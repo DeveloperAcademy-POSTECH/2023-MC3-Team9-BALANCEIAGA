@@ -24,7 +24,27 @@
 		027E969E2A56B2150066BA8F /* SupportVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027E969D2A56B2150066BA8F /* SupportVIew.swift */; };
 		02C1FA0B2A56B2F2009E9D41 /* NavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C1FA0A2A56B2F2009E9D41 /* NavigationView.swift */; };
 		02C1FA0D2A56B62C009E9D41 /* ArchivingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C1FA0C2A56B62C009E9D41 /* ArchivingView.swift */; };
+		7C78B2F52A5BBA72005FD733 /* SickSangHaeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C78B2F42A5BBA72005FD733 /* SickSangHaeTests.swift */; };
+		7C78B3022A5BBA7F005FD733 /* SickSangHaeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C78B3012A5BBA7F005FD733 /* SickSangHaeUITests.swift */; };
+		7C78B3042A5BBA7F005FD733 /* SickSangHaeUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C78B3032A5BBA7F005FD733 /* SickSangHaeUITestsLaunchTests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7C78B2F62A5BBA72005FD733 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 027E96672A56AB5E0066BA8F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 027E966E2A56AB5E0066BA8F;
+			remoteInfo = SickSangHae;
+		};
+		7C78B3052A5BBA7F005FD733 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 027E96672A56AB5E0066BA8F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 027E966E2A56AB5E0066BA8F;
+			remoteInfo = SickSangHae;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		027E966F2A56AB5E0066BA8F /* SickSangHae.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SickSangHae.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -45,10 +65,29 @@
 		027E969D2A56B2150066BA8F /* SupportVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportVIew.swift; sourceTree = "<group>"; };
 		02C1FA0A2A56B2F2009E9D41 /* NavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationView.swift; sourceTree = "<group>"; };
 		02C1FA0C2A56B62C009E9D41 /* ArchivingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivingView.swift; sourceTree = "<group>"; };
+		7C78B2F22A5BBA72005FD733 /* SickSangHaeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SickSangHaeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C78B2F42A5BBA72005FD733 /* SickSangHaeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SickSangHaeTests.swift; sourceTree = "<group>"; };
+		7C78B2FF2A5BBA7F005FD733 /* SickSangHaeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SickSangHaeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C78B3012A5BBA7F005FD733 /* SickSangHaeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SickSangHaeUITests.swift; sourceTree = "<group>"; };
+		7C78B3032A5BBA7F005FD733 /* SickSangHaeUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SickSangHaeUITestsLaunchTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		027E966C2A56AB5E0066BA8F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7C78B2EF2A5BBA72005FD733 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7C78B2FC2A5BBA7F005FD733 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -62,6 +101,8 @@
 			isa = PBXGroup;
 			children = (
 				027E96712A56AB5E0066BA8F /* SickSangHae */,
+				7C78B2F32A5BBA72005FD733 /* SickSangHaeTests */,
+				7C78B3002A5BBA7F005FD733 /* SickSangHaeUITests */,
 				027E96702A56AB5E0066BA8F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -70,6 +111,8 @@
 			isa = PBXGroup;
 			children = (
 				027E966F2A56AB5E0066BA8F /* SickSangHae.app */,
+				7C78B2F22A5BBA72005FD733 /* SickSangHaeTests.xctest */,
+				7C78B2FF2A5BBA7F005FD733 /* SickSangHaeUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -162,6 +205,23 @@
 			path = Reusable;
 			sourceTree = "<group>";
 		};
+		7C78B2F32A5BBA72005FD733 /* SickSangHaeTests */ = {
+			isa = PBXGroup;
+			children = (
+				7C78B2F42A5BBA72005FD733 /* SickSangHaeTests.swift */,
+			);
+			path = SickSangHaeTests;
+			sourceTree = "<group>";
+		};
+		7C78B3002A5BBA7F005FD733 /* SickSangHaeUITests */ = {
+			isa = PBXGroup;
+			children = (
+				7C78B3012A5BBA7F005FD733 /* SickSangHaeUITests.swift */,
+				7C78B3032A5BBA7F005FD733 /* SickSangHaeUITestsLaunchTests.swift */,
+			);
+			path = SickSangHaeUITests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -182,6 +242,42 @@
 			productReference = 027E966F2A56AB5E0066BA8F /* SickSangHae.app */;
 			productType = "com.apple.product-type.application";
 		};
+		7C78B2F12A5BBA72005FD733 /* SickSangHaeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7C78B2FA2A5BBA72005FD733 /* Build configuration list for PBXNativeTarget "SickSangHaeTests" */;
+			buildPhases = (
+				7C78B2EE2A5BBA72005FD733 /* Sources */,
+				7C78B2EF2A5BBA72005FD733 /* Frameworks */,
+				7C78B2F02A5BBA72005FD733 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7C78B2F72A5BBA72005FD733 /* PBXTargetDependency */,
+			);
+			name = SickSangHaeTests;
+			productName = SickSangHaeTests;
+			productReference = 7C78B2F22A5BBA72005FD733 /* SickSangHaeTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		7C78B2FE2A5BBA7F005FD733 /* SickSangHaeUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7C78B3072A5BBA7F005FD733 /* Build configuration list for PBXNativeTarget "SickSangHaeUITests" */;
+			buildPhases = (
+				7C78B2FB2A5BBA7F005FD733 /* Sources */,
+				7C78B2FC2A5BBA7F005FD733 /* Frameworks */,
+				7C78B2FD2A5BBA7F005FD733 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7C78B3062A5BBA7F005FD733 /* PBXTargetDependency */,
+			);
+			name = SickSangHaeUITests;
+			productName = SickSangHaeUITests;
+			productReference = 7C78B2FF2A5BBA7F005FD733 /* SickSangHaeUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -194,6 +290,14 @@
 				TargetAttributes = {
 					027E966E2A56AB5E0066BA8F = {
 						CreatedOnToolsVersion = 14.3;
+					};
+					7C78B2F12A5BBA72005FD733 = {
+						CreatedOnToolsVersion = 14.3;
+						TestTargetID = 027E966E2A56AB5E0066BA8F;
+					};
+					7C78B2FE2A5BBA7F005FD733 = {
+						CreatedOnToolsVersion = 14.3;
+						TestTargetID = 027E966E2A56AB5E0066BA8F;
 					};
 				};
 			};
@@ -211,6 +315,8 @@
 			projectRoot = "";
 			targets = (
 				027E966E2A56AB5E0066BA8F /* SickSangHae */,
+				7C78B2F12A5BBA72005FD733 /* SickSangHaeTests */,
+				7C78B2FE2A5BBA7F005FD733 /* SickSangHaeUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -222,6 +328,20 @@
 			files = (
 				027E967A2A56AB5F0066BA8F /* Preview Assets.xcassets in Resources */,
 				027E96772A56AB5F0066BA8F /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7C78B2F02A5BBA72005FD733 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7C78B2FD2A5BBA7F005FD733 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,7 +370,37 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7C78B2EE2A5BBA72005FD733 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7C78B2F52A5BBA72005FD733 /* SickSangHaeTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7C78B2FB2A5BBA7F005FD733 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7C78B3042A5BBA7F005FD733 /* SickSangHaeUITestsLaunchTests.swift in Sources */,
+				7C78B3022A5BBA7F005FD733 /* SickSangHaeUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7C78B2F72A5BBA72005FD733 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 027E966E2A56AB5E0066BA8F /* SickSangHae */;
+			targetProxy = 7C78B2F62A5BBA72005FD733 /* PBXContainerItemProxy */;
+		};
+		7C78B3062A5BBA7F005FD733 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 027E966E2A56AB5E0066BA8F /* SickSangHae */;
+			targetProxy = 7C78B3052A5BBA7F005FD733 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		027E967B2A56AB5F0066BA8F /* Debug */ = {
@@ -425,6 +575,76 @@
 			};
 			name = Release;
 		};
+		7C78B2F82A5BBA72005FD733 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DD63847N69;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.codingtest.SickSangHaeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SickSangHae.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SickSangHae";
+			};
+			name = Debug;
+		};
+		7C78B2F92A5BBA72005FD733 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DD63847N69;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.codingtest.SickSangHaeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SickSangHae.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SickSangHae";
+			};
+			name = Release;
+		};
+		7C78B3082A5BBA7F005FD733 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DD63847N69;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.codingtest.SickSangHaeUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = SickSangHae;
+			};
+			name = Debug;
+		};
+		7C78B3092A5BBA7F005FD733 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DD63847N69;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.codingtest.SickSangHaeUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = SickSangHae;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -442,6 +662,24 @@
 			buildConfigurations = (
 				027E967E2A56AB5F0066BA8F /* Debug */,
 				027E967F2A56AB5F0066BA8F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7C78B2FA2A5BBA72005FD733 /* Build configuration list for PBXNativeTarget "SickSangHaeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7C78B2F82A5BBA72005FD733 /* Debug */,
+				7C78B2F92A5BBA72005FD733 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7C78B3072A5BBA7F005FD733 /* Build configuration list for PBXNativeTarget "SickSangHaeUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7C78B3082A5BBA7F005FD733 /* Debug */,
+				7C78B3092A5BBA7F005FD733 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

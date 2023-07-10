@@ -17,7 +17,7 @@ final class SickSangHaeUITestsLaunchTests: XCTestCase {
         continueAfterFailure = false
     }
 
-    func testLaunch() throws {
+    func testLaunch() throws {	
         let app = XCUIApplication()
         app.launch()
 
