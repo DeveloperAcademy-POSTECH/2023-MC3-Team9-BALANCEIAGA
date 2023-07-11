@@ -4,7 +4,7 @@
 workspace "SickSangHae.xcodeproj/project.xcworkspace"
 scheme "SickSangHae"
 sdk "iphonesimulator"
-device "iPhone 14"
+device "iPhone SE (3rd generation)"
 code_coverage true
 xcargs '-parallelizeTargets'
 prelaunch_simulator true
