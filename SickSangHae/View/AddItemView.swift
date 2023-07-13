@@ -37,31 +37,7 @@ struct AddItemView: View {
                     
             }
             
-            ZStack {
-                Rectangle()
-                    .frame(width: 350, height: 116)
-                    .foregroundColor(.tempGrayColor)
-                    .cornerRadius(12)
-                VStack(alignment: .leading) {
-                    HStack {
-                        Text("품목")
-                            .padding(.leading,20)
-                        Text("품목을 입력해주세요.")
-                            .foregroundColor(.lightGrayColor)
-                            .padding(.leading,30)
-                    }
-                    Divider()
-                        .frame(width: 350, height: 10)
-                        .foregroundColor(.whatGrayColor)
-                    HStack {
-                        Text("금액")
-                            .padding(.leading,20)
-                        Text("금액을 입력해주세요.")
-                            .foregroundColor(.lightGrayColor)
-                            .padding(.leading,30)
-                    }
-                }
-            }
+            ItemBlockView()
             
             
             ZStack {
