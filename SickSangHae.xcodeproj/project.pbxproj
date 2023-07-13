@@ -27,6 +27,7 @@
 		8787EC002A5E79F400104EDE /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787EBFF2A5E79F400104EDE /* Color+Extension.swift */; };
 		8787EC022A5E8FC800104EDE /* Corner+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787EC012A5E8FC800104EDE /* Corner+Extension.swift */; };
 		8787EC042A5FD48800104EDE /* UpperTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787EC032A5FD48800104EDE /* UpperTabBar.swift */; };
+		8787EC062A5FE7CE00104EDE /* ItemBlockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787EC052A5FE7CE00104EDE /* ItemBlockView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +52,7 @@
 		8787EBFF2A5E79F400104EDE /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		8787EC012A5E8FC800104EDE /* Corner+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Corner+Extension.swift"; sourceTree = "<group>"; };
 		8787EC032A5FD48800104EDE /* UpperTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpperTabBar.swift; sourceTree = "<group>"; };
+		8787EC052A5FE7CE00104EDE /* ItemBlockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemBlockView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +169,7 @@
 			children = (
 				02C1FA0A2A56B2F2009E9D41 /* NavigationView.swift */,
 				8787EC032A5FD48800104EDE /* UpperTabBar.swift */,
+				8787EC052A5FE7CE00104EDE /* ItemBlockView.swift */,
 			);
 			path = Reusable;
 			sourceTree = "<group>";
@@ -250,6 +253,7 @@
 				027E969A2A56B1B00066BA8F /* NotificationView.swift in Sources */,
 				8787EC002A5E79F400104EDE /* Color+Extension.swift in Sources */,
 				027E969E2A56B2150066BA8F /* SupportVIew.swift in Sources */,
+				8787EC062A5FE7CE00104EDE /* ItemBlockView.swift in Sources */,
 				027E96732A56AB5E0066BA8F /* SickSangHaeApp.swift in Sources */,
 				8787EC022A5E8FC800104EDE /* Corner+Extension.swift in Sources */,
 				027E96942A56B01C0066BA8F /* ItemDetailView.swift in Sources */,
