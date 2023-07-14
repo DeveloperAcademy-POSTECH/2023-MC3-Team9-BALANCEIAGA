@@ -8,6 +8,7 @@ platform :ios do
         lane :unit_test do |options|
           scan(
             clean: options[:clean],
+            number_of_retries: 1,
             skip_package_dependencies_resolution: options[:skip_package_dependencies_resolution]
           )
         end
