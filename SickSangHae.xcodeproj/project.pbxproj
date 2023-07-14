@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		020439652A6161CA0055A8D4 /* CameraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020439642A6161CA0055A8D4 /* CameraViewModel.swift */; };
 		026AF26C2A5FD512005E265F /* Number+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026AF26B2A5FD512005E265F /* Number+Extension.swift */; };
 		027E96732A56AB5E0066BA8F /* SickSangHaeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027E96722A56AB5E0066BA8F /* SickSangHaeApp.swift */; };
 		027E96772A56AB5F0066BA8F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 027E96762A56AB5F0066BA8F /* Assets.xcassets */; };
@@ -29,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		020439642A6161CA0055A8D4 /* CameraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewModel.swift; sourceTree = "<group>"; };
 		026AF26B2A5FD512005E265F /* Number+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Number+Extension.swift"; sourceTree = "<group>"; };
 		027E966F2A56AB5E0066BA8F /* SickSangHae.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SickSangHae.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		027E96722A56AB5E0066BA8F /* SickSangHaeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SickSangHaeApp.swift; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 		027E96822A56ABA20066BA8F /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				020439642A6161CA0055A8D4 /* CameraViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -243,6 +246,7 @@
 				02D449802A5FEFF600D97A37 /* CameraModel.swift in Sources */,
 				02C1FA0D2A56B62C009E9D41 /* ArchivingView.swift in Sources */,
 				027E968A2A56AE0F0066BA8F /* CameraView.swift in Sources */,
+				020439652A6161CA0055A8D4 /* CameraViewModel.swift in Sources */,
 				027E96922A56AFD50066BA8F /* EditIconView.swift in Sources */,
 				027E96902A56AF950066BA8F /* SettingVIew.swift in Sources */,
 				027E969A2A56B1B00066BA8F /* NotificationView.swift in Sources */,
