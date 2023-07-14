@@ -9,7 +9,7 @@ import SwiftUI
 
 let screenSize: CGRect = UIScreen.main.bounds
 
-struct AddItemView: View {
+struct UpdateItemView: View {
     var body: some View {
         VStack {
             HStack {
@@ -93,9 +93,9 @@ struct AddItemView: View {
     }
 }
     
-    struct AddItemView_Previews: PreviewProvider {
+    struct UpdateItemView_Previews: PreviewProvider {
         static var previews: some View {
-            AddItemView()
+            UpdateItemView()
         }
     }
 
