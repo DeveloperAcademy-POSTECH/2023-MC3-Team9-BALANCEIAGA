@@ -8,9 +8,10 @@
 import SwiftUI
 
 extension Color {
+    public static let lightGreenGrayColor = Color("LightGreenGray")
     public static let lightGrayColor = Color("LightGray")
-    public static let tempGrayColor = Color("TempGray")
-    public static let whatGrayColor = Color("WhatGray")
+    public static let lightBlueGrayColor = Color("LightBlueGray")
+    public static let blueGrayColor = Color("BlueGray")
     
     
 }
