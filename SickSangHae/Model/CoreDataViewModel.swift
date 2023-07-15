@@ -54,7 +54,8 @@ extension CoreDataViewModel {
         self.getAllReceiptData()
     }
     
-    func deleteReceiptData() {
-        
+    func deleteReceiptData(target: Receipt) {
+        viewContext.delete(by: target)
+        getAllReceiptData()
     }
 }
