@@ -29,4 +29,13 @@ extension CoreDataViewModel {
             print("Cannot fetch receipts from SickSangHae Model")
         }
     }
+    
+    
+    func saveChanges() {
+        do {
+            try viewContext.save()
+        } catch {
+            print("Error while Saving in CoreData")
+        }
+    }
 }
