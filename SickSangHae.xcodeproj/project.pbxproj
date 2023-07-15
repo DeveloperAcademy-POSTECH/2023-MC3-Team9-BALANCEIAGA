@@ -115,7 +115,6 @@
 				CE9AFD8E2A5FE33000EB2D8C /* SickSangHaeModel.xcdatamodeld */,
 				CE9AFD992A5FED9200EB2D8C /* ItemStatus.swift */,
 				CE9AFD9B2A5FEFE400EB2D8C /* PersistentController.swift */,
-				CE9AFDBB2A628D6500EB2D8C /* CoreDataViewModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -144,6 +143,7 @@
 		027E96822A56ABA20066BA8F /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				CE9AFDBB2A628D6500EB2D8C /* CoreDataViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
