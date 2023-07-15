@@ -33,6 +33,7 @@ extension NSManagedObjectContext {
                 print("Get 한 object 변환 실패")
                 return nil
             }
+            print(result)
             return result
         } catch {
             print("해당하는 object 찾는거 실패")
@@ -40,16 +41,33 @@ extension NSManagedObjectContext {
         }
     }
     
-    func delete(by objectId: NSManagedObjectID) {
-        guard let target = get(by: objectId) else { return }
-        self.delete(target)
+    func delete(by object: Receipt) {
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Receipt")
+        request.predicate = NSPredicate(format: "id == %@", object.id.uuidString)
+        print("진입함!!!\n\(request)\n")
+        do {
+            let results = (try fetch(request) as? [NSManagedObject]) ?? [NSManagedObject]()
+            print("results 가져옴!!!\n")
+            results.forEach {
+                print($0)
+                self.delete($0)
+            }
+        } catch {
+            print("CoreData 에서 삭제 실패함!!!\n")
+        }
+        
+        self.saveContext()
     }
     
     func saveContext() {
         do {
-            try self.save()
+            if self.hasChanges {
+                print("변화 감지!!!\n")
+                try save()
+            }
         } catch {
-            print("Save context error")
+            let nserror = error as NSError
+            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
         }
     }
 }
