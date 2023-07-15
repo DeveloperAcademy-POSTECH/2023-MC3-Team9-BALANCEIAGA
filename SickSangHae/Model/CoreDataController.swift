@@ -8,8 +8,13 @@
 import CoreData
 import Foundation
 
-class DataController: ObservableObject {
+struct CoreDataController {
+    static let shared = CoreDataController()
     let container = NSPersistentContainer(name: "SickSangHaeModel")
+    
+    var viewContext: NSManagedObjectContext {
+        return container.viewContext
+    }
     
     init() {
         container.loadPersistentStores { description, error in
