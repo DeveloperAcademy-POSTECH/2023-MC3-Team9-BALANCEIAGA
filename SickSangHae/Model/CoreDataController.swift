@@ -25,3 +25,18 @@ struct CoreDataController {
         }
     }
 }
+
+extension NSManagedObjectContext {
+    func get(by objectID: NSManagedObjectID) -> Receipt? {
+        do {
+            guard let result = try self.existingObject(with: objectID) as? Receipt else {
+                print("Get 한 object 변환 실패")
+                return nil
+            }
+            return result
+        } catch {
+            print("해당하는 object 찾는거 실패")
+            return nil
+        }
+    }
+}
