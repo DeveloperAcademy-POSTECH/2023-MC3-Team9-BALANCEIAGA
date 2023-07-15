@@ -44,4 +44,12 @@ extension NSManagedObjectContext {
         guard let target = get(by: objectId) else { return }
         self.delete(target)
     }
+    
+    func saveContext() {
+        do {
+            try self.save()
+        } catch {
+            print("Save context error")
+        }
+    }
 }
