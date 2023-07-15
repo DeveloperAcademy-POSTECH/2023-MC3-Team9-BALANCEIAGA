@@ -44,10 +44,8 @@ extension NSManagedObjectContext {
     func delete(by object: Receipt) {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Receipt")
         request.predicate = NSPredicate(format: "id == %@", object.id.uuidString)
-        print("진입함!!!\n\(request)\n")
         do {
             let results = (try fetch(request) as? [NSManagedObject]) ?? [NSManagedObject]()
-            print("results 가져옴!!!\n")
             results.forEach {
                 print($0)
                 self.delete($0)
@@ -62,7 +60,6 @@ extension NSManagedObjectContext {
     func saveContext() {
         do {
             if self.hasChanges {
-                print("변화 감지!!!\n")
                 try save()
             }
         } catch {
