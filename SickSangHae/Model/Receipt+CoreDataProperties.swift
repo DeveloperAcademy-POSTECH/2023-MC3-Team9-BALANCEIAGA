@@ -6,8 +6,8 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 
 extension Receipt {
@@ -20,7 +20,7 @@ extension Receipt {
     @NSManaged public var price: Double
     @NSManaged public var name: String
     @NSManaged public var id: UUID
-    @NSManaged public var icon: Data
+    @NSManaged public var icon: String
     @NSManaged public var fastEatPin: Bool
     @NSManaged public var dateOfPurchase: Date
     @NSManaged public var placeOfPurchase: String?

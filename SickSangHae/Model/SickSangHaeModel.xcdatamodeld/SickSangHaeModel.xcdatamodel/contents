@@ -3,7 +3,7 @@
     <entity name="Receipt" representedClassName="Receipt" syncable="YES">
         <attribute name="dateOfPurchase" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="fastEatPin" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="icon" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <attribute name="icon" optional="YES" attributeType="String" allowsExternalBinaryDataStorage="YES"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="placeOfPurchase" optional="YES" attributeType="String"/>
