@@ -9,7 +9,7 @@ import CoreData
 import Foundation
 
 class CoreDataViewModel: ObservableObject {
-    private let viewContext = CoreDataController.shared.viewContext
+    private let viewContext = PersistentController.shared.viewContext
     @Published var receipts: [Receipt] = []
     
     init() {

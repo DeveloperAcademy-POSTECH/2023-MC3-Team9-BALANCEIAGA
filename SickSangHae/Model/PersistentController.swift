@@ -8,8 +8,8 @@
 import CoreData
 import Foundation
 
-struct CoreDataController {
-    static let shared = CoreDataController()
+struct PersistentController {
+    static let shared = PersistentController()
     let container = NSPersistentContainer(name: "SickSangHaeModel")
     
     var viewContext: NSManagedObjectContext {
