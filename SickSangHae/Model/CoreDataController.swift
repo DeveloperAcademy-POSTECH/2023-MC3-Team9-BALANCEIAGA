@@ -39,4 +39,9 @@ extension NSManagedObjectContext {
             return nil
         }
     }
+    
+    func delete(by objectId: NSManagedObjectID) {
+        guard let target = get(by: objectId) else { return }
+        self.delete(target)
+    }
 }
