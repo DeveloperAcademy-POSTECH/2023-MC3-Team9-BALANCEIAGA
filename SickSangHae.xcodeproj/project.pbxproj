@@ -29,6 +29,7 @@
 		CE9AFD982A5FEC9100EB2D8C /* Receipt+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9AFD962A5FEC9100EB2D8C /* Receipt+CoreDataProperties.swift */; };
 		CE9AFD9A2A5FED9200EB2D8C /* ItemStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9AFD992A5FED9200EB2D8C /* ItemStatus.swift */; };
 		CE9AFD9C2A5FEFE400EB2D8C /* CoreDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9AFD9B2A5FEFE400EB2D8C /* CoreDataController.swift */; };
+		CE9AFDBC2A628D6500EB2D8C /* CoreDataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9AFDBB2A628D6500EB2D8C /* CoreDataViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,7 @@
 		CE9AFD962A5FEC9100EB2D8C /* Receipt+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Receipt+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CE9AFD992A5FED9200EB2D8C /* ItemStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemStatus.swift; sourceTree = "<group>"; };
 		CE9AFD9B2A5FEFE400EB2D8C /* CoreDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataController.swift; sourceTree = "<group>"; };
+		CE9AFDBB2A628D6500EB2D8C /* CoreDataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 				CE9AFD8E2A5FE33000EB2D8C /* SickSangHaeModel.xcdatamodeld */,
 				CE9AFD992A5FED9200EB2D8C /* ItemStatus.swift */,
 				CE9AFD9B2A5FEFE400EB2D8C /* CoreDataController.swift */,
+				CE9AFDBB2A628D6500EB2D8C /* CoreDataViewModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -255,6 +258,7 @@
 				027E96922A56AFD50066BA8F /* EditIconView.swift in Sources */,
 				027E96902A56AF950066BA8F /* SettingVIew.swift in Sources */,
 				027E969A2A56B1B00066BA8F /* NotificationView.swift in Sources */,
+				CE9AFDBC2A628D6500EB2D8C /* CoreDataViewModel.swift in Sources */,
 				CE9AFD902A5FE33000EB2D8C /* SickSangHaeModel.xcdatamodeld in Sources */,
 				CE9AFD982A5FEC9100EB2D8C /* Receipt+CoreDataProperties.swift in Sources */,
 				027E969E2A56B2150066BA8F /* SupportVIew.swift in Sources */,
