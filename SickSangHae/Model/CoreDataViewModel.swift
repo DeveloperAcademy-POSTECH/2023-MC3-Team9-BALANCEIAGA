@@ -38,4 +38,21 @@ extension CoreDataViewModel {
             print("Error while Saving in CoreData")
         }
     }
+    
+    func createReceiptData() {
+        
+        let receipt = Receipt(context: viewContext)
+        receipt.id = UUID()
+        receipt.name = "TestName"
+        receipt.dateOfPurchase = Date.now
+        receipt.fastEatPin = false
+        receipt.icon = "icon_test"
+        receipt.price = 6000.0
+        receipt.state = Status.UnConsumed.rawValue
+        
+        saveChanges()
+        self.getAllReceiptData()
+    }
+    
+    
 }
