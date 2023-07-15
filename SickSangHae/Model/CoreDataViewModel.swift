@@ -20,5 +20,13 @@ class CoreDataViewModel: ObservableObject {
 }
 
 extension CoreDataViewModel {
-    
+    func getAllReceiptData() {
+        let request = NSFetchRequest<Receipt>(entityName: "Receipt")
+        
+        do {
+            receipts = try viewContext.fetch(request)
+        } catch {
+            print("Cannot fetch receipts from SickSangHae Model")
+        }
+    }
 }
