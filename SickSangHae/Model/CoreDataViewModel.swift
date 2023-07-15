@@ -58,4 +58,12 @@ extension CoreDataViewModel {
         viewContext.delete(by: target)
         getAllReceiptData()
     }
+    
+    func updateReceiptStateData(target: Receipt, state: Status) {
+        guard let receipt = viewContext.get(by: target.objectID) else { return }
+        receipt.state = state.rawValue
+        
+        viewContext.saveContext()
+        getAllReceiptData()
+    }
 }
