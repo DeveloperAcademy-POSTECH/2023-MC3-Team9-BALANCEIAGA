@@ -13,7 +13,7 @@ class CoreDataViewModel: ObservableObject {
     @Published var receipts: [Receipt] = []
     
     init() {
-
+        getAllReceiptData()
     }
     
     
