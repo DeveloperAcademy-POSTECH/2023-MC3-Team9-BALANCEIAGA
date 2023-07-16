@@ -26,6 +26,12 @@
 		02C1FA0B2A56B2F2009E9D41 /* NavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C1FA0A2A56B2F2009E9D41 /* NavigationView.swift */; };
 		02C1FA0D2A56B62C009E9D41 /* ArchivingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C1FA0C2A56B62C009E9D41 /* ArchivingView.swift */; };
 		7CEB9EB32A613D7C008B70FD /* SickSangHaeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEB9EB22A613D7C008B70FD /* SickSangHaeTests.swift */; };
+		CE9AFD902A5FE33000EB2D8C /* SickSangHaeModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CE9AFD8E2A5FE33000EB2D8C /* SickSangHaeModel.xcdatamodeld */; };
+		CE9AFD972A5FEC9100EB2D8C /* Receipt+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9AFD952A5FEC9100EB2D8C /* Receipt+CoreDataClass.swift */; };
+		CE9AFD982A5FEC9100EB2D8C /* Receipt+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9AFD962A5FEC9100EB2D8C /* Receipt+CoreDataProperties.swift */; };
+		CE9AFD9A2A5FED9200EB2D8C /* ItemStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9AFD992A5FED9200EB2D8C /* ItemStatus.swift */; };
+		CE9AFD9C2A5FEFE400EB2D8C /* PersistentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9AFD9B2A5FEFE400EB2D8C /* PersistentController.swift */; };
+		CE9AFDBC2A628D6500EB2D8C /* CoreDataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9AFDBB2A628D6500EB2D8C /* CoreDataViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +66,12 @@
 		02C1FA0C2A56B62C009E9D41 /* ArchivingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivingView.swift; sourceTree = "<group>"; };
 		7CEB9EB02A613D7C008B70FD /* SickSangHaeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SickSangHaeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CEB9EB22A613D7C008B70FD /* SickSangHaeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SickSangHaeTests.swift; sourceTree = "<group>"; };
+		CE9AFD8F2A5FE33000EB2D8C /* SickSangHaeModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SickSangHaeModel.xcdatamodel; sourceTree = "<group>"; };
+		CE9AFD952A5FEC9100EB2D8C /* Receipt+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Receipt+CoreDataClass.swift"; sourceTree = "<group>"; };
+		CE9AFD962A5FEC9100EB2D8C /* Receipt+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Receipt+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		CE9AFD992A5FED9200EB2D8C /* ItemStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemStatus.swift; sourceTree = "<group>"; };
+		CE9AFD9B2A5FEFE400EB2D8C /* PersistentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentController.swift; sourceTree = "<group>"; };
+		CE9AFDBB2A628D6500EB2D8C /* CoreDataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +134,11 @@
 		027E96802A56AB6F0066BA8F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				CE9AFD952A5FEC9100EB2D8C /* Receipt+CoreDataClass.swift */,
+				CE9AFD962A5FEC9100EB2D8C /* Receipt+CoreDataProperties.swift */,
+				CE9AFD8E2A5FE33000EB2D8C /* SickSangHaeModel.xcdatamodeld */,
+				CE9AFD992A5FED9200EB2D8C /* ItemStatus.swift */,
+				CE9AFD9B2A5FEFE400EB2D8C /* PersistentController.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -150,6 +167,7 @@
 		027E96822A56ABA20066BA8F /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				CE9AFDBB2A628D6500EB2D8C /* CoreDataViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -297,13 +315,19 @@
 			files = (
 				02C1FA0B2A56B2F2009E9D41 /* NavigationView.swift in Sources */,
 				027E969C2A56B1FE0066BA8F /* AppInfoView.swift in Sources */,
+				CE9AFD9C2A5FEFE400EB2D8C /* PersistentController.swift in Sources */,
 				02C1FA0D2A56B62C009E9D41 /* ArchivingView.swift in Sources */,
 				027E968A2A56AE0F0066BA8F /* CameraView.swift in Sources */,
 				027E96922A56AFD50066BA8F /* EditIconView.swift in Sources */,
 				027E96902A56AF950066BA8F /* SettingVIew.swift in Sources */,
 				027E969A2A56B1B00066BA8F /* NotificationView.swift in Sources */,
+				CE9AFDBC2A628D6500EB2D8C /* CoreDataViewModel.swift in Sources */,
+				CE9AFD902A5FE33000EB2D8C /* SickSangHaeModel.xcdatamodeld in Sources */,
+				CE9AFD982A5FEC9100EB2D8C /* Receipt+CoreDataProperties.swift in Sources */,
 				027E969E2A56B2150066BA8F /* SupportVIew.swift in Sources */,
 				027E96732A56AB5E0066BA8F /* SickSangHaeApp.swift in Sources */,
+				CE9AFD9A2A5FED9200EB2D8C /* ItemStatus.swift in Sources */,
+				CE9AFD972A5FEC9100EB2D8C /* Receipt+CoreDataClass.swift in Sources */,
 				027E96942A56B01C0066BA8F /* ItemDetailView.swift in Sources */,
 				026AF26C2A5FD512005E265F /* Number+Extension.swift in Sources */,
 				027E96962A56B0240066BA8F /* ChartView.swift in Sources */,
@@ -572,6 +596,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		CE9AFD8E2A5FE33000EB2D8C /* SickSangHaeModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				CE9AFD8F2A5FE33000EB2D8C /* SickSangHaeModel.xcdatamodel */,
+			);
+			currentVersion = CE9AFD8F2A5FE33000EB2D8C /* SickSangHaeModel.xcdatamodel */;
+			path = SickSangHaeModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 027E96672A56AB5E0066BA8F /* Project object */;
 }
