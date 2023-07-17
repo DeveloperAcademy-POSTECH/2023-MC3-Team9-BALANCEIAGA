@@ -87,11 +87,10 @@ struct CustomTabView: View {
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 25)
-                                    .foregroundColor(selectedTab == .MainView ? .mint : .gray)
                                 Text("나의 냉장고")
-                                    .foregroundColor(selectedTab == .MainView ? .mint : .gray)
                                     .font(.system(size: 14.adjusted))
                             }
+                            .foregroundColor(selectedTab == .MainView ? .mint : .gray)
                         }
                     )
 
@@ -109,11 +108,10 @@ struct CustomTabView: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 25)
-                            .foregroundColor(selectedTab == .ChartView ? .mint : .gray)
                         Text("통계")
-                            .foregroundColor(selectedTab == .ChartView ? .mint : .gray)
                             .font(.system(size: 14.adjusted))
                         }
+                        .foregroundColor(selectedTab == .ChartView ? .mint : .gray)
                     }
                 )
                 Spacer()
@@ -130,11 +128,10 @@ struct CustomTabView: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 25)
-                            .foregroundColor(selectedTab == .HistoryView ? .mint : .gray)
                         Text("보관함")
-                            .foregroundColor(selectedTab == .HistoryView ? .mint : .gray)
                             .font(.system(size: 14.adjusted))
                         }
+                        .foregroundColor(selectedTab == .HistoryView ? .mint : .gray)
                     }
                 )
 
@@ -152,11 +149,10 @@ struct CustomTabView: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 25)
-                            .foregroundColor(selectedTab == .SettingView ? .mint : .gray)
                         Text("설정")
-                            .foregroundColor(selectedTab == .SettingView ? .mint : .gray)
                             .font(.system(size: 14.adjusted))
                         }
+                        .foregroundColor(selectedTab == .SettingView ? .mint : .gray)
                     }
                 )
                 Spacer()
