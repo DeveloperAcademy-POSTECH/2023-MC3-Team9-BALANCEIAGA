@@ -11,13 +11,13 @@ import AVFoundation
 struct CameraView: View {
   @ObservedObject var viewModel = CameraViewModel()
   @Environment(\.dismiss) private var dismiss
-  @State private var isShowingText = false
   
   var body: some View {
     ZStack {
       viewModel.cameraPreview.ignoresSafeArea()
         .onAppear {
           viewModel.configure()
+          viewModel.startShowingText()
         }
         .gesture(MagnificationGesture()
           .onChanged { val in
@@ -30,9 +30,10 @@ struct CameraView: View {
       VStack {
         closeButton
         Spacer()
-        alertText
+        if viewModel.isShowingText {
+          alertText
+        }
         Spacer()
-        
         HStack {
           galleryButton
           Spacer()
@@ -40,14 +41,13 @@ struct CameraView: View {
           Spacer()
           flashButton
         }
-        .foregroundColor(.white)
-        .sheet(isPresented: $viewModel.imagePickerPresented) {
-          ImagePicker(image: $viewModel.selectedImage, isPresented: $viewModel.imagePickerPresented)
-        }
+        .padding([.leading, .trailing, .bottom], 32.adjusted)
+        selfAddButton
       }
-      .onAppear {
-        
-      }
+    }
+    .foregroundColor(.white)
+    .sheet(isPresented: $viewModel.imagePickerPresented) {
+      ImagePicker(image: $viewModel.selectedImage, isPresented: $viewModel.imagePickerPresented)
     }
   }
   
@@ -70,7 +70,7 @@ struct CameraView: View {
     Text("영수증의 결제 정보가\n잘 보이도록 찍어주세요")
       .multilineTextAlignment(.center)
       .foregroundColor(.white)
-      .font(.system(.title).bold())
+      .font(.system(size: 22))
       .transition(.opacity)
       .animation(.easeOut(duration: 2))
   }
@@ -97,10 +97,38 @@ struct CameraView: View {
       Image(systemName: viewModel.isFlashOn ? "bolt.fill" : "bolt.slash")
         .resizable()
         .frame(width: 20.adjusted, height: 26.adjusted)
-      
     }
     .foregroundColor(.white)
   }
+  
+  private var selfAddButton: some View {
+    Button {
+      //navigation 추가
+    } label: {
+      ZStack(alignment: .center) {
+        Rectangle()
+          .foregroundColor(.clear)
+          .frame(height: 60.adjusted)
+          .cornerRadius(15)
+          .overlay(
+            RoundedRectangle(cornerRadius: 15)
+              .inset(by: 1)
+              .stroke(.white, lineWidth: 2)
+          )
+        HStack(spacing: 8.adjusted) {
+          Image(systemName: "pencil.circle")
+            .resizable()
+            .frame(width: 19.adjusted, height: 19.adjusted)
+          Text("직접 추가하기")
+            .font(.system(size: 17))
+        }
+      }
+      .foregroundColor(.white)
+    }
+    .padding([.leading, .trailing], 24.adjusted)
+    .padding(.bottom, 20.adjusted)
+  }
+}
   
   struct CameraPreviewView: UIViewRepresentable {
     class VideoPreviewView: UIView {
@@ -131,4 +159,4 @@ struct CameraView: View {
       
     }
   }
-}
+
