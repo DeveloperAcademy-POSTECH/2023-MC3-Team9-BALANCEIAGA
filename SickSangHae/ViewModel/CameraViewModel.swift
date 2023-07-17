@@ -25,6 +25,7 @@ class CameraViewModel: ObservableObject {
   @Published var shutterEffect = false
   @Published var recentImage: UIImage?
   @Published var isFlashOn = false
+  @Published var isShowingText = false
   
   //MARK: - 초기 세팅
   
@@ -74,6 +75,15 @@ class CameraViewModel: ObservableObject {
   func zoomInitialize() {
     lastScale = 1.0
   }
+  
+  func startShowingText() {
+    DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+      withAnimation {
+        self?.isShowingText = false
+      }
+    }
+  }
+  
   
   init() {
     model = CameraModel()
