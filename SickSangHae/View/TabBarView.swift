@@ -17,6 +17,7 @@ enum Tab {
 struct TabBarView: View {
     //Custom TabView
     @State var selectedTab: Tab = .MainView
+
     var body: some View {
         VStack {
             Spacer()
@@ -35,7 +36,6 @@ struct TabBarView: View {
             CustomTabView(selectedTab: $selectedTab)
         }
     }
-
 }
 
 struct CustomTabView: View {
@@ -47,29 +47,30 @@ struct CustomTabView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fill)
 
-            Button{
-                // 카메라 기능을 넣어요
-            } label: {
-                ZStack{
-                    Rectangle()
-                        .fill(LinearGradient(gradient: Gradient(colors: [Color("PrimaryG"), Color("PrimaryB")]), startPoint: .leading, endPoint: .trailing))
-                        .frame(width: screenWidth, height: 60.adjusted)
-                        .foregroundColor(.blueGrayColor)
-                        .padding(.bottom, 12.adjusted)
-                        .cornerRadius(12.adjusted)
-                        .padding(.bottom, -12.adjusted)
+            if selectedTab == .MainView{
+                Button{
+                    // 카메라 기능을 넣어요
+                } label: {
+                    ZStack{
+                        Rectangle()
+                            .fill(LinearGradient(gradient: Gradient(colors: [Color("PrimaryG"), Color("PrimaryB")]), startPoint: .leading, endPoint: .trailing))
+                            .frame(width: screenWidth, height: 60.adjusted)
+                            .foregroundColor(.blueGrayColor)
+                            .padding(.bottom, 12.adjusted)
+                            .cornerRadius(12.adjusted)
+                            .padding(.bottom, -12.adjusted)
 
-                    HStack{
-                        Image(systemName: "camera.viewfinder")
-                            .font(.system(size: 20.adjusted))
-                        Text("영수증 스캔하기")
-                            .font(.system(size: 17.adjusted))
+                        HStack{
+                            Image(systemName: "camera.viewfinder")
+                                .font(.system(size: 20.adjusted))
+                            Text("영수증 스캔하기")
+                                .font(.system(size: 17.adjusted))
+                        }
+                        .foregroundColor(.white)
                     }
-                    .foregroundColor(.white)
-
                 }
+                .padding(.bottom, 150.adjusted)
             }
-            .padding(.bottom, 150.adjusted)
 
             HStack {
                 Spacer()
@@ -136,6 +137,7 @@ struct CustomTabView: View {
                         }
                     }
                 )
+
                 Spacer()
 
                 Rectangle()
@@ -160,7 +162,6 @@ struct CustomTabView: View {
                 Spacer()
                     .frame(width: 10.adjusted)
             }
-
         }
         .frame(height: 90.adjusted)
     }
