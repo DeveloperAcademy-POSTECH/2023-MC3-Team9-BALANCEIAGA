@@ -24,6 +24,7 @@
 		027E969E2A56B2150066BA8F /* SupportVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027E969D2A56B2150066BA8F /* SupportVIew.swift */; };
 		02C1FA0B2A56B2F2009E9D41 /* NavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C1FA0A2A56B2F2009E9D41 /* NavigationView.swift */; };
 		02C1FA0D2A56B62C009E9D41 /* ArchivingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C1FA0C2A56B62C009E9D41 /* ArchivingView.swift */; };
+		7CB728D72A65221500D2FFA6 /* Number+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB728D62A65221500D2FFA6 /* Number+Extension.swift */; };
 		8787EC002A5E79F400104EDE /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787EBFF2A5E79F400104EDE /* Color+Extension.swift */; };
 		8787EC022A5E8FC800104EDE /* Corner+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787EC012A5E8FC800104EDE /* Corner+Extension.swift */; };
 		8787EC042A5FD48800104EDE /* UpperTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787EC032A5FD48800104EDE /* UpperTabBar.swift */; };
@@ -49,6 +50,7 @@
 		027E969D2A56B2150066BA8F /* SupportVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportVIew.swift; sourceTree = "<group>"; };
 		02C1FA0A2A56B2F2009E9D41 /* NavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationView.swift; sourceTree = "<group>"; };
 		02C1FA0C2A56B62C009E9D41 /* ArchivingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivingView.swift; sourceTree = "<group>"; };
+		7CB728D62A65221500D2FFA6 /* Number+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Number+Extension.swift"; sourceTree = "<group>"; };
 		8787EBFF2A5E79F400104EDE /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		8787EC012A5E8FC800104EDE /* Corner+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Corner+Extension.swift"; sourceTree = "<group>"; };
 		8787EC032A5FD48800104EDE /* UpperTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpperTabBar.swift; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 			children = (
 				8787EBFF2A5E79F400104EDE /* Color+Extension.swift */,
 				8787EC012A5E8FC800104EDE /* Corner+Extension.swift */,
+				7CB728D62A65221500D2FFA6 /* Number+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -250,6 +253,7 @@
 				027E968A2A56AE0F0066BA8F /* CameraView.swift in Sources */,
 				027E96922A56AFD50066BA8F /* EditIconView.swift in Sources */,
 				027E96902A56AF950066BA8F /* SettingVIew.swift in Sources */,
+				7CB728D72A65221500D2FFA6 /* Number+Extension.swift in Sources */,
 				027E969A2A56B1B00066BA8F /* NotificationView.swift in Sources */,
 				8787EC002A5E79F400104EDE /* Color+Extension.swift in Sources */,
 				027E969E2A56B2150066BA8F /* SupportVIew.swift in Sources */,
