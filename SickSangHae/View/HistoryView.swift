@@ -1,8 +1,8 @@
 //
-//  ArchivingView.swift
+//  HistoryView.swift
 //  SickSangHae
 //
-//  Created by 최효원 on 2023/07/06.
+//  Created by kimsangwoo on 2023/07/17.
 //
 
 import SwiftUI
