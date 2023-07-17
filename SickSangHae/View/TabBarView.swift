@@ -8,28 +8,27 @@
 import SwiftUI
 
 enum Tab {
-    case first
-    case second
-    case third
-    case fourth
+    case MainView
+    case ChartView
+    case HistoryView
+    case SettingView
 }
 
 struct TabBarView: View {
     //Custom TabView
-
-    @State var selectedTab: Tab = .first
+    @State var selectedTab: Tab = .MainView
     var body: some View {
         VStack {
             Spacer()
             switch selectedTab {
-            case .first:
-                Text("The First Tab")
-            case .second:
-                Text("The Second Tab")
-            case .third:
-                Text("The Third Tab")
-            case .fourth:
-                Text("The Fourth Tab")
+            case .MainView:
+                Text("The MainView Tab")
+            case .ChartView:
+                Text("The ChartView Tab")
+            case .HistoryView:
+                Text("The HistoryView Tab")
+            case .SettingView:
+                Text("The SettingView Tab")
             }
             Spacer()
 
@@ -49,7 +48,7 @@ struct CustomTabView: View {
                 .aspectRatio(contentMode: .fill)
 
             Button{
-                // 기능을 넣어요
+                // 카메라 기능을 넣어요
             } label: {
                 ZStack{
                     Rectangle()
@@ -80,16 +79,16 @@ struct CustomTabView: View {
                     .foregroundColor(.clear)
                     .overlay(
                         Button {
-                            selectedTab = .first
+                            selectedTab = .MainView
                         } label: {
                             VStack{
-                                Image(systemName: selectedTab == .first ? "bag.fill" : "bag")
+                                Image(systemName: selectedTab == .MainView ? "bag.fill" : "bag")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 25)
-                                    .foregroundColor(selectedTab == .first ? .mint : .gray)
+                                    .foregroundColor(selectedTab == .MainView ? .mint : .gray)
                                 Text("나의 냉장고")
-                                    .foregroundColor(selectedTab == .first ? .mint : .gray)
+                                    .foregroundColor(selectedTab == .MainView ? .mint : .gray)
                                     .font(.system(size: 14.adjusted))
                             }
                         }
@@ -102,19 +101,19 @@ struct CustomTabView: View {
                     .foregroundColor(.clear)
                     .overlay(
                 Button {
-                    selectedTab = .second
+                    selectedTab = .ChartView
                 } label: {
                     VStack{
                         Image(systemName: "chart.bar.xaxis")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 25)
-                            .foregroundColor(selectedTab == .second ? .mint : .gray)
+                            .foregroundColor(selectedTab == .ChartView ? .mint : .gray)
                         Text("통계")
-                            .foregroundColor(selectedTab == .second ? .mint : .gray)
+                            .foregroundColor(selectedTab == .ChartView ? .mint : .gray)
                             .font(.system(size: 14.adjusted))
+                        }
                     }
-                }
                 )
                 Spacer()
 
@@ -123,19 +122,19 @@ struct CustomTabView: View {
                     .foregroundColor(.clear)
                     .overlay(
                 Button {
-                    selectedTab = .third
+                    selectedTab = .HistoryView
                 } label: {
                     VStack{
-                        Image(systemName: selectedTab == .third ? "newspaper.fill" : "newspaper")
+                        Image(systemName: selectedTab == .HistoryView ? "newspaper.fill" : "newspaper")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 25)
-                            .foregroundColor(selectedTab == .third ? .mint : .gray)
+                            .foregroundColor(selectedTab == .HistoryView ? .mint : .gray)
                         Text("보관함")
-                            .foregroundColor(selectedTab == .third ? .mint : .gray)
+                            .foregroundColor(selectedTab == .HistoryView ? .mint : .gray)
                             .font(.system(size: 14.adjusted))
+                        }
                     }
-                }
                 )
                 Spacer()
 
@@ -144,27 +143,23 @@ struct CustomTabView: View {
                     .foregroundColor(.clear)
                     .overlay(
                 Button {
-                    selectedTab = .fourth
+                    selectedTab = .SettingView
                 } label: {
                     VStack{
-                        Image(systemName: selectedTab == .fourth ? "circle.fill" : "circle")
+                        Image(systemName: selectedTab == .SettingView ? "circle.fill" : "circle")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 25)
-                            .foregroundColor(selectedTab == .fourth ? .mint : .gray)
+                            .foregroundColor(selectedTab == .SettingView ? .mint : .gray)
                         Text("설정")
-                            .foregroundColor(selectedTab == .fourth ? .mint : .gray)
+                            .foregroundColor(selectedTab == .SettingView ? .mint : .gray)
                             .font(.system(size: 14.adjusted))
+                        }
                     }
-                }
                 )
                 Spacer()
                     .frame(width: 10.adjusted)
             }
-
-
-
-
 
         }
         .frame(height: 90.adjusted)
