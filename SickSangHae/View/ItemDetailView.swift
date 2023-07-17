@@ -9,7 +9,20 @@ import SwiftUI
 
 struct ItemDetailView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            HStack {
+                Image(systemName: "chevron.left")
+                    .resizable()
+                    .frame(width: 8, height: 14.2)
+                Spacer()
+                Text("계란 30구")
+                    .bold()
+                    .padding(.leading, 15)
+                Spacer()
+                Text("수정")
+            }
+            .padding(.horizontal, 20)
+        }
     }
 }
 
