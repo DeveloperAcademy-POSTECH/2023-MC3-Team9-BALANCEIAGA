@@ -21,25 +21,29 @@ class CameraModel: NSObject, ObservableObject {
   //MARK: - 카메라 setup 함수
   
   func setUpCamera() {
-    guard let device = AVCaptureDevice.default(.builtInWideAngleCamera,
-                                               for: .video,
-                                               position: .back) else {
-      print("Failed to get AVCaptureDevice")
-      return
-    }
-    
-    do {
-      videoDeviceInput = try AVCaptureDeviceInput(device: device)
-      if session.canAddInput(videoDeviceInput) {
-        session.addInput(videoDeviceInput)
+    DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+      guard let self = self else { return }
+      guard let device = AVCaptureDevice.default(.builtInWideAngleCamera,
+                                                 for: .video,
+                                                 position: .back) else {
+        print("Failed to get AVCaptureDevice")
+        return
       }
-      if session.canAddOutput(output) {
-        session.addOutput(output)
-        output.maxPhotoQualityPrioritization = .quality
+      
+      do {
+        self.videoDeviceInput = try AVCaptureDeviceInput(device: device)
+        if self.session.canAddInput(self.videoDeviceInput) {
+          self.session.addInput(self.videoDeviceInput)
+        }
+        if self.session.canAddOutput(self.output) {
+          self.session.addOutput(self.output)
+          self.output.maxPhotoQualityPrioritization = .quality
+        }
+          //백그라운드 스레드에서 호출
+        self.session.startRunning()
+      } catch {
+        print("Failed to set up cameraL \(error)")
       }
-      session.startRunning()
-    } catch {
-      print("Failed to set up cameraL \(error)")
     }
   }
   

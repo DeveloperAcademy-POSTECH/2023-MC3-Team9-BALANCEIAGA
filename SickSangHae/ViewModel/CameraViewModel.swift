@@ -80,7 +80,7 @@ class CameraViewModel: ObservableObject {
     session = model.session
     cameraPreview = AnyView(CameraPreviewView(session: session))
     
-    model.$recentImage.sink { [weak self] (photo) Int
+    model.$recentImage.sink { [weak self] (photo) in
       guard let picture = photo else { return }
       self?.recentImage = picture
     }
