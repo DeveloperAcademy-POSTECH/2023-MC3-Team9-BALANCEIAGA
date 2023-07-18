@@ -7,26 +7,51 @@
 
 import SwiftUI
 
+enum topTabBar{
+    case basic
+    case longterm
+}
+
 struct MainView: View {
-  var body: some View {
 
-      VStack(alignment: .leading){
-          Spacer()
-              .frame(height: 39.adjusted)
-          HStack(alignment: .top){
-              Spacer()
-                  .frame(width: 23.adjusted)
-              Text("기본")
-                  .font(.system(size: 28.adjusted))
-              Text("장기보관")
-                  .font(.system(size: 28.adjusted))
-          }
-          .padding()
+    @State var selectedTopTab: topTabBar = .basic
 
-          TabBarView()
-      }
+    var body: some View {
 
-  }
+        VStack(alignment: .leading){
+            Spacer()
+                .frame(height: 32.adjusted)
+            HStack(alignment: .top){
+                Spacer()
+                    .frame(width: 20.adjusted)
+
+                Button{
+                    selectedTopTab = .basic
+                } label: {
+                    Text("기본")
+                        .font(.system(size: 28.adjusted).weight(.bold))
+                        .foregroundColor(selectedTopTab == .basic ? Color("PrimaryGB") : Color("Gray200"))
+                }
+
+                Spacer()
+                    .frame(width: CGFloat(7.5).adjusted)
+
+                Button{
+                    selectedTopTab = .longterm
+                } label: {
+                    Text("장기 보관")
+                        .font(.system(size: 28.adjusted).weight(.bold))
+                        .foregroundColor(selectedTopTab == .longterm ? Color("PrimaryGB") : Color("Gray200"))
+                }
+            }
+            .padding()
+
+            TabBarView()
+        }
+
+    }
+
+
 }
 
 struct MainView_Previews: PreviewProvider {
