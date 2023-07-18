@@ -89,7 +89,7 @@ struct CustomTabView: View {
                                 Text("냉장고")
                                     .font(.system(size: 11.adjusted))
                             }
-                            .foregroundColor(selectedTab == .MainView ? .mint : .gray)
+                            .foregroundColor(selectedTab == .MainView ? Color("PrimaryGB") : Color("Gray200"))
                         }
                     )
 
@@ -111,7 +111,7 @@ struct CustomTabView: View {
                         Text("통계")
                             .font(.system(size: 11.adjusted))
                         }
-                        .foregroundColor(selectedTab == .ChartView ? .mint : .gray)
+                        .foregroundColor(selectedTab == .ChartView ? Color("PrimaryGB") : Color("Gray200"))
                     }
                 )
                 Spacer()
@@ -132,7 +132,7 @@ struct CustomTabView: View {
                         Text("보관함")
                             .font(.system(size: 11.adjusted))
                         }
-                        .foregroundColor(selectedTab == .HistoryView ? .mint : .gray)
+                        .foregroundColor(selectedTab == .HistoryView ? Color("PrimaryGB") : Color("Gray200"))
                     }
                 )
 
@@ -154,7 +154,7 @@ struct CustomTabView: View {
                         Text("설정")
                             .font(.system(size: 11.adjusted))
                         }
-                        .foregroundColor(selectedTab == .SettingView ? .mint : .gray)
+                        .foregroundColor(selectedTab == .SettingView ? Color("PrimaryGB") : Color("Gray200"))
                     }
                 )
                 Spacer()
