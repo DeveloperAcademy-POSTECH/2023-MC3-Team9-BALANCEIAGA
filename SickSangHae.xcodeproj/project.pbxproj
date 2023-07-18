@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		020439652A6161CA0055A8D4 /* CameraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020439642A6161CA0055A8D4 /* CameraViewModel.swift */; };
 		020439692A6599180055A8D4 /* ImagePicker+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020439682A6599180055A8D4 /* ImagePicker+Extension.swift */; };
-		0204396D2A66B6FC0055A8D4 /* OCRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0204396C2A66B6FC0055A8D4 /* OCRView.swift */; };
+		0204396F2A66B9500055A8D4 /* OCRViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0204396E2A66B9500055A8D4 /* OCRViewModel.swift */; };
 		027E96732A56AB5E0066BA8F /* SickSangHaeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027E96722A56AB5E0066BA8F /* SickSangHaeApp.swift */; };
 		027E96772A56AB5F0066BA8F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 027E96762A56AB5F0066BA8F /* Assets.xcassets */; };
 		027E967A2A56AB5F0066BA8F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 027E96792A56AB5F0066BA8F /* Preview Assets.xcassets */; };
@@ -65,7 +65,7 @@
 /* Begin PBXFileReference section */
 		020439642A6161CA0055A8D4 /* CameraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewModel.swift; sourceTree = "<group>"; };
 		020439682A6599180055A8D4 /* ImagePicker+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImagePicker+Extension.swift"; sourceTree = "<group>"; };
-		0204396C2A66B6FC0055A8D4 /* OCRView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRView.swift; sourceTree = "<group>"; };
+		0204396E2A66B9500055A8D4 /* OCRViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRViewModel.swift; sourceTree = "<group>"; };
 		027E966F2A56AB5E0066BA8F /* SickSangHae.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SickSangHae.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		027E96722A56AB5E0066BA8F /* SickSangHaeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SickSangHaeApp.swift; sourceTree = "<group>"; };
 		027E96762A56AB5F0066BA8F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -199,7 +199,6 @@
 				027E96952A56B0240066BA8F /* ChartView.swift */,
 				027E96972A56B1800066BA8F /* TabBarView.swift */,
 				027E969D2A56B2150066BA8F /* SupportVIew.swift */,
-				0204396C2A66B6FC0055A8D4 /* OCRView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -209,6 +208,7 @@
 			children = (
 				CE9AFDBB2A628D6500EB2D8C /* CoreDataViewModel.swift */,
 				020439642A6161CA0055A8D4 /* CameraViewModel.swift */,
+				0204396E2A66B9500055A8D4 /* OCRViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -370,7 +370,6 @@
 				02C1FA0B2A56B2F2009E9D41 /* NavigationView.swift in Sources */,
 				027E969C2A56B1FE0066BA8F /* AppInfoView.swift in Sources */,
 				CE9AFD9C2A5FEFE400EB2D8C /* PersistentController.swift in Sources */,
-				0204396D2A66B6FC0055A8D4 /* OCRView.swift in Sources */,
 				02D449802A5FEFF600D97A37 /* CameraModel.swift in Sources */,
 				027E968A2A56AE0F0066BA8F /* CameraView.swift in Sources */,
 				020439652A6161CA0055A8D4 /* CameraViewModel.swift in Sources */,
@@ -387,6 +386,7 @@
 				7C41D9532A62807A0054FD04 /* LongTermList.swift in Sources */,
 				7C41D96D2A6284170054FD04 /* ItemDetailView.swift in Sources */,
 				7C41D9692A62825E0054FD04 /* SmallButtonView.swift in Sources */,
+				0204396F2A66B9500055A8D4 /* OCRViewModel.swift in Sources */,
 				027E969E2A56B2150066BA8F /* SupportVIew.swift in Sources */,
 				027E96732A56AB5E0066BA8F /* SickSangHaeApp.swift in Sources */,
 				CE9AFDBC2A628D6500EB2D8C /* CoreDataViewModel.swift in Sources */,
