@@ -52,9 +52,7 @@ struct CameraView: View {
   }
   
   private var closeButton: some View {
-    Button {
-      dismiss()
-    }label: {
+    Button(action: {dismiss()}) {
       Spacer()
       Image(systemName: "xmark")
         .resizable()
@@ -76,9 +74,7 @@ struct CameraView: View {
   }
   
   private var galleryButton: some View {
-    Button {
-      viewModel.imagePickerPresented.toggle()
-    } label: {
+    Button (action: {viewModel.imagePickerPresented.toggle()}) {
       Image("ic_gallery")
         .resizable()
         .frame(width: 29.adjusted, height: 24.adjusted)
@@ -86,8 +82,7 @@ struct CameraView: View {
   }
   
   private var captureButton: some View {
-    Button(action: {
-      viewModel.capturePhoto()}) {
+    Button(action: {viewModel.capturePhoto()}) {
         Image("img_cameraShutter")
       }
   }
@@ -102,9 +97,8 @@ struct CameraView: View {
   }
   
   private var selfAddButton: some View {
-    Button {
-      //navigation 추가
-    } label: {
+    //navitagtion 추가
+    Button (action: { }) {
       ZStack(alignment: .center) {
         Rectangle()
           .foregroundColor(.clear)
