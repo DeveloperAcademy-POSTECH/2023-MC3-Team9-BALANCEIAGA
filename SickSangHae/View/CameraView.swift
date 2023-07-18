@@ -46,9 +46,17 @@ struct CameraView: View {
       }
     }
     .foregroundColor(.white)
-    .sheet(isPresented: $viewModel.imagePickerPresented) {
+    .sheet(isPresented: $viewModel.imagePickerPresented ,onDismiss: {
+      viewModel.showPreview.toggle()
+    }) {
       ImagePicker(image: $viewModel.selectedImage, isPresented: $viewModel.imagePickerPresented)
     }
+    .fullScreenCover(isPresented: $viewModel.showPreview) {
+      if let image = viewModel.selectedImage {
+        GetScreenShotView(image: image)
+      }
+    }
+
   }
   
   private var closeButton: some View {
