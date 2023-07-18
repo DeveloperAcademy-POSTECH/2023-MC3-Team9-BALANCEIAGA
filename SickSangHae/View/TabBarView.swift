@@ -54,18 +54,17 @@ struct CustomTabView: View {
                     ZStack{
                         Rectangle()
                             .fill(LinearGradient(gradient: Gradient(colors: [Color("PrimaryG"), Color("PrimaryB")]), startPoint: .leading, endPoint: .trailing))
-                            .frame(width: screenWidth, height: 60.adjusted)
+                            .frame(width: screenWidth, height: 55.adjusted)
                             .foregroundColor(.blueGrayColor)
                             .padding(.bottom, 12.adjusted)
-                            .cornerRadius(12.adjusted)
+                            .cornerRadius(15.adjusted)
                             .padding(.bottom, -12.adjusted)
 
                         HStack{
                             Image(systemName: "camera.viewfinder")
-                                .font(.system(size: 20.adjusted))
                             Text("영수증 스캔하기")
-                                .font(.system(size: 17.adjusted))
                         }
+                        .font(.system(size: 17.adjusted).weight(.semibold))
                         .foregroundColor(.white)
                     }
                 }
@@ -74,89 +73,92 @@ struct CustomTabView: View {
 
             HStack {
                 Spacer()
-                    .frame(width: 10.adjusted)
+                    .frame(width: 12.adjusted)
                 Rectangle()
-                    .frame(width: 80.adjusted, height: 80.adjusted)
+                    .frame(width: 48.adjusted, height: 49.adjusted)
                     .foregroundColor(.clear)
                     .overlay(
                         Button {
                             selectedTab = .MainView
                         } label: {
                             VStack{
-                                Image(systemName: selectedTab == .MainView ? "bag.fill" : "bag")
+                                Image(systemName: "refrigerator.fill")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: 25)
-                                Text("나의 냉장고")
-                                    .font(.system(size: 14.adjusted))
+                                    .frame(width: 24)
+                                Text("냉장고")
+                                    .font(.system(size: 11.adjusted))
                             }
                             .foregroundColor(selectedTab == .MainView ? .mint : .gray)
                         }
                     )
 
                 Spacer()
+                    .frame(width: 50.adjusted)
 
                 Rectangle()
-                    .frame(width: 80.adjusted, height: 80.adjusted)
+                    .frame(width: 48.adjusted, height: 49.adjusted)
                     .foregroundColor(.clear)
                     .overlay(
                 Button {
                     selectedTab = .ChartView
                 } label: {
                     VStack{
-                        Image(systemName: "chart.bar.xaxis")
+                        Image(systemName: "chart.pie.fill")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 25)
+                            .frame(width: 24)
                         Text("통계")
-                            .font(.system(size: 14.adjusted))
+                            .font(.system(size: 11.adjusted))
                         }
                         .foregroundColor(selectedTab == .ChartView ? .mint : .gray)
                     }
                 )
                 Spacer()
+                    .frame(width: 50.adjusted)
 
                 Rectangle()
-                    .frame(width: 80.adjusted, height: 80.adjusted)
+                    .frame(width: 48.adjusted, height: 49.adjusted)
                     .foregroundColor(.clear)
                     .overlay(
                 Button {
                     selectedTab = .HistoryView
                 } label: {
                     VStack{
-                        Image(systemName: selectedTab == .HistoryView ? "newspaper.fill" : "newspaper")
+                        Image(systemName: "archivebox.fill")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 25)
+                            .frame(width: 24)
                         Text("보관함")
-                            .font(.system(size: 14.adjusted))
+                            .font(.system(size: 11.adjusted))
                         }
                         .foregroundColor(selectedTab == .HistoryView ? .mint : .gray)
                     }
                 )
 
                 Spacer()
+                    .frame(width: 50.adjusted)
 
                 Rectangle()
-                    .frame(width: 80.adjusted, height: 80.adjusted)
+                    .frame(width: 48.adjusted, height: 49.adjusted)
                     .foregroundColor(.clear)
                     .overlay(
                 Button {
                     selectedTab = .SettingView
                 } label: {
                     VStack{
-                        Image(systemName: selectedTab == .SettingView ? "circle.fill" : "circle")
+                        Image(systemName: "gearshape.fill")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 25)
+                            .frame(width: 24)
                         Text("설정")
-                            .font(.system(size: 14.adjusted))
+                            .font(.system(size: 11.adjusted))
                         }
                         .foregroundColor(selectedTab == .SettingView ? .mint : .gray)
                     }
                 )
                 Spacer()
-                    .frame(width: 10.adjusted)
+                    .frame(width: 12.adjusted)
             }
         }
         .frame(height: 90.adjusted)
