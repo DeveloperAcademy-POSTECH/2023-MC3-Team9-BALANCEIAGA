@@ -35,23 +35,6 @@ struct CameraView: View {
         }
         Spacer()
         HStack {
-          
-          Button(action: {}) {
-            if let previewImage = viewModel.captureImage {
-              Image(uiImage: previewImage)
-                .resizable()
-                .scaledToFill()
-                .frame(width: 75, height: 75)
-                .clipShape(RoundedRectangle(cornerRadius: 15))
-                .aspectRatio(1, contentMode: .fit)
-            } else {
-              RoundedRectangle(cornerRadius: 15)
-                .stroke(lineWidth: 3)
-                .foregroundColor(.white)
-                .frame(width: 75, height: 75)
-            }
-          }
-          Spacer()
           galleryButton
           Spacer()
           captureButton
@@ -63,10 +46,10 @@ struct CameraView: View {
       }
     }
     .foregroundColor(.white)
-    .sheet(isPresented: $viewModel.imagePickerPresented ,onDismiss: {
+    .sheet(isPresented: $viewModel.isImagePickerPresented ,onDismiss: {
       viewModel.isSelectedShowPreview.toggle()
     }) {
-      ImagePicker(image: $viewModel.selectedImage, isPresented: $viewModel.imagePickerPresented)
+      ImagePicker(image: $viewModel.selectedImage, isPresented: $viewModel.isImagePickerPresented)
     }
     //갤러리에서 이미지 선택했을 때
     .fullScreenCover(isPresented: $viewModel.isSelectedShowPreview) {
@@ -80,7 +63,6 @@ struct CameraView: View {
         GetScreenShotView(image: image)
       }
     }
-    
   }
   
   private var closeButton: some View {
@@ -102,11 +84,15 @@ struct CameraView: View {
       .foregroundColor(.white)
       .font(.system(size: 22))
       .transition(.opacity)
-      .animation(.easeOut(duration: 2))
+      .onAppear {
+        withAnimation(.easeOut(duration: 2)) {
+          viewModel.startShowingText()
+        }
+      }
   }
   
   private var galleryButton: some View {
-    Button (action: {viewModel.imagePickerPresented.toggle()}) {
+    Button (action: {viewModel.isImagePickerPresented.toggle()}) {
       Image("ic_gallery")
         .resizable()
         .frame(width: 29.adjusted, height: 24.adjusted)
@@ -114,7 +100,8 @@ struct CameraView: View {
   }
   
   private var captureButton: some View {
-    Button(action: {viewModel.capturePhoto()
+    Button(action: {
+      viewModel.capturePhoto()
       viewModel.isCapturedShowPreview.toggle()
     }) {
       Image("img_cameraShutter")

@@ -12,37 +12,37 @@ struct GetScreenShotView: View {
   @Environment(\.dismiss) private var dismiss
   var image: UIImage
   
-    var body: some View {
-      ZStack(alignment: .top) {
-        Color.white
-          .ignoresSafeArea(.all)
-        VStack {
-          HStack {
-            Button(action:{ dismiss() }) {
-              Image(systemName:"chevron.left")
-                .resizable()
-                .frame(width: 11.adjusted, height: 19.adjusted)
-                .foregroundColor(.black)
-            }
-            Spacer()
-            //navigation 추가
-            Button(action: {}) {
-              Text("등록")
-                .foregroundColor(.black)
-                .font(.system(size: 17.adjusted).bold())
-            }
+  var body: some View {
+    ZStack(alignment: .top) {
+      Color.white
+        .ignoresSafeArea(.all)
+      VStack {
+        HStack {
+          Button(action:{ dismiss() }) {
+            Image(systemName:"chevron.left")
+              .resizable()
+              .frame(width: 11.adjusted, height: 19.adjusted)
+              .foregroundColor(.black)
           }
-          .padding([.leading, .trailing], 20.adjusted)
-          .padding(.top, 10.adjusted)
-          
-          Image(uiImage: image)
-            .resizable()
-            .frame(width: screenWidth, height: screenWidth * 1.3)
-            .aspectRatio(contentMode: .fit)
-            .padding(.top, 90.adjusted)
-          
+          Spacer()
+          //navigation 추가
+          Button(action: {}) {
+            Text("등록")
+              .foregroundColor(.black)
+              .font(.system(size: 17.adjusted).bold())
+          }
         }
+        .padding([.leading, .trailing], 20.adjusted)
+        .padding(.top, 10.adjusted)
+        
+        Image(uiImage: image)
+          .resizable()
+          .frame(width: screenWidth, height: screenWidth * 1.3)
+          .aspectRatio(contentMode: .fit)
+          .padding(.top, 90.adjusted)
+        
       }
     }
+  }
 }
 

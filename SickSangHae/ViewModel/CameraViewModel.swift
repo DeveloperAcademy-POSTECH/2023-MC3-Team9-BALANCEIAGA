@@ -20,11 +20,11 @@ class CameraViewModel: ObservableObject {
   var lastScale: CGFloat = 1.0
   
   @Published var selectedImage: UIImage?
-  @Published var imagePickerPresented: Bool = false
+  @Published var captureImage: UIImage?
+  @Published var isImagePickerPresented = false
   @Published var isSelectedShowPreview = false
   @Published var isCapturedShowPreview = false
-  @Published var shutterEffect = false
-  @Published var captureImage: UIImage?
+  @Published var isShutterEffect = false
   @Published var isFlashOn = false
   @Published var isShowingText = false
   
@@ -46,12 +46,12 @@ class CameraViewModel: ObservableObject {
   func capturePhoto() {
     if !isCameraBusy {
       withAnimation(.easeInOut(duration: 0.1)) {
-        shutterEffect = true
+        isShutterEffect = true
       }
       
       DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
         withAnimation(.easeInOut(duration: 0.1)) {
-          self.shutterEffect = false
+          self.isShutterEffect = false
         }
       }
       
@@ -78,6 +78,7 @@ class CameraViewModel: ObservableObject {
   }
   
   func startShowingText() {
+    self.isShowingText = true
     DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
       withAnimation {
         self?.isShowingText = false
