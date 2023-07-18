@@ -382,6 +382,7 @@
 				8787EC022A5E8FC800104EDE /* Corner+Extension.swift in Sources */,
 				CE9AFD9A2A5FED9200EB2D8C /* ItemStatus.swift in Sources */,
 				CE9AFD972A5FEC9100EB2D8C /* Receipt+CoreDataClass.swift in Sources */,
+				027E96942A56B01C0066BA8F /* ItemDetailView.swift in Sources */,
 				8787EC042A5FD48800104EDE /* UpperTabBar.swift in Sources */,
 				7C41D9632A6282220054FD04 /* CenterAlertView.swift in Sources */,
 				7C41D9552A62808D0054FD04 /* OCRView.swift in Sources */,
