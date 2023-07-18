@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct HistoryView: View {
-
     
     let array = [
         "당근", "계란30구", "과자", "팝콘", "요거트", "당당치킨", "친환경양파", "깐마늘",
@@ -24,18 +23,48 @@ struct HistoryView: View {
                         VStack {
                             ForEach(array, id:\.self) { itemText in
                                 HStack {
-                                    RoundedRectangle(cornerRadius: 18)
+                                    Image(systemName: "circle.fill")
+                                        .resizable()
                                         .frame(width: 36, height: 36)
                                         .foregroundColor(.gray)
                                     Text(itemText)
                                         .frame(
-                                            width: screenWidth * 0.8,
-                                            height: 70,
+                                            width: screenWidth * 0.67,
+                                            height: 60,
                                             alignment: .leading)
                                         .font(.system(size: 17, weight: .bold))
+                                        .padding(.leading, 8)
+                                    Menu {
+                                        Button(action: {
+                                            //아이템 상태 복구 로직
+                                        }, label: {
+                                            Text("복구하기")
+                                            Image(systemName: "arrow.clockwise")
+                                        })
+                                        Button(action: {
+                                            //아이템 상태 변경 로직
+                                        }, label: {
+                                            Text("상했어요🤢")
+                                            Image(systemName: "arrow.triangle.2.circlepath")
+                                        })
+                                        Divider()
+                                        Button(role: .destructive, action: {
+                                            
+                                        }, label: {
+                                            Text("삭제하기")
+                                            Image(systemName: "trash.fill")
+                                        })
+                                    } label: {
+                                        Image(systemName: "ellipsis")
+                                            .resizable()
+                                            .frame(width: 21, height: 5)
+                                            .foregroundColor(.gray)
+                                            .padding(.trailing, screenWidth * 0.03)
+                                    }
                                 } //HStack닫기
                             } //ForEach닫기
                         } //VStack닫기
+                        .padding(.top)
                     } //Section닫기
                 } //LazyVStack닫기
             } //ScrollView닫기
@@ -96,7 +125,6 @@ struct TopSegmentedTabBar: View {
     } //body닫기
 } //struct닫기
 
-//프리뷰
 struct HistoryView_Previews: PreviewProvider {
     static var previews: some View {
         HistoryView()
