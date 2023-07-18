@@ -1,20 +1,20 @@
 //
-//  AddItemView.swift
+//  BasicList.swift
 //  SickSangHae
 //
-//  Created by 최효원 on 2023/07/06.
+//  Created by CHANG JIN LEE on 2023/07/15.
 //
 
 import SwiftUI
 
-struct AddItemView: View {
+struct BasicList: View {
     var body: some View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
 }
 
-struct AddItemView_Previews: PreviewProvider {
+struct BasicList_Previews: PreviewProvider {
     static var previews: some View {
-        AddItemView()
+        BasicList()
     }
 }
