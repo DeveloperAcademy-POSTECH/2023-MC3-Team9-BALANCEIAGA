@@ -21,9 +21,10 @@ class CameraViewModel: ObservableObject {
   
   @Published var selectedImage: UIImage?
   @Published var imagePickerPresented: Bool = false
-  @Published var showPreview = false
+  @Published var isSelectedShowPreview = false
+  @Published var isCapturedShowPreview = false
   @Published var shutterEffect = false
-  @Published var recentImage: UIImage?
+  @Published var captureImage: UIImage?
   @Published var isFlashOn = false
   @Published var isShowingText = false
   
@@ -92,7 +93,7 @@ class CameraViewModel: ObservableObject {
     
     model.$recentImage.sink { [weak self] (photo) in
       guard let picture = photo else { return }
-      self?.recentImage = picture
+      self?.captureImage = picture
     }
     .store(in: &self.subscriptions)
     

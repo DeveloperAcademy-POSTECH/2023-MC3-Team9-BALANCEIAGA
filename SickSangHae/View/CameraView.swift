@@ -35,6 +35,23 @@ struct CameraView: View {
         }
         Spacer()
         HStack {
+          
+          Button(action: {}) {
+            if let previewImage = viewModel.captureImage {
+              Image(uiImage: previewImage)
+                .resizable()
+                .scaledToFill()
+                .frame(width: 75, height: 75)
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                .aspectRatio(1, contentMode: .fit)
+            } else {
+              RoundedRectangle(cornerRadius: 15)
+                .stroke(lineWidth: 3)
+                .foregroundColor(.white)
+                .frame(width: 75, height: 75)
+            }
+          }
+          Spacer()
           galleryButton
           Spacer()
           captureButton
@@ -47,16 +64,23 @@ struct CameraView: View {
     }
     .foregroundColor(.white)
     .sheet(isPresented: $viewModel.imagePickerPresented ,onDismiss: {
-      viewModel.showPreview.toggle()
+      viewModel.isSelectedShowPreview.toggle()
     }) {
       ImagePicker(image: $viewModel.selectedImage, isPresented: $viewModel.imagePickerPresented)
     }
-    .fullScreenCover(isPresented: $viewModel.showPreview) {
+    //갤러리에서 이미지 선택했을 때
+    .fullScreenCover(isPresented: $viewModel.isSelectedShowPreview) {
       if let image = viewModel.selectedImage {
         GetScreenShotView(image: image)
       }
     }
-
+    //사진을 찍었을 때
+    .fullScreenCover(isPresented: $viewModel.isCapturedShowPreview) {
+      if let image = viewModel.captureImage {
+        GetScreenShotView(image: image)
+      }
+    }
+    
   }
   
   private var closeButton: some View {
@@ -90,9 +114,11 @@ struct CameraView: View {
   }
   
   private var captureButton: some View {
-    Button(action: {viewModel.capturePhoto()}) {
-        Image("img_cameraShutter")
-      }
+    Button(action: {viewModel.capturePhoto()
+      viewModel.isCapturedShowPreview.toggle()
+    }) {
+      Image("img_cameraShutter")
+    }
   }
   
   private var flashButton: some View {
@@ -131,34 +157,34 @@ struct CameraView: View {
     .padding(.bottom, 20.adjusted)
   }
 }
-  
-  struct CameraPreviewView: UIViewRepresentable {
-    class VideoPreviewView: UIView {
-      override class var layerClass: AnyClass {
-        AVCaptureVideoPreviewLayer.self
-      }
-      
-      var videoPreviewLayer: AVCaptureVideoPreviewLayer {
-        return layer as! AVCaptureVideoPreviewLayer
-      }
+
+struct CameraPreviewView: UIViewRepresentable {
+  class VideoPreviewView: UIView {
+    override class var layerClass: AnyClass {
+      AVCaptureVideoPreviewLayer.self
     }
     
-    let session: AVCaptureSession
-    
-    func makeUIView(context: Context) -> VideoPreviewView {
-      let view = VideoPreviewView()
-      
-      view.videoPreviewLayer.session = session
-      view.backgroundColor = .black
-      view.videoPreviewLayer.videoGravity = .resizeAspectFill
-      view.videoPreviewLayer.cornerRadius = 0
-      view.videoPreviewLayer.connection?.videoOrientation = .portrait
-      
-      return view
-    }
-    
-    func updateUIView(_ uiView: VideoPreviewView, context: Context) {
-      
+    var videoPreviewLayer: AVCaptureVideoPreviewLayer {
+      return layer as! AVCaptureVideoPreviewLayer
     }
   }
+  
+  let session: AVCaptureSession
+  
+  func makeUIView(context: Context) -> VideoPreviewView {
+    let view = VideoPreviewView()
+    
+    view.videoPreviewLayer.session = session
+    view.backgroundColor = .black
+    view.videoPreviewLayer.videoGravity = .resizeAspectFill
+    view.videoPreviewLayer.cornerRadius = 0
+    view.videoPreviewLayer.connection?.videoOrientation = .portrait
+    
+    return view
+  }
+  
+  func updateUIView(_ uiView: VideoPreviewView, context: Context) {
+    
+  }
+}
 
