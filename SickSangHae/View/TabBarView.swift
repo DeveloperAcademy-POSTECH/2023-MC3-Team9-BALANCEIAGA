@@ -7,9 +7,159 @@
 
 import SwiftUI
 
+enum Tab {
+    case MainView
+    case ChartView
+    case HistoryView
+    case SettingView
+}
+
 struct TabBarView: View {
+    //Custom TabView
+    @State var selectedTab: Tab = .MainView
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Spacer()
+            switch selectedTab {
+            case .MainView:
+                Text("The MainView Tab")
+            case .ChartView:
+                Text("The ChartView Tab")
+            case .HistoryView:
+                Text("The HistoryView Tab")
+            case .SettingView:
+                Text("The SettingView Tab")
+            }
+            Spacer()
+
+            CustomTabView(selectedTab: $selectedTab)
+        }
+    }
+}
+
+struct CustomTabView: View {
+    @Binding var selectedTab: Tab
+
+    var body: some View {
+        ZStack {
+            Image("background")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+
+            if selectedTab == .MainView{
+                Button{
+                    // 카메라 기능을 넣어요
+                } label: {
+                    ZStack{
+                        Rectangle()
+                            .fill(LinearGradient(gradient: Gradient(colors: [Color("PrimaryG"), Color("PrimaryB")]), startPoint: .leading, endPoint: .trailing))
+                            .frame(width: screenWidth, height: 60.adjusted)
+                            .foregroundColor(.blueGrayColor)
+                            .padding(.bottom, 12.adjusted)
+                            .cornerRadius(12.adjusted)
+                            .padding(.bottom, -12.adjusted)
+
+                        HStack{
+                            Image(systemName: "camera.viewfinder")
+                                .font(.system(size: 20.adjusted))
+                            Text("영수증 스캔하기")
+                                .font(.system(size: 17.adjusted))
+                        }
+                        .foregroundColor(.white)
+                    }
+                }
+                .padding(.bottom, 150.adjusted)
+            }
+
+            HStack {
+                Spacer()
+                    .frame(width: 10.adjusted)
+                Rectangle()
+                    .frame(width: 80.adjusted, height: 80.adjusted)
+                    .foregroundColor(.clear)
+                    .overlay(
+                        Button {
+                            selectedTab = .MainView
+                        } label: {
+                            VStack{
+                                Image(systemName: selectedTab == .MainView ? "bag.fill" : "bag")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 25)
+                                Text("나의 냉장고")
+                                    .font(.system(size: 14.adjusted))
+                            }
+                            .foregroundColor(selectedTab == .MainView ? .mint : .gray)
+                        }
+                    )
+
+                Spacer()
+
+                Rectangle()
+                    .frame(width: 80.adjusted, height: 80.adjusted)
+                    .foregroundColor(.clear)
+                    .overlay(
+                Button {
+                    selectedTab = .ChartView
+                } label: {
+                    VStack{
+                        Image(systemName: "chart.bar.xaxis")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 25)
+                        Text("통계")
+                            .font(.system(size: 14.adjusted))
+                        }
+                        .foregroundColor(selectedTab == .ChartView ? .mint : .gray)
+                    }
+                )
+                Spacer()
+
+                Rectangle()
+                    .frame(width: 80.adjusted, height: 80.adjusted)
+                    .foregroundColor(.clear)
+                    .overlay(
+                Button {
+                    selectedTab = .HistoryView
+                } label: {
+                    VStack{
+                        Image(systemName: selectedTab == .HistoryView ? "newspaper.fill" : "newspaper")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 25)
+                        Text("보관함")
+                            .font(.system(size: 14.adjusted))
+                        }
+                        .foregroundColor(selectedTab == .HistoryView ? .mint : .gray)
+                    }
+                )
+
+                Spacer()
+
+                Rectangle()
+                    .frame(width: 80.adjusted, height: 80.adjusted)
+                    .foregroundColor(.clear)
+                    .overlay(
+                Button {
+                    selectedTab = .SettingView
+                } label: {
+                    VStack{
+                        Image(systemName: selectedTab == .SettingView ? "circle.fill" : "circle")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 25)
+                        Text("설정")
+                            .font(.system(size: 14.adjusted))
+                        }
+                        .foregroundColor(selectedTab == .SettingView ? .mint : .gray)
+                    }
+                )
+                Spacer()
+                    .frame(width: 10.adjusted)
+            }
+        }
+        .frame(height: 90.adjusted)
     }
 }
 
