@@ -8,21 +8,20 @@
 import SwiftUI
 
 struct LongTermList: View {
+    let testLists = ["계란 30구","모둠쌈","요플레","요플레","모둠쌈","라면","양파","계란","모둠쌈","요플레","모둠쌈","모둠쌈","계란","요플레","모둠쌈","요플레"]
 
     var body: some View {
 
-            List {
-                ListTitle()
-                    .padding([.top, .bottom], 27.adjusted)
-                ListContents()
-                    .padding(.vertical, 16.adjusted)
-            }
-            .listStyle(.plain)
+        List {
+            ListTitle
+                .padding([.top, .bottom], 27.adjusted)
+            ListContents
+                .padding(.vertical, 16.adjusted)
+        }
+        .listStyle(.plain)
     }
-}
 
-struct ListTitle: View{
-    var body: some View{
+    private var ListTitle: some View {
         HStack{
             Text("천천히 먹어도 돼요")
                 .foregroundColor(Color("Gray900"))
@@ -43,11 +42,8 @@ struct ListTitle: View{
             .font(.system(size: 14.adjusted))
         }
     }
-}
 
-struct ListContents: View{
-    let testLists = ["계란 30구","모둠쌈","요플레","요플레","모둠쌈","라면","양파","계란","모둠쌈","요플레","모둠쌈","모둠쌈","계란","요플레","모둠쌈","요플레"]
-    var body: some View{
+    private var ListContents: some View{
         ForEach(testLists, id: \.self) { testList in
             HStack{
 
@@ -75,6 +71,7 @@ struct ListContents: View{
         }
     }
 }
+
 
 struct LongTermList_Previews: PreviewProvider {
     static var previews: some View {
