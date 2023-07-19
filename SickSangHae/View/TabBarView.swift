@@ -23,13 +23,13 @@ struct TabBarView: View {
             Spacer()
             switch selectedTab {
             case .MainView:
-                Text("The MainView Tab")
+                MainView()
             case .ChartView:
-                Text("The ChartView Tab")
+                ChartView()
             case .HistoryView:
                 Text("The HistoryView Tab")
             case .SettingView:
-                Text("The SettingView Tab")
+                SettingVIew()
             }
             Spacer()
 

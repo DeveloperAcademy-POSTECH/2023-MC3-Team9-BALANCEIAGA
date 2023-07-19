@@ -16,7 +16,7 @@ let data = ["Apple", "Banana", "Orange", "Pineapple", "Grapes", "Watermelon", "M
 
 struct MainView: View {
 
-    @State var selectedTopTab: topTabBar = .basic
+    @State var selectedTopTabBar: topTabBar = .basic
     @State private var searchText = ""
     @State private var isSearching = false
     @State var text: String = ""
@@ -31,22 +31,22 @@ struct MainView: View {
                     .frame(width: 20.adjusted)
 
                 Button{
-                    selectedTopTab = .basic
+                    selectedTopTabBar = .basic
                 } label: {
                     Text("기본")
                         .font(.system(size: 28.adjusted).weight(.bold))
-                        .foregroundColor(selectedTopTab == .basic ? Color("PrimaryGB") : Color("Gray200"))
+                        .foregroundColor(selectedTopTabBar == .basic ? Color("PrimaryGB") : Color("Gray200"))
                 }
 
                 Spacer()
                     .frame(width: CGFloat(15).adjusted)
 
                 Button{
-                    selectedTopTab = .longterm
+                    selectedTopTabBar = .longterm
                 } label: {
                     Text("장기 보관")
                         .font(.system(size: 28.adjusted).weight(.bold))
-                        .foregroundColor(selectedTopTab == .longterm ? Color("PrimaryGB") : Color("Gray200"))
+                        .foregroundColor(selectedTopTabBar == .longterm ? Color("PrimaryGB") : Color("Gray200"))
                 }
             }
             .padding()
@@ -56,7 +56,14 @@ struct MainView: View {
 
             SearchBar(text: $text)
 
-            TabBarView()
+            switch selectedTopTabBar {
+            case .basic:
+                BasicList()
+            case .longterm:
+                LongTermList()
+            }
+
+            Spacer()
         }
 
     }
