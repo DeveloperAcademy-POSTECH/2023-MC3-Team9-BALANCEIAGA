@@ -26,14 +26,12 @@ struct MainView: View {
         VStack(alignment: .leading){
             Spacer()
                 .frame(height: 32.adjusted)
-            HStack(alignment: .top){
-                Spacer()
-                    .frame(width: 20.adjusted)
 
+            HStack(alignment: .top){
                 Button{
                     selectedTopTabBar = .basic
                 } label: {
-                    Text("기본")
+                    Text("일반 보관")
                         .font(.system(size: 28.adjusted).weight(.bold))
                         .foregroundColor(selectedTopTabBar == .basic ? Color("PrimaryGB") : Color("Gray200"))
                 }
@@ -49,12 +47,13 @@ struct MainView: View {
                         .foregroundColor(selectedTopTabBar == .longterm ? Color("PrimaryGB") : Color("Gray200"))
                 }
             }
-            .padding()
+            .padding(.horizontal, 20)
 
             Spacer()
                 .frame(height: 30.adjusted)
 
             SearchBar(text: $text)
+                .padding(.horizontal, 20)
 
             switch selectedTopTabBar {
             case .basic:
@@ -65,6 +64,7 @@ struct MainView: View {
 
             Spacer()
         }
+        .padding([.top, .bottom], 20.adjusted)
 
     }
 
