@@ -16,7 +16,7 @@ let data = ["Apple", "Banana", "Orange", "Pineapple", "Grapes", "Watermelon", "M
 
 struct MainView: View {
 
-    @State var selectedTopTab: topTabBar = .basic
+    @State var selectedTopTabBar: topTabBar = .basic
     @State private var searchText = ""
     @State private var isSearching = false
     @State var text: String = ""
@@ -26,38 +26,45 @@ struct MainView: View {
         VStack(alignment: .leading){
             Spacer()
                 .frame(height: 32.adjusted)
-            HStack(alignment: .top){
-                Spacer()
-                    .frame(width: 20.adjusted)
 
+            HStack(alignment: .top){
                 Button{
-                    selectedTopTab = .basic
+                    selectedTopTabBar = .basic
                 } label: {
-                    Text("기본")
+                    Text("일반 보관")
                         .font(.system(size: 28.adjusted).weight(.bold))
-                        .foregroundColor(selectedTopTab == .basic ? Color("PrimaryGB") : Color("Gray200"))
+                        .foregroundColor(selectedTopTabBar == .basic ? Color("PrimaryGB") : Color("Gray200"))
                 }
 
                 Spacer()
                     .frame(width: CGFloat(15).adjusted)
 
                 Button{
-                    selectedTopTab = .longterm
+                    selectedTopTabBar = .longterm
                 } label: {
                     Text("장기 보관")
                         .font(.system(size: 28.adjusted).weight(.bold))
-                        .foregroundColor(selectedTopTab == .longterm ? Color("PrimaryGB") : Color("Gray200"))
+                        .foregroundColor(selectedTopTabBar == .longterm ? Color("PrimaryGB") : Color("Gray200"))
                 }
             }
-            .padding()
+            .padding(.horizontal, 20)
 
             Spacer()
                 .frame(height: 30.adjusted)
 
             SearchBar(text: $text)
+                .padding(.horizontal, 20)
 
-            TabBarView()
+            switch selectedTopTabBar {
+            case .basic:
+                BasicList()
+            case .longterm:
+                LongTermList()
+            }
+
+            Spacer()
         }
+        .padding([.top, .bottom], 20.adjusted)
 
     }
 
