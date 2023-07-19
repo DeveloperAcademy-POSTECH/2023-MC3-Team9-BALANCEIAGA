@@ -19,21 +19,23 @@ struct TabBarView: View {
     @State var selectedTab: Tab = .MainView
 
     var body: some View {
-        VStack {
-            Spacer()
-            switch selectedTab {
-            case .MainView:
-                MainView()
-            case .ChartView:
-                ChartView()
-            case .HistoryView:
-                Text("The HistoryView Tab")
-            case .SettingView:
-                SettingVIew()
+        NavigationStack{
+            VStack {
+                Spacer()
+                switch selectedTab {
+                case .MainView:
+                    MainView()
+                case .ChartView:
+                    ChartView()
+                case .HistoryView:
+                    Text("The HistoryView Tab")
+                case .SettingView:
+                    SettingVIew()
+                }
+                Spacer()
+                
+                CustomTabView(selectedTab: $selectedTab)
             }
-            Spacer()
-
-            CustomTabView(selectedTab: $selectedTab)
         }
     }
 }
