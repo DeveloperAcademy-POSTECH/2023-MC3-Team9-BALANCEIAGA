@@ -14,9 +14,9 @@ struct LongTermList: View {
 
         List {
             ListTitle
-                .padding([.top, .bottom], 27.adjusted)
+                .padding(.top, 17.adjusted)
             ListContents
-                .padding(.vertical, 16.adjusted)
+                .padding(.vertical, 8.adjusted)
         }
         .listStyle(.plain)
     }
@@ -25,7 +25,7 @@ struct LongTermList: View {
         HStack{
             Text("천천히 먹어도 돼요")
                 .foregroundColor(Color("Gray900"))
-                .font(.system(size: 20.adjusted))
+                .font(.system(size: 20.adjusted).weight(.bold))
 
             Spacer()
 
