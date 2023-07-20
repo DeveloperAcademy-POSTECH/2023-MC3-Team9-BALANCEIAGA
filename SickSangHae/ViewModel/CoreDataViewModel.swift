@@ -22,7 +22,9 @@ class CoreDataViewModel: ObservableObject {
 extension CoreDataViewModel {
     func getAllReceiptData() {
         let request = NSFetchRequest<Receipt>(entityName: "Receipt")
-        
+        request.sortDescriptors = [
+            NSSortDescriptor(key: "dateOfPurchase", ascending: false),
+            NSSortDescriptor(key: "name", ascending: true)]
         do {
             receipts = try viewContext.fetch(request)
         } catch {
