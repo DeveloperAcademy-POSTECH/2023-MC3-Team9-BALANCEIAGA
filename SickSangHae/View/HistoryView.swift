@@ -9,6 +9,8 @@ import SwiftUI
 
 struct HistoryView: View {
     
+    @StateObject var coreDataViewModel = CoreDataViewModel()
+    
     @State var isMovingSegmentedTab : Bool = true
     
     let array = [
@@ -40,12 +42,20 @@ struct HistoryView: View {
         ZStack(alignment: .top) {
             ZStack(alignment: .bottom) {
                 //백그라운드
-                headerBackround
+                headerBackground
                 
                 //버튼 및 타이틀
                 VStack(spacing: 0) {
+                    
                     //타이틀
                     titleText
+                    
+                    Button(action: {
+                        coreDataViewModel
+                        print(">>>AddModel")
+                    }, label: {
+                        Text("추가")
+                    })
                     
                     //버튼
                     segmentedTabButton
@@ -59,7 +69,7 @@ struct HistoryView: View {
         } //ZStack닫기
     }
     
-    var headerBackround: some View {
+    var headerBackground: some View {
         Rectangle()
             .foregroundColor(.white)
             .frame(
