@@ -78,6 +78,12 @@ extension CoreDataViewModel {
     
     func updateReceiptStateData(target: Receipt, state: Status) {
         guard let receipt = viewContext.get(by: target.objectID) else { return }
+        if state == .Pinned {
+            if target.status != .UnConsumed {
+                return
+            }
+        }
+        
         receipt.state = state.rawValue
         receipt.dateOfHistory = Date.now
         
