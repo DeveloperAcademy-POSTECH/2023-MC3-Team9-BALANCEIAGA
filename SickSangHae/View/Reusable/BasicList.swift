@@ -20,8 +20,7 @@ struct BasicList: View {
             Rectangle()
             .foregroundColor(.clear)
             .frame(width: 390.adjusted, height: 12.adjusted)
-            .background(.gray)
-//            .background("Gray100")
+            .background(Color("Gray100"))
             
             List {
                 BasicListTitle(title: "기본")
@@ -39,7 +38,7 @@ private struct BasicListTitle: View {
     var body: some View {
         HStack {
             Text(title)
-//                .foregroundColor(Color("Gray900"))
+                .foregroundColor(Color("Gray900"))
                 .font(.system(size: 20.adjusted))
             
             Spacer()
@@ -52,7 +51,7 @@ private struct BasicListTitle: View {
                     Image(systemName: "arrow.up.arrow.down")
                 }
             }
-//            .foregroundColor(Color("Gray600"))
+            .foregroundColor(Color("Gray600"))
             .font(.system(size: 14.adjusted))
         }
     }
@@ -65,7 +64,7 @@ private struct PinnedListTitle: View {
     var body: some View {
         HStack {
             Text(title)
-//                .foregroundColor(Color("Gray900"))
+                .foregroundColor(Color("Gray900"))
                 .font(.system(size: 20.adjusted))
             
             Spacer()
@@ -85,7 +84,7 @@ private struct ListContent: View {
                     
                     Image(systemName: "circle.fill")
                         .resizable()
-                    //                .foregroundColor(Color("Gray200"))
+                        .foregroundColor(Color("Gray200"))
                         .frame(width: 36.adjusted, height: 36.adjusted)
                     
                     Text(receipt.name)
@@ -94,7 +93,7 @@ private struct ListContent: View {
                     Spacer()
                     
                     Text("구매한지 x일")
-                    //                .foregroundColor(Color("Gray900"))
+                        .foregroundColor(Color("Gray900"))
                         .font(.system(size: 14.adjusted))
                 }
             }
