@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-let screenSize: CGRect = UIScreen.main.bounds
-
 struct UpdateItemView: View {
     var body: some View {
         VStack {
