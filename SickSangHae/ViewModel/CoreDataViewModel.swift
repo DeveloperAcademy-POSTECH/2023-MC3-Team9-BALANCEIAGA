@@ -78,18 +78,22 @@ extension CoreDataViewModel {
         getAllReceiptData()
     }
     
-    func updateReceiptStateData(target: Receipt, state: Status) {
+    func updateReceiptStateData(target: Receipt, status: Status) {
         guard let receipt = viewContext.get(by: target.objectID) else { return }
-        if state == .Pinned {
+        if status == .Pinned {
             if target.status != .UnConsumed {
                 return
             }
         }
         
-        receipt.state = state.rawValue
+        receipt.state = status.rawValue
         receipt.dateOfHistory = Date.now
         
-        viewContext.saveContext()
+        saveChanges()
         getAllReceiptData()
+    }
+    
+    func changeSortCase(status: Status) {
+        self.sortCase = status
     }
 }
