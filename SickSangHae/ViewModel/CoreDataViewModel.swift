@@ -45,6 +45,7 @@ extension CoreDataViewModel {
         receipt.id = UUID()
         receipt.name = "TestName"
         receipt.dateOfPurchase = Date.now
+        receipt.dateOfHistory = Date.now
         receipt.fastEatPin = false
         receipt.icon = "icon_test"
         receipt.price = 6000.0

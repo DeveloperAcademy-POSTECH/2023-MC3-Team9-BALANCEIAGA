@@ -23,6 +23,7 @@ extension Receipt {
     @NSManaged public var icon: String
     @NSManaged public var fastEatPin: Bool
     @NSManaged public var dateOfPurchase: Date
+    @NSManaged public var dateOfHistory: Date
     @NSManaged public var placeOfPurchase: String?
 
     var status: Status {
