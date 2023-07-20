@@ -10,21 +10,21 @@ import SwiftUI
 struct BasicList: View {
     
     var body: some View {
-        VStack {
-            List {
-                PinnedListTitle(title: "빨리 먹어야 해요 🕖")
-                ListContent()
+        ScrollView {
+            PinnedListTitle(title: "빨리 먹어야 해요 🕖")
+            ListContent()
             
             Rectangle()
-            .foregroundColor(.clear)
-            .frame(width: 390.adjusted, height: 12.adjusted)
-            .background(.gray)
-//            .background("Gray100")
-                BasicListTitle(title: "기본")
-                ListContent()
-            }
-            .listStyle(.plain)
+                .foregroundColor(.clear)
+                .frame(width: 390.adjusted, height: 12.adjusted)
+                .background(Color("Gray200"))
+                .padding(.top, -8.adjusted)
+            //                .background(.gray)
+            
+            BasicListTitle(title: "기본")
+            ListContent()
         }
+        .listStyle(.plain)
     }
 }
 
@@ -51,6 +51,7 @@ private struct BasicListTitle: View {
 //            .foregroundColor(Color("Gray600"))
             .font(.system(size: 14.adjusted))
         }
+        .padding([.top, .bottom], 17.adjusted)
     }
 }
 
@@ -66,34 +67,40 @@ private struct PinnedListTitle: View {
             
             Spacer()
         }
+        .padding([.top, .bottom], 17.adjusted)
     }
 }
 
 
 private struct ListContent: View {
     let itemList: [Receipt] = []
+    let data = ["Apple", "Banana", "Orange", "Pineapple", "Grapes", "Watermelon", "Mango", "Papaya", "Cherry"]
+    
     var body: some View {
-        VStack {
-            ForEach(itemList, id: \.self) { receipt in
+        ForEach(data, id:\.self) { item in
+            VStack(spacing: 0) {
                 HStack {
                     Text("")
                         .foregroundColor(.clear)
                     
                     Image(systemName: "circle.fill")
                         .resizable()
-                    //                .foregroundColor(Color("Gray200"))
+                        .foregroundColor(Color("Gray200"))
                         .frame(width: 36.adjusted, height: 36.adjusted)
                     
-                    Text(receipt.name)
-                        .foregroundColor(.clear)
+                    Text(item)
+                        .font(.system(size: 17.adjusted))
+                        .foregroundColor(Color("Gray900"))
                     
                     Spacer()
                     
                     Text("구매한지 x일")
-                    //                .foregroundColor(Color("Gray900"))
+                        .foregroundColor(Color("Gray900"))
                         .font(.system(size: 14.adjusted))
                 }
+                .padding([.top, .bottom], 8.adjusted)
             }
+            Divider()
         }
     }
 }
