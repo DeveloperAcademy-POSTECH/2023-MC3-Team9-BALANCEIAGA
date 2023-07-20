@@ -12,6 +12,20 @@ class CoreDataViewModel: ObservableObject {
     private let viewContext = PersistentController.shared.viewContext
     @Published var receipts: [Receipt] = []
     
+    var sortCase = Status.UnConsumed
+    var filteredReceipts: [Receipt] {
+        switch sortCase {
+        case .UnConsumed:
+            return receipts.filter { $0.status == .UnConsumed }
+        case .Deleted:
+            return receipts.filter { $0.status ==  .Deleted }
+        case .Eaten:
+            return receipts.filter { $0.status ==  .Eaten }
+        case .Rotten:
+            return receipts.filter { $0.status ==  .Rotten }
+        }
+    }
+    
     init() {
         getAllReceiptData()
     }
