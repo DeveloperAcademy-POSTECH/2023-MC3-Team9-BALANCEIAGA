@@ -17,12 +17,12 @@ class CoreDataViewModel: ObservableObject {
         switch sortCase {
         case .UnConsumed:
             return receipts.filter { $0.status == .UnConsumed }
-        case .Deleted:
-            return receipts.filter { $0.status ==  .Deleted }
         case .Eaten:
             return receipts.filter { $0.status ==  .Eaten }
         case .Rotten:
             return receipts.filter { $0.status ==  .Rotten }
+        case .Pinned:
+            return receipts.filter { $0.status ==  .Pinned }
         }
     }
     
