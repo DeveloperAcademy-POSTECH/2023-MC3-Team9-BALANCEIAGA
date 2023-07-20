@@ -19,7 +19,6 @@ struct BasicList: View {
                 .frame(width: 390.adjusted, height: 12.adjusted)
                 .background(Color("Gray200"))
                 .padding(.top, -8.adjusted)
-            //                .background(.gray)
             
             BasicListTitle(title: "기본")
             ListContent()
@@ -35,7 +34,7 @@ private struct BasicListTitle: View {
     var body: some View {
         HStack {
             Text(title)
-//                .foregroundColor(Color("Gray900"))
+                .foregroundColor(Color("Gray900"))
                 .font(.system(size: 20.adjusted))
             
             Spacer()
@@ -48,7 +47,7 @@ private struct BasicListTitle: View {
                     Image(systemName: "arrow.up.arrow.down")
                 }
             }
-//            .foregroundColor(Color("Gray600"))
+            .foregroundColor(Color("Gray600"))
             .font(.system(size: 14.adjusted))
         }
         .padding([.top, .bottom], 17.adjusted)
@@ -62,7 +61,7 @@ private struct PinnedListTitle: View {
     var body: some View {
         HStack {
             Text(title)
-//                .foregroundColor(Color("Gray900"))
+                .foregroundColor(Color("Gray900"))
                 .font(.system(size: 20.adjusted))
             
             Spacer()
