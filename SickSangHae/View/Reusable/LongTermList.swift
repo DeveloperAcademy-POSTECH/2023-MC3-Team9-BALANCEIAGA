@@ -12,7 +12,7 @@ struct LongTermList: View {
 
     var body: some View {
 
-        List {
+        ScrollView {
             ListTitle
                 .padding(.top, 17.adjusted)
             ListContents
@@ -67,7 +67,7 @@ struct LongTermList: View {
                     .foregroundColor(Color("Gray900"))
                     .font(.system(size: 14.adjusted).weight(.semibold))
             }
-
+            Divider()
         }
     }
 }
