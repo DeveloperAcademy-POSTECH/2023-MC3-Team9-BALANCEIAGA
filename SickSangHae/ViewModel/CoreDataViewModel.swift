@@ -61,13 +61,13 @@ extension CoreDataViewModel {
         
         let receipt = Receipt(context: viewContext)
         receipt.id = UUID()
-        receipt.name = "TestName"
+        receipt.name = "TestName \(receipts.count)"
         receipt.dateOfPurchase = Date.now
-        receipt.dateOfHistory = Date.now
+        receipt.dateOfHistory = Date.distantPast
         receipt.fastEatPin = false
         receipt.icon = "icon_test"
         receipt.price = 6000.0
-        receipt.state = Status.UnConsumed.rawValue
+        receipt.status = .UnConsumed
         
         saveChanges()
         self.getAllReceiptData()
@@ -91,9 +91,5 @@ extension CoreDataViewModel {
         
         saveChanges()
         getAllReceiptData()
-    }
-    
-    func changeSortCase(status: Status) {
-        self.sortCase = status
     }
 }
