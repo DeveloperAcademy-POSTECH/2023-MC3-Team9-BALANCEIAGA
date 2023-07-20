@@ -14,16 +14,12 @@ struct BasicList: View {
             List {
                 PinnedListTitle(title: "빨리 먹어야 해요 🕖")
                 ListContent()
-            }
-            .listStyle(.plain)
             
             Rectangle()
             .foregroundColor(.clear)
             .frame(width: 390.adjusted, height: 12.adjusted)
             .background(.gray)
 //            .background("Gray100")
-            
-            List {
                 BasicListTitle(title: "기본")
                 ListContent()
             }
