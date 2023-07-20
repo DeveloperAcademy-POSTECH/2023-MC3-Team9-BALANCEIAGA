@@ -23,6 +23,7 @@ struct BasicList: View {
             ListContent()
         }
         .listStyle(.plain)
+        
     }
 }
 

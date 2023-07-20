@@ -63,8 +63,8 @@ struct MainView: View {
             }
 
             Spacer()
+            
         }
-        .padding([.top, .bottom], 20.adjusted)
 
     }
 
