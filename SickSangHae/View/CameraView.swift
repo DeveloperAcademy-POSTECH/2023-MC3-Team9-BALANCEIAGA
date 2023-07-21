@@ -46,8 +46,22 @@ struct CameraView: View {
       }
     }
     .foregroundColor(.white)
-    .sheet(isPresented: $viewModel.imagePickerPresented) {
-      ImagePicker(image: $viewModel.selectedImage, isPresented: $viewModel.imagePickerPresented)
+    .sheet(isPresented: $viewModel.isImagePickerPresented ,onDismiss: {
+      viewModel.isSelectedShowPreview.toggle()
+    }) {
+      ImagePicker(image: $viewModel.selectedImage, isPresented: $viewModel.isImagePickerPresented)
+    }
+    //갤러리에서 이미지 선택했을 때
+    .fullScreenCover(isPresented: $viewModel.isSelectedShowPreview) {
+      if let image = viewModel.selectedImage {
+        GetScreenShotView(image: image)
+      }
+    }
+    //사진을 찍었을 때
+    .fullScreenCover(isPresented: $viewModel.isCapturedShowPreview) {
+      if let image = viewModel.captureImage {
+        GetScreenShotView(image: image)
+      }
     }
   }
   
@@ -70,11 +84,15 @@ struct CameraView: View {
       .foregroundColor(.white)
       .font(.system(size: 22))
       .transition(.opacity)
-      .animation(.easeOut(duration: 2))
+      .onAppear {
+        withAnimation(.easeOut(duration: 2)) {
+          viewModel.startShowingText()
+        }
+      }
   }
   
   private var galleryButton: some View {
-    Button (action: {viewModel.imagePickerPresented.toggle()}) {
+    Button (action: {viewModel.isImagePickerPresented.toggle()}) {
       Image("ic_gallery")
         .resizable()
         .frame(width: 29.adjusted, height: 24.adjusted)
@@ -82,9 +100,12 @@ struct CameraView: View {
   }
   
   private var captureButton: some View {
-    Button(action: {viewModel.capturePhoto()}) {
-        Image("img_cameraShutter")
-      }
+    Button(action: {
+      viewModel.capturePhoto()
+      viewModel.isCapturedShowPreview.toggle()
+    }) {
+      Image("img_cameraShutter")
+    }
   }
   
   private var flashButton: some View {
@@ -123,34 +144,34 @@ struct CameraView: View {
     .padding(.bottom, 20.adjusted)
   }
 }
-  
-  struct CameraPreviewView: UIViewRepresentable {
-    class VideoPreviewView: UIView {
-      override class var layerClass: AnyClass {
-        AVCaptureVideoPreviewLayer.self
-      }
-      
-      var videoPreviewLayer: AVCaptureVideoPreviewLayer {
-        return layer as! AVCaptureVideoPreviewLayer
-      }
+
+struct CameraPreviewView: UIViewRepresentable {
+  class VideoPreviewView: UIView {
+    override class var layerClass: AnyClass {
+      AVCaptureVideoPreviewLayer.self
     }
     
-    let session: AVCaptureSession
-    
-    func makeUIView(context: Context) -> VideoPreviewView {
-      let view = VideoPreviewView()
-      
-      view.videoPreviewLayer.session = session
-      view.backgroundColor = .black
-      view.videoPreviewLayer.videoGravity = .resizeAspectFill
-      view.videoPreviewLayer.cornerRadius = 0
-      view.videoPreviewLayer.connection?.videoOrientation = .portrait
-      
-      return view
-    }
-    
-    func updateUIView(_ uiView: VideoPreviewView, context: Context) {
-      
+    var videoPreviewLayer: AVCaptureVideoPreviewLayer {
+      return layer as! AVCaptureVideoPreviewLayer
     }
   }
+  
+  let session: AVCaptureSession
+  
+  func makeUIView(context: Context) -> VideoPreviewView {
+    let view = VideoPreviewView()
+    
+    view.videoPreviewLayer.session = session
+    view.backgroundColor = .black
+    view.videoPreviewLayer.videoGravity = .resizeAspectFill
+    view.videoPreviewLayer.cornerRadius = 0
+    view.videoPreviewLayer.connection?.videoOrientation = .portrait
+    
+    return view
+  }
+  
+  func updateUIView(_ uiView: VideoPreviewView, context: Context) {
+    
+  }
+}
 
