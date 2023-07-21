@@ -21,7 +21,7 @@ extension Receipt {
     @NSManaged public var name: String
     @NSManaged public var id: UUID
     @NSManaged public var icon: String
-    @NSManaged public var fastEatPin: Bool
+    @NSManaged public var isLongTerm: Bool
     @NSManaged public var dateOfPurchase: Date
     @NSManaged public var dateOfHistory: Date
     @NSManaged public var placeOfPurchase: String?
