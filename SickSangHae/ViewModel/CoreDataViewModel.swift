@@ -64,7 +64,7 @@ extension CoreDataViewModel {
         receipt.name = "TestName \(receipts.count)"
         receipt.dateOfPurchase = Date.now
         receipt.dateOfHistory = Date.distantPast
-        receipt.fastEatPin = false
+        receipt.isLongTerm = false
         receipt.icon = "icon_test"
         receipt.price = 6000.0
         receipt.status = .UnConsumed
@@ -88,6 +88,16 @@ extension CoreDataViewModel {
         
         receipt.state = status.rawValue
         receipt.dateOfHistory = Date.now
+        
+        saveChanges()
+        getAllReceiptData()
+    }
+    
+    func toggleIsLongTerm(target: Receipt) {
+        guard let receipt = viewContext.get(by: target.objectID) else { return }
+        guard receipt.status == .UnConsumed else { return }
+        
+        target.isLongTerm.toggle()
         
         saveChanges()
         getAllReceiptData()
