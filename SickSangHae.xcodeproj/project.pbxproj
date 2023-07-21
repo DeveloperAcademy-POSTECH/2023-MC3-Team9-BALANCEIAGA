@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		020439652A6161CA0055A8D4 /* CameraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020439642A6161CA0055A8D4 /* CameraViewModel.swift */; };
+		020439692A6599180055A8D4 /* ImagePicker+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020439682A6599180055A8D4 /* ImagePicker+Extension.swift */; };
 		027E96732A56AB5E0066BA8F /* SickSangHaeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027E96722A56AB5E0066BA8F /* SickSangHaeApp.swift */; };
 		027E96772A56AB5F0066BA8F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 027E96762A56AB5F0066BA8F /* Assets.xcassets */; };
 		027E967A2A56AB5F0066BA8F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 027E96792A56AB5F0066BA8F /* Preview Assets.xcassets */; };
@@ -46,6 +48,7 @@
 		CE9AFD9A2A5FED9200EB2D8C /* ItemStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9AFD992A5FED9200EB2D8C /* ItemStatus.swift */; };
 		CE9AFD9C2A5FEFE400EB2D8C /* PersistentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9AFD9B2A5FEFE400EB2D8C /* PersistentController.swift */; };
 		CE9AFDBC2A628D6500EB2D8C /* CoreDataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9AFDBB2A628D6500EB2D8C /* CoreDataViewModel.swift */; };
+		02D449802A5FEFF600D97A37 /* CameraModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D4497F2A5FEFF600D97A37 /* CameraModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +62,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		020439642A6161CA0055A8D4 /* CameraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewModel.swift; sourceTree = "<group>"; };
+		020439682A6599180055A8D4 /* ImagePicker+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImagePicker+Extension.swift"; sourceTree = "<group>"; };
 		027E966F2A56AB5E0066BA8F /* SickSangHae.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SickSangHae.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		027E96722A56AB5E0066BA8F /* SickSangHaeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SickSangHaeApp.swift; sourceTree = "<group>"; };
 		027E96762A56AB5F0066BA8F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -100,6 +105,7 @@
 		CE9AFD992A5FED9200EB2D8C /* ItemStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemStatus.swift; sourceTree = "<group>"; };
 		CE9AFD9B2A5FEFE400EB2D8C /* PersistentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentController.swift; sourceTree = "<group>"; };
 		CE9AFDBB2A628D6500EB2D8C /* CoreDataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataViewModel.swift; sourceTree = "<group>"; };
+		02D4497F2A5FEFF600D97A37 /* CameraModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +173,7 @@
 				CE9AFD8E2A5FE33000EB2D8C /* SickSangHaeModel.xcdatamodeld */,
 				CE9AFD992A5FED9200EB2D8C /* ItemStatus.swift */,
 				CE9AFD9B2A5FEFE400EB2D8C /* PersistentController.swift */,
+				02D4497F2A5FEFF600D97A37 /* CameraModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -198,6 +205,7 @@
 			isa = PBXGroup;
 			children = (
 				CE9AFDBB2A628D6500EB2D8C /* CoreDataViewModel.swift */,
+				020439642A6161CA0055A8D4 /* CameraViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -216,6 +224,7 @@
 				8787EBFF2A5E79F400104EDE /* Color+Extension.swift */,
 				8787EC012A5E8FC800104EDE /* Corner+Extension.swift */,
 				7CB728D62A65221500D2FFA6 /* Number+Extension.swift */,
+				020439682A6599180055A8D4 /* ImagePicker+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -358,13 +367,16 @@
 				02C1FA0B2A56B2F2009E9D41 /* NavigationView.swift in Sources */,
 				027E969C2A56B1FE0066BA8F /* AppInfoView.swift in Sources */,
 				CE9AFD9C2A5FEFE400EB2D8C /* PersistentController.swift in Sources */,
+				02D449802A5FEFF600D97A37 /* CameraModel.swift in Sources */,
 				027E968A2A56AE0F0066BA8F /* CameraView.swift in Sources */,
+				020439652A6161CA0055A8D4 /* CameraViewModel.swift in Sources */,
 				027E96922A56AFD50066BA8F /* EditIconView.swift in Sources */,
 				027E96902A56AF950066BA8F /* SettingVIew.swift in Sources */,
 				7CB728D72A65221500D2FFA6 /* Number+Extension.swift in Sources */,
 				7C41D9652A62823A0054FD04 /* RegisterCompleteView.swift in Sources */,
 				7C41D9572A6280950054FD04 /* ItemCheckView.swift in Sources */,
 				7C41D95F2A6282120054FD04 /* TopAlertView.swift in Sources */,
+				020439692A6599180055A8D4 /* ImagePicker+Extension.swift in Sources */,
 				027E969A2A56B1B00066BA8F /* NotificationView.swift in Sources */,
 				8787EC002A5E79F400104EDE /* Color+Extension.swift in Sources */,
 				7C41D95D2A6281D60054FD04 /* EditIconDetailView.swift in Sources */,
@@ -541,6 +553,8 @@
 				DEVELOPMENT_TEAM = 2QWMDJG53V;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "\"'식상해'이(가) 사용자의 사진에 접근하려고 합니다.\"";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "\"'식상해'이(가) 사용자의 앨범에 접근하려고 합니다. 앨범 쓰기 권한을 허용해주세요.\"";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -570,6 +584,8 @@
 				DEVELOPMENT_TEAM = 2QWMDJG53V;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "\"'식상해'이(가) 사용자의 사진에 접근하려고 합니다.\"";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "\"'식상해'이(가) 사용자의 앨범에 접근하려고 합니다. 앨범 쓰기 권한을 허용해주세요.\"";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
