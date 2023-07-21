@@ -77,32 +77,6 @@ struct SearchBar: View {
     @FocusState var isInputActive: Bool
 
     var body: some View {
-//        HStack {
-//
-//            TextField("식료품 검색 ...", text: $text)
-//                .padding(7)
-//                .padding(.horizontal, 25)
-//                .background(Color(.systemGray6))
-//                .cornerRadius(8)
-//                .padding(.horizontal, 10)
-//                .onTapGesture {
-//                    self.isEditing = true
-//                }
-//
-//            if isEditing {
-//                Button(action: {
-//                    self.isEditing = false
-//                    self.text = ""
-//
-//                }) {
-//                    Text("Cancel")
-//                }
-//                .padding(.trailing, 10)
-//                .transition(.move(edge: .trailing))
-//                .animation(.default)
-//            }
-//        }
-
         TextField("Enter your name", text: $text)
             .textFieldStyle(.roundedBorder)
                             .focused($isInputActive)
