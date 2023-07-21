@@ -6,9 +6,9 @@
 //
 import SwiftUI
 
-let screenSize = UIScreen.main.bounds
-let screenWidth = screenSize.width
-let screenHeight = screenSize.height
+let screen = UIScreen.main.bounds
+let screenWidth = screen.width
+let screenHeight = screen.height
 
 extension CGFloat {
   var adjusted: CGFloat {
