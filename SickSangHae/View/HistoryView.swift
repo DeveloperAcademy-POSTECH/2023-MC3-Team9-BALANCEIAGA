@@ -14,20 +14,26 @@ struct HistoryView: View {
     @State var isMovingSegmentedTab : Bool = true
     
     let array = [
-        "당근", "계란30구", "과자", "팝콘", "요거트", "당당치킨", "친환경양파", "깐마늘",
-        "맛있는우유", "월드콘", "돼지고기 목살", "깻잎", "딸기잼", "머스타드 소스", "된장",
-        "고추장", "어묵", "아무거나"
+        "당근", "계란30구", "과자", "팝콘", "요거트"
     ]
     
     var body: some View {
         NavigationStack {
             ZStack(alignment: .top) {
-                //아이템 리스트 뷰
+                
+                //히스토리 뷰 본체
                 VStack(spacing: 0) {
-                    //상단 탭
+                    
+                    //상단 탭 영역
                     topHeader
-                    //아이템 리스트
+                    
+                    //아이템 리스트 뷰
                     List {
+                        
+                        //아이템 리스트 헤더 날짜
+                        listHeaderDate
+                        
+                        //아이템 리스트
                         itemList
                     }
                     .listStyle(.plain)
@@ -50,6 +56,7 @@ struct HistoryView: View {
                     //타이틀
                     titleText
                     
+                    //Test버튼
                     Button(action: {
                         coreDataViewModel
                         print(">>>AddModel")
@@ -119,48 +126,70 @@ struct HistoryView: View {
             width: screenWidth * 0.8)
     }
     
+    var listHeaderDate: some View {
+        HStack {
+            Text("2023년 7월 21일")
+                .font(.system(size: 20, weight: .bold))
+            
+            Spacer()
+            
+            Text("88일 남음")
+                .font(.system(size: 14, weight: .medium))
+                .foregroundColor(.gray)
+        }
+        .frame(width: screenWidth * 0.9)
+        .padding(.top, 12.adjusted)
+    }
+    
     var itemList: some View {
         ForEach(array, id:\.self) { item in
-            HStack {
-                Image(systemName: "circle.fill")
-                    .resizable()
-                    .frame(width: 36, height: 36)
-                    .foregroundColor(.gray)
-                Text(item)
-                    .frame(
-                        height: 60,
-                        alignment: .leading)
-                    .font(.system(size: 17, weight: .bold))
-                    .padding(.leading, 8)
-                Spacer()
-                Menu {
-                    Button(action: {
-                        //아이템 상태 복구 로직
-                    }, label: {
-                        Text("복구하기")
-                        Image(systemName: "arrow.counterclockwise")
-                    })
-                    Button(action: {
-                        //아이템 상태 변경 로직
-                    }, label: {
-                        Text("상했어요")
-                        Image(systemName: "arrow.triangle.2.circlepath")
-                    })
-                    Divider()
-                    Button(role: .destructive, action: {
-                        
-                    }, label: {
-                        Text("삭제하기")
-                        Image(systemName: "trash")
-                    })
-                } label: {
-                    Image(systemName: "ellipsis")
+            VStack {
+                HStack {
+                    Image(systemName: "circle.fill")
                         .resizable()
-                        .frame(width: 22, height: 5)
+                        .frame(width: 36, height: 36)
                         .foregroundColor(.gray)
-                }
-            } //HStack닫기
-            .frame(width: screenWidth * 0.9)
+                    Text(item)
+                        .frame(
+                            height: 60,
+                            alignment: .leading)
+                        .font(.system(size: 17, weight: .bold))
+                        .padding(.leading, 8)
+                    Spacer()
+                    Menu {
+                        Button(action: {
+                            //아이템 상태 복구 로직
+                        }, label: {
+                            Text("복구하기")
+                            Image(systemName: "arrow.counterclockwise")
+                        })
+                        Button(action: {
+                            //아이템 상태 변경 로직
+                        }, label: {
+                            Text("상했어요")
+                            Image(systemName: "arrow.triangle.2.circlepath")
+                        })
+                        Divider()
+                        Button(role: .destructive, action: {
+                            
+                        }, label: {
+                            Text("삭제하기")
+                            Image(systemName: "trash")
+                        })
+                    } label: {
+                        Image(systemName: "ellipsis")
+                            .resizable()
+                            .frame(width: 22, height: 5)
+                            .foregroundColor(.gray)
+                    }
+                } //HStack닫기
+                .frame(width: screenWidth * 0.9)
+                
+                Divider()
+                    .frame(width: screenWidth * 0.9, alignment: .trailing)
+            }
+            .listRowSeparator(.hidden)
+            .frame(width: screenWidth)
         } //ForEach닫기
         .padding(.vertical, -7.adjusted)
     }
