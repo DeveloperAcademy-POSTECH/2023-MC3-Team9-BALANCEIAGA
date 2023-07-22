@@ -26,6 +26,7 @@
 		027E969E2A56B2150066BA8F /* SupportVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027E969D2A56B2150066BA8F /* SupportVIew.swift */; };
 		02C1FA0B2A56B2F2009E9D41 /* NavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C1FA0A2A56B2F2009E9D41 /* NavigationView.swift */; };
 		02D449802A5FEFF600D97A37 /* CameraModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D4497F2A5FEFF600D97A37 /* CameraModel.swift */; };
+		237674E92A6516C200E92BAB /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237674E82A6516C200E92BAB /* HistoryView.swift */; };
 		7C41D9512A6280690054FD04 /* BasicList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C41D9502A6280690054FD04 /* BasicList.swift */; };
 		7C41D9532A62807A0054FD04 /* LongTermList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C41D9522A62807A0054FD04 /* LongTermList.swift */; };
 		7C41D9552A62808D0054FD04 /* OCRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C41D9542A62808D0054FD04 /* OCRView.swift */; };
@@ -83,6 +84,7 @@
 		027E969D2A56B2150066BA8F /* SupportVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportVIew.swift; sourceTree = "<group>"; };
 		02C1FA0A2A56B2F2009E9D41 /* NavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationView.swift; sourceTree = "<group>"; };
 		02D4497F2A5FEFF600D97A37 /* CameraModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraModel.swift; sourceTree = "<group>"; };
+		237674E82A6516C200E92BAB /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		7C41D9502A6280690054FD04 /* BasicList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicList.swift; sourceTree = "<group>"; };
 		7C41D9522A62807A0054FD04 /* LongTermList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LongTermList.swift; sourceTree = "<group>"; };
 		7C41D9542A62808D0054FD04 /* OCRView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRView.swift; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 				027E96952A56B0240066BA8F /* ChartView.swift */,
 				027E96972A56B1800066BA8F /* TabBarView.swift */,
 				027E969D2A56B2150066BA8F /* SupportVIew.swift */,
+				237674E82A6516C200E92BAB /* HistoryView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -377,6 +380,7 @@
 				027E96902A56AF950066BA8F /* SettingVIew.swift in Sources */,
 				7CB728D72A65221500D2FFA6 /* Number+Extension.swift in Sources */,
 				7C41D9652A62823A0054FD04 /* RegisterCompleteView.swift in Sources */,
+				237674E92A6516C200E92BAB /* HistoryView.swift in Sources */,
 				7C41D9572A6280950054FD04 /* ItemCheckView.swift in Sources */,
 				7C41D95F2A6282120054FD04 /* TopAlertView.swift in Sources */,
 				020439692A6599180055A8D4 /* ImagePicker+Extension.swift in Sources */,
@@ -553,7 +557,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SickSangHae/Preview Content\"";
-				DEVELOPMENT_TEAM = 2QWMDJG53V;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "\"'식상해'이(가) 사용자의 사진에 접근하려고 합니다.\"";
@@ -584,7 +588,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SickSangHae/Preview Content\"";
-				DEVELOPMENT_TEAM = 2QWMDJG53V;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "\"'식상해'이(가) 사용자의 사진에 접근하려고 합니다.\"";
