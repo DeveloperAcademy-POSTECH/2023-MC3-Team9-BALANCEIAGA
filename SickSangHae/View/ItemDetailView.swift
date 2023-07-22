@@ -24,7 +24,7 @@ struct ItemDetailView: View {
             }
             HStack {
                 Circle()
-                    .foregroundColor(.lightBlueGrayColor)
+                    .foregroundColor(Color("Gray200"))
                     .frame(width: 80.adjusted)
                 Text("계란 30구")
                     .font(.title3)
@@ -41,7 +41,7 @@ struct ItemDetailView: View {
                     Rectangle()
                         .cornerRadius(8)
                         .frame(width: 350.adjusted, height: 60.adjusted)
-                        .foregroundColor(.lightGrayColor)
+                        .foregroundColor(Color("Gray50"))
                     Text("2023년 7월 39일")
                         .bold()
                         .padding(.horizontal, 20.adjusted)
@@ -52,7 +52,7 @@ struct ItemDetailView: View {
                     Rectangle()
                         .cornerRadius(8)
                         .frame(width: 350.adjusted, height: 60.adjusted)
-                        .foregroundColor(.lightGrayColor)
+                        .foregroundColor(Color("Gray50"))
                     Text("9,800원")
                         .bold()
                         .padding(.horizontal, 20.adjusted)
@@ -60,7 +60,7 @@ struct ItemDetailView: View {
             }
             Rectangle()
                 .frame(width: 390.adjusted ,height: 12.adjusted)
-                .foregroundColor(.lightGrayColor)
+                .foregroundColor(Color("Gray100"))
                 .padding(.vertical, 30.adjusted)
             
             VStack(alignment: .leading) {
