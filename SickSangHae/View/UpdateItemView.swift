@@ -90,7 +90,7 @@ struct UpdateItemView: View {
           }
           .padding(.bottom, 30)
         }
-        TopAlertView(name: "파채", currentCase: .delete)
+        TopAlertView(viewModel: TopAlertViewModel(name: "파채", currentCase: .delete))
       }
     }
 }

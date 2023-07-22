@@ -9,24 +9,17 @@ import SwiftUI
 
 //MARK: - 색, 폰트 변경
 
-enum TopAlertViewCase {
-  case delete
-  case rot
-  case eat
-}
-
 struct TopAlertView: View {
-  var name: String
-  var currentCase: TopAlertViewCase = .delete
+  @ObservedObject var viewModel: TopAlertViewModel
 
   var body: some View {
-    switch currentCase {
+    switch viewModel.currentCase {
     case .delete:
-      TopAlertBaseView(iconImage: "img_delete", message: "\(name)를 삭제했어요", backgroundColor: .pointRLight, strokeColor: .pointRMiddle)
+      TopAlertBaseView(iconImage: "img_delete", message: "\(viewModel.name)를 삭제했어요", backgroundColor: .pointRLight, strokeColor: .pointRMiddle, viewModel: viewModel)
     case .rot:
-      TopAlertBaseView(iconImage: "img_rot", message: "\(name)가 상했어요", backgroundColor: .pointRLight, strokeColor: .pointRMiddle)
+      TopAlertBaseView(iconImage: "img_rot", message: "\(viewModel.name)가 상했어요", backgroundColor: .pointRLight, strokeColor: .pointRMiddle, viewModel: viewModel)
     case .eat:
-      TopAlertBaseView(iconImage: "img_eat", message: "\(name)를 먹었어요", backgroundColor: .alertGreen, strokeColor: .primaryGMiddle)
+      TopAlertBaseView(iconImage: "img_eat", message: "\(viewModel.name)를 먹었어요", backgroundColor: .alertGreen, strokeColor: .primaryGMiddle, viewModel: viewModel)
   
     }
   }
@@ -37,11 +30,11 @@ struct TopAlertBaseView: View {
   var message: String
   var backgroundColor: Color
   var strokeColor: Color
-  @State private var isAlertVisible = true
   @GestureState private var dragOffset = CGSize.zero
+  @ObservedObject var viewModel: TopAlertViewModel
 
   var body: some View {
-    if isAlertVisible {
+    if viewModel.isAlertVisible {
       ZStack(alignment: .leading) {
         RoundedRectangle(cornerRadius: 41.adjusted)
           .stroke(strokeColor, lineWidth: 1)
@@ -72,15 +65,11 @@ struct TopAlertBaseView: View {
       .offset(y: max(dragOffset.height, 0))
       .gesture (DragGesture()
         .updating($dragOffset, body: { (value, dragOffset, _) in
-          dragOffset = value.translation
-        })
-        .onEnded { value in
-          if value.translation.height < -50 {
-            withAnimation {
-              isAlertVisible = false
-            }
-          }
-        })
+           dragOffset = value.translation
+         })
+          .onEnded(viewModel.onDragEnded)
+                
+      )
     }
   }
 }
@@ -88,7 +77,6 @@ struct TopAlertBaseView: View {
 
 struct TopAlertView_Previews: PreviewProvider {
     static var previews: some View {
-      TopAlertView(name: "파채", currentCase: .delete)
-
+      TopAlertView(viewModel: TopAlertViewModel(name: "파채", currentCase: .delete))
     }
 }
