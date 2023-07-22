@@ -15,7 +15,6 @@ enum Tab {
 }
 
 struct TabBarView: View {
-    //Custom TabView
     @State var selectedTab: Tab = .MainView
 
     var body: some View {
@@ -91,7 +90,6 @@ struct CustomTabView: View {
 
                     Spacer()
                         .frame(width: screenWidth * 0.11)
-//                        .frame(width: 50.adjusted)
 
                     Rectangle()
                         .frame(width: 48.adjusted, height: 49.adjusted)
@@ -113,7 +111,6 @@ struct CustomTabView: View {
                         )
                     Spacer()
                         .frame(width: screenWidth * 0.11)
-//                        .frame(width: 50.adjusted)
 
                     Rectangle()
                         .frame(width: 48.adjusted, height: 49.adjusted)
@@ -136,7 +133,6 @@ struct CustomTabView: View {
 
                     Spacer()
                         .frame(width: screenWidth * 0.11)
-//                        .frame(width: 50.adjusted)
 
                     Rectangle()
                         .frame(width: 48.adjusted, height: 49.adjusted)
@@ -157,11 +153,9 @@ struct CustomTabView: View {
                             }
                         )
                 }
-//                .background(.blue)
                 .padding(.bottom, 10.adjusted)
             }
         }
-//        .background(.red)
     }
 }
 
