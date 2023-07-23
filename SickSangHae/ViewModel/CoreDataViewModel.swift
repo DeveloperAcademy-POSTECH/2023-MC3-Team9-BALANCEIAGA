@@ -116,14 +116,44 @@ extension CoreDataViewModel {
             updateStatusToSpoiled(target: target)
         }
     }
+    
+    func updateStatusToUnEaten(target: Receipt, to status: Status) {
         guard let receipt = viewContext.get(by: target.objectID) else { return }
-        if status == .Pinned {
-            if target.status != .UnConsumed {
-                return
-            }
+        
+        receipt.currentStatus = status
+        receipt.dateOfHistory = Date.now
+        
+        saveChanges()
+        getAllReceiptData()
+    }
+    
+    func updateStatusToEaten(target: Receipt) {
+        guard let receipt = viewContext.get(by: target.objectID) else { return }
+        guard receipt.currentStatus != .Eaten else { return }
+        
+        if receipt.currentStatus != .Spoiled {
+            receipt.previousStatus = receipt.currentStatus
         }
         
-        receipt.state = status.rawValue
+        receipt.currentStatus = .Eaten
+        receipt.dateOfHistory = Date.now
+        
+        saveChanges()
+        getAllReceiptData()
+    }
+    
+    
+    func updateStatusToSpoiled(target: Receipt) {
+        guard let receipt = viewContext.get(by: target.objectID) else { return }
+        
+        guard receipt.currentStatus != .Spoiled else { return }
+        
+        if receipt.currentStatus != .Eaten {
+            receipt.previousStatus = receipt.currentStatus
+        }
+        
+        
+        receipt.currentStatus = .Spoiled
         receipt.dateOfHistory = Date.now
         
         saveChanges()
