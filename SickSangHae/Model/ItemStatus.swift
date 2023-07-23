@@ -8,8 +8,9 @@
 import Foundation
 
 enum Status: Int16 {
-    case UnConsumed = 0
-    case Eaten = 1
-    case Rotten = 2
-    case Pinned = 3
+    case shortTermUnEaten = 0
+    case shortTermPinned = 1
+    case longTermUnEaten = 2
+    case Eaten = 3
+    case Spoiled = 4
 }

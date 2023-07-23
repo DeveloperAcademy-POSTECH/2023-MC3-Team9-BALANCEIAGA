@@ -23,14 +23,13 @@ extension Receipt {
     @NSManaged public var name: String
     @NSManaged public var id: UUID
     @NSManaged public var icon: String
-    @NSManaged public var isLongTerm: Bool
     @NSManaged public var dateOfPurchase: Date
     @NSManaged public var dateOfHistory: Date
     @NSManaged public var placeOfPurchase: String?
 
     var currentStatus: Status {
         get {
-            return Status(rawValue: self.currentState) ?? .UnConsumed
+            return Status(rawValue: self.currentState) ?? .shortTermUnEaten
         }
         set {
             self.currentState = newValue.rawValue
@@ -39,7 +38,7 @@ extension Receipt {
     
     var previousStatus: Status {
         get {
-            return Status(rawValue: self.previousState) ?? .UnConsumed
+            return Status(rawValue: self.previousState) ?? .shortTermUnEaten
         }
         set {
             self.currentState = newValue.rawValue
