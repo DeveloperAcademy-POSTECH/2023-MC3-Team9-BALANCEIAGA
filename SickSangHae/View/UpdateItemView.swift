@@ -11,22 +11,29 @@ struct UpdateItemView: View {
   @ObservedObject var viewModel: UpdateItemViewModel
   
   var body: some View {
-    VStack {
-      topBar
-      Spacer().frame(height: 36.adjusted)
-      DateSelectionView(viewModel: viewModel)
-      Spacer().frame(height: 30.adjusted)
-      ZStack(alignment: .top) {
-        VStack {
-          ItemBlockView()
-          addItemButton
-          Spacer()
-          nextButton
-        }
-        if viewModel.isDatePickerOpen {
-          DatePickerView(viewModel: viewModel)
+    ZStack {
+      Color.white
+        .ignoresSafeArea(.all)
+      VStack {
+        topBar
+        Spacer().frame(height: 36.adjusted)
+        DateSelectionView(viewModel: viewModel)
+        Spacer().frame(height: 30.adjusted)
+        ZStack(alignment: .top) {
+          VStack {
+            ItemBlockView()
+            addItemButton
+            Spacer()
+            nextButton
+          }
+          if viewModel.isDatePickerOpen {
+            DatePickerView(viewModel: viewModel)
+          }
         }
       }
+    }
+    .onTapGesture {
+      self.endTextEditing()
     }
   }
   

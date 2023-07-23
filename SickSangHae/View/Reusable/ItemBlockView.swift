@@ -21,7 +21,6 @@ struct ItemBlockView: View {
                     Text("품목")
                         .padding(.leading,20)
                   TextField("무엇을 구매했나요?", text: $name)
-      
                 }
               Divider().foregroundColor(.gray100)
                     .frame(width: 350, height: 10)
@@ -30,6 +29,7 @@ struct ItemBlockView: View {
                     Text("금액")
                         .padding(.leading,20)
                   TextField("얼마였나요?", text: $price)
+                    .keyboardType(.numberPad)
                 }
             }
             .padding(.leading, 20.adjusted)
