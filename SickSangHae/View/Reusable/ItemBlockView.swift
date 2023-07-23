@@ -9,7 +9,9 @@ import SwiftUI
 
 struct ItemBlockView: View {
   @State var name: String = ""
-  @State var price: String = ""
+  @State var price: Int = 0
+  
+  @ObservedObject var viewModel: UpdateItemViewModel
   var body: some View {
         ZStack {
             Rectangle()
@@ -28,7 +30,7 @@ struct ItemBlockView: View {
                 HStack(spacing: 28.adjusted) {
                     Text("금액")
                         .padding(.leading,20)
-                  TextField("얼마였나요?", text: $price)
+                  TextField("얼마였나요?", value: $price, formatter: UpdateItemViewModel.priceFormatter)
                     .keyboardType(.numberPad)
                 }
             }
@@ -45,6 +47,6 @@ struct ItemBlockView: View {
 
 struct ItemBlockView_Previews: PreviewProvider {
     static var previews: some View {
-        ItemBlockView()
+      ItemBlockView(viewModel: UpdateItemViewModel())
     }
 }

@@ -17,6 +17,14 @@ class UpdateItemViewModel: ObservableObject {
     return formatter
   }()
   
+  static let priceFormatter: NumberFormatter = {
+    let formatter = NumberFormatter()
+    formatter.numberStyle = .decimal
+    formatter.groupingSeparator = ","
+    formatter.positiveSuffix = "원"
+    return formatter
+  }()
+  
   var todayDate: Date {
     return Calendar.current.startOfDay(for: Date())
   }

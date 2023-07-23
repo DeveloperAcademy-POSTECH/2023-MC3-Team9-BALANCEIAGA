@@ -21,7 +21,7 @@ struct UpdateItemView: View {
         Spacer().frame(height: 30.adjusted)
         ZStack(alignment: .top) {
           VStack {
-            ItemBlockView()
+            ItemBlockView(viewModel: viewModel)
             addItemButton
             Spacer()
             nextButton
