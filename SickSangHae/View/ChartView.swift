@@ -11,7 +11,7 @@ struct ChartView: View {
     @State private var selectedDate = Date()
     @State private var wholeCost = 123102
     @State private var eatenCost = 43200
-    
+
     private let dateFormatter: DateFormatter = {
             let formatter = DateFormatter()
             formatter.dateFormat = "M" // Format to display month and year
@@ -69,7 +69,7 @@ struct ChartView: View {
                 (7, Color("PrimaryGB")),
                 (3, Color("Gray200"))
                 ])
-            .frame(width: 250.adjusted)
+            .frame(width: 200.adjusted)
 
             summaryList
                 .padding(.horizontal, 20.adjusted)
