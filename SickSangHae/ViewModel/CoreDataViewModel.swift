@@ -102,7 +102,20 @@ extension CoreDataViewModel {
         getAllReceiptData()
     }
     
-    func updateReceiptStateData(target: Receipt, status: Status) {
+    func updateStatus(target: Receipt, to status: Status) {
+        switch status {
+        case .shortTermUnEaten:
+            updateStatusToUnEaten(target: target, to: status)
+        case .shortTermPinned:
+            updateStatusToUnEaten(target: target, to: status)
+        case .longTermUnEaten:
+            updateStatusToUnEaten(target: target, to: status)
+        case .Eaten:
+            updateStatusToEaten(target: target)
+        case .Spoiled:
+            updateStatusToSpoiled(target: target)
+        }
+    }
         guard let receipt = viewContext.get(by: target.objectID) else { return }
         if status == .Pinned {
             if target.status != .UnConsumed {
