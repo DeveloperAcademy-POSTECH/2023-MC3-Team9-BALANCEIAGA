@@ -33,7 +33,6 @@ extension NSManagedObjectContext {
                 print("Get 한 object 변환 실패")
                 return nil
             }
-            print(result)
             return result
         } catch {
             print("해당하는 object 찾는거 실패")

@@ -41,7 +41,7 @@ extension Receipt {
             return Status(rawValue: self.previousState) ?? .shortTermUnEaten
         }
         set {
-            self.currentState = newValue.rawValue
+            self.previousState = newValue.rawValue
         }
     }
     
