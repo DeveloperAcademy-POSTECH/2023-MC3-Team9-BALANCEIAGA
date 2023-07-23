@@ -63,17 +63,35 @@ extension CoreDataViewModel {
         }
     }
     
-    func createReceiptData() {
+    func createReceiptData(name: String, price: Double) {
+        
+        let receipt = Receipt(context: viewContext)
+        receipt.id = UUID()
+        receipt.name = name
+        receipt.dateOfPurchase = Date.now
+        receipt.dateOfHistory = Date.now
+        receipt.icon = "icon_test"
+        receipt.price = price
+        receipt.previousStatus = .shortTermUnEaten
+        receipt.currentStatus = .shortTermUnEaten
+        receipt.itemCategory = .Unknown
+        
+        saveChanges()
+        self.getAllReceiptData()
+    }
+    
+    func createTestReceiptData() {
         
         let receipt = Receipt(context: viewContext)
         receipt.id = UUID()
         receipt.name = "TestName \(receipts.count)"
         receipt.dateOfPurchase = Date.now
         receipt.dateOfHistory = Date.distantPast
-        receipt.isLongTerm = false
         receipt.icon = "icon_test"
         receipt.price = 6000.0
-        receipt.status = .UnConsumed
+        receipt.previousStatus = .shortTermUnEaten
+        receipt.currentStatus = .shortTermUnEaten
+        receipt.itemCategory = .Unknown
         
         saveChanges()
         self.getAllReceiptData()
