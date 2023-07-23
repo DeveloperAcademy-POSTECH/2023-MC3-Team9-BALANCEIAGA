@@ -55,7 +55,9 @@ extension CoreDataViewModel {
     
     func saveChanges() {
         do {
-            try viewContext.save()
+            if viewContext.hasChanges {
+                try viewContext.save()
+            }
         } catch {
             print("Error while Saving in CoreData")
         }
