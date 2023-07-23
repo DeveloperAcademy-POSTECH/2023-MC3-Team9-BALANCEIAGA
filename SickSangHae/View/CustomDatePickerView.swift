@@ -7,7 +7,40 @@
 
 import SwiftUI
 
-struct CustomDatePickerView: View {
+struct DateSelectionView: View {
+  @ObservedObject var viewModel: UpdateItemViewModel
+  
+  var body: some View {
+    HStack(spacing: 24) {
+      Button(action: {
+        viewModel.decreaseDate()
+      }, label: {
+        Image(systemName: "chevron.left")
+          .resizable()
+          .frame(width: 8, height: 14)
+      })
+      
+      Button(action: {
+        viewModel.isDatePickerOpen.toggle()
+      }, label: {
+        Text("\(viewModel.dateString)")
+          .font(.system(size: 20).bold())
+      })
+      
+      Button(action: {
+        viewModel.increaseDate()
+      }, label: {
+        Image(systemName: "chevron.right")
+          .resizable()
+          .frame(width: 8, height: 14)
+      })
+      .foregroundColor(viewModel.date < viewModel.todayDate ? .black : .gray)
+    }
+    .foregroundColor(.black)
+  }
+}
+
+struct DatePickerView: View {
   @ObservedObject var viewModel: UpdateItemViewModel
   
   var body: some View {
