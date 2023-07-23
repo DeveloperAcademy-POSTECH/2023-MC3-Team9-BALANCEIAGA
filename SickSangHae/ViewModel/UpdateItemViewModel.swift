@@ -18,6 +18,10 @@ class UpdateItemViewModel: ObservableObject {
     return formatter
   }()
   
+  var dateString: String {
+    UpdateItemViewModel.dateFormat.string(from: date)
+  }
+  
   func decreaseDate() {
       date = Calendar.current.date(byAdding: .day, value: -1, to: date) ?? date
   }

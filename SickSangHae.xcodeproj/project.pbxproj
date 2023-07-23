@@ -25,6 +25,7 @@
 		027E969C2A56B1FE0066BA8F /* AppInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027E969B2A56B1FE0066BA8F /* AppInfoView.swift */; };
 		027E969E2A56B2150066BA8F /* SupportVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027E969D2A56B2150066BA8F /* SupportVIew.swift */; };
 		0296E08F2A6D966000B69F01 /* UpdateItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0296E08E2A6D966000B69F01 /* UpdateItemViewModel.swift */; };
+		0296E0912A6D99C600B69F01 /* CustomDatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0296E0902A6D99C600B69F01 /* CustomDatePickerView.swift */; };
 		02C1FA0B2A56B2F2009E9D41 /* NavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C1FA0A2A56B2F2009E9D41 /* NavigationView.swift */; };
 		02D449802A5FEFF600D97A37 /* CameraModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D4497F2A5FEFF600D97A37 /* CameraModel.swift */; };
 		02FC0ED62A6C5D3500B4284C /* TopAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FC0ED52A6C5D3500B4284C /* TopAlertViewModel.swift */; };
@@ -87,6 +88,7 @@
 		027E969B2A56B1FE0066BA8F /* AppInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfoView.swift; sourceTree = "<group>"; };
 		027E969D2A56B2150066BA8F /* SupportVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportVIew.swift; sourceTree = "<group>"; };
 		0296E08E2A6D966000B69F01 /* UpdateItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateItemViewModel.swift; sourceTree = "<group>"; };
+		0296E0902A6D99C600B69F01 /* CustomDatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDatePickerView.swift; sourceTree = "<group>"; };
 		02C1FA0A2A56B2F2009E9D41 /* NavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationView.swift; sourceTree = "<group>"; };
 		02D4497F2A5FEFF600D97A37 /* CameraModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraModel.swift; sourceTree = "<group>"; };
 		02FC0ED52A6C5D3500B4284C /* TopAlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopAlertViewModel.swift; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 				027E96972A56B1800066BA8F /* TabBarView.swift */,
 				027E969D2A56B2150066BA8F /* SupportVIew.swift */,
 				237674E82A6516C200E92BAB /* HistoryView.swift */,
+				0296E0902A6D99C600B69F01 /* CustomDatePickerView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -388,6 +391,7 @@
 				02FC0ED82A6C5DF100B4284C /* TopAlertModel.swift in Sources */,
 				027E968A2A56AE0F0066BA8F /* CameraView.swift in Sources */,
 				020439652A6161CA0055A8D4 /* CameraViewModel.swift in Sources */,
+				0296E0912A6D99C600B69F01 /* CustomDatePickerView.swift in Sources */,
 				027E96922A56AFD50066BA8F /* EditIconView.swift in Sources */,
 				027E96902A56AF950066BA8F /* SettingVIew.swift in Sources */,
 				7CB728D72A65221500D2FFA6 /* Number+Extension.swift in Sources */,
