@@ -12,20 +12,24 @@ class CoreDataViewModel: ObservableObject {
     private let viewContext = PersistentController.shared.viewContext
     @Published var receipts: [Receipt] = []
     
-    var unConsumedList: [Receipt] {
-        return receipts.filter{ $0.status == .UnConsumed }
+    var shortTermUnEatenList: [Receipt] {
+        return receipts.filter{ $0.currentStatus == .shortTermUnEaten}
+    }
+    
+    var shortTermPinnedList: [Receipt] {
+        return receipts.filter{ $0.currentStatus == .shortTermPinned}
+    }
+    
+    var longTermUnEatenList: [Receipt] {
+        return receipts.filter{ $0.currentStatus == .longTermUnEaten}
     }
     
     var eatenList: [Receipt] {
-        return receipts.filter{ $0.status == .Eaten }
+        return receipts.filter{ $0.currentStatus == .Eaten }
     }
     
-    var rottenList: [Receipt] {
-        return receipts.filter{ $0.status == .Rotten }
-    }
-    
-    var pinnedList: [Receipt] {
-        return receipts.filter{ $0.status == .Pinned }
+    var spoiledList: [Receipt] {
+        return receipts.filter{ $0.currentStatus == .Spoiled }
     }
     
     init() {
