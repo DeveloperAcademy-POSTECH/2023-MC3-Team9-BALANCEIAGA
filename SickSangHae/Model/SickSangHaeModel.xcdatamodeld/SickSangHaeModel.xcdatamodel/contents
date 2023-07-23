@@ -2,6 +2,7 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22A380" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Receipt" representedClassName="Receipt" syncable="YES">
         <attribute name="category" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="currentState" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="dateOfHistory" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="dateOfPurchase" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="icon" optional="YES" attributeType="String" allowsExternalBinaryDataStorage="YES"/>
@@ -9,7 +10,7 @@
         <attribute name="isLongTerm" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="placeOfPurchase" optional="YES" attributeType="String"/>
+        <attribute name="previousState" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="price" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="state" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
 </model>
