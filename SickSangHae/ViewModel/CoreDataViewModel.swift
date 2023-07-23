@@ -44,7 +44,7 @@ class CoreDataViewModel: ObservableObject {
 }
 
 extension CoreDataViewModel {
-    func getAllReceiptData() {
+    private func getAllReceiptData() {
         let request = NSFetchRequest<Receipt>(entityName: "Receipt")
         request.sortDescriptors = [
             NSSortDescriptor(key: "dateOfPurchase", ascending: false),
@@ -57,7 +57,7 @@ extension CoreDataViewModel {
     }
     
     
-    func saveChanges() {
+    private func saveChanges() {
         do {
             if viewContext.hasChanges {
                 try viewContext.save()
@@ -121,7 +121,7 @@ extension CoreDataViewModel {
         }
     }
     
-    func updateStatusToUnEaten(target: Receipt, to status: Status) {
+    private func updateStatusToUnEaten(target: Receipt, to status: Status) {
         guard let receipt = viewContext.get(by: target.objectID) else { return }
         
         receipt.currentStatus = status
@@ -131,7 +131,7 @@ extension CoreDataViewModel {
         getAllReceiptData()
     }
     
-    func updateStatusToEaten(target: Receipt) {
+    private func updateStatusToEaten(target: Receipt) {
         guard let receipt = viewContext.get(by: target.objectID) else { return }
         guard receipt.currentStatus != .Eaten else { return }
         
@@ -147,7 +147,7 @@ extension CoreDataViewModel {
     }
     
     
-    func updateStatusToSpoiled(target: Receipt) {
+    private func updateStatusToSpoiled(target: Receipt) {
         guard let receipt = viewContext.get(by: target.objectID) else { return }
         
         guard receipt.currentStatus != .Spoiled else { return }

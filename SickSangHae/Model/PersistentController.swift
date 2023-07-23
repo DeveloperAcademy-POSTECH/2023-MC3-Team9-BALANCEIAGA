@@ -46,7 +46,6 @@ extension NSManagedObjectContext {
         do {
             let results = (try fetch(request) as? [NSManagedObject]) ?? [NSManagedObject]()
             results.forEach {
-                print($0)
                 self.delete($0)
             }
         } catch {
