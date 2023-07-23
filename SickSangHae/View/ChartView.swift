@@ -9,6 +9,9 @@ import SwiftUI
 
 struct ChartView: View {
     @State private var selectedDate = Date()
+    @State private var wholeCost = 123102
+    @State private var eatenCost = 43200
+    
     private let dateFormatter: DateFormatter = {
             let formatter = DateFormatter()
             formatter.dateFormat = "M" // Format to display month and year
@@ -68,8 +71,31 @@ struct ChartView: View {
                 ])
             .frame(width: 250.adjusted)
 
-            Spacer()
+            summaryList
+                .padding(.horizontal, 20.adjusted)
+                .padding(.vertical, 38.adjusted)
 
+            Spacer()
+        }
+    }
+
+    private var summaryList: some View{
+        VStack(spacing: 15.adjusted){
+            HStack{
+                Text("전체")
+                Spacer()
+                Text("\(wholeCost)원")
+            }
+            HStack{
+                Text("잘 먹은 금액")
+                Spacer()
+                Text("\(eatenCost)원")
+            }
+            HStack{
+                Text("낭비된 금액")
+                Spacer()
+                Text("\(wholeCost - eatenCost)원")
+            }
         }
     }
 
