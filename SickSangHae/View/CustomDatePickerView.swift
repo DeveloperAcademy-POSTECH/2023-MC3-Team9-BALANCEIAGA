@@ -34,7 +34,7 @@ struct DateSelectionView: View {
           .resizable()
           .frame(width: 8, height: 14)
       })
-      .foregroundColor(viewModel.date < viewModel.todayDate ? .black : .gray)
+      .foregroundColor(viewModel.isDateBeforeToday() ? .black : .gray)
     }
     .foregroundColor(.black)
   }
