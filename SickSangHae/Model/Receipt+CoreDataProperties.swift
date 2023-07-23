@@ -17,6 +17,7 @@ extension Receipt {
     }
 
     @NSManaged public var state: Int16
+    @NSManaged public var category: Int16
     @NSManaged public var price: Double
     @NSManaged public var name: String
     @NSManaged public var id: UUID
@@ -32,6 +33,16 @@ extension Receipt {
         }
         set {
             self.state = newValue.rawValue
+        }
+    }
+    
+    
+    var itemCategory: Categories {
+        get {
+            return Categories(rawValue: self.state) ?? .Unknown
+        }
+        set {
+            self.category = newValue.rawValue
         }
     }
 }
