@@ -8,15 +8,7 @@
 import SwiftUI
 
 struct UpdateItemView: View {
-  @State private var date = Date()
-  @State private var todayDate = Date()
-  @State private var isDatePickerOpen = false
-  
-  static let dateFormat: DateFormatter =  {
-    let formatter = DateFormatter()
-    formatter.dateFormat = "YYYY년 M월 dd일"
-    return formatter
-  }()
+  @ObservedObject var viewModel: UpdateItemViewModel
   
   var body: some View {
     VStack {
@@ -38,7 +30,7 @@ struct UpdateItemView: View {
       Spacer().frame(height: 36.adjusted)
       HStack(spacing: 24) {
         Button(action: {
-          date = Calendar.current.date(byAdding: .day, value: -1, to: date) ?? date
+          viewModel.decreaseDate()
           
         }, label: {
           Image(systemName: "chevron.left")
@@ -47,24 +39,21 @@ struct UpdateItemView: View {
           
         })
         Button(action: {
-          isDatePickerOpen.toggle()
+          viewModel.isDatePickerOpen.toggle()
         }, label: {
-          Text("\(date, formatter: UpdateItemView.dateFormat)")
+          Text("\(viewModel.date, formatter: UpdateItemViewModel.dateFormat)")
             .font(.system(size: 20).bold())
           
         })
         Button(action: {
-          if date < todayDate {
-            date = Calendar.current.date(byAdding: .day, value: +1, to: date) ?? date
-          }
-          
+          viewModel.increaseDate()
         }, label: {
           Image(systemName: "chevron.right")
             .resizable()
             .frame(width: 8, height: 14)
           
         })
-        .foregroundColor(date < todayDate ? .black : .gray)
+        .foregroundColor(viewModel.date < viewModel.todayDate ? .black : .gray)
         
       }
       .foregroundColor(.black)
@@ -87,8 +76,7 @@ struct UpdateItemView: View {
             .foregroundColor(.accentColor)
           }
           .padding(.top, 15)
-          //        // 품목 추가 버튼
-          //
+   
           Spacer()
           
           ZStack {
@@ -105,7 +93,7 @@ struct UpdateItemView: View {
           .padding(.bottom, 30)
         }
         
-        if isDatePickerOpen {
+        if viewModel.isDatePickerOpen {
           ZStack {
             Rectangle()
               .cornerRadius(12)
@@ -115,16 +103,16 @@ struct UpdateItemView: View {
             GeometryReader { geo in
               
               DatePicker (
-                "\(date, formatter: UpdateItemView.dateFormat)",
-                selection: $date,
+                "\(viewModel.date, formatter: UpdateItemViewModel.dateFormat)",
+                selection: $viewModel.date,
                 in: ...Date(),
                 displayedComponents: .date
               )
               .labelsHidden()
               .datePickerStyle(GraphicalDatePickerStyle())
               .frame(width: geo.size.width, height: geo.size.height)
-              .onChange(of: date) { _ in
-                isDatePickerOpen = false
+              .onChange(of: viewModel.date) { _ in
+                viewModel.isDatePickerOpen = false
                 
               }
               
@@ -142,7 +130,7 @@ struct UpdateItemView: View {
 }
   struct UpdateItemView_Previews: PreviewProvider {
     static var previews: some View {
-      UpdateItemView()
+      UpdateItemView(viewModel: UpdateItemViewModel())
     }
   }
   

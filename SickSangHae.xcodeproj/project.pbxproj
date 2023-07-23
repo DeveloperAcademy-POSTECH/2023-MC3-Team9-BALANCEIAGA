@@ -24,6 +24,7 @@
 		027E969A2A56B1B00066BA8F /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027E96992A56B1B00066BA8F /* NotificationView.swift */; };
 		027E969C2A56B1FE0066BA8F /* AppInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027E969B2A56B1FE0066BA8F /* AppInfoView.swift */; };
 		027E969E2A56B2150066BA8F /* SupportVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027E969D2A56B2150066BA8F /* SupportVIew.swift */; };
+		0296E08F2A6D966000B69F01 /* UpdateItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0296E08E2A6D966000B69F01 /* UpdateItemViewModel.swift */; };
 		02C1FA0B2A56B2F2009E9D41 /* NavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C1FA0A2A56B2F2009E9D41 /* NavigationView.swift */; };
 		02D449802A5FEFF600D97A37 /* CameraModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D4497F2A5FEFF600D97A37 /* CameraModel.swift */; };
 		02FC0ED62A6C5D3500B4284C /* TopAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FC0ED52A6C5D3500B4284C /* TopAlertViewModel.swift */; };
@@ -85,6 +86,7 @@
 		027E96992A56B1B00066BA8F /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		027E969B2A56B1FE0066BA8F /* AppInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfoView.swift; sourceTree = "<group>"; };
 		027E969D2A56B2150066BA8F /* SupportVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportVIew.swift; sourceTree = "<group>"; };
+		0296E08E2A6D966000B69F01 /* UpdateItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateItemViewModel.swift; sourceTree = "<group>"; };
 		02C1FA0A2A56B2F2009E9D41 /* NavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationView.swift; sourceTree = "<group>"; };
 		02D4497F2A5FEFF600D97A37 /* CameraModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraModel.swift; sourceTree = "<group>"; };
 		02FC0ED52A6C5D3500B4284C /* TopAlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopAlertViewModel.swift; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 				020439642A6161CA0055A8D4 /* CameraViewModel.swift */,
 				0204396E2A66B9500055A8D4 /* OCRViewModel.swift */,
 				02FC0ED52A6C5D3500B4284C /* TopAlertViewModel.swift */,
+				0296E08E2A6D966000B69F01 /* UpdateItemViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -408,6 +411,7 @@
 				CE9AFD982A5FEC9100EB2D8C /* Receipt+CoreDataProperties.swift in Sources */,
 				027E969E2A56B2150066BA8F /* SupportVIew.swift in Sources */,
 				8787EC062A5FE7CE00104EDE /* ItemBlockView.swift in Sources */,
+				0296E08F2A6D966000B69F01 /* UpdateItemViewModel.swift in Sources */,
 				027E96732A56AB5E0066BA8F /* SickSangHaeApp.swift in Sources */,
 				8787EC022A5E8FC800104EDE /* Corner+Extension.swift in Sources */,
 				CE9AFD9A2A5FED9200EB2D8C /* ItemStatus.swift in Sources */,
