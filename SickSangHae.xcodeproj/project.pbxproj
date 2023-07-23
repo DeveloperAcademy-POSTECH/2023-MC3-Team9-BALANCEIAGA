@@ -69,6 +69,7 @@
 		020439642A6161CA0055A8D4 /* CameraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewModel.swift; sourceTree = "<group>"; };
 		020439682A6599180055A8D4 /* ImagePicker+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImagePicker+Extension.swift"; sourceTree = "<group>"; };
 		0204396E2A66B9500055A8D4 /* OCRViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRViewModel.swift; sourceTree = "<group>"; };
+		025E92752A6C7254003DFA03 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		027E966F2A56AB5E0066BA8F /* SickSangHae.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SickSangHae.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		027E96722A56AB5E0066BA8F /* SickSangHaeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SickSangHaeApp.swift; sourceTree = "<group>"; };
 		027E96762A56AB5F0066BA8F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -155,6 +156,7 @@
 		027E96712A56AB5E0066BA8F /* SickSangHae */ = {
 			isa = PBXGroup;
 			children = (
+				025E92752A6C7254003DFA03 /* Info.plist */,
 				027E96852A56ACA90066BA8F /* Application */,
 				027E96832A56ABBA0066BA8F /* Global */,
 				027E96822A56ABA20066BA8F /* ViewModel */,
@@ -335,11 +337,11 @@
 			};
 			buildConfigurationList = 027E966A2A56AB5E0066BA8F /* Build configuration list for PBXProject "SickSangHae" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = ko;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
+				ko,
 			);
 			mainGroup = 027E96662A56AB5E0066BA8F;
 			productRefGroup = 027E96702A56AB5E0066BA8F /* Products */;
@@ -568,6 +570,7 @@
 				DEVELOPMENT_TEAM = 2QWMDJG53V;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SickSangHae/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "\"'식상해'이(가) 사용자의 사진에 접근하려고 합니다.\"";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "\"'식상해'이(가) 사용자의 앨범에 접근하려고 합니다. 앨범 쓰기 권한을 허용해주세요.\"";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -599,6 +602,7 @@
 				DEVELOPMENT_TEAM = 2QWMDJG53V;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SickSangHae/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "\"'식상해'이(가) 사용자의 사진에 접근하려고 합니다.\"";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "\"'식상해'이(가) 사용자의 앨범에 접근하려고 합니다. 앨범 쓰기 권한을 허용해주세요.\"";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
