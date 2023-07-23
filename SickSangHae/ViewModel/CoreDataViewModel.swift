@@ -160,13 +160,17 @@ extension CoreDataViewModel {
         getAllReceiptData()
     }
     
-    func toggleIsLongTerm(target: Receipt) {
+    
+    func recoverPreviousStatus(target: Receipt) {
         guard let receipt = viewContext.get(by: target.objectID) else { return }
-        guard receipt.status == .UnConsumed else { return }
+        guard receipt.currentStatus == .Eaten || receipt.currentStatus == .Spoiled else { return }
         
-        target.isLongTerm.toggle()
+        receipt.currentStatus = receipt.previousStatus
+        receipt.dateOfHistory = receipt.dateOfPurchase
         
         saveChanges()
         getAllReceiptData()
     }
+    
+    
 }
