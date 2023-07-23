@@ -115,8 +115,11 @@ struct Pie: View {
     var body: some View {
         Canvas { context, size in
             let donut = Path { p in
-                p.addEllipse(in: CGRect(origin: .zero, size: size))
-                p.addEllipse(in: CGRect(x: size.width * 0.25, y: size.height * 0.25, width: size.width * 0.5, height: size.height * 0.5))
+                let donutSize = CGSize(width: size.width * 0.3, height: size.height * 0.3) // Reduce the size by 0.8
+                            p.addEllipse(in: CGRect(origin: .zero, size: size))
+                            p.addEllipse(in: CGRect(x: (size.width - donutSize.width) / 2,
+                                                    y: (size.height - donutSize.height) / 2,
+                                                    width: donutSize.width, height: donutSize.height))
             }
             context.clip(to: donut, style: .init(eoFill: true))
 
