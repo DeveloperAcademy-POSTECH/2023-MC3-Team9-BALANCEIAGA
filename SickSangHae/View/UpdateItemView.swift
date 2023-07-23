@@ -86,4 +86,3 @@ struct UpdateItemView_Previews: PreviewProvider {
     UpdateItemView(viewModel: UpdateItemViewModel())
   }
 }
-
