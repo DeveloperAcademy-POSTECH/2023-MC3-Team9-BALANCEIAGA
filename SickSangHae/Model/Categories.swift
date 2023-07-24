@@ -8,8 +8,8 @@
 import Foundation
 
 enum Categories: Int16 {
-    case Unknown = 0
-    case Meat = 1
-    case Bread = 2
-    case Grains = 3
+    case unknown = 0
+    case meat = 1
+    case bread = 2
+    case grains = 3
 }
