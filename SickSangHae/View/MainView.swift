@@ -102,7 +102,9 @@ struct SearchBar: View {
                         }
                     }
                 
-                if !text.isEmpty {
+                if text.isEmpty {
+                    EmptyView()
+                } else {
                     Button(action: {
                         self.text = ""
                     }) {
@@ -113,8 +115,6 @@ struct SearchBar: View {
                                 .foregroundColor(Color("Gray200"))
                         }
                     }
-                } else {
-                    EmptyView()
                 }
             }
             .padding(.leading, 4)
