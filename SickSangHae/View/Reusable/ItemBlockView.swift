@@ -8,50 +8,58 @@
 import SwiftUI
 
 struct ItemBlockView: View {
-  @State var name: String = ""
-  @State var priceInt: Int = 0
-  @State var priceString: String = ""
+
   @ObservedObject var viewModel: UpdateItemViewModel
   var body: some View {
-    ZStack(alignment: .trailing) {
-      Rectangle()
-        .foregroundColor(.lightGrayColor)
-        .cornerRadius(12)
-      VStack(alignment: .leading) {
-        HStack(spacing: 28.adjusted) {
-          Text("품목")
-            .padding(.leading,20)
-          TextField("무엇을 구매했나요?", text: $name)
+    VStack(alignment: .leading) {
+      ZStack(alignment: .trailing) {
+        Rectangle()
+          .foregroundColor(.lightGrayColor)
+          .cornerRadius(12)
+        VStack(alignment: .leading) {
+          HStack(spacing: 28.adjusted) {
+            Text("품목")
+              .padding(.leading,20)
+            TextField("무엇을 구매했나요?", text: $viewModel.name)
+          }
+          Divider().foregroundColor(.gray100)
+          HStack(spacing: 28.adjusted) {
+            Text("금액")
+              .padding(.leading, 20)
+            TextField("얼마였나요?",
+                      text: $viewModel.priceString, onEditingChanged: { editing in
+              if !editing {
+                viewModel.priceInt = Int(viewModel.priceString) ?? 0
+                viewModel.priceString = UpdateItemViewModel.priceFormatter.string(from: NSNumber(value: viewModel.priceInt)) ?? ""
+              }
+              
+            })
+            .keyboardType(.numberPad)
+          }
         }
-        Divider().foregroundColor(.gray100)
-        HStack(spacing: 28.adjusted) {
-          Text("금액")
-            .padding(.leading, 20)
-          TextField("얼마였나요?",
-                    text: $priceString, onEditingChanged: { editing in
-            if !editing {
-              priceInt = Int(priceString) ?? 0
-              priceString = UpdateItemViewModel.priceFormatter.string(from: NSNumber(value: priceInt)) ?? ""
-            }
-            
-          })
-          .keyboardType(.numberPad)
+        VStack {
+          Image(systemName: "xmark.circle.fill")
+            .resizable()
+            .frame(width:25 ,height:25)
+            .foregroundColor(.lightBlueGrayColor)
+          
+          Spacer()
         }
-      }
-      VStack {
-        Image(systemName: "xmark.circle.fill")
-          .resizable()
-          .frame(width:25 ,height:25)
-          .foregroundColor(.lightBlueGrayColor)
+        .padding(.trailing, 16.adjusted)
+        .padding(.top, 14.adjusted)
         
-        Spacer()
       }
-      .padding(.trailing, 16.adjusted)
-      .padding(.top, 14.adjusted)
-      
+      .frame(height: 116.adjusted)
+      Spacer().frame(height: 10)
+      if viewModel.isShowTextfieldWarning && !viewModel.areBothTextFieldsNotEmpty {
+        Text("\(viewModel.showTextfieldStatus)을 입력하세요.")
+          .font(.system(size: 14))
+          .foregroundColor(.pointR)
+          .padding(.leading, 20.adjusted)
+      }
     }
-    .frame(height: 116.adjusted)
     .padding([.leading,.trailing], 20.adjusted)
+
   }
 }
 

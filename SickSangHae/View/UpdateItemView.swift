@@ -71,19 +71,20 @@ struct UpdateItemView: View {
   }
   
   private var nextButton: some View {
-    ZStack {
-      Rectangle()
-        .frame(width: 350, height: 60)
-        .foregroundColor(.lightGreenGrayColor)
-        .cornerRadius(12)
-      
-      HStack {
+    Button(action: {
+      viewModel.isShowTextfieldWarning = !viewModel.areBothTextFieldsNotEmpty
+    }, label: {
+      ZStack{
+        Rectangle()
+          .cornerRadius(12)
+          .frame(height: 60.adjusted)
         Text("다음")
           .foregroundColor(.white)
-          .bold()
+          .font(.system(size: 17))
       }
-    }
-    .padding(.bottom, 30)
+      .padding([.leading, .trailing], 20.adjusted)
+      .padding(.bottom, 30.adjusted)
+    })
   }
 }
 
