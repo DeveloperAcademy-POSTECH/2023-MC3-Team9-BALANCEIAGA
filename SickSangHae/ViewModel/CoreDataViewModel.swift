@@ -111,8 +111,7 @@ extension CoreDataViewModel {
 
         switch status {
         case .shortTermUnEaten, .shortTermPinned, .longTermUnEaten:
-            receipt.currentStatus = status
-
+            updateStatusToUnEaten(target: target, to: status)
         case .Eaten:
             guard receipt.currentStatus != .Eaten else { break }
 
