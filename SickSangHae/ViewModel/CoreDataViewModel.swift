@@ -108,11 +108,7 @@ extension CoreDataViewModel {
     
     func updateStatus(target: Receipt, to status: Status) {
         switch status {
-        case .shortTermUnEaten:
-            updateStatusToUnEaten(target: target, to: status)
-        case .shortTermPinned:
-            updateStatusToUnEaten(target: target, to: status)
-        case .longTermUnEaten:
+        case .shortTermUnEaten, .shortTermPinned, .longTermUnEaten:
             updateStatusToUnEaten(target: target, to: status)
         case .Eaten:
             updateStatusToEaten(target: target)
