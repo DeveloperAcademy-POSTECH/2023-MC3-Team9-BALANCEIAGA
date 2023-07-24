@@ -7,30 +7,31 @@
 
 import SwiftUI
 
-enum Tab {
-    case MainView
-    case ChartView
-    case HistoryView
-    case SettingView
+enum Tab: CaseIterable {
+    case mainView
+    case chartView
+    case historyView
+    case settingView
+
+    @ViewBuilder
+        var view: some View {
+            switch self {
+            case .mainView: MainView()
+            case .chartView: ChartView()
+            case .historyView: HistoryView()
+            case .settingView: SettingVIew()
+            }
+        }
 }
 
 struct TabBarView: View {
-    @State var selectedTab: Tab = .MainView
+    @State var selectedTab: Tab = .mainView
 
     var body: some View {
         NavigationStack{
             VStack {
-                switch selectedTab {
-                case .MainView:
-                    MainView()
-                case .ChartView:
-                    ChartView()
-                case .HistoryView:
-                    Text("The HistoryView Tab")
-                case .SettingView:
-                    SettingVIew()
-                }
-                
+                selectedTab.view
+
                 CustomTabView(selectedTab: $selectedTab)
             }
         }
@@ -44,7 +45,7 @@ struct CustomTabView: View {
         ZStack(alignment: .bottom) {
 
             VStack{
-                if selectedTab == .MainView{
+                if selectedTab == .mainView{
                     Button{
                         // 카메라 기능을 넣어요
                     } label: {
@@ -74,7 +75,7 @@ struct CustomTabView: View {
                         .foregroundColor(.clear)
                         .overlay(
                             Button {
-                                selectedTab = .MainView
+                                selectedTab = .mainView
                             } label: {
                                 VStack{
                                     Image(systemName: "refrigerator.fill")
@@ -84,7 +85,7 @@ struct CustomTabView: View {
                                     Text("냉장고")
                                         .font(.system(size: 11.adjusted))
                                 }
-                                .foregroundColor(selectedTab == .MainView ? Color("PrimaryGB") : Color("Gray200"))
+                                .foregroundColor(selectedTab == .mainView ? Color("PrimaryGB") : Color("Gray200"))
                             }
                         )
 
@@ -96,7 +97,7 @@ struct CustomTabView: View {
                         .foregroundColor(.clear)
                         .overlay(
                             Button {
-                                selectedTab = .ChartView
+                                selectedTab = .chartView
                             } label: {
                                 VStack{
                                     Image(systemName: "chart.pie.fill")
@@ -106,7 +107,7 @@ struct CustomTabView: View {
                                     Text("통계")
                                         .font(.system(size: 11.adjusted))
                                 }
-                                .foregroundColor(selectedTab == .ChartView ? Color("PrimaryGB") : Color("Gray200"))
+                                .foregroundColor(selectedTab == .chartView ? Color("PrimaryGB") : Color("Gray200"))
                             }
                         )
                     Spacer()
@@ -117,7 +118,7 @@ struct CustomTabView: View {
                         .foregroundColor(.clear)
                         .overlay(
                             Button {
-                                selectedTab = .HistoryView
+                                selectedTab = .historyView
                             } label: {
                                 VStack{
                                     Image(systemName: "archivebox.fill")
@@ -127,7 +128,7 @@ struct CustomTabView: View {
                                     Text("보관함")
                                         .font(.system(size: 11.adjusted))
                                 }
-                                .foregroundColor(selectedTab == .HistoryView ? Color("PrimaryGB") : Color("Gray200"))
+                                .foregroundColor(selectedTab == .historyView ? Color("PrimaryGB") : Color("Gray200"))
                             }
                         )
 
@@ -139,7 +140,7 @@ struct CustomTabView: View {
                         .foregroundColor(.clear)
                         .overlay(
                             Button {
-                                selectedTab = .SettingView
+                                selectedTab = .settingView
                             } label: {
                                 VStack{
                                     Image(systemName: "gearshape.fill")
@@ -149,7 +150,7 @@ struct CustomTabView: View {
                                     Text("설정")
                                         .font(.system(size: 11.adjusted))
                                 }
-                                .foregroundColor(selectedTab == .SettingView ? Color("PrimaryGB") : Color("Gray200"))
+                                .foregroundColor(selectedTab == .settingView ? Color("PrimaryGB") : Color("Gray200"))
                             }
                         )
                 }
