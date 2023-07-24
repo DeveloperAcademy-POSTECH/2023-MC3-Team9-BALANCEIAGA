@@ -7,30 +7,31 @@
 
 import SwiftUI
 
-enum Tab {
-    case MainView
-    case ChartView
-    case HistoryView
-    case SettingView
+enum Tab: CaseIterable {
+    case mainView
+    case chartView
+    case historyView
+    case settingView
+
+    @ViewBuilder
+        var view: some View {
+            switch self {
+            case .mainView: MainView()
+            case .chartView: ChartView()
+            case .historyView: HistoryView()
+            case .settingView: SettingVIew()
+            }
+        }
 }
 
 struct TabBarView: View {
-    @State var selectedTab: Tab = .MainView
+    @State var selectedTab: Tab = .mainView
 
     var body: some View {
         NavigationStack{
-            VStack(spacing: 0) {
-                switch selectedTab {
-                case .MainView:
-                    MainView()
-                case .HistoryView:
-                    HistoryView()
-                case .ChartView:
-                    ChartView()
-                case .SettingView:
-                    SettingVIew()
-                }
-                
+            VStack {
+                selectedTab.view
+
                 CustomTabView(selectedTab: $selectedTab)
             }
             .ignoresSafeArea(.keyboard)
@@ -59,7 +60,8 @@ struct CustomTabView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            if selectedTab == .MainView{
+            switch selectedTab {
+            case .mainView:
                 Button {
                     // 카메라 기능을 넣어요
                 } label: {
@@ -67,7 +69,7 @@ struct CustomTabView: View {
                         ScanButton(cornerRadius: 15)
                                     .fill(LinearGradient(gradient: Gradient(colors: [Color("PrimaryG"), Color("PrimaryB")]), startPoint: .leading, endPoint: .trailing))
                                     .frame(width: screenWidth, height: 55)
-                        
+
                         HStack {
                             Image(systemName: "camera.viewfinder")
                             Text("영수증 스캔하기")
@@ -76,93 +78,28 @@ struct CustomTabView: View {
                         .foregroundColor(.white)
                     }
                 }
+            default: EmptyView()
+
             }
             
             Spacer()
                 .frame(height: 14)
-            
+
             HStack {
-                Rectangle()
-                    .frame(width: 48, height: 44)
-                    .foregroundColor(.clear)
-                    .overlay(
-                        Button {
-                            selectedTab = .MainView
-                        } label: {
-                            VStack{
-                                Image(systemName: "refrigerator.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 24)
-                                Text("냉장고")
-                                    .font(.system(size: 11, weight: .medium))
-                            }
-                            .foregroundColor(selectedTab == .MainView ? Color("PrimaryGB") : Color("Gray200"))
-                        }
-                    )
+                TabItem(selectedTabType: .mainView, imageName: "refrigerator.fill", title: "냉장고")
                 
                 Spacer()
-                
-                Rectangle()
-                    .frame(width: 48, height: 44)
-                    .foregroundColor(.clear)
-                    .overlay(
-                        Button {
-                            selectedTab = .HistoryView
-                        } label: {
-                            VStack{
-                                Image(systemName: "archivebox.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 24)
-                                Text("식기록")
-                                    .font(.system(size: 11, weight: .medium))
-                            }
-                            .foregroundColor(selectedTab == .HistoryView ? Color("PrimaryGB") : Color("Gray200"))
-                        }
-                    )
+
+                TabItem(selectedTabType: .historyView, imageName: "archivebox.fill", title: "식기록")
                 
                 Spacer()
-                
-                Rectangle()
-                    .frame(width: 48, height: 44)
-                    .foregroundColor(.clear)
-                    .overlay(
-                        Button {
-                            selectedTab = .ChartView
-                        } label: {
-                            VStack{
-                                Image(systemName: "chart.pie.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 24)
-                                Text("식통계")
-                                    .font(.system(size: 11, weight: .medium))
-                            }
-                            .foregroundColor(selectedTab == .ChartView ? Color("PrimaryGB") : Color("Gray200"))
-                        }
-                    )
+
+                TabItem(selectedTabType: .chartView, imageName: "chart.pie.fill", title: "식통계")
                 
                 Spacer()
-                
-                Rectangle()
-                    .frame(width: 48, height: 44)
-                    .foregroundColor(.clear)
-                    .overlay(
-                        Button {
-                            selectedTab = .SettingView
-                        } label: {
-                            VStack{
-                                Image(systemName: "gearshape.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 24)
-                                Text("설정")
-                                    .font(.system(size: 11, weight: .medium))
-                            }
-                            .foregroundColor(selectedTab == .SettingView ? Color("PrimaryGB") : Color("Gray200"))
-                        }
-                    )
+
+                TabItem(selectedTabType: .settingView, imageName: "gearshape.fill", title: "설정")
+
             }
             .frame(width: screenWidth * 0.85)
             
@@ -170,6 +107,27 @@ struct CustomTabView: View {
                 .frame(height: 14)
         }
         .frame(width: screenWidth)
+    }
+
+    func TabItem(selectedTabType: Tab, imageName: String, title: String) -> some View{
+        Rectangle()
+            .frame(width: 48, height: 44)
+            .foregroundColor(.clear)
+            .overlay(
+                Button {
+                    selectedTab = selectedTabType
+                } label: {
+                    VStack{
+                        Image(systemName: "refrigerator.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 24)
+                        Text("냉장고")
+                            .font(.system(size: 11, weight: .medium))
+                    }
+                    .foregroundColor(selectedTab == selectedTabType ? Color("PrimaryGB") : Color("Gray200"))
+                }
+            )
     }
 }
 
