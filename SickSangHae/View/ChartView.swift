@@ -149,10 +149,6 @@ struct ChartView: View {
 
     }
 
-//    private var worstEaten: some View{
-//
-//    }
-
     private var summaryList: some View{
         VStack(spacing: 15.adjusted){
             HStack{
