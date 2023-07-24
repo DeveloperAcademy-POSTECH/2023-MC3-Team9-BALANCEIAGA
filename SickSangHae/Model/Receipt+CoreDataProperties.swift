@@ -48,7 +48,7 @@ extension Receipt {
     
     var itemCategory: Categories {
         get {
-            return Categories(rawValue: self.category) ?? .Unknown
+            return Categories(rawValue: self.category) ?? .unknown
         }
         set {
             self.category = newValue.rawValue

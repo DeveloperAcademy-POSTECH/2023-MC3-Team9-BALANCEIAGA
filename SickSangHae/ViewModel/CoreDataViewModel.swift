@@ -78,7 +78,7 @@ extension CoreDataViewModel {
         receipt.price = price
         receipt.previousStatus = .shortTermUnEaten
         receipt.currentStatus = .shortTermUnEaten
-        receipt.itemCategory = .Unknown
+        receipt.itemCategory = .unknown
         
         saveChanges()
         self.getAllReceiptData()
@@ -95,7 +95,7 @@ extension CoreDataViewModel {
         receipt.price = 6000.0
         receipt.previousStatus = .shortTermUnEaten
         receipt.currentStatus = .shortTermUnEaten
-        receipt.itemCategory = .Unknown
+        receipt.itemCategory = .unknown
         
         saveChanges()
         self.getAllReceiptData()
@@ -111,7 +111,7 @@ extension CoreDataViewModel {
 
         switch status {
         case .shortTermUnEaten, .shortTermPinned, .longTermUnEaten:
-            updateStatusToUnEaten(target: target, to: status)
+            receipt.currentStatus = status
         case .Eaten:
             guard receipt.currentStatus != .Eaten else { break }
 
