@@ -9,16 +9,31 @@ import SwiftUI
 
 struct HistoryView: View {
     
-    @StateObject var coreDataViewModel = CoreDataViewModel()
+    @State var isMovingSegmentedTab = true
     
-    @State var isMovingSegmentedTab : Bool = true
-    
-    let array = ["Apple", "Banana", "Orange", "Pineapple", "Grapes", "Watermelon"]
+    let array: [String] = ["Apple", "Banana", "Orange", "Pineapple", "Grapes", "Watermelon"]
     
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                topHeader
+                //버튼 및 타이틀
+                Spacer()
+                    .frame(height: 32)
+                
+                HStack {
+                    Text("보관함")
+                        .font(.system(size: 28, weight: .bold))
+                        .foregroundColor(Color("PrimaryGB"))
+                        .padding(.horizontal, 20)
+                    Spacer()
+                }
+                
+                Spacer()
+                    .frame(height: 20)
+                
+                segmentedTabButton
+                    .padding(.horizontal, 20)
+                
                 
                 ScrollView {
                     deleteNotiMessage
@@ -36,28 +51,6 @@ struct HistoryView: View {
         
     } //body닫기
     
-    
-    var topHeader: some View {
-        //버튼 및 타이틀
-        VStack(alignment: .leading, spacing: 0) {
-            Spacer()
-                .frame(height: 32)
-            
-            Text("보관함")
-                .font(.system(size: 28, weight: .bold))
-                .foregroundColor(Color("PrimaryGB"))
-                .padding(.horizontal, 20)
-            
-            Spacer()
-                .frame(height: 20)
-            
-            segmentedTabButton
-                .padding(.horizontal, 20)
-            
-        } //VStack닫기
-        
-    } //topHeader닫기
-    
     var segmentedTabButton: some View {
         HStack {
             VStack(spacing: 0) {
@@ -72,13 +65,14 @@ struct HistoryView: View {
                 }) //Button닫기
                 
                 Spacer()
-                
+
                 RoundedRectangle(cornerRadius: 1.5)
                     .foregroundColor(isMovingSegmentedTab ? Color("PrimaryGB") : .clear)
-                    .frame(width: screenWidth * 0.4, height: 3)
+                    .frame(width: 155, height: 3)
             } //VStack닫기
             
             Spacer()
+                .frame(minWidth: 10, maxWidth: 40)
             
             VStack(spacing: 0) {
                 Spacer()
@@ -95,7 +89,7 @@ struct HistoryView: View {
                 
                 RoundedRectangle(cornerRadius: 1.5)
                     .foregroundColor(isMovingSegmentedTab ? .clear : Color("PrimaryGB"))
-                    .frame(width: screenWidth * 0.4, height: 3)
+                    .frame(width: 155, height: 3)
             } //VStack닫기
         } //HStack닫기
         .frame(height: 52)
