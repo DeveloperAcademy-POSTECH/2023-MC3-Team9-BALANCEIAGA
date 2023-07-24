@@ -140,8 +140,7 @@ extension CoreDataViewModel {
     
     
     func recoverPreviousStatus(target: Receipt) {
-        guard let receipt = viewContext.get(by: target.objectID) else { return }
-        guard receipt.currentStatus == .Eaten || receipt.currentStatus == .Spoiled else { return }
+        guard let receipt = viewContext.get(by: target.objectID), receipt.currentStatus == .Eaten || receipt.currentStatus == .Spoiled else { return }
         
         receipt.currentStatus = receipt.previousStatus
         receipt.dateOfHistory = receipt.dateOfPurchase
