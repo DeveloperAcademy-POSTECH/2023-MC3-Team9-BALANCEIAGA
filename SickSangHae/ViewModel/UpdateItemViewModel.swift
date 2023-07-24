@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-class UpdateItemViewModel: ObservableObject {
+//MARK: - CalendarViewModel로 이름 변경 필요, monthFormatter 필요
+final class UpdateItemViewModel: ObservableObject {
   @Published var date = Date()
   @Published var isDatePickerOpen = false
   
@@ -33,17 +34,27 @@ class UpdateItemViewModel: ObservableObject {
     UpdateItemViewModel.dateFormat.string(from: date)
   }
   
-  func isDateBeforeToday() -> Bool {
+  var isDateBeforeToday: Bool {
     return date < todayDate
   }
   
-  func decreaseDate() {
-    date = Calendar.current.date(byAdding: .day, value: -1, to: date) ?? date
+  var decreaseDate: Date {
+    get {
+      return date
+    }
+    set {
+      date = Calendar.current.date(byAdding: .day, value: -1, to: date) ?? date
+    }
   }
   
-  func increaseDate() {
-    if isDateBeforeToday() {
-      date = Calendar.current.date(byAdding: .day, value: +1, to: date) ?? date
+  var increaseDate: Date {
+    get {
+      return date
+    }
+    set {
+      if newValue < todayDate {
+        date = Calendar.current.date(byAdding: .day, value: +1, to: date) ?? date
+      }
     }
   }
 }
