@@ -9,8 +9,8 @@ import SwiftUI
 
 struct ItemBlockView: View {
   @State var name: String = ""
-  @State var price: Int = 0
-  
+  @State var priceInt: Int = 0
+  @State var priceString: String = ""
   @ObservedObject var viewModel: UpdateItemViewModel
   var body: some View {
     ZStack(alignment: .trailing) {
@@ -26,9 +26,16 @@ struct ItemBlockView: View {
         Divider().foregroundColor(.gray100)
         HStack(spacing: 28.adjusted) {
           Text("금액")
-            .padding(.leading,20)
-          TextField("얼마였나요?", value: $price, formatter: UpdateItemViewModel.priceFormatter)
-            .keyboardType(.numberPad)
+            .padding(.leading, 20)
+          TextField("얼마였나요?",
+                    text: $priceString, onEditingChanged: { editing in
+            if !editing {
+              priceInt = Int(priceString) ?? 0
+              priceString = UpdateItemViewModel.priceFormatter.string(from: NSNumber(value: priceInt)) ?? ""
+            }
+            
+          })
+          .keyboardType(.numberPad)
         }
       }
       VStack {
@@ -48,8 +55,5 @@ struct ItemBlockView: View {
   }
 }
 
-struct ItemBlockView_Previews: PreviewProvider {
-  static var previews: some View {
-    ItemBlockView(viewModel: UpdateItemViewModel())
-  }
-}
+
+

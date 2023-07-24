@@ -9,7 +9,6 @@ import SwiftUI
 
 struct UpdateItemView: View {
   @ObservedObject var viewModel: UpdateItemViewModel
-  
   var body: some View {
     ZStack {
       Color.white
