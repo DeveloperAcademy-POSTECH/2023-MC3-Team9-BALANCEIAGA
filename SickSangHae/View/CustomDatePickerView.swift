@@ -13,7 +13,7 @@ struct DateSelectionView: View {
   var body: some View {
     HStack(spacing: 24) {
       Button(action: {
-        viewModel.decreaseDate()
+        viewModel.decreaseDate = viewModel.date
       }, label: {
         Image(systemName: "chevron.left")
           .resizable()
@@ -28,13 +28,13 @@ struct DateSelectionView: View {
       })
       
       Button(action: {
-        viewModel.increaseDate()
+        viewModel.increaseDate = viewModel.date
       }, label: {
         Image(systemName: "chevron.right")
           .resizable()
           .frame(width: 8, height: 14)
       })
-      .foregroundColor(viewModel.isDateBeforeToday() ? .black : .gray)
+      .foregroundColor(viewModel.isDateBeforeToday ? .black : .gray)
     }
     .foregroundColor(.black)
   }
