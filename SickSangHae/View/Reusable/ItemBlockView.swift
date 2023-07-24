@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ItemBlockView: View {
-
   @ObservedObject var viewModel: UpdateItemViewModel
   var body: some View {
     VStack(alignment: .leading) {
@@ -38,16 +37,18 @@ struct ItemBlockView: View {
           }
         }
         VStack {
-          Image(systemName: "xmark.circle.fill")
-            .resizable()
-            .frame(width:25 ,height:25)
-            .foregroundColor(.lightBlueGrayColor)
-          
+          Button(action: {
+            viewModel.isShowTopAlertView = true
+          }, label: {
+            Image(systemName: "xmark.circle.fill")
+              .resizable()
+              .frame(width:25 ,height:25)
+              .foregroundColor(.lightBlueGrayColor)
+          })
           Spacer()
         }
         .padding(.trailing, 16.adjusted)
         .padding(.top, 14.adjusted)
-        
       }
       .frame(height: 116.adjusted)
       Spacer().frame(height: 10)

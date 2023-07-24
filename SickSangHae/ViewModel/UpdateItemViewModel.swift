@@ -12,6 +12,7 @@ final class UpdateItemViewModel: ObservableObject {
   @Published var date = Date()
   @Published var isDatePickerOpen = false
   @Published var isShowTextfieldWarning = false
+  @Published var isShowTopAlertView = false
   @Published var priceInt: Int = 0
   @Published var priceString: String = ""
   @Published var name: String = ""

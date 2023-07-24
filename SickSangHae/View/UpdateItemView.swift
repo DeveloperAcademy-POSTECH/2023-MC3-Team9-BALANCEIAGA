@@ -10,7 +10,7 @@ import SwiftUI
 struct UpdateItemView: View {
   @ObservedObject var viewModel: UpdateItemViewModel
   var body: some View {
-    ZStack {
+    ZStack(alignment: .top) {
       Color.white
         .ignoresSafeArea(.all)
       VStack {
@@ -27,6 +27,16 @@ struct UpdateItemView: View {
           }
           if viewModel.isDatePickerOpen {
             DatePickerView(viewModel: viewModel)
+          }
+        }
+      }
+      if viewModel.isShowTopAlertView {
+        Group {
+          TopAlertView(viewModel: TopAlertViewModel(name: "파채", currentCase: .delete))
+        }
+        .onAppear {
+          DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            viewModel.isShowTopAlertView = false
           }
         }
       }
