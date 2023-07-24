@@ -45,14 +45,15 @@ struct CustomTabView: View {
         ZStack(alignment: .bottom) {
 
             VStack{
-                if selectedTab == .mainView{
+                switch selectedTab {
+                case .mainView:
                     Button{
                         // 카메라 기능을 넣어요
                     } label: {
                         ZStack{
                             Rectangle()
                                 .fill(LinearGradient(gradient: Gradient(colors: [Color("PrimaryG"), Color("PrimaryB")]), startPoint: .leading, endPoint: .trailing))
-                                .frame(width: screenWidth, height: 55.adjusted)
+                                .frame(width: .infinity, height: 55.adjusted)
                                 .foregroundColor(.blueGrayColor)
                                 .padding(.bottom, 12.adjusted)
                                 .cornerRadius(15.adjusted)
@@ -67,6 +68,7 @@ struct CustomTabView: View {
                         }
                     }
                     .padding(.bottom, 10.adjusted)
+                default: HStack{}
                 }
 
                 HStack {
