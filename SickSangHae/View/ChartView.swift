@@ -23,20 +23,22 @@ struct ChartView: View {
 
     var body: some View {
 
+        Spacer()
+            .frame(height: 32.adjusted)
+
+        HStack(alignment: .top){
+            Text("식통계")
+                .font(.system(size: 28.adjusted).weight(.bold))
+                .foregroundColor( Color("PrimaryGB"))
+
+            Spacer()
+
+        }
+        .padding(.horizontal, 20.adjusted)
+        
         ScrollView{
             VStack(alignment: .center){
-                Spacer()
-                    .frame(height: 32.adjusted)
 
-                HStack(alignment: .top){
-                    Text("통계")
-                        .font(.system(size: 28.adjusted).weight(.bold))
-                        .foregroundColor( Color("PrimaryGB"))
-
-                    Spacer()
-
-                }
-                .padding(.horizontal, 20.adjusted)
 
                 Spacer()
                     .frame(height: 26.adjusted)
