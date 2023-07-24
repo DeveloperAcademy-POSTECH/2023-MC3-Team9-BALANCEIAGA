@@ -107,59 +107,34 @@ extension CoreDataViewModel {
     }
     
     func updateStatus(target: Receipt, to status: Status) {
+        guard let receipt = viewContext.get(by: target.objectID) else { return }
+
         switch status {
-        case .shortTermUnEaten:
-            updateStatusToUnEaten(target: target, to: status)
-        case .shortTermPinned:
-            updateStatusToUnEaten(target: target, to: status)
-        case .longTermUnEaten:
-            updateStatusToUnEaten(target: target, to: status)
+        case .shortTermUnEaten, .shortTermPinned, .longTermUnEaten:
+            receipt.currentStatus = status
+
         case .Eaten:
-            updateStatusToEaten(target: target)
+            guard receipt.currentStatus != .Eaten else { break }
+
+            if receipt.currentStatus != .Spoiled {
+                receipt.previousStatus = receipt.currentStatus
+            }
+
+            receipt.currentStatus = .Eaten
+
         case .Spoiled:
-            updateStatusToSpoiled(target: target)
+            guard receipt.currentStatus != .Spoiled else { break }
+
+            if receipt.currentStatus != .Eaten {
+                receipt.previousStatus = receipt.currentStatus
+            }
+
+
+            receipt.currentStatus = .Spoiled
         }
-    }
-    
-    private func updateStatusToUnEaten(target: Receipt, to status: Status) {
-        guard let receipt = viewContext.get(by: target.objectID) else { return }
-        
-        receipt.currentStatus = status
+
         receipt.dateOfHistory = Date.now
-        
-        saveChanges()
-        getAllReceiptData()
-    }
-    
-    private func updateStatusToEaten(target: Receipt) {
-        guard let receipt = viewContext.get(by: target.objectID) else { return }
-        guard receipt.currentStatus != .Eaten else { return }
-        
-        if receipt.currentStatus != .Spoiled {
-            receipt.previousStatus = receipt.currentStatus
-        }
-        
-        receipt.currentStatus = .Eaten
-        receipt.dateOfHistory = Date.now
-        
-        saveChanges()
-        getAllReceiptData()
-    }
-    
-    
-    private func updateStatusToSpoiled(target: Receipt) {
-        guard let receipt = viewContext.get(by: target.objectID) else { return }
-        
-        guard receipt.currentStatus != .Spoiled else { return }
-        
-        if receipt.currentStatus != .Eaten {
-            receipt.previousStatus = receipt.currentStatus
-        }
-        
-        
-        receipt.currentStatus = .Spoiled
-        receipt.dateOfHistory = Date.now
-        
+
         saveChanges()
         getAllReceiptData()
     }
