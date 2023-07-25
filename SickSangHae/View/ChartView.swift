@@ -49,7 +49,7 @@ struct ChartView: View {
                         selectedDate = Calendar.current.date(byAdding: .month, value: -1, to: selectedDate) ?? selectedDate
                     }) {
                         Image(systemName: "chevron.left")
-                            .foregroundColor(Color("Gray900"))
+                            .foregroundColor(.gray900)
                     }
 
                     Text("\(dateFormatter.string(from: selectedDate))월")
