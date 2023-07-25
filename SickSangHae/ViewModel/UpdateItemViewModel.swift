@@ -18,6 +18,20 @@ final class UpdateItemViewModel: ObservableObject {
   @Published var name: String = ""
   
   
+    @Published var items: [Item] = [Item](arrayLiteral: Item())
+  
+    struct Item: Hashable, Identifiable {
+        let id: UUID
+        let name: String
+        let price: Int
+        
+        init(name: String = "", price: Int = 0) {
+            self.id = UUID()
+            self.name = name
+            self.price = price
+        }
+    }
+    
   private static let dateFormat: DateFormatter =  {
     let formatter = DateFormatter()
     formatter.dateFormat = "YYYY년 M월 dd일"
@@ -83,5 +97,19 @@ final class UpdateItemViewModel: ObservableObject {
       }
     }
   }
+    
+    func addNewItem() {
+        items.append(Item())
+        // TODO: CoreData 에 넣는 함수
+    }
+    
+    func deleteItem(id: UUID) {
+        for i in 0..<items.count {
+            if items[i].id == id {
+                items.remove(at: i)
+                return
+            }
+        }
+    }
 }
 
