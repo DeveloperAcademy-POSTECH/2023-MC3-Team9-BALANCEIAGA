@@ -27,7 +27,7 @@ struct UpdateItemView: View {
                   ScrollView {
                       VStack {
                           ForEach(viewModel.items, id: \.self) { item in
-                              ItemBlockView(name: item.name, price: item.price,viewModel: viewModel)
+                              ItemBlockView(viewModel: viewModel)
                           }
                           .onChange(of: viewModel.items) { _ in
                               withAnimation {
@@ -55,10 +55,9 @@ struct UpdateItemView: View {
       
       if viewModel.isShowTopAlertView {
         Group {
-          if viewModel.isShowTopAlertView {
             TopAlertView(viewModel: TopAlertViewModel(name: "파채", currentCase: .delete))
               .transition(.move(edge: .top))
-          }
+          
         }
         .opacity(viewModel.isShowTopAlertView ? 1 : 0)
         .animation(.easeInOut(duration: 0.4))
@@ -77,6 +76,7 @@ struct UpdateItemView: View {
         .onTapGesture {
           self.endTextEditing()
         }
+        .navigationBarBackButtonHidden(true)
     }
   
     
