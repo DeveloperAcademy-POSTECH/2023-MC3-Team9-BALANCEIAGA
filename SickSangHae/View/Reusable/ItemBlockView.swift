@@ -55,8 +55,12 @@ struct ItemBlockView: View {
   }
 }
 
-struct ItemBlockView_Previews: PreviewProvider {
-  static var previews: some View {
-    ItemBlockView(viewModel: UpdateItemViewModel())
-  }
+extension ItemBlockView: Hashable, Equatable {
+    static func == (lhs: ItemBlockView, rhs: ItemBlockView) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        
+    }
 }
