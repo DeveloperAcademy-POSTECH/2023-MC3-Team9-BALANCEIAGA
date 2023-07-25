@@ -26,9 +26,8 @@ final class UpdateItemViewModel: ObservableObject {
   
   static let priceFormatter: NumberFormatter = {
     let formatter = NumberFormatter()
-    formatter.numberStyle = .decimal
+    formatter.numberStyle = .currency
     formatter.groupingSeparator = ","
-    formatter.positiveSuffix = "원"
     return formatter
   }()
   

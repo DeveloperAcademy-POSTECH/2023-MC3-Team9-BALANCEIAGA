@@ -25,13 +25,22 @@ struct ItemBlockView: View {
           HStack(spacing: 28.adjusted) {
             Text("금액")
               .padding(.leading, 20)
-            TextField("얼마였나요?",
-                      text: $viewModel.priceString, onEditingChanged: { editing in
+//            TextField("얼마였나요?",
+//                      text: $viewModel.priceString, onEditingChanged: { editing in
+//              if !editing {
+//                viewModel.priceInt = Int(viewModel.priceString) ?? 0
+//                viewModel.priceString = UpdateItemViewModel.priceFormatter.string(from: NSNumber(value: viewModel.priceInt)) ?? ""
+//                print(viewModel.priceInt
+//                )
+//                print(viewModel.priceString)
+//              }
+//
+//            })
+            
+            TextField("얼마였나요?", value: $viewModel.priceInt, formatter: UpdateItemViewModel.priceFormatter, onEditingChanged:  { editing in
               if !editing {
-                viewModel.priceInt = Int(viewModel.priceString) ?? 0
-                viewModel.priceString = UpdateItemViewModel.priceFormatter.string(from: NSNumber(value: viewModel.priceInt)) ?? ""
+                print(viewModel.priceInt)
               }
-              
             })
             .keyboardType(.numberPad)
           }

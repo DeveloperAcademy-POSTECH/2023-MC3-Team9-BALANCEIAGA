@@ -60,8 +60,6 @@ struct TopAlertBaseView: View {
         .padding(.leading, 14.adjusted)
       }
       .padding([.leading, .trailing], 20.adjusted)
-
-      .animation(.easeInOut)
       .offset(y: max(dragOffset.height, 0))
       .gesture (DragGesture()
         .updating($dragOffset, body: { (value, dragOffset, _) in
