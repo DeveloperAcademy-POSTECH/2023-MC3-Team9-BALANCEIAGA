@@ -33,7 +33,6 @@ extension NSManagedObjectContext {
                 print("Get 한 object 변환 실패")
                 return nil
             }
-            print(result)
             return result
         } catch {
             print("해당하는 object 찾는거 실패")
@@ -47,7 +46,6 @@ extension NSManagedObjectContext {
         do {
             let results = (try fetch(request) as? [NSManagedObject]) ?? [NSManagedObject]()
             results.forEach {
-                print($0)
                 self.delete($0)
             }
         } catch {
