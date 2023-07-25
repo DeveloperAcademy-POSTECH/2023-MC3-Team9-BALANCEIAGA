@@ -8,44 +8,52 @@
 import SwiftUI
 
 struct ItemBlockView: View {
-    var body: some View {
-        
-        ZStack {
-            Rectangle()
-                .frame(width: 350, height: 116)
-                .foregroundColor(.lightGrayColor)
-                .cornerRadius(12)
-            VStack(alignment: .leading) {
-                HStack {
-                    Text("품목")
-                        .padding(.leading,20)
-                    Text("품목을 입력해주세요.")
-                        .foregroundColor(.blueGrayColor)
-                        .padding(.leading,30)
-                }
-                Divider()
-                    .frame(width: 350, height: 10)
-                    .foregroundColor(.lightGrayColor)
-                HStack {
-                    Text("금액")
-                        .padding(.leading,20)
-                    Text("금액을 입력해주세요.")
-                        .foregroundColor(.blueGrayColor)
-                        .padding(.leading,30)
-                }
-            }
-            Image(systemName: "xmark.circle.fill")
-                .resizable()
-                .frame(width:25 ,height:25)
-                .foregroundColor(.lightBlueGrayColor)
-                .padding(.leading, 295)
-                .padding(.bottom, 60)
+  @State var name: String = ""
+  @State var price: Int = 0
+  
+  @ObservedObject var viewModel: UpdateItemViewModel
+  var body: some View {
+    ZStack(alignment: .trailing) {
+      Rectangle()
+        .foregroundColor(.lightGrayColor)
+        .cornerRadius(12)
+      VStack(alignment: .leading) {
+        HStack(spacing: 28.adjusted) {
+          Text("품목")
+            .padding(.leading,20)
+          TextField("무엇을 구매했나요?", text: $name)
         }
+        Divider().foregroundColor(.gray100)
+        HStack(spacing: 28.adjusted) {
+          Text("금액")
+            .padding(.leading,20)
+          TextField("얼마였나요?", value: $price, formatter: UpdateItemViewModel.priceFormatter)
+            .keyboardType(.numberPad)
+        }
+      }
+      VStack {
+        Image(systemName: "xmark.circle.fill")
+          .resizable()
+          .frame(width:25 ,height:25)
+          .foregroundColor(.lightBlueGrayColor)
+          .onTapGesture {
+              // TODO: viewmodel delete function
+              
+          }
+        
+        Spacer()
+      }
+      .padding(.trailing, 16.adjusted)
+      .padding(.top, 14.adjusted)
+      
     }
+    .frame(height: 116.adjusted)
+    .padding([.leading,.trailing], 20.adjusted)
+  }
 }
 
 struct ItemBlockView_Previews: PreviewProvider {
-    static var previews: some View {
-        ItemBlockView()
-    }
+  static var previews: some View {
+    ItemBlockView(viewModel: UpdateItemViewModel())
+  }
 }
