@@ -19,7 +19,15 @@ extension CGFloat {
 }
 
 extension Int {
-  public var adjusted: CGFloat {
+  var adjusted: CGFloat {
+    let ratio: CGFloat = screenWidth / 390
+    let ratioH: CGFloat = screenHeight / 844
+    return ratio <= ratioH ? CGFloat(self) * ratio : CGFloat(self) * ratioH
+  }
+}
+
+extension Double {
+  var adjusted: CGFloat {
     let ratio: CGFloat = screenWidth / 390
     let ratioH: CGFloat = screenHeight / 844
     return ratio <= ratioH ? CGFloat(self) * ratio : CGFloat(self) * ratioH
