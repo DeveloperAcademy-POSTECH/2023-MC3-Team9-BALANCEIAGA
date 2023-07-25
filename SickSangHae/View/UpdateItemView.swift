@@ -130,6 +130,7 @@ struct UpdateItemView: View {
         .frame(width: 15, height: 15)
     }
     .padding([.leading, .trailing], 20.adjusted)
+//    .padding(.top, 10)
   }
   
   private var addItemButton: some View {
