@@ -36,6 +36,10 @@ struct ItemBlockView: View {
           .resizable()
           .frame(width:25 ,height:25)
           .foregroundColor(.lightBlueGrayColor)
+          .onTapGesture {
+              // TODO: viewmodel delete function
+              
+          }
         
         Spacer()
       }
