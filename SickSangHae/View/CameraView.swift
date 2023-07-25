@@ -45,6 +45,7 @@ struct CameraView: View {
         selfAddButton
       }
     }
+    .navigationBarBackButtonHidden(true)
     .foregroundColor(.white)
     .sheet(isPresented: $viewModel.isImagePickerPresented ,onDismiss: {
       viewModel.isSelectedShowPreview.toggle()

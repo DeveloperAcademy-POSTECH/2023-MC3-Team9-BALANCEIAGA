@@ -62,22 +62,21 @@ struct CustomTabView: View {
         VStack(spacing: 0) {
             switch selectedTab {
             case .mainView:
-                Button {
-                    // 카메라 기능을 넣어요
-                } label: {
-                    ZStack {
-                        ScanButton(cornerRadius: 15)
-                                    .fill(LinearGradient(gradient: Gradient(colors: [Color("PrimaryG"), Color("PrimaryB")]), startPoint: .leading, endPoint: .trailing))
-                                    .frame(width: screenWidth, height: 55)
-
-                        HStack {
-                            Image(systemName: "camera.viewfinder")
-                            Text("영수증 스캔하기")
-                                .font(.system(size: 17, weight: .semibold))
-                        }
-                        .foregroundColor(.white)
-                    }
+              NavigationLink(destination: CameraView(), label: {
+                ZStack {
+                  ScanButton(cornerRadius: 15)
+                    .fill(LinearGradient(gradient: Gradient(colors: [Color("PrimaryG"), Color("PrimaryB")]), startPoint: .leading, endPoint: .trailing))
+                    .frame(width: screenWidth, height: 55)
+                  
+                  HStack {
+                    Image(systemName: "camera.viewfinder")
+                    Text("영수증 스캔하기")
+                      .font(.system(size: 17, weight: .semibold))
+                  }
+                  .foregroundColor(.white)
                 }
+              })
+                
             default: EmptyView()
 
             }
