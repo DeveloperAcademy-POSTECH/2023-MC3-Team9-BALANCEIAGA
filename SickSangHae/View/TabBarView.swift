@@ -29,7 +29,7 @@ struct TabBarView: View {
 
     var body: some View {
         NavigationStack{
-            VStack {
+            VStack(spacing: 0) {
                 selectedTab.view
 
                 CustomTabView(selectedTab: $selectedTab)
