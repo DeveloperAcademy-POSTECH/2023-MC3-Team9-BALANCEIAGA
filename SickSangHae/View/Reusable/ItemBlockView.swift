@@ -59,7 +59,6 @@ struct ItemBlockView: View {
           .font(.system(size: 14))
           .foregroundColor(.pointR)
           .padding(.leading, 20.adjusted)
-      }
     }
     .padding(.horizontal, 20.adjusted)
 

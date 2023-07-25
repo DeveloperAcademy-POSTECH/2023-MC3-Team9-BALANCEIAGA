@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct UpdateItemView: View {
+    
+    @Namespace var bottomID
+    
   @ObservedObject var viewModel: UpdateItemViewModel
   var body: some View {
     ZStack(alignment: .top) {
@@ -20,8 +23,27 @@ struct UpdateItemView: View {
         Spacer().frame(height: 30.adjusted)
         ZStack(alignment: .top) {
           VStack {
-            ItemBlockView(viewModel: viewModel)
-            addItemButton
+              ScrollViewReader { proxy in
+                  ScrollView {
+                      VStack {
+                          ForEach(viewModel.items, id: \.self) { item in
+                              ItemBlockView(name: item.name, price: item.price,viewModel: viewModel)
+                          }
+                          .onChange(of: viewModel.items) { _ in
+                              withAnimation {
+                                  proxy.scrollTo(bottomID, anchor: .bottom)
+                              }
+                          }
+                          addItemButton
+                            .onTapGesture {
+                                withAnimation {
+                                    viewModel.addNewItem()
+                                }
+                            }
+                            .id(bottomID)
+                      }
+                  }
+              }
             Spacer()
             nextButton
           }
