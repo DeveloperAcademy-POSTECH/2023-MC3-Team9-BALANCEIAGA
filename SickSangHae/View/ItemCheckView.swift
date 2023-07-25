@@ -69,23 +69,29 @@ struct ItemCheckView: View {
 
             Spacer()
 
-            Button{
+            switch isOCR{
+            case true:
+                Button{
 
-            } label: {
+                } label: {
 
-                ZStack{
-                    RoundedRectangle(cornerRadius: 5)
-                        .foregroundColor(Color("Gray100"))
+                    ZStack{
+                        RoundedRectangle(cornerRadius: 5)
+                            .foregroundColor(Color("Gray100"))
 
-                    Text("수정")
-                        .foregroundColor(Color("Gray600"))
+                        Text("수정")
+                            .foregroundColor(Color("Gray600"))
+                    }
+                    .frame(width: 45, height: 25)
+
                 }
-                .frame(width: 45, height: 25)
-
+                .foregroundColor(Color("Gray600"))
+                .font(.system(size: 14.adjusted))
+                .padding(.trailing, 20.adjusted)
+            default:
+                EmptyView()
             }
-            .foregroundColor(Color("Gray600"))
-            .font(.system(size: 14.adjusted))
-            .padding(.trailing, 20.adjusted)
+
         }
         .padding([.top, .bottom], 17.adjusted)
         .padding([.leading], 20.adjusted)
