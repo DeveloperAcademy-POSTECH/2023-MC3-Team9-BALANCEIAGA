@@ -91,7 +91,7 @@ struct UpdateItemView: View {
                           addItemButton
                             .onTapGesture {
                                 withAnimation {
-                                    viewModel.addNewItem()
+                                    addItemBlockView()
                                 }
                             }
                             .id(bottomID)
@@ -100,6 +100,9 @@ struct UpdateItemView: View {
               }
             Spacer()
             nextButton
+                  .onTapGesture {
+                      registerItemBlockViews()
+                  }
           }
           if viewModel.isDatePickerOpen {
             DatePickerView(viewModel: viewModel)
@@ -227,6 +230,22 @@ extension UpdateItemView {
       .padding([.leading, .trailing], 14.adjusted)
     }
   }
+    
+    func addItemBlockView() {
+        itemBlockViews.append(ItemBlockView(viewModel: viewModel))
+        swipeOffsets.append(CGFloat(0))
+    }
+    
+    func deleteItemBlockView(_ offset:Int) {
+        itemBlockViews.remove(at: offset)
+        swipeOffsets.remove(at: offset)
+    }
+    
+    func registerItemBlockViews() {
+        for i in 0..<itemBlockViews.count {
+            // TODO: CoreData 연결
+        }
+    }
 }
 
 struct UpdateItemView_Previews: PreviewProvider {
