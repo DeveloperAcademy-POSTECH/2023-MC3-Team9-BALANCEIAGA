@@ -11,15 +11,21 @@ struct ItemCheckView: View {
 
     var items = ["a", "b", "c", "d"]
     // TODO: 나중에 뷰 연결할때는 @Binding으로 바꾸어야할 듯합니다.
-    var isOCR = false
+    var isOCR = true
     @ObservedObject var viewModel = UpdateItemViewModel()
 
     var body: some View {
         ZStack(alignment: .top) {
             VStack {
                 HStack {
-                    Image(systemName: "chevron.left")
-                        .frame(width: 8, height: 14.2)
+                    switch isOCR{
+                    case true:
+                        Image(systemName: "chevron.left")
+                            .frame(width: 8, height: 14.2)
+                    default:
+                        EmptyView()
+                    }
+
                     Spacer()
                     Image(systemName: "xmark")
                         .resizable()
