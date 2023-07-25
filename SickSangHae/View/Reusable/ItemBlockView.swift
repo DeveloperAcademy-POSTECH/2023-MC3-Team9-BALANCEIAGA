@@ -8,9 +8,27 @@
 import SwiftUI
 
 struct ItemBlockView: View {
-  @State var name: String = ""
-  @State var price: Int = 0
-  
+    let id = UUID()
+    
+    class Name: ObservableObject {
+        @Published var name: String
+        
+        init(name: String) {
+            self.name = name
+        }
+    }
+    
+    class Price: ObservableObject {
+        @Published var price: Int
+        
+        init(price: Int) {
+            self.price = price
+        }
+    }
+    
+    @ObservedObject var name = Name(name: "")
+    @ObservedObject var price = Price(price: 0)
+    
   @ObservedObject var viewModel: UpdateItemViewModel
   var body: some View {
     ZStack(alignment: .trailing) {
