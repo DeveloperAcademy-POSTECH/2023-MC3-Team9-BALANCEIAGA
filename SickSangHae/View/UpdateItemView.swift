@@ -28,12 +28,62 @@ struct UpdateItemView: View {
         ZStack(alignment: .top) {
           VStack {
               ScrollViewReader { proxy in
-                  ScrollView {
+                  ScrollView(.vertical) {
                       VStack {
-                          ForEach(viewModel.items, id: \.self) { item in
-                              ItemBlockView(name: item.name, price: item.price,viewModel: viewModel)
+                          ForEach(Array(zip(itemBlockViews.indices, itemBlockViews)), id: \.0) { index, element in
+                              ZStack {
+                                      element
+                                      .onTapGesture {
+                                          withAnimation {
+                                              swipeOffsets[index] = 0
+                                          }
+                                      }
+                                      .offset(x: swipeOffsets[index])
+                                      HStack {
+                                          Spacer()
+                                          Button {
+                                              deleteItemBlockView(index)
+                                          } label: {
+                                              VStack {
+                                                  Image(systemName: "trash.fill")
+                                                      .padding(.bottom, 4)
+                                                  
+                                                  Text("삭제")
+                                                      .font(.system(size: 14, weight: .semibold))
+                                              }
+                                                      .frame(width: 90.adjusted, height: 116.adjusted)
+                                          }
+                                          
+                                          .background(Color("PointR"))
+                                          .foregroundColor(.white)
+                                          .clipShape(RoundedRectangle(cornerRadius: 12))
+                                          .padding(.trailing, 20.adjusted)
+                                                                                    
+                                          .opacity(swipeOffsets[index] < 0 ? 1 : 0)
+                                      }
+                                      
+                              }
+                              .gesture(DragGesture().onChanged({ value in
+                                  withAnimation {
+                                      if value.translation.width < 0 {
+                                          swipeOffsets[index] = value.translation.width
+                                      }
+                                  }
+                              })
+                                .onEnded({ value in
+                                    withAnimation {
+                                        if value.translation.width < -90 {
+                                            swipeOffsets[index] = -100
+                                        } else {
+                                            swipeOffsets[index] = 0
+                                        }
+                                    }
+                                }))
+                                  
                           }
-                          .onChange(of: viewModel.items) { _ in
+                          
+                          
+                          .onChange(of: itemBlockViews) { _ in
                               withAnimation {
                                   proxy.scrollTo(bottomID, anchor: .bottom)
                               }
