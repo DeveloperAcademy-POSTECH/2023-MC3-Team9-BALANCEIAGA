@@ -64,3 +64,9 @@ extension ItemBlockView: Hashable, Equatable {
         
     }
 }
+
+struct ItemBlockView_Previews: PreviewProvider {
+  static var previews: some View {
+      ItemBlockView(viewModel: UpdateItemViewModel())
+  }
+}
