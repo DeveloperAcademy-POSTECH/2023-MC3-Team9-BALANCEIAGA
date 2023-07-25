@@ -12,7 +12,10 @@ struct UpdateItemView: View {
     @Namespace var bottomID
     
   @ObservedObject var viewModel: UpdateItemViewModel
-  
+    @State private var itemBlockViews: [ItemBlockView] = [ItemBlockView]()
+    
+    @State var swipeOffsets: [CGFloat] = [CGFloat]()
+    
   var body: some View {
     ZStack {
       Color.white
