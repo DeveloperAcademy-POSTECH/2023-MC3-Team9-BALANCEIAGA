@@ -57,5 +57,19 @@ final class UpdateItemViewModel: ObservableObject {
       }
     }
   }
+    
+    func addNewItem() {
+        items.append(Item())
+        // TODO: CoreData 에 넣는 함수
+    }
+    
+    func deleteItem(id: UUID) {
+        for i in 0..<items.count {
+            if items[i].id == id {
+                items.remove(at: i)
+                return
+            }
+        }
+    }
 }
 
