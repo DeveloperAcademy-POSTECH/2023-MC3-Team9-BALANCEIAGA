@@ -9,120 +9,212 @@ import SwiftUI
 
 struct HistoryView: View {
     
-    let array = [
-        "당근", "계란30구", "과자", "팝콘", "요거트", "당당치킨", "친환경양파", "깐마늘",
-        "맛있는우유", "월드콘", "돼지고기 목살", "깻잎", "딸기잼", "머스타드 소스", "된장",
-        "고추장", "어묵", "아무거나"
-    ]
+    @State var isMovingSegmentedTab = true
+    
+    let array: [String] = ["Apple", "Banana", "Orange", "Pineapple", "Grapes", "Watermelon"]
     
     var body: some View {
         NavigationStack {
-            ScrollView {
-                LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
-                    Section(header: TopSegmentedTabBar()) {
-                        VStack {
-                            ForEach(array, id:\.self) { itemText in
-                                HStack {
-                                    Image(systemName: "circle.fill")
-                                        .resizable()
-                                        .frame(width: 36, height: 36)
-                                        .foregroundColor(.gray)
-                                    Text(itemText)
-                                        .frame(
-                                            width: screenWidth * 0.67,
-                                            height: 60,
-                                            alignment: .leading)
-                                        .font(.system(size: 17, weight: .bold))
-                                        .padding(.leading, 8)
-                                    Menu {
-                                        Button(action: {
-                                            //아이템 상태 복구 로직
-                                        }, label: {
-                                            Text("복구하기")
-                                            Image(systemName: "arrow.clockwise")
-                                        })
-                                        Button(action: {
-                                            //아이템 상태 변경 로직
-                                        }, label: {
-                                            Text("상했어요🤢")
-                                            Image(systemName: "arrow.triangle.2.circlepath")
-                                        })
-                                        Divider()
-                                        Button(role: .destructive, action: {
-                                            
-                                        }, label: {
-                                            Text("삭제하기")
-                                            Image(systemName: "trash.fill")
-                                        })
-                                    } label: {
-                                        Image(systemName: "ellipsis")
-                                            .resizable()
-                                            .frame(width: 21, height: 5)
-                                            .foregroundColor(.gray)
-                                            .padding(.trailing, screenWidth * 0.03)
-                                    }
-                                } //HStack닫기
-                            } //ForEach닫기
-                        } //VStack닫기
-                        .padding(.top)
-                    } //Section닫기
-                } //LazyVStack닫기
-            } //ScrollView닫기
-            .scrollIndicators(.hidden)
-            .ignoresSafeArea()
-        } //NavigationStack닫기
-    } //body닫기
-} //struct닫기
-
-struct TopSegmentedTabBar: View {
-    
-    @State private var isMovingSegmentedTab : Bool = true
-    
-    var body: some View {
-        ZStack(alignment: .bottom) {
-            Rectangle()
-                .foregroundColor(.white)
-                .frame(height: screenHeight * 0.21)
-            
             VStack(spacing: 0) {
+                //버튼 및 타이틀
+                Spacer()
+                    .frame(height: 32)
+                
                 HStack {
-                    VStack {
-                        Button(action: {
-                            isMovingSegmentedTab = true
-                        }, label: {
-                            Text("먹었어요😋")
-                                .font(.system(size: 20, weight: .bold))
-                                .foregroundColor(.black)
-                        })
-                        Rectangle()
-                            .foregroundColor(isMovingSegmentedTab ? .blue : .white)
-                            .frame(width: screenWidth * 0.36, height: 3)
-                    }
+                    Text("보관함")
+                        .font(.system(size: 28, weight: .bold))
+                        .foregroundColor(Color("PrimaryGB"))
+                        .padding(.horizontal, 20)
                     Spacer()
-                        .frame(width: screenWidth * 0.12)
-                    VStack {
-                        Button(action: {
-                            isMovingSegmentedTab = false
-                        }, label: {
-                            Text("상했어요🤢")
-                                .font(.system(size: 20, weight: .bold))
-                                .foregroundColor(.black)
-                        })
-                        Rectangle()
-                            .foregroundColor(isMovingSegmentedTab ? .white : .blue)
-                            .frame(width: screenWidth * 0.36, height: 3)
-                    }
-                } //HStack닫기
-                Divider()
+                }
+                
+                Spacer()
+                    .frame(height: 20)
+                
+                segmentedTabButton
+                    .padding(.horizontal, 20)
+                
+                
+                ScrollView {
+                    deleteNotiMessage
+                    
+                    listSection
+                    
+                    listSection
+                    
+                } //ScrollView닫기
+                .listStyle(.plain)
+                
             } //VStack닫기
             
-            Text("보관함")
-                .font(.system(size: 28, weight: .bold))
-                .frame(width: screenWidth, alignment: .leading)
-                .padding(.leading, screenWidth * 0.1)
-                .padding(.bottom, screenHeight * 0.08)
-        } //ZStack닫기
+        } //NavigationStack닫기
+        
     } //body닫기
+    
+    var segmentedTabButton: some View {
+        HStack {
+            VStack(spacing: 0) {
+                Spacer()
+                
+                Button(action: {
+                    isMovingSegmentedTab = true
+                }, label: {
+                    Text("먹었어요😋")
+                        .font(.system(size: 20, weight: .bold))
+                        .foregroundColor(Color("Gray900"))
+                }) //Button닫기
+                
+                Spacer()
+
+                RoundedRectangle(cornerRadius: 1.5)
+                    .foregroundColor(isMovingSegmentedTab ? Color("PrimaryGB") : .clear)
+                    .frame(width: 155, height: 3)
+            } //VStack닫기
+            
+            Spacer()
+                .frame(minWidth: 10, maxWidth: 40)
+            
+            VStack(spacing: 0) {
+                Spacer()
+                
+                Button(action: {
+                    isMovingSegmentedTab = false
+                }, label: {
+                    Text("상했어요🤢")
+                        .font(.system(size: 20, weight: .bold))
+                        .foregroundColor(Color("Gray900"))
+                }) //Button닫기
+                
+                Spacer()
+                
+                RoundedRectangle(cornerRadius: 1.5)
+                    .foregroundColor(isMovingSegmentedTab ? .clear : Color("PrimaryGB"))
+                    .frame(width: 155, height: 3)
+            } //VStack닫기
+        } //HStack닫기
+        .frame(height: 52)
+    } //segmentedTabButton닫기
+    
+    
+    var deleteNotiMessage: some View {
+        VStack(alignment: .leading) {
+            Spacer()
+                .frame(height: 24)
+            
+            Text("아래의 항목들은 이곳에서 90일 동안 보관됩니다. 각 항목들은 90일이 지나면 영구적으로 삭제됩니다.")
+                .font(.system(size: 14))
+                .foregroundColor(Color("Gray600"))
+            
+        } //VStack닫기
+        .padding(.horizontal, 18)
+        
+    } //deleteNotiMessage닫기
+    
+    
+    var listSection: some View {
+        VStack(spacing: 0) {
+            listTitle
+            
+            itemList
+            
+            Spacer()
+                .frame(height: 4)
+            
+            Rectangle()
+                .foregroundColor(.clear)
+                .frame(width: screenWidth, height: 12)
+                .background(Color("Gray100"))
+            
+        } //VStack닫기
+        
+    } //listSection닫기
+    
+    var listTitle: some View {
+        HStack {
+            Text("2023년 7월 21일")
+                .foregroundColor(Color("Gray900"))
+                .font(.system(size: 20).weight(.semibold))
+            
+            Spacer()
+            
+            Text("88일 남음")
+                .font(.system(size: 14, weight: .medium))
+                .foregroundColor(Color("Gray600"))
+            
+        } //HStack닫기
+        .padding([.top, .bottom], 17)
+        .padding([.leading, .trailing], 20)
+        
+    } //listTitle닫기
+    
+    var itemList: some View {
+        ForEach(array, id:\.self) { item in
+            VStack {
+                HStack {
+                    Image(systemName: "circle.fill")
+                        .resizable()
+                        .foregroundColor(Color("Gray200"))
+                        .frame(width: 36, height: 36)
+                    
+                    Spacer()
+                        .frame(width: 12)
+                    
+                    Text(item)
+                        .font(.system(size: 17).weight(.semibold))
+                        .foregroundColor(Color("Gray900"))
+                    
+                    Spacer()
+                    
+                    Menu {
+                        Button(action: {
+                            //아이템 상태 복구 로직
+                        }, label: {
+                            Text("복구하기")
+                            Image(systemName: "arrow.counterclockwise")
+                        })
+                        
+                        Button(action: {
+                            //아이템 상태 변경 로직
+                        }, label: {
+                            Text("상했어요")
+                            Image(systemName: "arrow.triangle.2.circlepath")
+                        })
+                        
+                        Divider()
+                        
+                        Button(role: .destructive, action: {
+                            
+                        }, label: {
+                            Text("삭제하기")
+                            Image(systemName: "trash.fill")
+                        })
+                    } label: {
+                        Rectangle()
+                            .frame(width: 36, height: 36)
+                            .foregroundColor(.clear)
+                            .overlay(
+                                Image(systemName: "ellipsis")
+                                    .resizable()
+                                    .foregroundColor(Color("Gray200"))
+                                    .frame(width: 21, height: 5)
+                            )
+                            .padding(.trailing, 20)
+                    } //Menu닫기
+                    
+                } //HStack닫기
+                .padding(.top, 12)
+                
+                Divider()
+                    .overlay(Color("Gray100"))
+                    .opacity(item == array.last ? 0 : 1)
+                
+            } //VStack닫기
+            .padding(.leading, 20)
+            
+        } //ForEach닫기
+        
+    } //itemList닫기
+    
 } //struct닫기
 
 struct HistoryView_Previews: PreviewProvider {
