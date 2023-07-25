@@ -8,25 +8,54 @@
 import SwiftUI
 
 struct UpdateItemView: View {
+    
+    @Namespace var bottomID
+    
   @ObservedObject var viewModel: UpdateItemViewModel
   
   var body: some View {
-    VStack {
-      topBar
-      Spacer().frame(height: 36.adjusted)
-      DateSelectionView(viewModel: viewModel)
-      Spacer().frame(height: 30.adjusted)
-      ZStack(alignment: .top) {
-        VStack {
-          ItemBlockView()
-          addItemButton
-          Spacer()
-          nextButton
-        }
-        if viewModel.isDatePickerOpen {
-          DatePickerView(viewModel: viewModel)
+    ZStack {
+      Color.white
+        .ignoresSafeArea(.all)
+      VStack {
+        topBar
+        Spacer().frame(height: 36.adjusted)
+        DateSelectionView(viewModel: viewModel)
+        Spacer().frame(height: 30.adjusted)
+        ZStack(alignment: .top) {
+          VStack {
+              ScrollViewReader { proxy in
+                  ScrollView {
+                      VStack {
+                          ForEach(viewModel.items, id: \.self) { item in
+                              ItemBlockView(name: item.name, price: item.price,viewModel: viewModel)
+                          }
+                          .onChange(of: viewModel.items) { _ in
+                              withAnimation {
+                                  proxy.scrollTo(bottomID, anchor: .bottom)
+                              }
+                          }
+                          addItemButton
+                            .onTapGesture {
+                                withAnimation {
+                                    viewModel.addNewItem()
+                                }
+                            }
+                            .id(bottomID)
+                      }
+                  }
+              }
+            Spacer()
+            nextButton
+          }
+          if viewModel.isDatePickerOpen {
+            DatePickerView(viewModel: viewModel)
+          }
         }
       }
+    }
+    .onTapGesture {
+      self.endTextEditing()
     }
   }
   
@@ -152,6 +181,3 @@ struct UpdateItemView_Previews: PreviewProvider {
     UpdateItemView(viewModel: UpdateItemViewModel())
   }
 }
-
-
-
