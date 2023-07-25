@@ -9,7 +9,35 @@ import SwiftUI
 
 struct RegisterCompleteView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+
+        VStack(spacing: 35){
+            Spacer()
+
+            Circle()
+                .frame(width: 140)
+                .foregroundColor(Color("Gray100"))
+            Text("등록이 완료되었어요")
+                .font(.system(size: 18).weight(.semibold))
+
+            Spacer()
+
+            Button {
+                // TODO: 여기에 닫기 버튼에 대한 기능을 완성해요
+            } label:{
+                ZStack{
+                    Rectangle()
+                        .frame(width: 350, height: 60)
+                        .foregroundColor(.lightGreenGrayColor)
+                        .cornerRadius(12)
+                    HStack {
+                        Text("닫기")
+                            .foregroundColor(.white)
+                            .bold()
+                    }
+                }
+                .padding(.bottom, 30)
+            }
+        }
     }
 }
 
