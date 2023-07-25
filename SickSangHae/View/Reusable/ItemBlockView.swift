@@ -61,7 +61,7 @@ struct ItemBlockView: View {
           .padding(.leading, 20.adjusted)
       }
     }
-    .padding([.leading,.trailing], 20.adjusted)
+    .padding(.horizontal, 20.adjusted)
 
   }
 }

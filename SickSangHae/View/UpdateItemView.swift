@@ -168,7 +168,7 @@ struct UpdateItemView: View {
               viewModel.isDatePickerOpen = false
             }
           }
-          .padding(.all, 20)
+          .padding(20)
         }
         .frame(height: screenHeight / (2.6).adjusted)
         .padding([.leading, .trailing], 14.adjusted)
