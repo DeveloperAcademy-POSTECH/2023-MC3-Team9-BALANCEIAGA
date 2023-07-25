@@ -27,7 +27,7 @@ struct RegisterCompleteView: View {
                 ZStack{
                     Rectangle()
                         .frame(width: 350, height: 60)
-                        .foregroundColor(.lightGreenGrayColor)
+                        .foregroundColor(Color("PrimaryGB"))
                         .cornerRadius(12)
                     HStack {
                         Text("닫기")
