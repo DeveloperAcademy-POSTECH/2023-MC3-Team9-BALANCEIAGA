@@ -83,46 +83,51 @@ struct CustomTabView: View {
             }
             
             Spacer()
-                .frame(height: 14)
+                .frame(height: 8)
 
             HStack {
-                TabItem(selectedTabType: .mainView, imageName: "refrigerator.fill", title: "냉장고")
+                TabItem(selectedTabType: .mainView, imageName: selectedTab == .mainView ? "RefActive" : "RefDisActive", title: "냉장고")
                 
                 Spacer()
 
-                TabItem(selectedTabType: .historyView, imageName: "archivebox.fill", title: "식기록")
+                TabItem(selectedTabType: .historyView, imageName: selectedTab == .historyView ? "HistoryActive" : "HistoryDisActive", title: "식기록")
                 
                 Spacer()
 
-                TabItem(selectedTabType: .chartView, imageName: "chart.pie.fill", title: "식통계")
+                TabItem(selectedTabType: .chartView, imageName: selectedTab == .chartView ? "ChartActive" : "ChartDisActive", title: "식통계")
                 
                 Spacer()
-
-                TabItem(selectedTabType: .settingView, imageName: "gearshape.fill", title: "설정")
+                
+                TabItem(selectedTabType: .settingView, imageName: selectedTab == .settingView ? "SettingActive" : "SettingDisActive", title: "설정")
 
             }
-            .frame(width: screenWidth * 0.85)
+            .frame(minWidth: 300, maxWidth: 360)
+            .padding(.horizontal, 24)
             
             Spacer()
-                .frame(height: 14)
+                .frame(height: 4)
         }
         .frame(width: screenWidth)
     }
 
     func TabItem(selectedTabType: Tab, imageName: String, title: String) -> some View{
         Rectangle()
-            .frame(width: 48, height: 44)
+            .frame(width: 52, height: 52)
             .foregroundColor(.clear)
             .overlay(
                 Button {
                     selectedTab = selectedTabType
                 } label: {
-                    VStack{
-                        Image(systemName: "refrigerator.fill")
+                    VStack(spacing: 0) {
+                        Image(imageName)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 24)
-                        Text("냉장고")
+                            .frame(width: 32)
+                        
+                        Spacer()
+                            .frame(height: 4)
+                        
+                        Text(title)
                             .font(.system(size: 11, weight: .medium))
                     }
                     .foregroundColor(selectedTab == selectedTabType ? Color("PrimaryGB") : Color("Gray200"))
