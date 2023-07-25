@@ -183,10 +183,7 @@ struct ChartView: View {
 
 
     func getCurrentMonth() -> String {
-           let currentDate = Date()
-           let calendar = Calendar.current
-           let month = calendar.component(.month, from: currentDate)
-           return String(month)
+           return String(Calendar.current.component(.month, from: Date()))
        }
 }
 
