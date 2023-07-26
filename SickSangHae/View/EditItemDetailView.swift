@@ -7,11 +7,23 @@
 
 import SwiftUI
 
+extension View {
+    func endTextEditing() {
+        UIApplication.shared.sendAction(
+            #selector(UIResponder.resignFirstResponder),
+            to: nil, from: nil, for: nil
+        )
+    }
+}
+
 struct EditItemDetailView: View {
     
     @Binding var isShowingEditView: Bool
     
+    @State private var isShowingIconView = false
+    
     @State var nameText: String = ""
+    @State var dateText: String = ""
     @State var wonText: String = ""
     
     var body: some View {
@@ -20,11 +32,14 @@ struct EditItemDetailView: View {
             ScrollView {
                 iconEdit
                 InfoEditField(nameText: $nameText, wonText: $wonText)
-                Spacer()
             }
             deleteButton
         }
         .padding(.horizontal, 20.adjusted)
+        .ignoresSafeArea(.keyboard)
+        .onTapGesture {
+            self.endTextEditing()
+        }
     }
     
     var topNaviBar: some View {
@@ -46,8 +61,9 @@ struct EditItemDetailView: View {
                 }, label: {
                     Text("완료")
                         .bold()
-                        .foregroundColor(.black)
                 })
+                .disabled(nameText.isEmpty)
+                .disabled(nameText == nameText && dateText == dateText && wonText == wonText)
             }
         }
         .padding(.top, 10)
@@ -61,7 +77,7 @@ struct EditItemDetailView: View {
                 .frame(width: 110, height: 110)
             
             Button(action: {
-                
+                self.isShowingIconView.toggle()
             }, label: {
                 ZStack {
                     Circle()
@@ -76,6 +92,9 @@ struct EditItemDetailView: View {
                         )
                 }
             })
+            .sheet(isPresented: self.$isShowingIconView) {
+                EditIconDetailView()
+            }
         }
         .padding(.vertical, 20.adjusted)
     }
@@ -110,14 +129,13 @@ struct InfoEditField: View {
     @State private var selectedDate = Date()
     @State private var showingDatePicker = false
     
-    var formattedDate: String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy년 MM월 dd일"
-        return formatter.string(from: selectedDate)
+    var body: some View {
+        nameField
+        dateField
+        wonField
     }
     
-    var body: some View {
-        
+    var nameField: some View {
         VStack(alignment: .leading) {
             Text("품목명")
                 .font(.system(size: 14, weight: .medium))
@@ -139,7 +157,7 @@ struct InfoEditField: View {
                             Spacer()
                             
                             Button("완료") {
-                                isInputActive = false
+                                isInputActive = true
                             }
                         }
                     }
@@ -164,8 +182,10 @@ struct InfoEditField: View {
             .background(Color("Gray50"))
             .cornerRadius(8)
         }
-        .padding(.bottom, 20)
-        
+        .padding(.bottom, 10)
+    }
+    
+    var dateField: some View {
         VStack(alignment: .leading) {
             Text("구매일")
                 .font(.system(size: 14, weight: .medium))
@@ -199,8 +219,10 @@ struct InfoEditField: View {
             .background(Color("Gray50"))
             .cornerRadius(8)
         }
-        .padding(.bottom, 20)
-        
+        .padding(.bottom, 10)
+    }
+    
+    var wonField: some View {
         VStack(alignment: .leading) {
             Text("구매금액")
                 .font(.system(size: 14, weight: .medium))
@@ -248,7 +270,13 @@ struct InfoEditField: View {
             .background(Color("Gray50"))
             .cornerRadius(8)
         }
-        .padding(.bottom, 20)
+        .padding(.bottom, 10)
+    }
+    
+    var formattedDate: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy년 MM월 dd일"
+        return formatter.string(from: selectedDate)
     }
 }
 
