@@ -91,7 +91,6 @@ struct CustomTabView: View {
                 })
                 .onReceive(self.appState.$moveToRootView) { moveToDashboard in
                     if moveToDashboard {
-                        print("move pop")
                         self.isActive = false
                         self.appState.moveToRootView = false
                         cameraViewModelShared.isCapturedShowPreview = false

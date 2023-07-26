@@ -82,7 +82,7 @@ struct ItemCheckView: View {
             
             switch isOCR{
             case true:
-                NavigationLink(destination: UpdateItemView(viewModel: UpdateItemViewModel(), appState: appState), label: {
+                NavigationLink(destination: UpdateItemView(viewModel: UpdateItemViewModel(),titleName: "수정", buttonName: "수정 완료", appState: appState), label: {
                 ZStack{
                     RoundedRectangle(cornerRadius: 5)
                         .foregroundColor(Color("Gray100"))

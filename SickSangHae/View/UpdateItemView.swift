@@ -11,6 +11,8 @@ struct UpdateItemView: View {
     @Namespace var bottomID
     @Environment(\.dismiss) private var dismiss
     @ObservedObject var viewModel: UpdateItemViewModel
+    @State var titleName: String
+    @State var buttonName: String
     let appState: AppState
     
     var body: some View {
@@ -89,7 +91,7 @@ struct UpdateItemView: View {
                     .frame(width: 10, height: 19)
             })
             Spacer()
-            Text("직접 추가")
+            Text(titleName)
                 .fontWeight(.bold)
                 .font(.system(size: 17))
             Spacer()
@@ -101,6 +103,7 @@ struct UpdateItemView: View {
                     .frame(width: 15, height: 15)
             })
         }
+        .foregroundColor(.gray900)
         .padding([.leading, .trailing], 20.adjusted)
     }
     
@@ -129,7 +132,7 @@ struct UpdateItemView: View {
                 Rectangle()
                     .cornerRadius(12)
                     .frame(height: 60.adjusted)
-                Text("다음")
+                Text(buttonName)
                     .foregroundColor(.white)
                     .font(.system(size: 17))
             }
