@@ -11,6 +11,9 @@ import Foundation
 class CoreDataViewModel: ObservableObject {
     private let viewContext = PersistentController.shared.viewContext
     @Published var receipts: [Receipt] = []
+    @Published var shortTermUnEatenOffsets: [CGFloat] = []
+    @Published var shortTermPinnedOffsets: [CGFloat] = []
+    @Published var longTermUnEatenOffsets: [CGFloat] = []
     
     var shortTermUnEatenList: [Receipt] {
         return receipts.filter{ $0.currentStatus == .shortTermUnEaten}
@@ -27,17 +30,18 @@ class CoreDataViewModel: ObservableObject {
     var eatenList: [Receipt] {
         return receipts
             .filter{ $0.currentStatus == .Eaten }
-            .sorted{ $0.dateOfHistory < $1.dateOfHistory }
+            .sorted{ $0.dateOfHistory > $1.dateOfHistory }
     }
     
     var spoiledList: [Receipt] {
         return receipts
             .filter{ $0.currentStatus == .Spoiled }
-            .sorted{ $0.dateOfHistory < $1.dateOfHistory }
+            .sorted{ $0.dateOfHistory > $1.dateOfHistory }
     }
     
     init() {
         getAllReceiptData()
+        getAllOffsetCounts()
     }
     
     
@@ -56,6 +60,11 @@ extension CoreDataViewModel {
         }
     }
     
+    private func getAllOffsetCounts() {
+        shortTermPinnedOffsets = [CGFloat](repeating: 0.0, count:shortTermPinnedList.count)
+        shortTermUnEatenOffsets = [CGFloat](repeating: 0.0, count:shortTermUnEatenList.count)
+        longTermUnEatenOffsets = [CGFloat](repeating: 0.0, count:longTermUnEatenList.count)
+    }
     
     private func saveChanges() {
         do {
@@ -84,21 +93,37 @@ extension CoreDataViewModel {
         self.getAllReceiptData()
     }
     
-    func createTestReceiptData() {
-        
-        let receipt = Receipt(context: viewContext)
-        receipt.id = UUID()
-        receipt.name = "TestName \(receipts.count)"
-        receipt.dateOfPurchase = Date.now
-        receipt.dateOfHistory = Date.distantPast
-        receipt.icon = "icon_test"
-        receipt.price = 6000.0
-        receipt.previousStatus = .shortTermUnEaten
-        receipt.currentStatus = .shortTermUnEaten
-        receipt.itemCategory = .unknown
-        
-        saveChanges()
-        self.getAllReceiptData()
+    func createNewSwipeOffset(status: Status, completion: () -> ()) {
+        switch status {
+        case .shortTermPinned:
+            shortTermPinnedOffsets.append(0.0)
+        case .shortTermUnEaten:
+            shortTermUnEatenOffsets.append(0.0)
+        case .longTermUnEaten:
+            longTermUnEatenOffsets.append(0.0)
+        default:
+            break
+        }
+        completion()
+    }
+    
+    func createTestReceiptData(status: Status) {
+        createNewSwipeOffset(status: status) {
+            print("Done \(status)\n")
+            let receipt = Receipt(context: viewContext)
+            receipt.id = UUID()
+            receipt.name = "TestName \(receipts.count)"
+            receipt.dateOfPurchase = Date.now
+            receipt.dateOfHistory = Date.distantPast
+            receipt.icon = "icon_test"
+            receipt.price = 6000.0
+            receipt.previousStatus = status
+            receipt.currentStatus = status
+            receipt.itemCategory = .unknown
+            
+            saveChanges()
+            self.getAllReceiptData()
+        }
     }
     
     func deleteReceiptData(target: Receipt) {

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ItemBlockView: View {
   @ObservedObject var viewModel: UpdateItemViewModel
+  
   var body: some View {
     VStack(alignment: .leading) {
       ZStack(alignment: .trailing) {
@@ -62,7 +63,6 @@ struct ItemBlockView: View {
       }
     }
     .padding([.leading,.trailing], 20.adjusted)
-
   }
 }
 

@@ -20,7 +20,6 @@ struct TopAlertView: View {
       TopAlertBaseView(iconImage: "img_rot", message: "\(viewModel.name)가 상했어요", backgroundColor: .pointRLight, strokeColor: .pointRMiddle, viewModel: viewModel)
     case .eat:
       TopAlertBaseView(iconImage: "img_eat", message: "\(viewModel.name)를 먹었어요", backgroundColor: .alertGreen, strokeColor: .primaryGMiddle, viewModel: viewModel)
-  
     }
   }
 }
@@ -71,7 +70,6 @@ struct TopAlertBaseView: View {
     }
   }
 }
-
 
 struct TopAlertView_Previews: PreviewProvider {
     static var previews: some View {

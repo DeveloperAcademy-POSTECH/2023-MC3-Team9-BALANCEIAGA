@@ -202,6 +202,7 @@
 				CE9AFD992A5FED9200EB2D8C /* ItemStatus.swift */,
 				CE9AFD9B2A5FEFE400EB2D8C /* PersistentController.swift */,
 				02D4497F2A5FEFF600D97A37 /* CameraModel.swift */,
+				02FC0ED72A6C5DF100B4284C /* TopAlertModel.swift */,
 				CE0319E62A6D5221009580F6 /* Categories.swift */,
 				02FC0ED72A6C5DF100B4284C /* TopAlertModel.swift */,
 			);
@@ -259,6 +260,7 @@
 				8787EC012A5E8FC800104EDE /* Corner+Extension.swift */,
 				7CB728D62A65221500D2FFA6 /* Number+Extension.swift */,
 				020439682A6599180055A8D4 /* ImagePicker+Extension.swift */,
+				028B6B242A6DB47C00DFDEF7 /* View+Extension.swift */,
 				CE9AFE0D2A68E56A00EB2D8C /* Date+Extension.swift */,
 				028B6B242A6DB47C00DFDEF7 /* View+Extension.swift */,
 				02EC281D2A6FEEEE00DAFCFA /* Font+Extension.swift */,
