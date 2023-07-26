@@ -164,13 +164,15 @@ private struct ListContent: View {
                             swipeOffsets[index] = value.translation.width
                         }
                     })
-                        .onEnded({ value in
+                        .onEnded ({ value in
                             withAnimation {
-                                if value.translation.width < -60 {
+                                let translationWidth = value.translation.width
+                                switch translationWidth {
+                                case ..<(-60):
                                     swipeOffsets[index] = -70
-                                } else if value.translation.width > 60 {
+                                case 60...:
                                     swipeOffsets[index] = 70
-                                } else {
+                                default:
                                     swipeOffsets[index] = 0
                                 }
                             }
@@ -180,7 +182,7 @@ private struct ListContent: View {
                 Divider()
                     .overlay(Color("Gray100"))
                     .opacity(item == itemList.last ? 0 : 1)
-                    .padding([.leading], 20)
+                    .padding(.leading, 20)
             }
             
             

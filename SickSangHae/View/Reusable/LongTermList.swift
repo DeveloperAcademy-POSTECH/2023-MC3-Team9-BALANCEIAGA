@@ -53,7 +53,7 @@ struct LongTermList: View {
             .padding(.trailing, 20)
         }
         .padding([.top, .bottom], 17)
-        .padding([.leading], 20)
+        .padding(.leading, 20)
     }
 
     private var ListContents: some View{
@@ -131,13 +131,15 @@ struct LongTermList: View {
                             swipeOffsets[index] = value.translation.width
                         }
                     })
-                        .onEnded({ value in
+                        .onEnded ({ value in
                             withAnimation {
-                                if value.translation.width < -60 {
+                                let translationWidth = value.translation.width
+                                switch translationWidth {
+                                case ..<(-60):
                                     swipeOffsets[index] = -70
-                                } else if value.translation.width > 60 {
+                                case 60...:
                                     swipeOffsets[index] = 70
-                                } else {
+                                default:
                                     swipeOffsets[index] = 0
                                 }
                             }
