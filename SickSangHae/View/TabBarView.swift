@@ -32,6 +32,7 @@ struct TabBarView: View {
     @State var selectedTab: Tab = .mainView
     let appState: AppState
     @StateObject var coreDataViewModel = CoreDataViewModel()
+    
     var body: some View {
         NavigationStack{
             VStack(spacing: 0) {

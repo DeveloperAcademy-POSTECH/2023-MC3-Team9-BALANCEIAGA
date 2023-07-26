@@ -205,6 +205,9 @@ extension UpdateItemView {
             .frame(height: screenHeight / (2.6).adjusted)
             .padding([.leading, .trailing], 14.adjusted)
         }
+      }
     }
-}
-
+    .onTapGesture {
+      self.endTextEditing()
+    }
+  }

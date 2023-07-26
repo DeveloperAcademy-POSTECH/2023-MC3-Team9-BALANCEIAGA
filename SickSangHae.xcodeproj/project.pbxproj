@@ -202,6 +202,7 @@
 				CE9AFD992A5FED9200EB2D8C /* ItemStatus.swift */,
 				CE9AFD9B2A5FEFE400EB2D8C /* PersistentController.swift */,
 				02D4497F2A5FEFF600D97A37 /* CameraModel.swift */,
+				02FC0ED72A6C5DF100B4284C /* TopAlertModel.swift */,
 				CE0319E62A6D5221009580F6 /* Categories.swift */,
 				02FC0ED72A6C5DF100B4284C /* TopAlertModel.swift */,
 			);
