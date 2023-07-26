@@ -49,11 +49,16 @@ struct ItemBlockView: View {
                     .keyboardType(.numberPad)
             }
         }
+      }
+      .frame(height: 116.adjusted)
+      Spacer().frame(height: 10)
+      if viewModel.isShowTextfieldWarning && !viewModel.areBothTextFieldsNotEmpty {
+        Text("\(viewModel.showTextfieldStatus)을 입력하세요.")
+          .font(.system(size: 14))
+          .foregroundColor(.pointR)
+          .padding(.leading, 20.adjusted)
     }
-    .frame(height: 116.adjusted)
-    .padding([.leading,.trailing], 20.adjusted)
-  }
-}
+    .padding(.horizontal, 20.adjusted)
 
 extension ItemBlockView: Hashable, Equatable {
     static func == (lhs: ItemBlockView, rhs: ItemBlockView) -> Bool {
@@ -70,3 +75,6 @@ struct ItemBlockView_Previews: PreviewProvider {
       ItemBlockView(viewModel: UpdateItemViewModel())
   }
 }
+
+
+
