@@ -123,7 +123,7 @@ class OCRViewModel: ObservableObject {
     func queryGPT(prompts: String, dispatchGroup: DispatchGroup, completion: @escaping (String) -> Void) {
         let configuration = OpenAI.Configuration(token: chatToken, organizationIdentifier: chatOrganization, timeoutInterval: 60.0)
         let openAI = OpenAI(configuration: configuration)
-        let customPrompt = prompts + "\n 이거를 딕셔너리로 정리해. 그리고 key는 상품명, 단가, 수량, 금액이야. value에는 특수문자를 없애야해. 딕셔너리만 응답해줘."
+        let customPrompt = prompts + "\n 이거를 딕셔너리로 정리해. 그리고 key는 상품명, 단가, 수량, 금액이야. value에는 특수문자를 없애야해. value는 리스트형식이야. 딕셔너리만 응답해줘."
 
         let query = ChatQuery(model: .gpt3_5Turbo, messages: [.init(role: .user, content: customPrompt)])
 
