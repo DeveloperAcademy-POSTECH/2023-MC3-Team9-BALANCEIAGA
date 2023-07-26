@@ -7,15 +7,6 @@
 
 import SwiftUI
 
-extension View {
-    func endTextEditing() {
-        UIApplication.shared.sendAction(
-            #selector(UIResponder.resignFirstResponder),
-            to: nil, from: nil, for: nil
-        )
-    }
-}
-
 struct EditItemDetailView: View {
     
     @Binding var isShowingEditView: Bool
@@ -40,7 +31,7 @@ struct EditItemDetailView: View {
         .padding(.horizontal, 20.adjusted)
         .ignoresSafeArea(.keyboard)
         .onTapGesture {
-            self.endTextEditing()
+            endTextEditing()
         }
     }
     
