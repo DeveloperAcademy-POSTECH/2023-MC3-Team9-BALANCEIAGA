@@ -117,8 +117,8 @@ extension CoreDataViewModel {
             receipt.dateOfHistory = Date.distantPast
             receipt.icon = "icon_test"
             receipt.price = 6000.0
-            receipt.previousStatus = .shortTermUnEaten
-            receipt.currentStatus = .shortTermUnEaten
+            receipt.previousStatus = status
+            receipt.currentStatus = status
             receipt.itemCategory = .unknown
             
             saveChanges()
