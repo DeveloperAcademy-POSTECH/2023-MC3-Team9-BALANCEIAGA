@@ -100,3 +100,6 @@ iOSInjectionProject/
 .DS_Store
 .AppleDouble
 .LSOverride
+
+# Secrets 파일 보호
+*.xcconfig
