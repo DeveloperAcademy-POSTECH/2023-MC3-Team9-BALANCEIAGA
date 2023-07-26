@@ -30,7 +30,7 @@ struct EditItemDetailView: View {
         VStack {
             topNaviBar
             ScrollView {
-                iconEdit
+                editIconButton
                 InfoEditField(nameText: $nameText, wonText: $wonText)
             }
             deleteButton
@@ -69,7 +69,7 @@ struct EditItemDetailView: View {
         .padding(.top, 10)
     }
     
-    var iconEdit: some View {
+    var editIconButton: some View {
         ZStack(alignment: .bottomTrailing) {
             //추후 Custom Item Icon으로 대체
             Circle()
