@@ -10,6 +10,7 @@ import SwiftUI
 struct ItemCheckView: View {
     
     var items = ["a", "b", "c", "d"]
+    @Binding var gptAnswer: Dictionary<String, [Any]>
     // TODO: 나중에 뷰 연결할때는 @Binding으로 바꾸어야할 듯합니다.
     var isOCR = true
     @ObservedObject var viewModel = UpdateItemViewModel()
@@ -118,9 +119,14 @@ struct ItemCheckView: View {
                 
                 Divider()
                     .overlay(Color("Gray100"))
-                
-                ForEach(items, id: \.self) { item in
-                    listDetail(listTraling: item, listLeading: "8,000원", listColor: "Gray900")
+
+                ForEach(0..<gptAnswer["상품명"]!.count, id: \.self) { index in
+                    let productName = gptAnswer["상품명"]![index] as! String
+                    let price = gptAnswer["단가"]![index] as! Int
+                    let quantity = gptAnswer["수량"]![index] as! Int
+                    let amount = gptAnswer["금액"]![index] as! Int
+
+                    listDetail(listTraling: productName, listLeading: String(price), listColor: "Gray900")
                     
                     Divider()
                         .overlay(Color("Gray100"))
@@ -150,9 +156,8 @@ struct ItemCheckView: View {
 }
 
 //struct ItemCheckView_Previews: PreviewProvider {
-//    @State private var dictionaryBinding: Dictionary<String, [Any]> = ["상품명": ["안판닭감정", "삿포로캔500ML", "코젤다크캔 500ml", "데스페라도스캔 ⑧ ⅝57¾500", "청바오전 500 에누리(행사)", "당당국산돼지갈비맛 팝세."], "수량": [1, 9, 1, 2, 1, 1], "금액": [3588, 5310, 3000, 6000, 3000, 3000], "단가": [35881, 590, 3000, 3000, 3000, 3000]]
 //
 //    static var previews: some View {
-//        ItemCheckView(gptAnswer: $dictionaryBinding)
+//        ItemCheckView(gptAnswer: <#Binding<[String : [Any]]>#>, appState: <#AppState#>)
 //    }
 //}
