@@ -100,6 +100,7 @@
 		02FC0ED72A6C5DF100B4284C /* TopAlertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopAlertModel.swift; sourceTree = "<group>"; };
 		237674E82A6516C200E92BAB /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		7C16FB3C2A716CC50025BC20 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = SOURCE_ROOT; };
+		7C16FB3F2A7170030025BC20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		7C41D9502A6280690054FD04 /* BasicList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicList.swift; sourceTree = "<group>"; };
 		7C41D9522A62807A0054FD04 /* LongTermList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LongTermList.swift; sourceTree = "<group>"; };
 		7C41D9542A62808D0054FD04 /* OCRView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRView.swift; sourceTree = "<group>"; };
@@ -299,6 +300,7 @@
 		7CEB9EB12A613D7C008B70FD /* SickSangHaeTests */ = {
 			isa = PBXGroup;
 			children = (
+				7C16FB3F2A7170030025BC20 /* Info.plist */,
 				7CEB9EB22A613D7C008B70FD /* SickSangHaeTests.swift */,
 			);
 			path = SickSangHaeTests;
@@ -674,6 +676,9 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DD63847N69;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SickSangHaeTests/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.codingtest.SickSangHaeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -693,6 +698,9 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DD63847N69;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SickSangHaeTests/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.codingtest.SickSangHaeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
