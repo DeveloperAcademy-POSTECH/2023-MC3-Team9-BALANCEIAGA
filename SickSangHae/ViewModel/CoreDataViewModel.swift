@@ -27,13 +27,13 @@ class CoreDataViewModel: ObservableObject {
     var eatenList: [Receipt] {
         return receipts
             .filter{ $0.currentStatus == .Eaten }
-            .sorted{ $0.dateOfHistory < $1.dateOfHistory }
+            .sorted{ $0.dateOfHistory > $1.dateOfHistory }
     }
     
     var spoiledList: [Receipt] {
         return receipts
             .filter{ $0.currentStatus == .Spoiled }
-            .sorted{ $0.dateOfHistory < $1.dateOfHistory }
+            .sorted{ $0.dateOfHistory > $1.dateOfHistory }
     }
     
     init() {
