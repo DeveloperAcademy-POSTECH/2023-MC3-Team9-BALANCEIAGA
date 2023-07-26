@@ -93,21 +93,37 @@ extension CoreDataViewModel {
         self.getAllReceiptData()
     }
     
-    func createTestReceiptData() {
-        
-        let receipt = Receipt(context: viewContext)
-        receipt.id = UUID()
-        receipt.name = "TestName \(receipts.count)"
-        receipt.dateOfPurchase = Date.now
-        receipt.dateOfHistory = Date.distantPast
-        receipt.icon = "icon_test"
-        receipt.price = 6000.0
-        receipt.previousStatus = .shortTermUnEaten
-        receipt.currentStatus = .shortTermUnEaten
-        receipt.itemCategory = .unknown
-        
-        saveChanges()
-        self.getAllReceiptData()
+    func createNewSwipeOffset(status: Status, completion: () -> ()) {
+        switch status {
+        case .shortTermPinned:
+            shortTermPinnedOffsets.append(0.0)
+        case .shortTermUnEaten:
+            shortTermUnEatenOffsets.append(0.0)
+        case .longTermUnEaten:
+            longTermUnEatenOffsets.append(0.0)
+        default:
+            break
+        }
+        completion()
+    }
+    
+    func createTestReceiptData(status: Status) {
+        createNewSwipeOffset(status: status) {
+            print("Done \(status)\n")
+            let receipt = Receipt(context: viewContext)
+            receipt.id = UUID()
+            receipt.name = "TestName \(receipts.count)"
+            receipt.dateOfPurchase = Date.now
+            receipt.dateOfHistory = Date.distantPast
+            receipt.icon = "icon_test"
+            receipt.price = 6000.0
+            receipt.previousStatus = .shortTermUnEaten
+            receipt.currentStatus = .shortTermUnEaten
+            receipt.itemCategory = .unknown
+            
+            saveChanges()
+            self.getAllReceiptData()
+        }
     }
     
     func deleteReceiptData(target: Receipt) {
