@@ -24,7 +24,7 @@ struct ItemDetailView: View {
     
     var body: some View {
         
-        VStack {
+        VStack(spacing: 0) {
             topNaviBar
             
             ScrollView {
@@ -62,6 +62,7 @@ struct ItemDetailView: View {
                 .padding(.horizontal, 20.adjusted)
                 .padding(.bottom, 40)
             } //ScrollView닫기
+            SmallButtonView()
         } // VStack닫기
     } //body닫기
         
