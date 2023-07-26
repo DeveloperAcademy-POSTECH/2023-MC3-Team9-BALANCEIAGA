@@ -101,7 +101,7 @@ struct ItemCheckView: View {
             
         }
         .padding([.top, .bottom], 17.adjusted)
-        .padding([.leading], 20.adjusted)
+        .padding(.leading, 20.adjusted)
     }
     
     private var ListContents: some View{
@@ -125,7 +125,7 @@ struct ItemCheckView: View {
                     Divider()
                         .overlay(Color("Gray100"))
                 }
-                .padding([.horizontal], 40.adjusted)
+                .padding(.horizontal, 40.adjusted)
             }
         }
     }
