@@ -20,6 +20,8 @@ struct MainView: View {
     @State private var searchText = ""
     @State private var isSearching = false
     @State var text: String = ""
+    
+    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
 
     var body: some View {
 
@@ -60,7 +62,7 @@ struct MainView: View {
             case .basic:
                 BasicList()
             case .longterm:
-                LongTermList()
+                LongTermList(itemList: coreDataViewModel.longTermUnEatenList, swipeOffsets: coreDataViewModel.longTermUnEatenOffsets, status: .longTermUnEaten)
             }
             
         }
@@ -102,7 +104,7 @@ struct SearchBar: View {
                         }
                     }
                 
-                if text.isEmpty {
+                if text.isEmpty || !isInputActive {
                     EmptyView()
                 } else {
                     Button(action: {
@@ -128,8 +130,10 @@ struct SearchBar: View {
 
 
 struct MainView_Previews: PreviewProvider {
+    static let coreDataViewModel = CoreDataViewModel()
   static var previews: some View {
     MainView()
+          .environmentObject(coreDataViewModel)
   }
 }
 
