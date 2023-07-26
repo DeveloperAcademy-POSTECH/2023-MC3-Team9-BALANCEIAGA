@@ -207,7 +207,4 @@ extension UpdateItemView {
         }
       }
     }
-    .onTapGesture {
-      self.endTextEditing()
-    }
-  }
+  
