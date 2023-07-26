@@ -8,11 +8,15 @@
 import SwiftUI
 
 struct CenterAlertView: View {
+    
+    let titleMessage: String
+    let bodyMessage: String
+    let actionButtonMessage: String
+    
     var body: some View {
         ZStack {
             Color.black.opacity(0.4)
                 .edgesIgnoringSafeArea(.all)
-            
             centerAlert
         }
     } //body닫기
@@ -37,14 +41,14 @@ struct CenterAlertView: View {
     
     var centerAlertText: some View {
         VStack(spacing: 0) {
-            Text("제목")
+            Text(titleMessage)
                 .font(.system(size: 20, weight: .semibold))
                 .foregroundColor(Color("Gray900"))
                 .frame(width: 240, height: 20)
                 .multilineTextAlignment(.center)
                 .padding(.bottom, 16)
             
-            Text("본문 경고 메시지")
+            Text("진짜로 \(bodyMessage)를 \(actionButtonMessage)하시겠습니까?")
                 .font(.system(size: 17, weight: .medium))
                 .foregroundColor(Color("Gray800"))
                 .frame(width: 240, height: 17)
@@ -81,7 +85,7 @@ struct CenterAlertView: View {
                     RoundedRectangle(cornerRadius: 8)
                         .frame(width: 125, height: 45)
                         .foregroundColor(Color("PointR"))
-                    Text("네, OO할래요")
+                    Text("네, \(actionButtonMessage)할래요")
                         .font(.system(size: 14, weight: .semibold))
                         .foregroundColor(.white)
                 }
@@ -92,6 +96,6 @@ struct CenterAlertView: View {
 
 struct CenterAlertView_Previews: PreviewProvider {
     static var previews: some View {
-        CenterAlertView()
+        CenterAlertView(titleMessage: "제목", bodyMessage: "항목", actionButtonMessage: "취소")
     }
 }
