@@ -15,7 +15,8 @@ struct OCRView: View {
   @State private var isShowBoundingBoxView = true
   @State private var isShowScanView = false
   @State private var isShowItemCheckView = false
-  
+  let appState: AppState
+    
   var body: some View {
     GeometryReader { geometry in
       Image(uiImage: image)
@@ -32,7 +33,7 @@ struct OCRView: View {
           }
       }
       if isShowScanView {
-        NavigationLink(destination: ItemCheckView(), isActive: $isShowItemCheckView) {
+        NavigationLink(destination: ItemCheckView(appState: appState), isActive: $isShowItemCheckView) {
           EmptyView()
         }
         .hidden()
@@ -67,7 +68,7 @@ struct OCRView: View {
           
         }
         
-        VStack {
+          VStack(alignment: .center) {
           Spacer()
           Text("영수증 인식완료!")
             .font(.system(size: 22).bold())

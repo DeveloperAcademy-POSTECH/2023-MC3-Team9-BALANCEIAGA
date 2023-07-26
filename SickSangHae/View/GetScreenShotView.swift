@@ -11,7 +11,7 @@ struct GetScreenShotView: View {
   @ObservedObject var viewModel = CameraViewModel()
   @ObservedObject private var model = CameraModel()
   @Environment(\.dismiss) private var dismiss
-
+  let appState: AppState
   var image: UIImage
   
   var body: some View {
@@ -29,7 +29,7 @@ struct GetScreenShotView: View {
             }
             Spacer()
             //navigation 추가
-            NavigationLink(destination: OCRView(image: model.resizeImage(image, to: UIScreen.main.bounds.size))) {
+              NavigationLink(destination: OCRView(image: model.resizeImage(image, to: UIScreen.main.bounds.size), appState: appState)) {
               Text("등록")
                 .foregroundColor(.black)
                 .font(.system(size: 17.adjusted).bold())
@@ -47,6 +47,9 @@ struct GetScreenShotView: View {
         }
       }
     }
+    .navigationBarBackButtonHidden(true)
+
+
   }
 }
 

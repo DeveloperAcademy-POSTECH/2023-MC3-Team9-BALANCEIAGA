@@ -25,7 +25,7 @@ class TopAlertViewModel: ObservableObject {
   
   // 제스처 종료(스와이프 완료) 처리를 수행하는 함수
   func onDragEnded(value: DragGesture.Value) {
-    if value.translation.height < -50 {
+    if value.translation.height < -80 {
       hideAlert()
     }
   }
