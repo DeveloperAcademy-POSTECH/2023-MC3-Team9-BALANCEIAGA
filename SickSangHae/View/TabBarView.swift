@@ -31,11 +31,12 @@ class AppState: ObservableObject {
 struct TabBarView: View {
     @State var selectedTab: Tab = .mainView
     let appState: AppState
-    
+    @StateObject var coreDataViewModel = CoreDataViewModel()
     var body: some View {
         NavigationStack{
             VStack(spacing: 0) {
                 selectedTab.view
+                    .environmentObject(coreDataViewModel)
 
                 CustomTabView(selectedTab: $selectedTab, appState: appState)
             }
