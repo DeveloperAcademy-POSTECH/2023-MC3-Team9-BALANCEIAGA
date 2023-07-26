@@ -8,49 +8,47 @@
 import SwiftUI
 
 struct ItemBlockView: View {
+    let id = UUID()
+    
+    class Name: ObservableObject {
+        @Published var name: String
+        
+        init(name: String) {
+            self.name = name
+        }
+    }
+    
+    class Price: ObservableObject {
+        @Published var price: Int
+        
+        init(price: Int) {
+            self.price = price
+        }
+    }
+    
+    @ObservedObject var name = Name(name: "")
+    @ObservedObject var price = Price(price: 0)
+    
   @ObservedObject var viewModel: UpdateItemViewModel
   var body: some View {
-    VStack(alignment: .leading) {
-      ZStack(alignment: .trailing) {
-        Rectangle()
-          .foregroundColor(.lightGrayColor)
-          .cornerRadius(12)
+    ZStack(alignment: .trailing) {
+      Rectangle()
+        .foregroundColor(.lightGrayColor)
+        .cornerRadius(12)
         VStack(alignment: .leading) {
-          HStack(spacing: 28.adjusted) {
-            Text("품목")
-              .padding(.leading,20)
-            TextField("무엇을 구매했나요?", text: $viewModel.name)
-          }
-          Divider().foregroundColor(.gray100)
-          HStack(spacing: 28.adjusted) {
-            Text("금액")
-              .padding(.leading, 20)
-            TextField("얼마였나요?",
-                      text: $viewModel.priceString, onEditingChanged: { editing in
-              if !editing {
-                viewModel.priceInt = Int(viewModel.priceString) ?? 0
-                viewModel.priceString = UpdateItemViewModel.priceFormatter.string(from: NSNumber(value: viewModel.priceInt)) ?? ""
-                print(viewModel.priceInt
-                )
-                print(viewModel.priceString)
-              }
-            })
-            .keyboardType(.numberPad)
-          }
+            HStack(spacing: 28.adjusted) {
+                Text("품목")
+                    .padding(.leading,20)
+                TextField("무엇을 구매했나요?", text: $name.name)
+            }
+            Divider().foregroundColor(.gray100)
+            HStack(spacing: 28.adjusted) {
+                Text("금액")
+                    .padding(.leading,20)
+                TextField("얼마였나요?", value: $price.price, formatter: UpdateItemViewModel.priceFormatter)
+                    .keyboardType(.numberPad)
+            }
         }
-        VStack {
-          Button(action: {
-            viewModel.isShowTopAlertView = true
-          }, label: {
-            Image(systemName: "xmark.circle.fill")
-              .resizable()
-              .frame(width:25 ,height:25)
-              .foregroundColor(.lightBlueGrayColor)
-          })
-          Spacer()
-        }
-        .padding(.trailing, 16.adjusted)
-        .padding(.top, 14.adjusted)
       }
       .frame(height: 116.adjusted)
       Spacer().frame(height: 10)
@@ -62,6 +60,19 @@ struct ItemBlockView: View {
     }
     .padding(.horizontal, 20.adjusted)
 
+extension ItemBlockView: Hashable, Equatable {
+    static func == (lhs: ItemBlockView, rhs: ItemBlockView) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        
+    }
+}
+
+struct ItemBlockView_Previews: PreviewProvider {
+  static var previews: some View {
+      ItemBlockView(viewModel: UpdateItemViewModel())
   }
 }
 
