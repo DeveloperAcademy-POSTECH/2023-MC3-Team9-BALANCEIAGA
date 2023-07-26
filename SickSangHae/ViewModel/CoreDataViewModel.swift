@@ -11,6 +11,9 @@ import Foundation
 class CoreDataViewModel: ObservableObject {
     private let viewContext = PersistentController.shared.viewContext
     @Published var receipts: [Receipt] = []
+    @Published var shortTermUnEatenOffsets: [CGFloat] = []
+    @Published var shortTermPinnedOffsets: [CGFloat] = []
+    @Published var longTermUnEatenOffsets: [CGFloat] = []
     
     var shortTermUnEatenList: [Receipt] {
         return receipts.filter{ $0.currentStatus == .shortTermUnEaten}
@@ -38,6 +41,7 @@ class CoreDataViewModel: ObservableObject {
     
     init() {
         getAllReceiptData()
+        getAllOffsetCounts()
     }
     
     
@@ -56,6 +60,11 @@ extension CoreDataViewModel {
         }
     }
     
+    private func getAllOffsetCounts() {
+        shortTermPinnedOffsets = [CGFloat](repeating: 0.0, count:shortTermPinnedList.count)
+        shortTermUnEatenOffsets = [CGFloat](repeating: 0.0, count:shortTermUnEatenList.count)
+        longTermUnEatenOffsets = [CGFloat](repeating: 0.0, count:longTermUnEatenList.count)
+    }
     
     private func saveChanges() {
         do {
