@@ -16,120 +16,118 @@ struct UpdateItemView: View {
     
     @State var swipeOffsets: [CGFloat] = [CGFloat]()
     
-  var body: some View {
-    ZStack(alignment: .top) {
-      Color.white
-        .ignoresSafeArea(.all)
-      VStack {
-        topBar
-        Spacer().frame(height: 36.adjusted)
-        DateSelectionView(viewModel: viewModel)
-        Spacer().frame(height: 30.adjusted)
+    var body: some View {
         ZStack(alignment: .top) {
-          VStack {
-              ScrollViewReader { proxy in
-                  ScrollView(.vertical) {
-                      VStack {
-                          ForEach(Array(zip(itemBlockViews.indices, itemBlockViews)), id: \.0) { index, element in
-                              ZStack {
-                                      element
-                                      .onTapGesture {
-                                          withAnimation {
-                                              swipeOffsets[index] = 0
-                                          }
-                                      }
-                                      .offset(x: swipeOffsets[index])
-                                      HStack {
-                                          Spacer()
-                                          Button {
-                                              deleteItemBlockView(index)
-                                          } label: {
-                                              VStack {
-                                                  Image(systemName: "trash.fill")
-                                                      .padding(.bottom, 4)
-                                                  
-                                                  Text("삭제")
-                                                      .font(.system(size: 14, weight: .semibold))
-                                              }
-                                                      .frame(width: 90.adjusted, height: 116.adjusted)
-                                          }
-                                          
-                                          .background(Color("PointR"))
-                                          .foregroundColor(.white)
-                                          .clipShape(RoundedRectangle(cornerRadius: 12))
-                                          .padding(.trailing, 20.adjusted)
-                                                                                    
-                                          .opacity(swipeOffsets[index] < 0 ? 1 : 0)
-                                      }
-                                      
-                              }
-                              .gesture(DragGesture().onChanged({ value in
-                                  withAnimation {
-                                      if value.translation.width < 0 {
-                                          swipeOffsets[index] = value.translation.width
-                                      }
-                                  }
-                              })
-                                .onEnded({ value in
-                                    withAnimation {
-                                        if value.translation.width < -90 {
-                                            swipeOffsets[index] = -100
-                                        } else {
-                                            swipeOffsets[index] = 0
+            Color.white
+                .ignoresSafeArea(.all)
+            VStack {
+                topBar
+                Spacer().frame(height: 36.adjusted)
+                DateSelectionView(viewModel: viewModel)
+                Spacer().frame(height: 30.adjusted)
+                ZStack(alignment: .top) {
+                    VStack {
+                        ScrollViewReader { proxy in
+                            ScrollView(.vertical) {
+                                VStack {
+                                    ForEach(Array(zip(itemBlockViews.indices, itemBlockViews)), id: \.0) { index, element in
+                                        ZStack {
+                                            element
+                                                .onTapGesture {
+                                                    withAnimation {
+                                                        swipeOffsets[index] = 0
+                                                    }
+                                                }
+                                                .offset(x: swipeOffsets[index])
+                                            HStack {
+                                                Spacer()
+                                                Button {
+                                                    deleteItemBlockView(index)
+                                                } label: {
+                                                    VStack {
+                                                        Image(systemName: "trash.fill")
+                                                            .padding(.bottom, 4)
+                                                        
+                                                        Text("삭제")
+                                                            .font(.system(size: 14, weight: .semibold))
+                                                    }
+                                                    .frame(width: 90.adjusted, height: 116.adjusted)
+                                                }
+                                                
+                                                .background(Color("PointR"))
+                                                .foregroundColor(.white)
+                                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                                .padding(.trailing, 20.adjusted)
+                                                
+                                                .opacity(swipeOffsets[index] < 0 ? 1 : 0)
+                                            }
+                                            
+                                        }
+                                        .gesture(DragGesture().onChanged({ value in
+                                            withAnimation {
+                                                if value.translation.width < 0 {
+                                                    swipeOffsets[index] = value.translation.width
+                                                }
+                                            }
+                                        })
+                                            .onEnded({ value in
+                                                withAnimation {
+                                                    if value.translation.width < -90 {
+                                                        swipeOffsets[index] = -100
+                                                    } else {
+                                                        swipeOffsets[index] = 0
+                                                    }
+                                                }
+                                            }))
+                                        
+                                    }
+                                    
+                                    
+                                    .onChange(of: itemBlockViews) { _ in
+                                        withAnimation {
+                                            proxy.scrollTo(bottomID, anchor: .bottom)
                                         }
                                     }
-                                }))
-                                  
-                          }
-                          
-                          
-                          .onChange(of: itemBlockViews) { _ in
-                              withAnimation {
-                                  proxy.scrollTo(bottomID, anchor: .bottom)
-                              }
-                          }
-                          addItemButton
-                            .onTapGesture {
-                                withAnimation {
-                                    addItemBlockView()
+                                    addItemButton
+                                        .onTapGesture {
+                                            withAnimation {
+                                                addItemBlockView()
+                                            }
+                                        }
+                                        .id(bottomID)
                                 }
                             }
-                            .id(bottomID)
-                      }
-                  }
-              }
-            Spacer()
-            nextButton
-                  .onTapGesture {
-                      registerItemBlockViews()
-                  }
-          }
-          if viewModel.isDatePickerOpen {
-            DatePickerView(viewModel: viewModel)
-          }
-        }
-      }
-    }      
-      if viewModel.isShowTopAlertView {
-        Group {
-          if viewModel.isShowTopAlertView {
-            TopAlertView(viewModel: TopAlertViewModel(name: "파채", currentCase: .delete))
-              .transition(.move(edge: .top))
-          }
-        }
-        .opacity(viewModel.isShowTopAlertView ? 1 : 0)
-        .animation(.easeInOut(duration: 0.4))
-        .onAppear {
-          withAnimation(.easeInOut(duration: 1)) {
-            viewModel.isShowTopAlertView = true
-          }
-          DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            withAnimation(.easeInOut(duration: 1)) {
-              viewModel.isShowTopAlertView = false
+                        }
+                        Spacer()
+                        nextButton
+                            .onTapGesture {
+                                registerItemBlockViews()
+                            }
+                    }
+                    if viewModel.isDatePickerOpen {
+                        DatePickerView(viewModel: viewModel)
+                    }
+                }
             }
-          }
+
+        if viewModel.isShowTopAlertView {
+            Group {
+                TopAlertView(viewModel: TopAlertViewModel(name: "파채", currentCase: .delete))
+                    .transition(.move(edge: .top))
+            }
+            .opacity(viewModel.isShowTopAlertView ? 1 : 0)
+            .animation(.easeInOut(duration: 0.4))
+            .onAppear {
+                withAnimation(.easeInOut(duration: 1)) {
+                    viewModel.isShowTopAlertView = true
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    withAnimation(.easeInOut(duration: 1)) {
+                        viewModel.isShowTopAlertView = false
+                    }
+                }
+            }
         }
-      }
     }
         .onTapGesture {
           self.endTextEditing()
@@ -253,7 +251,7 @@ struct UpdateItemView: View {
         .padding([.leading, .trailing], 14.adjusted)
       }
     }
-  }
+  
     
     func addItemBlockView() {
         itemBlockViews.append(ItemBlockView(viewModel: viewModel))
@@ -261,6 +259,7 @@ struct UpdateItemView: View {
     }
     
     func deleteItemBlockView(_ offset:Int) {
+        viewModel.isShowTopAlertView = true
         itemBlockViews.remove(at: offset)
         swipeOffsets.remove(at: offset)
     }
@@ -271,6 +270,7 @@ struct UpdateItemView: View {
         }
     }
 }
+
 
 struct UpdateItemView_Previews: PreviewProvider {
   static var previews: some View {
