@@ -8,7 +8,18 @@
 import SwiftUI
 
 struct LongTermList: View {
-    let testLists = ["계란 30구","모둠쌈","요플레","요플레","모둠쌈","라면","양파","계란","모둠쌈","요플레","모둠쌈","모둠쌈","계란","요플레","모둠쌈","요플레"]
+    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    
+    let itemList: [Receipt]
+    let status: Status
+    @State private var swipeOffsets: [CGFloat]
+    
+    
+    init(itemList: [Receipt], swipeOffsets: [CGFloat], status: Status) {
+        self.itemList = itemList
+        self.status = status
+        self.swipeOffsets = swipeOffsets
+    }
 
     var body: some View {
 
