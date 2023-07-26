@@ -8,19 +8,19 @@
 import SwiftUI
 
 struct BasicList: View {
-    
+    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
     var body: some View {
         ScrollView {
             PinnedListTitle(title: "빨리 먹어야 해요 🕖")
-            ListContent()
+            ListContent(itemList: coreDataViewModel.shortTermPinnedList, swipeOffsets: coreDataViewModel.shortTermPinnedOffsets, status: .shortTermPinned)
             
             Rectangle()
                 .foregroundColor(.clear)
-                .frame(width: screenWidth, height: 12.adjusted)
+                .frame(width: screenWidth, height: 12)
                 .background(Color("Gray100"))
             
             BasicListTitle(title: "기본")
-            ListContent()
+            ListContent(itemList: coreDataViewModel.shortTermUnEatenList, swipeOffsets: coreDataViewModel.shortTermUnEatenOffsets, status: .shortTermUnEaten)
         }
         .listStyle(.plain)
         
@@ -35,25 +35,25 @@ private struct BasicListTitle: View {
         HStack {
             Text(title)
                 .foregroundColor(Color("Gray900"))
-                .font(.system(size: 20.adjusted).weight(.semibold))
+                .font(.system(size: 20).weight(.semibold))
             
             Spacer()
             
             Button {
                 
             } label: {
-                HStack(spacing: 2.adjusted) {
+                HStack(spacing: 2) {
                     Text("최신순")
                         .foregroundColor(Color("Gray600"))
                     Image(systemName: "arrow.up.arrow.down")
                 }
             }
             .foregroundColor(Color("Gray600"))
-            .font(.system(size: 14.adjusted))
-            .padding(.trailing, 20.adjusted)
+            .font(.system(size: 14))
+            .padding(.trailing, 20)
         }
-        .padding([.top, .bottom], 17.adjusted)
-        .padding([.leading], 20.adjusted)
+        .padding([.top, .bottom], 17)
+        .padding([.leading], 20)
     }
 }
 
@@ -65,12 +65,12 @@ private struct PinnedListTitle: View {
         HStack {
             Text(title)
                 .foregroundColor(Color("Gray900"))
-                .font(.system(size: 20.adjusted).weight(.semibold))
+                .font(.system(size: 20).weight(.semibold))
             
             Spacer()
         }
-        .padding([.top, .bottom], 17.adjusted)
-        .padding([.leading, .trailing], 20.adjusted)
+        .padding([.top, .bottom], 17)
+        .padding([.leading, .trailing], 20)
     }
 }
 
