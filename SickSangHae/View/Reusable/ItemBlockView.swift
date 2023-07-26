@@ -70,11 +70,69 @@ extension ItemBlockView: Hashable, Equatable {
     func hash(into hasher: inout Hasher) {
         
     }
+    
+    func deleteItem() {
+        viewModel.isShowTopAlertView = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            withAnimation(.easeInOut(duration: 1)) {
+                viewModel.isShowTopAlertView = false
+                viewModel.deleteItemBlock(itemBlockViewModel: itemBlockViewModel)
+            }
+        }
+    }
 }
+
+class ItemBlockViewModel: ObservableObject, Equatable, Hashable {
+    let id = UUID()
+    @Published var name: String
+    @Published var price: Int
+    @Published var offset: CGFloat = 0
+    
+    init(name: String, price: Int) {
+        self.name = name
+        self.price = price
+    }
+    
+    var priceString: String {
+        return String(price)
+    }
+    
+    var isAnyTextFieldEmpty: Bool {
+      return name.isEmpty || priceString.isEmpty
+    }
+    
+    var areBothTextFieldsNotEmpty: Bool {
+      return !name.isEmpty && !priceString.isEmpty
+    }
+    
+    
+    var showTextfieldStatus: String {
+      switch (priceString.isEmpty, name.isEmpty) {
+      case (true, true):
+        return "상품명과 금액"
+      case (true, false):
+        return "금액"
+      case (false, true):
+        return "상품명"
+      case (false, false):
+        return ""
+      }
+    }
+    
+    
+    static func == (lhs: ItemBlockViewModel, rhs: ItemBlockViewModel) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        
+    }
+}
+
 
 struct ItemBlockView_Previews: PreviewProvider {
   static var previews: some View {
-      ItemBlockView(viewModel: UpdateItemViewModel())
+      ItemBlockView(viewModel: UpdateItemViewModel(), itemBlockViewModel: ItemBlockViewModel(name: "", price: 0))
   }
 }
 
