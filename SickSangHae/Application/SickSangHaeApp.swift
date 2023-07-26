@@ -9,9 +9,14 @@ import SwiftUI
 
 @main
 struct SickSangHaeApp: App {
+    @StateObject private var cameraViewModelShared = CameraViewModel()
+
     var body: some Scene {
         WindowGroup {
-            TabBarView()
+        let appState = AppState()
+            TabBarView(appState: appState)
+                .environmentObject(appState)
+                .environmentObject(cameraViewModelShared)
         }
     }
 }

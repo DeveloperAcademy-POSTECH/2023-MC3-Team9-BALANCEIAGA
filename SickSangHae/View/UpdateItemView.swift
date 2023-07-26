@@ -26,7 +26,7 @@ struct UpdateItemView: View {
               ScrollViewReader { proxy in
                   ScrollView {
                       VStack {
-                          ForEach(viewModel.items, id: \.self) { item in
+                        ForEach(viewModel.items, id: \.self) { item in
                               ItemBlockView(viewModel: viewModel)
                           }
                           .onChange(of: viewModel.items) { _ in

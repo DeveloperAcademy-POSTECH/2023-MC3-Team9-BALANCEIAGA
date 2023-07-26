@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct RegisterCompleteView: View {
+    let appState: AppState
     var body: some View {
 
         VStack(spacing: 35){
@@ -22,7 +23,7 @@ struct RegisterCompleteView: View {
             Spacer()
 
             Button {
-                // TODO: 여기에 닫기 버튼에 대한 기능을 완성해요
+                self.appState.moveToRootView = true
             } label:{
                 ZStack{
                     Rectangle()
@@ -38,11 +39,7 @@ struct RegisterCompleteView: View {
                 .padding(.bottom, 30)
             }
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 
-struct RegisterCompleteView_Previews: PreviewProvider {
-    static var previews: some View {
-        RegisterCompleteView()
-    }
-}

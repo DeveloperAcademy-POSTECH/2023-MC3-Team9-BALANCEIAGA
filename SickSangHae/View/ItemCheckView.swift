@@ -13,7 +13,7 @@ struct ItemCheckView: View {
     // TODO: 나중에 뷰 연결할때는 @Binding으로 바꾸어야할 듯합니다.
     var isOCR = true
     @ObservedObject var viewModel = UpdateItemViewModel()
-    @Environment(\.dismiss) private var dismiss
+    @State var appState: AppState
     
     var body: some View {
         NavigationStack {
@@ -30,8 +30,8 @@ struct ItemCheckView: View {
                         
                         Spacer()
                         Button(action: {
-                            dismiss()
-                            dismiss()
+                            self.appState.moveToRootView = true
+                            
                         }, label: {
                             Image(systemName: "xmark")
                                 .resizable()
@@ -147,10 +147,4 @@ struct ItemCheckView: View {
         .padding([.top, .bottom], 8.adjusted)
     }
     
-}
-
-struct ItemCheckView_Previews: PreviewProvider {
-    static var previews: some View {
-        ItemCheckView()
-    }
 }
