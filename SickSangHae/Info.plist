@@ -6,5 +6,12 @@
 	<string>$(CHAT_GPT_TOKEN)</string>
 	<key>CHAT_GPT_ORGANIZATIONIDENTIFIER</key>
 	<string>$(CHAT_GPT_ORGANIZATIONIDENTIFIER)</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Pretendard-Bold.otf</string>
+		<string>Pretendard-SemiBold.otf</string>
+		<string>Pretendard-Medium.otf</string>
+		<string>Pretendard-Regular.otf</string>
+	</array>
 </dict>
 </plist>

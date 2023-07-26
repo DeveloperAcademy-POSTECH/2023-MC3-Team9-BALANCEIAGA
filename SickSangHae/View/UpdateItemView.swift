@@ -8,176 +8,203 @@
 import SwiftUI
 
 struct UpdateItemView: View {
-    
     @Namespace var bottomID
+    @Environment(\.dismiss) private var dismiss
+    @ObservedObject var viewModel: UpdateItemViewModel
+    @State var titleName: String
+    @State var buttonName: String
+    let appState: AppState
     
-  @ObservedObject var viewModel: UpdateItemViewModel
-  
-  var body: some View {
-    ZStack {
-      Color.white
-        .ignoresSafeArea(.all)
-      VStack {
-        topBar
-        Spacer().frame(height: 36.adjusted)
-        DateSelectionView(viewModel: viewModel)
-        Spacer().frame(height: 30.adjusted)
+    var body: some View {
         ZStack(alignment: .top) {
-          VStack {
-              ScrollViewReader { proxy in
-                  ScrollView {
-                      VStack {
-                          ForEach(viewModel.items, id: \.self) { item in
-                              ItemBlockView(name: item.name, price: item.price,viewModel: viewModel)
-                          }
-                          .onChange(of: viewModel.items) { _ in
-                              withAnimation {
-                                  proxy.scrollTo(bottomID, anchor: .bottom)
-                              }
-                          }
-                          addItemButton
-                            .onTapGesture {
-                                withAnimation {
-                                    viewModel.addNewItem()
+            Color.white
+                .ignoresSafeArea(.all)
+            VStack {
+                topBar
+                Spacer().frame(height: 36.adjusted)
+                DateSelectionView(viewModel: viewModel)
+                Spacer().frame(height: 30.adjusted)
+                ZStack(alignment: .top) {
+                    VStack {
+                        ScrollViewReader { proxy in
+                            ScrollView {
+                                VStack {
+                                    ForEach(viewModel.items, id: \.self) { item in
+                                        ItemBlockView(viewModel: viewModel)
+                                    }
+                                    .onChange(of: viewModel.items) { _ in
+                                        withAnimation {
+                                            proxy.scrollTo(bottomID, anchor: .bottom)
+                                        }
+                                    }
+                                    addItemButton
+                                        .onTapGesture {
+                                            withAnimation {
+                                                viewModel.addNewItem()
+                                            }
+                                        }
+                                        .id(bottomID)
                                 }
                             }
-                            .id(bottomID)
-                      }
-                  }
-              }
-            Spacer()
-            nextButton
-          }
-          if viewModel.isDatePickerOpen {
-            DatePickerView(viewModel: viewModel)
-          }
+                        }
+                        Spacer()
+                        nextButton
+                    }
+                    if viewModel.isDatePickerOpen {
+                        DatePickerView(viewModel: viewModel)
+                    }
+                }
+            }
+            
+            if viewModel.isShowTopAlertView {
+                Group {
+                    TopAlertView(viewModel: TopAlertViewModel(name: "파채", currentCase: .delete))
+                        .transition(.move(edge: .top))
+                    
+                }
+                .opacity(viewModel.isShowTopAlertView ? 1 : 0)
+                .animation(.easeInOut(duration: 0.4))
+                .onAppear {
+                    withAnimation(.easeInOut(duration: 1)) {
+                        viewModel.isShowTopAlertView = true
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        withAnimation(.easeInOut(duration: 1)) {
+                            viewModel.isShowTopAlertView = false
+                        }
+                    }
+                }
+            }
         }
-      }
+        .onTapGesture {
+            self.endTextEditing()
+        }
+        .navigationBarBackButtonHidden(true)
     }
-    .onTapGesture {
-      self.endTextEditing()
+    
+    
+    private var topBar: some View {
+        HStack {
+            Button(action:{dismiss()}, label: {
+                Image(systemName: "chevron.left")
+                    .resizable()
+                    .frame(width: 10, height: 19)
+            })
+            Spacer()
+            Text(titleName)
+                .fontWeight(.bold)
+                .font(.system(size: 17))
+            Spacer()
+            Button(action: {
+                self.appState.moveToRootView = true
+            } , label: {
+                Image(systemName: "xmark")
+                    .resizable()
+                    .frame(width: 15, height: 15)
+            })
+        }
+        .foregroundColor(.gray900)
+        .padding([.leading, .trailing], 20.adjusted)
     }
-  }
-  
-  private var topBar: some View {
-    HStack {
-      Image(systemName: "chevron.left")
-        .resizable()
-        .frame(width: 10, height: 19)
-      Spacer()
-      Text("직접 추가")
-        .fontWeight(.bold)
-        .font(.system(size: 17))
-      Spacer()
-      Image(systemName: "xmark")
-        .resizable()
-        .frame(width: 15, height: 15)
+    
+    private var addItemButton: some View {
+        ZStack {
+            Rectangle()
+                .frame(width: 350, height: 60)
+                .foregroundColor(.lightGrayColor)
+                .cornerRadius(12)
+            
+            HStack {
+                Image(systemName: "plus")
+                Text("품목 추가하기")
+            }
+            .bold()
+            .foregroundColor(.accentColor)
+        }
+        .padding(.top, 15)
     }
-    .padding([.leading, .trailing], 20.adjusted)
-  }
-  
-  private var addItemButton: some View {
-    ZStack {
-      Rectangle()
-        .frame(width: 350, height: 60)
-        .foregroundColor(.lightGrayColor)
-        .cornerRadius(12)
-      
-      HStack {
-        Image(systemName: "plus")
-        Text("품목 추가하기")
-      }
-      .bold()
-      .foregroundColor(.accentColor)
+    
+    private var nextButton: some View {
+        Button(action: {
+            viewModel.isShowTextfieldWarning = !viewModel.areBothTextFieldsNotEmpty
+        }, label: {
+            ZStack{
+                Rectangle()
+                    .cornerRadius(12)
+                    .frame(height: 60.adjusted)
+                Text(buttonName)
+                    .foregroundColor(.white)
+                    .font(.system(size: 17))
+            }
+            .padding([.leading, .trailing], 20.adjusted)
+            .padding(.bottom, 30.adjusted)
+        })
     }
-    .padding(.top, 15)
-  }
-  
-  private var nextButton: some View {
-    ZStack {
-      Rectangle()
-        .frame(width: 350, height: 60)
-        .foregroundColor(.lightGreenGrayColor)
-        .cornerRadius(12)
-      
-      HStack {
-        Text("다음")
-          .foregroundColor(.white)
-          .bold()
-      }
-    }
-    .padding(.bottom, 30)
-  }
 }
 
 extension UpdateItemView {
-  struct DateSelectionView: View {
-    @ObservedObject var viewModel: UpdateItemViewModel
-    
-    var body: some View {
-      HStack(spacing: 24) {
-        Button(action: {
-          viewModel.decreaseDate = viewModel.date
-        }, label: {
-          Image(systemName: "chevron.left")
-            .resizable()
-            .frame(width: 8, height: 14)
-        })
+    struct DateSelectionView: View {
+        @ObservedObject var viewModel: UpdateItemViewModel
         
-        Button(action: {
-          viewModel.isDatePickerOpen.toggle()
-        }, label: {
-          Text("\(viewModel.dateString)")
-            .font(.system(size: 20).bold())
-        })
-        
-        Button(action: {
-          viewModel.increaseDate = viewModel.date
-        }, label: {
-          Image(systemName: "chevron.right")
-            .resizable()
-            .frame(width: 8, height: 14)
-        })
-        .foregroundColor(viewModel.isDateBeforeToday ? .black : .gray)
-      }
-      .foregroundColor(.black)
-    }
-  }
-  
-  struct DatePickerView: View {
-    @ObservedObject var viewModel: UpdateItemViewModel
-    
-    var body: some View {
-      ZStack {
-        Rectangle()
-          .cornerRadius(12)
-          .foregroundColor(.white)
-          .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 4)
-        
-        GeometryReader { geo in
-          DatePicker(
-            viewModel.dateString,
-            selection: $viewModel.date,
-            in: ...Date(),
-            displayedComponents: .date
-          )
-          .labelsHidden()
-          .datePickerStyle(GraphicalDatePickerStyle())
-          .frame(width: geo.size.width, height: geo.size.height)
-          .onChange(of: viewModel.date) { _ in
-            viewModel.isDatePickerOpen = false
-          }
+        var body: some View {
+            HStack(spacing: 24) {
+                Button(action: {
+                    viewModel.decreaseDate = viewModel.date
+                }, label: {
+                    Image(systemName: "chevron.left")
+                        .resizable()
+                        .frame(width: 8, height: 14)
+                })
+                
+                Button(action: {
+                    viewModel.isDatePickerOpen.toggle()
+                }, label: {
+                    Text("\(viewModel.dateString)")
+                        .font(.system(size: 20).bold())
+                })
+                
+                Button(action: {
+                    viewModel.increaseDate = viewModel.date
+                }, label: {
+                    Image(systemName: "chevron.right")
+                        .resizable()
+                        .frame(width: 8, height: 14)
+                })
+                .foregroundColor(viewModel.isDateBeforeToday ? .black : .gray)
+            }
+            .foregroundColor(.black)
         }
-        .padding(.all, 20)
-      }
-      .frame(height: screenHeight / (2.6).adjusted)
-      .padding([.leading, .trailing], 14.adjusted)
     }
-  }
-}
-
-struct UpdateItemView_Previews: PreviewProvider {
-  static var previews: some View {
-    UpdateItemView(viewModel: UpdateItemViewModel())
-  }
-}
+    
+    struct DatePickerView: View {
+        @ObservedObject var viewModel: UpdateItemViewModel
+        
+        var body: some View {
+            ZStack {
+                Rectangle()
+                    .cornerRadius(12)
+                    .foregroundColor(.white)
+                    .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 4)
+                
+                GeometryReader { geo in
+                    DatePicker(
+                        viewModel.dateString,
+                        selection: $viewModel.date,
+                        in: ...Date(),
+                        displayedComponents: .date
+                    )
+                    .labelsHidden()
+                    .datePickerStyle(GraphicalDatePickerStyle())
+                    .frame(width: geo.size.width, height: geo.size.height)
+                    .onChange(of: viewModel.date) { _ in
+                        viewModel.isDatePickerOpen = false
+                    }
+                }
+                .padding(.all, 20)
+            }
+            .frame(height: screenHeight / (2.6).adjusted)
+            .padding([.leading, .trailing], 14.adjusted)
+        }
+      }
+    }
+  

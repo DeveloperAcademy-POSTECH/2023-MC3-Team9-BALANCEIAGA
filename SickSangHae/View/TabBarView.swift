@@ -24,15 +24,22 @@ enum Tab: CaseIterable {
         }
 }
 
+class AppState: ObservableObject {
+    @Published var moveToRootView: Bool = false
+}
+
 struct TabBarView: View {
     @State var selectedTab: Tab = .mainView
-
+    let appState: AppState
+    @StateObject var coreDataViewModel = CoreDataViewModel()
+    
     var body: some View {
         NavigationStack{
             VStack(spacing: 0) {
                 selectedTab.view
+                    .environmentObject(coreDataViewModel)
 
-                CustomTabView(selectedTab: $selectedTab)
+                CustomTabView(selectedTab: $selectedTab, appState: appState)
             }
             .ignoresSafeArea(.keyboard)
         }
@@ -57,27 +64,42 @@ struct ScanButton: Shape {
 
 struct CustomTabView: View {
     @Binding var selectedTab: Tab
+    @State var isActive = false
+    @EnvironmentObject private var cameraViewModelShared: CameraViewModel
 
+    let appState: AppState
     var body: some View {
         VStack(spacing: 0) {
             switch selectedTab {
             case .mainView:
                 Button {
-                    // 카메라 기능을 넣어요
+                    isActive = true
                 } label: {
                     ZStack {
-                        ScanButton(cornerRadius: 15)
-                                    .fill(LinearGradient(gradient: Gradient(colors: [Color("PrimaryG"), Color("PrimaryB")]), startPoint: .leading, endPoint: .trailing))
-                                    .frame(width: screenWidth, height: 55)
-
-                        HStack {
-                            Image(systemName: "camera.viewfinder")
-                            Text("영수증 스캔하기")
-                                .font(.system(size: 17, weight: .semibold))
-                        }
-                        .foregroundColor(.white)
+                      ScanButton(cornerRadius: 15)
+                        .fill(LinearGradient(gradient: Gradient(colors: [Color("PrimaryG"), Color("PrimaryB")]), startPoint: .leading, endPoint: .trailing))
+                        .frame(width: screenWidth, height: 55)
+                      
+                      HStack {
+                        Image(systemName: "camera.viewfinder")
+                        Text("영수증 스캔하기")
+                          .font(.system(size: 17, weight: .semibold))
+                      }
+                      .foregroundColor(.white)
                     }
                 }
+                .navigationDestination(isPresented: $isActive, destination: {
+                    CameraView(appState: appState)
+                })
+                .onReceive(self.appState.$moveToRootView) { moveToDashboard in
+                    if moveToDashboard {
+                        self.isActive = false
+                        self.appState.moveToRootView = false
+                        cameraViewModelShared.isCapturedShowPreview = false
+                        cameraViewModelShared.isSelectedShowPreview = false
+                    }
+                }
+          
             default: EmptyView()
 
             }
@@ -136,9 +158,5 @@ struct CustomTabView: View {
     }
 }
 
-struct TabBarView_Previews: PreviewProvider {
-    static var previews: some View {
-        TabBarView()
-    }
-}
+
 

@@ -11,7 +11,7 @@ struct HistoryView: View {
     
     @State var isMovingSegmentedTab = true
     
-    let array: [String] = ["Apple", "Banana", "Orange", "Pineapple", "Grapes", "Watermelon"]
+    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
     
     var body: some View {
         NavigationStack {
@@ -40,7 +40,7 @@ struct HistoryView: View {
                     
                     listSection
                     
-                    listSection
+//                    listSection
                     
                 } //ScrollView닫기
                 .listStyle(.plain)
@@ -148,7 +148,7 @@ struct HistoryView: View {
     } //listTitle닫기
     
     var itemList: some View {
-        ForEach(array, id:\.self) { item in
+        ForEach(isMovingSegmentedTab ? coreDataViewModel.eatenList : coreDataViewModel.spoiledList, id:\.self) { item in
             VStack {
                 HStack {
                     Image(systemName: "circle.fill")
@@ -159,7 +159,7 @@ struct HistoryView: View {
                     Spacer()
                         .frame(width: 12)
                     
-                    Text(item)
+                    Text(item.name)
                         .font(.system(size: 17).weight(.semibold))
                         .foregroundColor(Color("Gray900"))
                     
@@ -168,6 +168,7 @@ struct HistoryView: View {
                     Menu {
                         Button(action: {
                             //아이템 상태 복구 로직
+                            coreDataViewModel.recoverPreviousStatus(target: item)
                         }, label: {
                             Text("복구하기")
                             Image(systemName: "arrow.counterclockwise")
@@ -175,15 +176,16 @@ struct HistoryView: View {
                         
                         Button(action: {
                             //아이템 상태 변경 로직
+                            isMovingSegmentedTab ? coreDataViewModel.updateStatus(target: item, to: .Spoiled) : coreDataViewModel.updateStatus(target: item, to: .Eaten)
                         }, label: {
-                            Text("상했어요")
+                            Text(isMovingSegmentedTab ? "상했어요" : "먹었어요")
                             Image(systemName: "arrow.triangle.2.circlepath")
                         })
                         
                         Divider()
                         
                         Button(role: .destructive, action: {
-                            
+                            coreDataViewModel.deleteReceiptData(target: item)
                         }, label: {
                             Text("삭제하기")
                             Image(systemName: "trash.fill")
@@ -206,7 +208,7 @@ struct HistoryView: View {
                 
                 Divider()
                     .overlay(Color("Gray100"))
-                    .opacity(item == array.last ? 0 : 1)
+                    .opacity(item == coreDataViewModel.eatenList.last ? 0 : 1)
                 
             } //VStack닫기
             .padding(.leading, 20)
@@ -218,7 +220,9 @@ struct HistoryView: View {
 } //struct닫기
 
 struct HistoryView_Previews: PreviewProvider {
+    static let coreDataViewModel = CoreDataViewModel()
     static var previews: some View {
         HistoryView()
+            .environmentObject(coreDataViewModel)
     }
 }
