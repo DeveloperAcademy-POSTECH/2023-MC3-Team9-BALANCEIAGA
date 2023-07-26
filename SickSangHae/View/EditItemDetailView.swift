@@ -32,6 +32,8 @@ struct EditItemDetailView: View {
             ScrollView {
                 editIconButton
                 InfoEditField(nameText: $nameText, wonText: $wonText)
+                
+                
             }
             deleteButton
         }
@@ -63,7 +65,7 @@ struct EditItemDetailView: View {
                         .bold()
                 })
                 .disabled(nameText.isEmpty)
-                .disabled(nameText == nameText && dateText == dateText && wonText == wonText)
+                // 추후 CoreData연결하면서 품목명, 구매일, 구매금액, 아이콘 넷 중 하나라도 바뀌지 않는다면 완료버튼이 비활성화 되도록 disabled조건문 추가
             }
         }
         .padding(.top, 10)
@@ -124,14 +126,16 @@ struct InfoEditField: View {
     @Binding var wonText: String
     
     @State private var isEditing = false
-    @FocusState var isInputActive: Bool
-    
     @State private var selectedDate = Date()
     @State private var showingDatePicker = false
     
+    @FocusState var isInputActive: Bool
+    
     var body: some View {
         nameField
+        
         dateField
+        
         wonField
     }
     
@@ -146,8 +150,6 @@ struct InfoEditField: View {
                     Text("품목명은 필수에요")
                         .bold()
                         .foregroundColor(Color("Gray200"))
-                } else {
-                    EmptyView()
                 }
                 
                 TextField("", text: $nameText)
@@ -162,9 +164,7 @@ struct InfoEditField: View {
                         }
                     }
                 
-                if nameText.isEmpty || !isInputActive {
-                    EmptyView()
-                } else {
+                if !nameText.isEmpty && isInputActive {
                     Button(action: {
                         self.nameText = ""
                     }, label: {
