@@ -53,7 +53,7 @@ struct ItemCheckView: View {
                     }
                     
                     Spacer()
-                    NavigationLink(destination: RegisterCompleteView(), label: {
+                    NavigationLink(destination: RegisterCompleteView(appState: appState), label: {
                         ZStack {
                             Rectangle()
                                 .frame(width: 350, height: 60)
@@ -82,7 +82,7 @@ struct ItemCheckView: View {
             
             switch isOCR{
             case true:
-                NavigationLink(destination: UpdateItemView(viewModel: UpdateItemViewModel()), label: {
+                NavigationLink(destination: UpdateItemView(viewModel: UpdateItemViewModel(), appState: appState), label: {
                 ZStack{
                     RoundedRectangle(cornerRadius: 5)
                         .foregroundColor(Color("Gray100"))

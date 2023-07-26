@@ -9,8 +9,8 @@ import SwiftUI
 
 struct RegisterCompleteView: View {
     let appState: AppState
+    
     var body: some View {
-
         VStack(spacing: 35){
             Spacer()
 

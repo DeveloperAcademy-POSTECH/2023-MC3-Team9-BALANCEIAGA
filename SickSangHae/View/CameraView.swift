@@ -11,7 +11,8 @@ import AVFoundation
 struct CameraView: View {
   @ObservedObject var viewModel = CameraViewModel()
   @Environment(\.dismiss) private var dismiss
-    let appState: AppState
+  let appState: AppState
+    
   var body: some View {
     ZStack {
       viewModel.cameraPreview.ignoresSafeArea()

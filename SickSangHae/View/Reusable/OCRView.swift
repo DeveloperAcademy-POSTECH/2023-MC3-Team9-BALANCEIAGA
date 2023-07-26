@@ -15,8 +15,8 @@ struct OCRView: View {
   @State private var isShowBoundingBoxView = true
   @State private var isShowScanView = false
   @State private var isShowItemCheckView = false
-  
-    let appState: AppState
+  let appState: AppState
+    
   var body: some View {
     GeometryReader { geometry in
       Image(uiImage: image)

@@ -11,7 +11,7 @@ struct GetScreenShotView: View {
   @ObservedObject var viewModel = CameraViewModel()
   @ObservedObject private var model = CameraModel()
   @Environment(\.dismiss) private var dismiss
-    let appState: AppState
+  let appState: AppState
   var image: UIImage
   
   var body: some View {
