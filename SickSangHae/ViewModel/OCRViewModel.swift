@@ -58,7 +58,8 @@ class OCRViewModel: ObservableObject {
     @Published var textObservations: [VNRecognizedTextObservation] = []
     let chatToken = Environments.chatTokenkey
     let chatOrganization = Environments.chatOrganizationkey
-    var GPTprompt = ""
+    var gptAnswer = Dictionary<String, [Any]>()
+    var gptPrompt = ""
 
     //이미지 분석 메소드
     @MainActor
@@ -79,7 +80,8 @@ class OCRViewModel: ObservableObject {
             print(text)
 
             let requestArr = result.compactMap { $0.topCandidates(1).first?.string }
-            self!.GPTprompt = requestArr.joined(separator: " ")
+            self!.gptPrompt = requestArr.joined(separator: " ")
+
             // MARK: GPT 연결하는 부분
             print("Request Results: \(requestArr.joined(separator: " "))")
             print("Request Results: \(requestArr)")
@@ -118,13 +120,13 @@ class OCRViewModel: ObservableObject {
     }
 
     @MainActor
-    func queryGPT(prompts: String, completion: @escaping (String) -> Void) {
+    func queryGPT(prompts: String, dispatchGroup: DispatchGroup, completion: @escaping (String) -> Void) {
         let configuration = OpenAI.Configuration(token: chatToken, organizationIdentifier: chatOrganization, timeoutInterval: 60.0)
         let openAI = OpenAI(configuration: configuration)
-        let customPrompt = prompts + "\n 이거를 딕셔너리로 정리해줘"
+        let customPrompt = prompts + "\n 이거를 딕셔너리로 정리해. 그리고 key는 상품명, 단가, 수량, 금액이야. value에는 특수문자를 없애야해. 딕셔너리만 응답해줘."
 
         let query = ChatQuery(model: .gpt3_5Turbo, messages: [.init(role: .user, content: customPrompt)])
-
+        
         openAI.chatsStream(query: query) { partialResult in
             print("GPT data:")
             switch partialResult {
@@ -143,12 +145,24 @@ class OCRViewModel: ObservableObject {
             }
         } completion: { error in
             print(error ?? "Unknown Error.")
+            dispatchGroup.leave()
             if let errorMessage = error?.localizedDescription {
                 DispatchQueue.main.async {
                     completion(errorMessage)
                 }
             }
         }
+    }
+
+    func convertToDictionary(text: String) -> [String: [Any]]? {
+        if let data = text.data(using: .utf8) {
+            do {
+                return try JSONSerialization.jsonObject(with: data, options: []) as? [String: [Any]]
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        return nil
     }
 }
 

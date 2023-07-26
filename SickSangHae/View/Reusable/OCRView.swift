@@ -16,6 +16,7 @@ struct OCRView: View {
     @State private var isShowScanView = false
     @State private var isShowItemCheckView = false
     @State private var gptAnswer: String = ""
+    let dispatchGroup = DispatchGroup()
 
     var body: some View {
         GeometryReader { geometry in
@@ -30,22 +31,31 @@ struct OCRView: View {
                             isShowBoundingBoxView = false
                             isShowScanView = true
                         }
-                        viewModel.queryGPT(prompts: viewModel.GPTprompt){ word in
-                            gptAnswer += word
-                            print(gptAnswer)
-                        }
                     }
             }
             if isShowScanView {
-                NavigationLink(destination: ItemCheckView(), isActive: $isShowItemCheckView) {
+                NavigationLink(destination: ItemCheckView(gptAnswer: $viewModel.gptAnswer), isActive: $isShowItemCheckView) {
                     EmptyView()
                 }
                 .hidden()
                 scanView
                     .onAppear {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 7.0) {
+                        // MARK: DispatchGroup을 enter 합니다.
+                        dispatchGroup.enter()
+                        DispatchQueue.main.async {
+                            // MARK: viewModel.queryGPT 안에서 DispatchGroup를 leave 합니다.
+                            viewModel.queryGPT(prompts: viewModel.gptPrompt, dispatchGroup: dispatchGroup){ word in
+                                gptAnswer += word
+                                print(gptAnswer)
+                            }
+                        }
+
+                        dispatchGroup.notify(queue: .main) {
+                            // MARK: 여기에 DispatchGroup의 모든 작업이 완료되었을 때 실행할 로직 추가
                             isShowScanView = false
                             isShowItemCheckView = true
+                            print(gptAnswer)
+                            viewModel.gptAnswer = viewModel.convertToDictionary(text: gptAnswer)!
                         }
                     }
             }
