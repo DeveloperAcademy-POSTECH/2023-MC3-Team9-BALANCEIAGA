@@ -16,6 +16,10 @@ final class UpdateItemViewModel: ObservableObject {
   @Published var priceInt: Int = 0
   @Published var priceString: String = ""
   @Published var name: String = ""
+
+    @Published var itemBlockViewModels: [ItemBlockViewModel] = [ItemBlockViewModel]()
+    
+    
     
   private static let dateFormat: DateFormatter =  {
     let formatter = DateFormatter()
@@ -82,5 +86,31 @@ final class UpdateItemViewModel: ObservableObject {
       }
     }
   }
+    
+    var isEveryBlockFilled: Bool {
+        var result = true
+        itemBlockViewModels.forEach { item in
+            if item.areBothTextFieldsNotEmpty == false {
+                result = false
+                return
+            }
+        }
+        
+        return result
+    }
+    
+    func addNewItemBlock() {
+        itemBlockViewModels.append(ItemBlockViewModel(name: "", price: 0))
+    }
+    
+    
+    func deleteItemBlock(itemBlockViewModel: ItemBlockViewModel) {
+        for i in 0..<itemBlockViewModels.count {
+            if itemBlockViewModels[i].id == itemBlockViewModel.id {
+                itemBlockViewModels.remove(at: i)
+                break
+            }
+        }
+    }
 }
 
