@@ -53,7 +53,7 @@ struct BasicList: View {
                 .padding(.trailing, 20)
             }
             .padding([.top, .bottom], 17)
-            .padding([.leading], 20)
+            .padding(.leading, 20)
     }
     
     private var PinnedListTitle: some View {
@@ -64,8 +64,8 @@ struct BasicList: View {
                 
                 Spacer()
             }
-            .padding([.top, .bottom], 17)
-            .padding([.leading, .trailing], 20)
+            .padding(.vertical, 17)
+            .padding(.horizontal, 20)
         }
 }
 
@@ -159,7 +159,7 @@ Array(zip(listContentViewModel.itemList.indices, listContentViewModel.itemList.r
                                 .font(.system(size: 14).weight(.semibold))
                                 .padding(.trailing, 20)
                         }
-                        .padding([.top, .bottom], 8)
+                        .padding(.vertical, 8)
                     }
                     .gesture(DragGesture().onChanged({ value in
                         withAnimation {
