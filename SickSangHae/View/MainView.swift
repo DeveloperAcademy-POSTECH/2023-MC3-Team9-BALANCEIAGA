@@ -22,6 +22,8 @@ struct MainView: View {
     @State var text: String = ""
     
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    
+    @State var appState = AppState()
 
     var body: some View {
 
@@ -60,9 +62,9 @@ struct MainView: View {
 
             switch selectedTopTabBar {
             case .basic:
-                BasicList()
+                BasicList(appState: appState)
             case .longterm:
-                LongTermList(itemList: coreDataViewModel.longTermUnEatenList, swipeOffsets: coreDataViewModel.longTermUnEatenOffsets, status: .longTermUnEaten)
+                LongTermList(coreDataViewModel: coreDataViewModel, listContentViewModel: ListContentViewModel(status: .longTermUnEaten, itemList: coreDataViewModel.longTermUnEatenList), appState: appState)
             }
             
         }

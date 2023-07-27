@@ -12,7 +12,12 @@ struct EditIconDetailView: View {
     
     let iconImages = ["supplements", "nuts", "grains", "fruits", "snacks", "frozenFoods", "eggs", "deliFoods", "ddeuk", "dumples", "noodles", "mealkits", "rices", "breads", "sauces", "seafoods", "cereals", "cookingOils", "iceCream", "dairies", "meats", "beverages", "koreanSauces", "seasonings", "liquors", "retortFoods", "jams", "teas", "chocolates", "friedChicken", "vegetables", "coffee", "beans", "cannedFoods", "seaweeds", "hamSausage"]
     
-    @State var currentIcon: String = "shoppingCart"
+    var iconDict: Dictionary<String, String> {
+        Dictionary(uniqueKeysWithValues: zip(iconImages, iconTitles))
+    }
+    
+    @Binding var receiptIcon: String
+    @State var currentIcon: String
     @Environment(\.dismiss) var dismiss
     var body: some View {
         
@@ -29,7 +34,8 @@ struct EditIconDetailView: View {
                 Spacer()
                 Button(action: {
                     // 변경된 icon 저장하는 로직
-                    
+                    receiptIcon = currentIcon
+                    dismiss()
                 }, label: {
                     Text("완료")
                         .bold()
@@ -64,7 +70,8 @@ struct EditIconDetailView: View {
                     }
                     
                 }
-                Text("계란 30구")
+//                Text("계란 30구")
+                Text(iconDict[currentIcon] ?? "쇼핑카트")
                     .font(.title2)
                     .bold()
                     .padding(screenHeight * 0.028)
@@ -96,11 +103,8 @@ struct EditIconDetailView: View {
     }
 }
 
-func didDismiss() {
-}
-
 struct EditIconDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        EditIconDetailView()
+        EditIconDetailView(receiptIcon: .constant("bread"), currentIcon: "shoppingCart")
     }
 }
