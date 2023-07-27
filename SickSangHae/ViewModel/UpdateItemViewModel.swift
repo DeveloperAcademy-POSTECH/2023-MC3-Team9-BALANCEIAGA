@@ -109,5 +109,10 @@ final class UpdateItemViewModel: ObservableObject {
             }
         }
     }
+
+    // MARK: Json 형식의 String을 Dictionary<String, [Any]> 타입으로 바꿔주는 함수
+    func formatValue(_ value: [Any]) -> String {
+            return value.map { String(describing: $0) }.joined(separator: ", ")
+    }
 }
 

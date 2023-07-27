@@ -36,6 +36,7 @@
 		02FC0ED62A6C5D3500B4284C /* TopAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FC0ED52A6C5D3500B4284C /* TopAlertViewModel.swift */; };
 		02FC0ED82A6C5DF100B4284C /* TopAlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FC0ED72A6C5DF100B4284C /* TopAlertModel.swift */; };
 		237674E92A6516C200E92BAB /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237674E82A6516C200E92BAB /* HistoryView.swift */; };
+		7C16FB352A70F1450025BC20 /* OpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 7C16FB342A70F1450025BC20 /* OpenAI */; };
 		7C41D9512A6280690054FD04 /* BasicList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C41D9502A6280690054FD04 /* BasicList.swift */; };
 		7C41D9532A62807A0054FD04 /* LongTermList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C41D9522A62807A0054FD04 /* LongTermList.swift */; };
 		7C41D9552A62808D0054FD04 /* OCRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C41D9542A62808D0054FD04 /* OCRView.swift */; };
@@ -106,6 +107,8 @@
 		02FC0ED52A6C5D3500B4284C /* TopAlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopAlertViewModel.swift; sourceTree = "<group>"; };
 		02FC0ED72A6C5DF100B4284C /* TopAlertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopAlertModel.swift; sourceTree = "<group>"; };
 		237674E82A6516C200E92BAB /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		7C16FB3F2A7170030025BC20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		7C16FB492A7182D10025BC20 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		7C41D9502A6280690054FD04 /* BasicList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicList.swift; sourceTree = "<group>"; };
 		7C41D9522A62807A0054FD04 /* LongTermList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LongTermList.swift; sourceTree = "<group>"; };
 		7C41D9542A62808D0054FD04 /* OCRView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRView.swift; sourceTree = "<group>"; };
@@ -140,6 +143,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C16FB352A70F1450025BC20 /* OpenAI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,6 +160,7 @@
 		027E96662A56AB5E0066BA8F = {
 			isa = PBXGroup;
 			children = (
+				7C16FB492A7182D10025BC20 /* Secrets.xcconfig */,
 				027E96712A56AB5E0066BA8F /* SickSangHae */,
 				7CEB9EB12A613D7C008B70FD /* SickSangHaeTests */,
 				027E96702A56AB5E0066BA8F /* Products */,
@@ -309,6 +314,7 @@
 		7CEB9EB12A613D7C008B70FD /* SickSangHaeTests */ = {
 			isa = PBXGroup;
 			children = (
+				7C16FB3F2A7170030025BC20 /* Info.plist */,
 				7CEB9EB22A613D7C008B70FD /* SickSangHaeTests.swift */,
 			);
 			path = SickSangHaeTests;
@@ -330,6 +336,9 @@
 			dependencies = (
 			);
 			name = SickSangHae;
+			packageProductDependencies = (
+				7C16FB342A70F1450025BC20 /* OpenAI */,
+			);
 			productName = SickSangHae;
 			productReference = 027E966F2A56AB5E0066BA8F /* SickSangHae.app */;
 			productType = "com.apple.product-type.application";
@@ -380,6 +389,9 @@
 				ko,
 			);
 			mainGroup = 027E96662A56AB5E0066BA8F;
+			packageReferences = (
+				7C16FB332A70F1450025BC20 /* XCRemoteSwiftPackageReference "OpenAI" */,
+			);
 			productRefGroup = 027E96702A56AB5E0066BA8F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -676,6 +688,9 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DD63847N69;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SickSangHaeTests/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.codingtest.SickSangHaeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -694,6 +709,9 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DD63847N69;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SickSangHaeTests/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.codingtest.SickSangHaeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -735,6 +753,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		7C16FB332A70F1450025BC20 /* XCRemoteSwiftPackageReference "OpenAI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MacPaw/OpenAI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7C16FB342A70F1450025BC20 /* OpenAI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7C16FB332A70F1450025BC20 /* XCRemoteSwiftPackageReference "OpenAI" */;
+			productName = OpenAI;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		CE9AFD8E2A5FE33000EB2D8C /* SickSangHaeModel.xcdatamodeld */ = {

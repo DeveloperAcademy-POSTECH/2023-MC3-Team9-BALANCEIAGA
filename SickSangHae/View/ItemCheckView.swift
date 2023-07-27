@@ -10,6 +10,7 @@ import SwiftUI
 struct ItemCheckView: View {
     
     var items = ["a", "b", "c", "d"]
+    @Binding var gptAnswer: Dictionary<String, [Any]>
     // TODO: 나중에 뷰 연결할때는 @Binding으로 바꾸어야할 듯합니다.
     var isOCR = true
     @ObservedObject var viewModel = UpdateItemViewModel()
@@ -118,9 +119,14 @@ struct ItemCheckView: View {
                 
                 Divider()
                     .overlay(Color("Gray100"))
-                
-                ForEach(items, id: \.self) { item in
-                    listDetail(listTraling: item, listLeading: "8,000원", listColor: "Gray900")
+
+                ForEach(0..<gptAnswer["상품명"]!.count, id: \.self) { index in
+                    let productName = gptAnswer["상품명"]![index] as! String
+                    let price = gptAnswer["단가"]![index] as! Int
+                    let quantity = gptAnswer["수량"]![index] as! Int
+                    let amount = gptAnswer["금액"]![index] as! Int
+
+                    listDetail(listTraling: productName, listLeading: String(price), listColor: "Gray900")
                     
                     Divider()
                         .overlay(Color("Gray100"))
@@ -148,3 +154,10 @@ struct ItemCheckView: View {
     }
     
 }
+
+//struct ItemCheckView_Previews: PreviewProvider {
+//
+//    static var previews: some View {
+//        ItemCheckView(gptAnswer: <#Binding<[String : [Any]]>#>, appState: <#AppState#>)
+//    }
+//}
