@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct SmallButtonView: View {
+    
+    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    let receipt: Receipt
+    
     var body: some View {
         ZStack {
             VStack(spacing: 0){
@@ -16,7 +20,7 @@ struct SmallButtonView: View {
                     .frame(width: 390.adjusted, height: 1.adjusted)
                 HStack {
                     Button {
-                        
+                        coreDataViewModel.updateStatus(target: receipt, to: .Eaten)
                     } label: {
                         ZStack {
                             Rectangle()
@@ -29,7 +33,7 @@ struct SmallButtonView: View {
                     .buttonStyle(CustomButtonStyle())
                     Spacer()
                     Button {
-                        
+                        coreDataViewModel.updateStatus(target: receipt, to: .Spoiled)
                     } label: {
                         ZStack {
                             Rectangle()
@@ -59,8 +63,10 @@ struct SmallButtonView: View {
     
     
     struct SmallButtonView_Previews: PreviewProvider {
+        static let coreDataViewModel = CoreDataViewModel()
         static var previews: some View {
-            SmallButtonView()
+            SmallButtonView(receipt: Receipt(context: coreDataViewModel.viewContext))
+                .environmentObject(coreDataViewModel)
         }
     }
 }

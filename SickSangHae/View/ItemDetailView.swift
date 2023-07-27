@@ -7,20 +7,38 @@
 
 import SwiftUI
 
-enum selected{
-    case basic
-    case fastEat
-    case slowEat
-    case unselected
-}
+//enum selected{
+//    case basic
+//    case fastEat
+//    case slowEat
+//    case unselected
+//}
 
 struct ItemDetailView: View {
     var greenBlueGradient = Gradient(colors: [Color("PrimaryG"), Color("PrimaryB")])
     var notSelectedGradient = Gradient(colors: [Color("Gray200"), Color("Gray200")])
     var clearGradient = Gradient(colors: [.clear, .clear])
     
-    @State var needToEatASAP: selected = .unselected
+    @State var appState: AppState
+    
     @State private var isShowingEditView = false
+    
+    @State var receipt: Receipt
+    
+    @EnvironmentObject var coreDateViewModel: CoreDataViewModel
+    
+    //    @State var needToEatASAP: selected = .unselected
+        @State var needToEatASAP: Status {
+            didSet {
+                coreDateViewModel.updateStatus(target: receipt, to: needToEatASAP)
+            }
+        }
+    
+    init(receipt: Receipt, appState: AppState) {
+        self.receipt = receipt
+        self.needToEatASAP = receipt.currentStatus
+        self.appState = appState
+    }
     
     var body: some View {
         
@@ -62,19 +80,23 @@ struct ItemDetailView: View {
                 .padding(.horizontal, 20.adjusted)
                 .padding(.bottom, 40)
             } //ScrollView닫기
-            SmallButtonView()
+            SmallButtonView(receipt: receipt)
         } // VStack닫기
     } //body닫기
         
     var topNaviBar: some View {
         HStack {
-            Image(systemName: "chevron.left")
-                .resizable()
-                .frame(width: 10, height: 18)
-            
+            Button {
+                print("clicked")
+                appState.moveToRootView = true
+            } label: {
+                Image(systemName: "chevron.left")
+                    .resizable()
+                    .frame(width: 10, height: 18)
+            }
             Spacer()
             
-            Text("계란 30구")
+            Text("\(receipt.name)")
                 .bold()
                 .padding(.leading, 15)
             
@@ -88,7 +110,7 @@ struct ItemDetailView: View {
                     .foregroundColor(.black)
             })
             .fullScreenCover(isPresented: $isShowingEditView) {
-                EditItemDetailView(isShowingEditView: $isShowingEditView)
+                EditItemDetailView(isShowingEditView: $isShowingEditView, iconText: receipt.icon, nameText: receipt.name, dateText: receipt.dateOfPurchase, wonText: "\(receipt.price)", appState: appState, receipt: receipt)
             }
         } //HStack닫기
         .padding(.top, 10)
@@ -101,11 +123,12 @@ struct ItemDetailView: View {
                 VStack(alignment: .leading, spacing: 0) {
                     
                     HStack {
-                        Circle()
+                        Image(receipt.icon)
+                            .resizable()
                             .foregroundColor(Color("Gray200"))
-                            .frame(width: 80)
+                            .frame(width: 80, height: 80)
                         
-                        Text("계란 30구")
+                        Text("\(receipt.name)")
                             .font(.system(size: 22, weight: .bold))
                             .padding(.leading, 15)
                     }
@@ -116,7 +139,7 @@ struct ItemDetailView: View {
                         .foregroundColor(Color("Gray600"))
                         .padding(.bottom, 12)
                     
-                    Text("2023년 7월 39일")
+                    Text("\(receipt.dateOfPurchase.formattedDate)")
                         .font(.system(size: 20, weight: .bold))
                         .padding(.bottom, 30)
                     
@@ -125,7 +148,7 @@ struct ItemDetailView: View {
                         .foregroundColor(Color("Gray600"))
                         .padding(.bottom, 12)
                     
-                    Text("9,800원")
+                    Text("\(Int(receipt.price))원")
                         .font(.system(size: 20, weight: .bold))
                         .padding(.bottom, 30)
                 }
@@ -145,7 +168,8 @@ struct ItemDetailView: View {
     
     var bacicRadioButton: some View {
         Button(action: {
-            needToEatASAP = .basic
+//            needToEatASAP = .basic
+            needToEatASAP = .shortTermUnEaten
         }, label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
@@ -155,9 +179,17 @@ struct ItemDetailView: View {
                 HStack {
                     ZStack {
                         Circle()
+//                            .stroke(
+//                                LinearGradient(
+//                                    gradient: needToEatASAP == .basic ? greenBlueGradient: notSelectedGradient,
+//                                    startPoint: .leading,
+//                                    endPoint: .trailing
+//                                ),
+//                                lineWidth: 2
+//                            )
                             .stroke(
                                 LinearGradient(
-                                    gradient: needToEatASAP == .basic ? greenBlueGradient: notSelectedGradient,
+                                    gradient: needToEatASAP == .shortTermUnEaten ? greenBlueGradient: notSelectedGradient,
                                     startPoint: .leading,
                                     endPoint: .trailing
                                 ),
@@ -165,9 +197,16 @@ struct ItemDetailView: View {
                             )
                             .frame(width: 20, height: 20)
                         Circle()
+//                            .fill(
+//                                LinearGradient(
+//                                    gradient: needToEatASAP == .basic ? greenBlueGradient : Gradient(colors: [.clear, .clear]),
+//                                    startPoint: .leading,
+//                                    endPoint: .trailing
+//                                )
+//                            )
                             .fill(
                                 LinearGradient(
-                                    gradient: needToEatASAP == .basic ? greenBlueGradient : Gradient(colors: [.clear, .clear]),
+                                    gradient: needToEatASAP == .shortTermUnEaten ? greenBlueGradient : Gradient(colors: [.clear, .clear]),
                                     startPoint: .leading,
                                     endPoint: .trailing
                                 )
@@ -187,9 +226,17 @@ struct ItemDetailView: View {
         })
         .overlay(
             RoundedRectangle(cornerRadius: 8)
+//                .stroke(
+//                    LinearGradient(
+//                        gradient: needToEatASAP == .basic ? greenBlueGradient : Gradient(colors: [.clear, .clear]),
+//                        startPoint: .leading,
+//                        endPoint: .trailing
+//                    ),
+//                    lineWidth: 2
+//                )
                 .stroke(
                     LinearGradient(
-                        gradient: needToEatASAP == .basic ? greenBlueGradient : Gradient(colors: [.clear, .clear]),
+                        gradient: needToEatASAP == .shortTermUnEaten ? greenBlueGradient : Gradient(colors: [.clear, .clear]),
                         startPoint: .leading,
                         endPoint: .trailing
                     ),
@@ -201,7 +248,8 @@ struct ItemDetailView: View {
     
     var fastEatRadioButton: some View {
         Button(action: {
-            needToEatASAP = .fastEat
+//            needToEatASAP = .fastEat
+            needToEatASAP = .shortTermPinned
         }, label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
@@ -211,9 +259,17 @@ struct ItemDetailView: View {
                 HStack {
                     ZStack {
                         Circle()
+//                            .stroke(
+//                                LinearGradient(
+//                                    gradient: needToEatASAP == .fastEat ? greenBlueGradient: notSelectedGradient,
+//                                    startPoint: .leading,
+//                                    endPoint: .trailing
+//                                ),
+//                                lineWidth: 2
+//                            )
                             .stroke(
                                 LinearGradient(
-                                    gradient: needToEatASAP == .fastEat ? greenBlueGradient: notSelectedGradient,
+                                    gradient: needToEatASAP == .shortTermPinned ? greenBlueGradient: notSelectedGradient,
                                     startPoint: .leading,
                                     endPoint: .trailing
                                 ),
@@ -221,9 +277,16 @@ struct ItemDetailView: View {
                             )
                             .frame(width: 20, height: 20)
                         Circle()
+//                            .fill(
+//                                LinearGradient(
+//                                    gradient: needToEatASAP == .fastEat ? greenBlueGradient : Gradient(colors: [.clear, .clear]),
+//                                    startPoint: .leading,
+//                                    endPoint: .trailing
+//                                )
+//                            )
                             .fill(
                                 LinearGradient(
-                                    gradient: needToEatASAP == .fastEat ? greenBlueGradient : Gradient(colors: [.clear, .clear]),
+                                    gradient: needToEatASAP == .shortTermPinned ? greenBlueGradient : Gradient(colors: [.clear, .clear]),
                                     startPoint: .leading,
                                     endPoint: .trailing
                                 )
@@ -243,9 +306,17 @@ struct ItemDetailView: View {
         })
         .overlay(
             RoundedRectangle(cornerRadius: 8)
+//                .stroke(
+//                    LinearGradient(
+//                        gradient: needToEatASAP == .fastEat ? greenBlueGradient : Gradient(colors: [.clear, .clear]),
+//                        startPoint: .leading,
+//                        endPoint: .trailing
+//                    ),
+//                    lineWidth: 2
+//                )
                 .stroke(
                     LinearGradient(
-                        gradient: needToEatASAP == .fastEat ? greenBlueGradient : Gradient(colors: [.clear, .clear]),
+                        gradient: needToEatASAP == .shortTermPinned ? greenBlueGradient : Gradient(colors: [.clear, .clear]),
                         startPoint: .leading,
                         endPoint: .trailing
                     ),
@@ -256,7 +327,8 @@ struct ItemDetailView: View {
     
     var slowEatRadioButton: some View {
         Button(action: {
-            needToEatASAP = .slowEat
+//            needToEatASAP = .slowEat
+            needToEatASAP = .longTermUnEaten
         }, label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
@@ -266,9 +338,17 @@ struct ItemDetailView: View {
                 HStack {
                     ZStack {
                         Circle()
+//                            .stroke(
+//                                LinearGradient(
+//                                    gradient: needToEatASAP == .slowEat ? greenBlueGradient: notSelectedGradient,
+//                                    startPoint: .leading,
+//                                    endPoint: .trailing
+//                                ),
+//                                lineWidth: 2
+//                            )
                             .stroke(
                                 LinearGradient(
-                                    gradient: needToEatASAP == .slowEat ? greenBlueGradient: notSelectedGradient,
+                                    gradient: needToEatASAP == .longTermUnEaten ? greenBlueGradient: notSelectedGradient,
                                     startPoint: .leading,
                                     endPoint: .trailing
                                 ),
@@ -276,9 +356,16 @@ struct ItemDetailView: View {
                             )
                             .frame(width: 20, height: 20)
                         Circle()
+//                            .fill(
+//                                LinearGradient(
+//                                    gradient: needToEatASAP == .slowEat ? greenBlueGradient : Gradient(colors: [.clear, .clear]),
+//                                    startPoint: .leading,
+//                                    endPoint: .trailing
+//                                )
+//                            )
                             .fill(
                                 LinearGradient(
-                                    gradient: needToEatASAP == .slowEat ? greenBlueGradient : Gradient(colors: [.clear, .clear]),
+                                    gradient: needToEatASAP == .longTermUnEaten ? greenBlueGradient : Gradient(colors: [.clear, .clear]),
                                     startPoint: .leading,
                                     endPoint: .trailing
                                 )
@@ -298,9 +385,17 @@ struct ItemDetailView: View {
         })
         .overlay(
             RoundedRectangle(cornerRadius: 8)
+//                .stroke(
+//                    LinearGradient(
+//                        gradient: needToEatASAP == .slowEat ? greenBlueGradient : Gradient(colors: [.clear, .clear]),
+//                        startPoint: .leading,
+//                        endPoint: .trailing
+//                    ),
+//                    lineWidth: 2
+//                )
                 .stroke(
                     LinearGradient(
-                        gradient: needToEatASAP == .slowEat ? greenBlueGradient : Gradient(colors: [.clear, .clear]),
+                        gradient: needToEatASAP == .longTermUnEaten ? greenBlueGradient : Gradient(colors: [.clear, .clear]),
                         startPoint: .leading,
                         endPoint: .trailing
                     ),
@@ -311,7 +406,8 @@ struct ItemDetailView: View {
 }
         
 struct ItemDetailView_Previews: PreviewProvider {
+    static let coreDataViewModel = CoreDataViewModel()
     static var previews: some View {
-        ItemDetailView()
+        ItemDetailView(receipt: Receipt(context: coreDataViewModel.viewContext), appState: AppState())
     }
 }

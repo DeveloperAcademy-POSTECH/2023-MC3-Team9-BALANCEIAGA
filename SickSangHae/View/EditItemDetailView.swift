@@ -13,16 +13,22 @@ struct EditItemDetailView: View {
     
     @State private var isShowingIconView = false
     
-    @State var nameText: String = ""
-    @State var dateText: String = ""
-    @State var wonText: String = ""
+    @State var iconText: String
+    @State var nameText: String
+    @State var dateText: Date
+    @State var wonText: String
+    @State var appState: AppState
+    
+    @EnvironmentObject var coreDateViewModel: CoreDataViewModel
+    
+    let receipt: Receipt
     
     var body: some View {
         VStack {
             topNaviBar
             ScrollView {
                 editIconButton
-                InfoEditField(nameText: $nameText, wonText: $wonText)
+                InfoEditField(nameText: $nameText,dateText: $dateText, wonText: $wonText)
                 
                 
             }
@@ -50,6 +56,7 @@ struct EditItemDetailView: View {
                 Spacer()
                 Button(action: {
                     //변경된 텍스트 값을 ItemDetailView로 업데이트하는 로직
+                    coreDateViewModel.editReceiptData(target: receipt,icon: iconText, name: nameText, dateOfPurchase: dateText, price: wonText)
                     self.isShowingEditView.toggle()
                 }, label: {
                     Text("완료")
@@ -65,7 +72,8 @@ struct EditItemDetailView: View {
     var editIconButton: some View {
         ZStack(alignment: .bottomTrailing) {
             //추후 Custom Item Icon으로 대체
-            Circle()
+            Image(iconText)
+                .resizable()
                 .foregroundColor(Color("Gray200"))
                 .frame(width: 110, height: 110)
             
@@ -86,7 +94,7 @@ struct EditItemDetailView: View {
                 }
             })
             .sheet(isPresented: self.$isShowingIconView) {
-                EditIconDetailView()
+                EditIconDetailView(receiptIcon: $iconText, currentIcon: receipt.icon)
             }
         }
         .padding(.vertical, 20.adjusted)
@@ -94,7 +102,11 @@ struct EditItemDetailView: View {
     
     var deleteButton: some View {
         Button(action: {
-            
+            moveToRootViewAndDelete {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    coreDateViewModel.deleteReceiptData(target: receipt)
+                }
+            }
         }, label: {
             ZStack {
                 Rectangle()
@@ -108,16 +120,24 @@ struct EditItemDetailView: View {
             .padding(.bottom, 20.adjusted)
         })
     }
+    
+    
+    func moveToRootViewAndDelete(completion: () -> ()) {
+        isShowingEditView = false
+        appState.moveToRootView = true
+        completion()
+    }
 }
 
 
 struct InfoEditField: View {
     
     @Binding var nameText: String
+    @Binding var dateText: Date
     @Binding var wonText: String
     
     @State private var isEditing = false
-    @State private var selectedDate = Date()
+//    @State private var selectedDate = Date()
     @State private var showingDatePicker = false
     
     @FocusState var isInputActive: Bool
@@ -195,12 +215,12 @@ struct InfoEditField: View {
                     }
                 })
                 .sheet(isPresented: $showingDatePicker) {
-                    DatePicker("구매일자", selection: $selectedDate, in: ...Date(), displayedComponents: .date)
+                    DatePicker("구매일자", selection: $dateText, in: ...Date(), displayedComponents: .date)
                         .presentationDetents([.medium])
                         .datePickerStyle(GraphicalDatePickerStyle())
                         .padding(.horizontal, 10)
                         .environment(\.locale, .init(identifier: "ko"))
-                        .onChange(of: selectedDate) { _ in
+                        .onChange(of: dateText) { _ in
                             showingDatePicker = false
                         }
                 }
@@ -267,12 +287,13 @@ struct InfoEditField: View {
     var formattedDate: String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy년 MM월 dd일"
-        return formatter.string(from: selectedDate)
+        return formatter.string(from: dateText)
     }
 }
 
 struct EditItemDetailView_Previews: PreviewProvider {
+    static let coreDataViewModel = CoreDataViewModel()
     static var previews: some View {
-        EditItemDetailView(isShowingEditView: .constant(false))
+        EditItemDetailView(isShowingEditView: .constant(false), iconText: "bread" ,nameText: "TestName", dateText: Date.now, wonText: "6000",appState: AppState(), receipt: Receipt(context: coreDataViewModel.viewContext))
     }
 }
