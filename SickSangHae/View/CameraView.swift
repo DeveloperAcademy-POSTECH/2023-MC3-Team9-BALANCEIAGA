@@ -11,7 +11,8 @@ import AVFoundation
 struct CameraView: View {
   @ObservedObject var viewModel = CameraViewModel()
   @Environment(\.dismiss) private var dismiss
-  
+  let appState: AppState
+    
   var body: some View {
     ZStack {
       viewModel.cameraPreview.ignoresSafeArea()
@@ -45,6 +46,7 @@ struct CameraView: View {
         selfAddButton
       }
     }
+    .navigationBarBackButtonHidden(true)
     .foregroundColor(.white)
     .sheet(isPresented: $viewModel.isImagePickerPresented ,onDismiss: {
       viewModel.isSelectedShowPreview.toggle()
@@ -54,13 +56,13 @@ struct CameraView: View {
     //갤러리에서 이미지 선택했을 때
     .fullScreenCover(isPresented: $viewModel.isSelectedShowPreview) {
       if let image = viewModel.selectedImage {
-        GetScreenShotView(image: image)
+          GetScreenShotView(appState: appState, image: image)
       }
     }
     //사진을 찍었을 때
     .fullScreenCover(isPresented: $viewModel.isCapturedShowPreview) {
       if let image = viewModel.captureImage {
-        GetScreenShotView(image: image)
+          GetScreenShotView(appState: appState, image: image)
       }
     }
   }

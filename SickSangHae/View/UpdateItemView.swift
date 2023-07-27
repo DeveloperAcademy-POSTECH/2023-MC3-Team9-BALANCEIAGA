@@ -8,8 +8,12 @@
 import SwiftUI
 
 struct UpdateItemView: View {
-    
     @Namespace var bottomID
+    @Environment(\.dismiss) private var dismiss
+    @ObservedObject var viewModel: UpdateItemViewModel
+    @State var titleName: String
+    @State var buttonName: String
+    let appState: AppState
     
     @ObservedObject var viewModel: UpdateItemViewModel
     
@@ -98,123 +102,132 @@ struct UpdateItemView: View {
         .onTapGesture {
             self.endTextEditing()
         }
+        .navigationBarBackButtonHidden(true)
     }
-  
+    
     
     private var topBar: some View {
-      HStack {
-        Image(systemName: "chevron.left")
-          .resizable()
-          .frame(width: 10, height: 19)
-        Spacer()
-        Text("직접 추가")
-          .fontWeight(.bold)
-          .font(.system(size: 17))
-        Spacer()
-        Image(systemName: "xmark")
-          .resizable()
-          .frame(width: 15, height: 15)
-      }
-      .padding([.leading, .trailing], 20.adjusted)
+        HStack {
+            Button(action:{dismiss()}, label: {
+                Image(systemName: "chevron.left")
+                    .resizable()
+                    .frame(width: 10, height: 19)
+            })
+            Spacer()
+            Text(titleName)
+                .fontWeight(.bold)
+                .font(.system(size: 17))
+            Spacer()
+            Button(action: {
+                self.appState.moveToRootView = true
+            } , label: {
+                Image(systemName: "xmark")
+                    .resizable()
+                    .frame(width: 15, height: 15)
+            })
+        }
+        .foregroundColor(.gray900)
+        .padding([.leading, .trailing], 20.adjusted)
     }
     
     private var addItemButton: some View {
-      ZStack {
-        Rectangle()
-          .frame(width: 350, height: 60)
-          .foregroundColor(.lightGrayColor)
-          .cornerRadius(12)
-        
-        HStack {
-          Image(systemName: "plus")
-          Text("품목 추가하기")
+        ZStack {
+            Rectangle()
+                .frame(width: 350, height: 60)
+                .foregroundColor(.lightGrayColor)
+                .cornerRadius(12)
+            
+            HStack {
+                Image(systemName: "plus")
+                Text("품목 추가하기")
+            }
+            .bold()
+            .foregroundColor(.accentColor)
         }
-        .bold()
-        .foregroundColor(.accentColor)
-      }
-      .padding(.top, 15)
+        .padding(.top, 15)
     }
     
     private var nextButton: some View {
-      Button(action: {
-        viewModel.isShowTextfieldWarning = !viewModel.areBothTextFieldsNotEmpty
-      }, label: {
-        ZStack{
-          Rectangle()
-            .cornerRadius(12)
-            .frame(height: 60.adjusted)
-          Text("다음")
-            .foregroundColor(.white)
-            .font(.system(size: 17))
-        }
-        .padding([.leading, .trailing], 20.adjusted)
-        .padding(.bottom, 30.adjusted)
-      })
+        Button(action: {
+            viewModel.isShowTextfieldWarning = !viewModel.areBothTextFieldsNotEmpty
+        }, label: {
+            ZStack{
+                Rectangle()
+                    .cornerRadius(12)
+                    .frame(height: 60.adjusted)
+                Text(buttonName)
+                    .foregroundColor(.white)
+                    .font(.system(size: 17))
+            }
+            .padding([.leading, .trailing], 20.adjusted)
+            .padding(.bottom, 30.adjusted)
+        })
     }
-  }
-  
-  extension UpdateItemView {
+}
+
+extension UpdateItemView {
     struct DateSelectionView: View {
-      @ObservedObject var viewModel: UpdateItemViewModel
-      
-      var body: some View {
-        HStack(spacing: 24) {
-          Button(action: {
-            viewModel.decreaseDate = viewModel.date
-          }, label: {
-            Image(systemName: "chevron.left")
-              .resizable()
-              .frame(width: 8, height: 14)
-          })
-          
-          Button(action: {
-            viewModel.isDatePickerOpen.toggle()
-          }, label: {
-            Text("\(viewModel.dateString)")
-              .font(.system(size: 20).bold())
-          })
-          
-          Button(action: {
-            viewModel.increaseDate = viewModel.date
-          }, label: {
-            Image(systemName: "chevron.right")
-              .resizable()
-              .frame(width: 8, height: 14)
-          })
-          .foregroundColor(viewModel.isDateBeforeToday ? .black : .gray)
+        @ObservedObject var viewModel: UpdateItemViewModel
+        
+        var body: some View {
+            HStack(spacing: 24) {
+                Button(action: {
+                    viewModel.decreaseDate = viewModel.date
+                }, label: {
+                    Image(systemName: "chevron.left")
+                        .resizable()
+                        .frame(width: 8, height: 14)
+                })
+                
+                Button(action: {
+                    viewModel.isDatePickerOpen.toggle()
+                }, label: {
+                    Text("\(viewModel.dateString)")
+                        .font(.system(size: 20).bold())
+                })
+                
+                Button(action: {
+                    viewModel.increaseDate = viewModel.date
+                }, label: {
+                    Image(systemName: "chevron.right")
+                        .resizable()
+                        .frame(width: 8, height: 14)
+                })
+                .foregroundColor(viewModel.isDateBeforeToday ? .black : .gray)
+            }
+            .foregroundColor(.black)
         }
-        .foregroundColor(.black)
-      }
     }
     
     struct DatePickerView: View {
-      @ObservedObject var viewModel: UpdateItemViewModel
-      
-      var body: some View {
-        ZStack {
-          Rectangle()
-            .cornerRadius(12)
-            .foregroundColor(.white)
-            .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 4)
-          
-          GeometryReader { geo in
-            DatePicker(
-              viewModel.dateString,
-              selection: $viewModel.date,
-              in: ...Date(),
-              displayedComponents: .date
-            )
-            .labelsHidden()
-            .datePickerStyle(GraphicalDatePickerStyle())
-            .frame(width: geo.size.width, height: geo.size.height)
-            .onChange(of: viewModel.date) { _ in
-              viewModel.isDatePickerOpen = false
+        @ObservedObject var viewModel: UpdateItemViewModel
+        
+        var body: some View {
+            ZStack {
+                Rectangle()
+                    .cornerRadius(12)
+                    .foregroundColor(.white)
+                    .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 4)
+                
+                GeometryReader { geo in
+                    DatePicker(
+                        viewModel.dateString,
+                        selection: $viewModel.date,
+                        in: ...Date(),
+                        displayedComponents: .date
+                    )
+                    .labelsHidden()
+                    .datePickerStyle(GraphicalDatePickerStyle())
+                    .frame(width: geo.size.width, height: geo.size.height)
+                    .onChange(of: viewModel.date) { _ in
+                        viewModel.isDatePickerOpen = false
+                    }
+                }
+                .padding(.all, 20)
             }
           }
           .padding(20)
         }
-        .frame(height: screenHeight / (2.6).adjusted)
-        .padding([.leading, .trailing], 14.adjusted)
       }
     }
   

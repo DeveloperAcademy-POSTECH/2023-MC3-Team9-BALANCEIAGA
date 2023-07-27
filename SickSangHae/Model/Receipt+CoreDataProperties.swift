@@ -16,21 +16,42 @@ extension Receipt {
         return NSFetchRequest<Receipt>(entityName: "Receipt")
     }
 
-    @NSManaged public var state: Int16
+    @NSManaged public var currentState: Int16
+    @NSManaged public var previousState: Int16
+    @NSManaged public var category: Int16
     @NSManaged public var price: Double
     @NSManaged public var name: String
     @NSManaged public var id: UUID
     @NSManaged public var icon: String
-    @NSManaged public var fastEatPin: Bool
     @NSManaged public var dateOfPurchase: Date
+    @NSManaged public var dateOfHistory: Date
     @NSManaged public var placeOfPurchase: String?
 
-    var status: Status {
+    var currentStatus: Status {
         get {
-            return Status(rawValue: self.state) ?? .UnConsumed
+            return Status(rawValue: self.currentState) ?? .shortTermUnEaten
         }
         set {
-            self.state = newValue.rawValue
+            self.currentState = newValue.rawValue
+        }
+    }
+    
+    var previousStatus: Status {
+        get {
+            return Status(rawValue: self.previousState) ?? .shortTermUnEaten
+        }
+        set {
+            self.previousState = newValue.rawValue
+        }
+    }
+    
+    
+    var itemCategory: Categories {
+        get {
+            return Categories(rawValue: self.category) ?? .unknown
+        }
+        set {
+            self.category = newValue.rawValue
         }
     }
 }
