@@ -9,121 +9,128 @@ import SwiftUI
 
 struct BasicList: View {
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    @State var isDescending = true
+    
+    @State var appState: AppState
+    
     var body: some View {
         ScrollView {
-            PinnedListTitle(title: "빨리 먹어야 해요 🕖")
-            ListContent(itemList: coreDataViewModel.shortTermPinnedList, swipeOffsets: coreDataViewModel.shortTermPinnedOffsets, status: .shortTermPinned)
+            PinnedListTitle
+            ListContent(coreDataViewModel: coreDataViewModel, listContentViewModel: ListContentViewModel(status: .shortTermPinned, itemList: coreDataViewModel.shortTermPinnedList), isDescending: true, appState: appState)
             
             Rectangle()
                 .foregroundColor(.clear)
                 .frame(width: screenWidth, height: 12)
                 .background(Color("Gray100"))
             
-            BasicListTitle(title: "기본")
-            ListContent(itemList: coreDataViewModel.shortTermUnEatenList, swipeOffsets: coreDataViewModel.shortTermUnEatenOffsets, status: .shortTermUnEaten)
+            BasicListTitle
+            ListContent(coreDataViewModel: coreDataViewModel, listContentViewModel: ListContentViewModel(status: .shortTermUnEaten, itemList: coreDataViewModel.shortTermUnEatenList), isDescending: isDescending, appState: appState)
+
         }
         .listStyle(.plain)
         
     }
-}
-
-private struct BasicListTitle: View {
     
-    let title: String
-    
-    var body: some View {
-        HStack {
-            Text(title)
-                .foregroundColor(Color("Gray900"))
-                .font(.system(size: 20).weight(.semibold))
-            
-            Spacer()
-            
-            Button {
+    var BasicListTitle: some View {
+            HStack {
+                Text("기본")
+                    .foregroundColor(Color("Gray900"))
+                    .font(.system(size: 20).weight(.semibold))
                 
-            } label: {
-                HStack(spacing: 2) {
-                    Text("최신순")
-                        .foregroundColor(Color("Gray600"))
-                    Image(systemName: "arrow.up.arrow.down")
+                Spacer()
+                
+                Button {
+                    isDescending.toggle()
+                } label: {
+                    HStack(spacing: 2) {
+                        Text(isDescending ? "최신순" : "오래된순")
+                            .foregroundColor(Color("Gray600"))
+                        Image(systemName: "arrow.up.arrow.down")
+                    }
                 }
+                .foregroundColor(Color("Gray600"))
+                .font(.system(size: 14))
+                .padding(.trailing, 20)
             }
-            .foregroundColor(Color("Gray600"))
-            .font(.system(size: 14))
-            .padding(.trailing, 20)
-        }
-        .padding([.top, .bottom], 17)
-        .padding([.leading], 20)
+            .padding([.top, .bottom], 17)
+            .padding([.leading], 20)
     }
+    
+    private var PinnedListTitle: some View {
+            HStack {
+                Text("빨리 먹어야 해요 🕖")
+                    .foregroundColor(Color("Gray900"))
+                    .font(.system(size: 20).weight(.semibold))
+                
+                Spacer()
+            }
+            .padding([.top, .bottom], 17)
+            .padding([.leading, .trailing], 20)
+        }
 }
 
-private struct PinnedListTitle: View {
-    
-    let title: String
-    
-    var body: some View {
-        HStack {
-            Text(title)
-                .foregroundColor(Color("Gray900"))
-                .font(.system(size: 20).weight(.semibold))
-            
-            Spacer()
-        }
-        .padding([.top, .bottom], 17)
-        .padding([.leading, .trailing], 20)
-    }
-}
+
+
+
 
 
 private struct ListContent: View {
-    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    @ObservedObject var coreDataViewModel: CoreDataViewModel
+    @ObservedObject var listContentViewModel: ListContentViewModel
     
-    let itemList: [Receipt]
-    let status: Status
-    @State private var swipeOffsets: [CGFloat]
+    @State var isDescending: Bool
     
+    let appState: AppState
     
-    init(itemList: [Receipt], swipeOffsets: [CGFloat], status: Status) {
-        self.itemList = itemList
-        self.status = status
-        self.swipeOffsets = swipeOffsets   
+    init(coreDataViewModel: CoreDataViewModel, listContentViewModel: ListContentViewModel, isDescending: Bool, appState: AppState) {
+        self.coreDataViewModel = coreDataViewModel
+        self.listContentViewModel = listContentViewModel
+        self.isDescending = isDescending
+        self.appState = appState
+    }
+    
+    var sortedReceipts: Array<(Int, Receipt)> {
+        isDescending ? Array(zip(listContentViewModel.itemList.indices, listContentViewModel.itemList)) :
+Array(zip(listContentViewModel.itemList.indices, listContentViewModel.itemList.reversed()))
     }
     
     var body: some View {
-        VStack {
-            ForEach(Array(zip(itemList.indices, itemList)), id:\.0) { index, item in
-                ZStack {
-                    HStack {
-                        Button {
-                            withAnimation {
-                                coreDataViewModel.updateStatus(target: item, to: .Eaten)
-                            }
-                            swipeOffsets[index] = 0
-                        } label: {
-                            Image(systemName: "fork.knife")
+        ForEach(sortedReceipts, id:\.0) { index, item in
+            ZStack {
+                HStack {
+                    Button {
+                        withAnimation {
+                            coreDataViewModel.updateStatus(target: item, to: .Eaten)
                         }
-                        .frame(width: 70, height: 60)
-                        .background(.green)
-                        .foregroundColor(.white)
-                        .opacity(swipeOffsets[index] > 0 ? 1 : 0)
-                        
-                        Spacer()
-                        
-                        Button {
-                            withAnimation {
-                                coreDataViewModel.updateStatus(target: item, to: .Spoiled)
-                            }
-                            swipeOffsets[index] = 0
-                        } label: {
-                            Image(systemName: "allergens.fill")
-                        }
-                        .frame(width: 70, height: 60)
-                        .background(.red)
-                        .foregroundColor(.white)
-                        .opacity(swipeOffsets[index] < 0 ? 1 : 0)
+                        listContentViewModel.offsets[index] = 0
+                    } label: {
+                        Image(systemName: "fork.knife")
                     }
+                    .frame(width: 70, height: 60)
+                    .background(.green)
+                    .foregroundColor(.white)
+                    .opacity(listContentViewModel.offsets[index] > 0 ? 1 : 0)
                     
+                    Spacer()
                     
+                    Button {
+                        withAnimation {
+                            coreDataViewModel.updateStatus(target: item, to: .Spoiled)
+                        }
+                        listContentViewModel.offsets[index] = 0
+                    } label: {
+                        Image(systemName: "allergens.fill")
+                    }
+                    .frame(width: 70, height: 60)
+                    .background(.red)
+                    .foregroundColor(.white)
+                    .opacity(listContentViewModel.offsets[index] < 0 ? 1 : 0)
+                }
+                
+                NavigationLink {
+                    ItemDetailView(receipt: item, appState: appState)
+                        .environmentObject(coreDataViewModel)
+                } label: {
                     ZStack {
                         Rectangle()
                             .fill(.white)
@@ -131,7 +138,7 @@ private struct ListContent: View {
                             Text("")
                                 .foregroundColor(.clear)
                             
-                            Image(systemName: "circle.fill")
+                            Image(item.icon)
                                 .resizable()
                                 .foregroundColor(Color("Gray200"))
                                 .frame(width: 36, height: 36)
@@ -139,6 +146,7 @@ private struct ListContent: View {
                             
                             Spacer()
                                 .frame(width: 12)
+                                
                             
                             Text(item.name)
                                 .font(.system(size: 17).weight(.semibold))
@@ -153,15 +161,9 @@ private struct ListContent: View {
                         }
                         .padding([.top, .bottom], 8)
                     }
-                    .offset(x: swipeOffsets[index])
-                    .onTapGesture {
-                        withAnimation {
-                            swipeOffsets[index] = 0
-                        }
-                    }
                     .gesture(DragGesture().onChanged({ value in
                         withAnimation {
-                            swipeOffsets[index] = value.translation.width
+                            listContentViewModel.offsets[index] = value.translation.width
                         }
                     })
                         .onEnded ({ value in
@@ -169,41 +171,51 @@ private struct ListContent: View {
                                 let translationWidth = value.translation.width
                                 switch translationWidth {
                                 case ..<(-60):
-                                    swipeOffsets[index] = -70
+                                    listContentViewModel.offsets[index] = -70
                                 case 60...:
-                                    swipeOffsets[index] = 70
+                                    listContentViewModel.offsets[index] = 70
                                 default:
-                                    swipeOffsets[index] = 0
+                                    listContentViewModel.offsets[index] = 0
                                 }
                             }
                         }))
                 }
+                .offset(x: listContentViewModel.offsets[index])
                 
-                Divider()
-                    .overlay(Color("Gray100"))
-                    .opacity(item == itemList.last ? 0 : 1)
-                    .padding(.leading, 20)
+                
             }
             
+            
+            Divider()
+                .overlay(Color("Gray100"))
+                .opacity(item == listContentViewModel.itemList.last ? 0 : 1)
+                .padding(.leading, 20)
+        }   
             
             Button("Add") {
-                swipeOffsets.append(0.0)
-                coreDataViewModel.createTestReceiptData(status: status)
-                print("swipeOffsets.count: \(swipeOffsets.count)")
-                print("itemList.count: \(itemList.count)")
+                listContentViewModel.offsets.append(0.0)
+                coreDataViewModel.createTestReceiptData(status: listContentViewModel.status)
             }
-            .onAppear {
-                print("swipeOffsets.count: \(swipeOffsets.count)")
-                print("itemList.count: \(itemList.count)")
-            }
-        }
+    }
+}
+
+class ListContentViewModel: ObservableObject {
+    
+    let status: Status
+    @Published var itemList: [Receipt]
+    @Published var offsets: [CGFloat]
+    
+    init(status: Status, itemList: [Receipt]) {
+        self.status = status
+        self.itemList = itemList
+        self.offsets = [CGFloat](repeating: 0, count: itemList.count)
     }
 }
 
 struct BasicList_Previews: PreviewProvider {
     static let previewCoreDataViewModel = CoreDataViewModel()
     static var previews: some View {
-        BasicList()
+        BasicList(appState: AppState())
             .environmentObject(previewCoreDataViewModel)
     }
 }
