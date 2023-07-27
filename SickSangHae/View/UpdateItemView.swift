@@ -15,8 +15,6 @@ struct UpdateItemView: View {
     @State var buttonName: String
     let appState: AppState
     
-    @ObservedObject var viewModel: UpdateItemViewModel
-    
     var body: some View {
         ZStack(alignment: .top) {
             Color.white
@@ -225,11 +223,9 @@ extension UpdateItemView {
                 }
                 .padding(.all, 20)
             }
+            .padding(20)
           }
-          .padding(20)
         }
-      }
-    }
   
     
     func addItemBlockView() {
@@ -244,8 +240,8 @@ extension UpdateItemView {
 }
 
 
-struct UpdateItemView_Previews: PreviewProvider {
-  static var previews: some View {
-    UpdateItemView(viewModel: UpdateItemViewModel())
-  }
-}
+//struct UpdateItemView_Previews: PreviewProvider {
+//  static var previews: some View {
+//    UpdateItemView(viewModel: UpdateItemViewModel())
+//  }
+//}
