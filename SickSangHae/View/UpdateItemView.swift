@@ -240,8 +240,8 @@ extension UpdateItemView {
 }
 
 
-//struct UpdateItemView_Previews: PreviewProvider {
-//  static var previews: some View {
-//    UpdateItemView(viewModel: UpdateItemViewModel())
-//  }
-//}
+struct UpdateItemView_Previews: PreviewProvider {
+  static var previews: some View {
+      UpdateItemView(viewModel: UpdateItemViewModel(), titleName: "test", buttonName: "button", appState: AppState())
+  }
+}
