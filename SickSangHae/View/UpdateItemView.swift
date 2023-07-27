@@ -27,12 +27,31 @@ struct UpdateItemView: View {
                 ZStack(alignment: .top) {
                     VStack {
                         ScrollViewReader { proxy in
-                            ScrollView {
+                            ScrollView(.vertical) {
                                 VStack {
-                                    ForEach(viewModel.items, id: \.self) { item in
-                                        ItemBlockView(viewModel: viewModel)
+                                    ForEach(viewModel.itemBlockViewModels, id: \.self) { item in
+                                        ItemBlockView(viewModel: viewModel, itemBlockViewModel: item)
+                                        .gesture(
+                                            DragGesture()
+                                                .onChanged({ value in
+                                                    withAnimation {
+                                                        if value.translation.width < 0 {
+                                                            item.offset = value.translation.width
+                                                        }
+                                                    }
+                                                })
+                                                .onEnded({ value in
+                                                    withAnimation {
+                                                        if value.translation.width < -90 {
+                                                            item.offset = -100
+                                                        } else {
+                                                            item.offset = 0
+                                                        }
+                                                    }
+                                                })
+                                        )
                                     }
-                                    .onChange(of: viewModel.items) { _ in
+                                    .onChange(of: viewModel.itemBlockViewModels) { _ in
                                         withAnimation {
                                             proxy.scrollTo(bottomID, anchor: .bottom)
                                         }
@@ -40,7 +59,7 @@ struct UpdateItemView: View {
                                     addItemButton
                                         .onTapGesture {
                                             withAnimation {
-                                                viewModel.addNewItem()
+                                                addItemBlockView()
                                             }
                                         }
                                         .id(bottomID)
@@ -49,6 +68,9 @@ struct UpdateItemView: View {
                         }
                         Spacer()
                         nextButton
+                            .onTapGesture {
+                                registerItemBlockViews()
+                            }
                     }
                     if viewModel.isDatePickerOpen {
                         DatePickerView(viewModel: viewModel)
@@ -60,7 +82,6 @@ struct UpdateItemView: View {
                 Group {
                     TopAlertView(viewModel: TopAlertViewModel(name: "파채", currentCase: .delete))
                         .transition(.move(edge: .top))
-                    
                 }
                 .opacity(viewModel.isShowTopAlertView ? 1 : 0)
                 .animation(.easeInOut(duration: 0.4))
@@ -202,9 +223,25 @@ extension UpdateItemView {
                 }
                 .padding(.all, 20)
             }
-            .frame(height: screenHeight / (2.6).adjusted)
-            .padding([.leading, .trailing], 14.adjusted)
+            .padding(20)
+          }
         }
-      }
-    }
   
+    
+    func addItemBlockView() {
+        viewModel.addNewItemBlock()
+    }
+    
+    func registerItemBlockViews() {
+        for i in 0..<viewModel.itemBlockViewModels.count {
+            // TODO: CoreData 연결
+        }
+    }
+}
+
+
+struct UpdateItemView_Previews: PreviewProvider {
+  static var previews: some View {
+      UpdateItemView(viewModel: UpdateItemViewModel(), titleName: "test", buttonName: "button", appState: AppState())
+  }
+}

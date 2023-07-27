@@ -142,7 +142,7 @@ struct CameraView: View {
       }
       .foregroundColor(.white)
     }
-    .padding([.leading, .trailing], 24.adjusted)
+    .padding(.horizontal, 24.adjusted)
     .padding(.bottom, 20.adjusted)
   }
 }
