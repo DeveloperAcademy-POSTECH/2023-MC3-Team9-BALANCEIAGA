@@ -16,7 +16,7 @@ struct ItemCheckView: View {
     @ObservedObject var viewModel = UpdateItemViewModel()
     @State var appState: AppState
     @State private var isRegisterCompleteView = false
-    @State private var isShowingUpdateItemView = true
+    @State private var isShowingUpdateItemView = false
     
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
     
@@ -78,6 +78,9 @@ struct ItemCheckView: View {
                 }
             }
             .navigationBarBackButtonHidden(true)
+            .fullScreenCover(isPresented: $isShowingUpdateItemView) {
+                UpdateItemView(viewModel: UpdateItemViewModel(),titleName: "수정", buttonName: "수정 완료",gptAnswer: $gptAnswer, appState: appState)
+            }
         }
     }
     private var ListTitle: some View {
@@ -90,9 +93,6 @@ struct ItemCheckView: View {
             
             switch isOCR{
             case true:
-                NavigationLink("",isActive: $isShowingUpdateItemView) {
-                    UpdateItemView(viewModel: UpdateItemViewModel(), titleName: "수정", buttonName: "수정 완료", gptAnswer: $gptAnswer, appState: appState)
-                }
                 Button {
                     isShowingUpdateItemView = true
                 } label: {
@@ -181,7 +181,7 @@ struct ItemCheckView: View {
     
     func registerItemsToCoreData() {
         for i in 0..<gptAnswer["상품명"]!.count {
-//            coreDataViewModel.createReceiptData(name: gptAnswer["상품명"]![i] as! String, price: Double(gptAnswer["금액"]![i] as! Int))
+            coreDataViewModel.createReceiptData(name: gptAnswer["상품명"]![i] as! String, price: Double(gptAnswer["금액"]![i] as! Int))
         }
     }
 }

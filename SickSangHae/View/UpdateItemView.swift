@@ -71,7 +71,6 @@ struct UpdateItemView: View {
                             }
                             Spacer()
                             nextButton
-                            navLink
                         }
                         if viewModel.isDatePickerOpen {
                             DatePickerView(viewModel: viewModel)
@@ -155,7 +154,8 @@ struct UpdateItemView: View {
         Button(action: {
             viewModel.isShowTextfieldWarning = !viewModel.areBothTextFieldsNotEmpty
             registerItemBlockViews()
-            isItemCheckView = true
+//            isItemCheckView = true
+            dismiss()
         }, label: {
             ZStack{
                 Rectangle()
@@ -168,14 +168,6 @@ struct UpdateItemView: View {
             .padding([.leading, .trailing], 20.adjusted)
             .padding(.bottom, 30.adjusted)
         })
-    }
-    
-    var navLink: some View {
-        NavigationLink(isActive: $isItemCheckView) {
-            ItemCheckView(gptAnswer: $gptAnswer, appState: appState)
-        } label: {
-            
-        }
     }
 }
 
