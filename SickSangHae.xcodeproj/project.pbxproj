@@ -128,7 +128,6 @@
 		8787EC032A5FD48800104EDE /* UpperTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpperTabBar.swift; sourceTree = "<group>"; };
 		8787EC052A5FE7CE00104EDE /* ItemBlockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemBlockView.swift; sourceTree = "<group>"; };
 		CE0319E62A6D5221009580F6 /* Categories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Categories.swift; sourceTree = "<group>"; };
-		CE04EA0C2A73803900CFBE4E /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		CE9AFD8F2A5FE33000EB2D8C /* SickSangHaeModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SickSangHaeModel.xcdatamodel; sourceTree = "<group>"; };
 		CE9AFD952A5FEC9100EB2D8C /* Receipt+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Receipt+CoreDataClass.swift"; sourceTree = "<group>"; };
 		CE9AFD962A5FEC9100EB2D8C /* Receipt+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Receipt+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -160,7 +159,6 @@
 		027E96662A56AB5E0066BA8F = {
 			isa = PBXGroup;
 			children = (
-				CE04EA0C2A73803900CFBE4E /* Secrets.xcconfig */,
 				027E96712A56AB5E0066BA8F /* SickSangHae */,
 				7CEB9EB12A613D7C008B70FD /* SickSangHaeTests */,
 				027E96702A56AB5E0066BA8F /* Products */,
@@ -617,7 +615,6 @@
 		};
 		027E967E2A56AB5F0066BA8F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CE04EA0C2A73803900CFBE4E /* Secrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
