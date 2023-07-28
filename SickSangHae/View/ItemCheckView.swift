@@ -15,6 +15,9 @@ struct ItemCheckView: View {
     var isOCR = true
     @ObservedObject var viewModel = UpdateItemViewModel()
     @State var appState: AppState
+    @State private var isRegisterCompleteView = false
+    
+    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
     
     var body: some View {
         NavigationStack {
@@ -54,7 +57,7 @@ struct ItemCheckView: View {
                     }
                     
                     Spacer()
-                    NavigationLink(destination: RegisterCompleteView(appState: appState), label: {
+                    NavigationLink(destination: RegisterCompleteView(appState: appState) ,label: {
                         ZStack {
                             Rectangle()
                                 .frame(width: 350, height: 60)
@@ -67,6 +70,9 @@ struct ItemCheckView: View {
                             }
                         }
                         .padding(.bottom, 30)
+                        .onTapGesture {
+                            registerItemsToCoreData()
+                        }
                     })
                 }
             }
@@ -83,7 +89,7 @@ struct ItemCheckView: View {
             
             switch isOCR{
             case true:
-                NavigationLink(destination: UpdateItemView(viewModel: UpdateItemViewModel(),titleName: "수정", buttonName: "수정 완료", appState: appState), label: {
+                NavigationLink(destination: UpdateItemView(viewModel: UpdateItemViewModel(),titleName: "수정", buttonName: "수정 완료",gptAnswer: $gptAnswer, appState: appState), label: {
                 ZStack{
                     RoundedRectangle(cornerRadius: 5)
                         .foregroundColor(Color("Gray100"))
@@ -153,6 +159,12 @@ struct ItemCheckView: View {
         .padding([.top, .bottom], 8.adjusted)
     }
     
+    
+    func registerItemsToCoreData() {
+        for i in 0..<gptAnswer["상품명"]!.count {
+//            coreDataViewModel.createReceiptData(name: gptAnswer["상품명"]![i] as! String, price: Double(gptAnswer["금액"]![i] as! Int))
+        }
+    }
 }
 
 //struct ItemCheckView_Previews: PreviewProvider {

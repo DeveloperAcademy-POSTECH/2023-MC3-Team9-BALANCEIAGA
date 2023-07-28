@@ -103,6 +103,10 @@ final class UpdateItemViewModel: ObservableObject {
         itemBlockViewModels.append(ItemBlockViewModel(name: "", price: 0))
     }
     
+    func makeInitialItemBlock(name: String, price: Int) {
+        itemBlockViewModels.append(ItemBlockViewModel(name: name, price: price))
+    }
+    
     
     func deleteItemBlock(itemBlockViewModel: ItemBlockViewModel) {
         for i in 0..<itemBlockViewModels.count {

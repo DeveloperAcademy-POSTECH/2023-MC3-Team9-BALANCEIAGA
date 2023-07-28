@@ -181,8 +181,6 @@ Array(zip(listContentViewModel.itemList.indices, listContentViewModel.itemList.r
                         }))
                 }
                 .offset(x: listContentViewModel.offsets[index])
-                
-                
             }
             
             
