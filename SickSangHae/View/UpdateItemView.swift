@@ -13,7 +13,6 @@ struct UpdateItemView: View {
     @ObservedObject var viewModel: UpdateItemViewModel
     @State var titleName: String
     @State var buttonName: String
-//    @State var transferDictionary: [String:[Any]] = ["상품명":[], "단가":[], "수량":[], "금액":[]]
     @Binding var gptAnswer: [String:[Any]]
     @State private var isItemCheckView = false
     let appState: AppState
