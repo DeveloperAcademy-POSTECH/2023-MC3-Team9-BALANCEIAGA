@@ -123,7 +123,7 @@ class OCRViewModel: ObservableObject {
     func queryGPT(prompts: String, dispatchGroup: DispatchGroup, completion: @escaping (String) -> Void) {
         let configuration = OpenAI.Configuration(token: chatToken, organizationIdentifier: chatOrganization, timeoutInterval: 60.0)
         let openAI = OpenAI(configuration: configuration)
-        let customPrompt = prompts + "\n 이거를 딕셔너리로 정리해. 다음과 같은 포맷으로 줘야해. {\"상품명\": [], \"단가\": [], \"수량\": [], \"금액\": []}. 특수문자는 모두 제거해. 상품명에는 단가, 수량, 금액을 제거해. 단가, 수량, 금액은 Int형으로 되어있어야 해. 상품명, 단가, 수량, 금액 중에 비어 있는게 있으면 1을 추가해서 넣어. null은 모두 1로 바꿔. 그리고 상품명 value의 array size와 단가, 수량, 금액 value의 array size가 다르면 단가, 수량, 금액 value의  array size가 같아지도록 1을 추가해. 오직 딕셔너리만 응답해야 돼. 다른 말 하지마."
+        let customPrompt = prompts + "\n 이거를 딕셔너리로 정리해. 다음과 같은 포맷으로 줘야해. {\"상품명\": [], \"수량\": [], \"금액\": []}. 특수문자는 모두 제거해. 상품명에는 수량, 금액을 제거해.  수량, 금액은 Int형으로 되어있어야 해. 상품명, 수량, 금액 중에 비어 있는게 있으면 1을 추가해서 넣어. null은 모두 1로 바꿔. 그리고 상품명 value의 array size와 수량, 금액 value의 array size가 다르면 수량, 금액 value의  array size가 같아지도록 1을 추가해. 오직 딕셔너리만 응답해야 돼. 다른 말 하지마."
 
         let query = ChatQuery(model: .gpt3_5Turbo, messages: [.init(role: .user, content: customPrompt)])
         
@@ -159,7 +159,7 @@ class OCRViewModel: ObservableObject {
             do {
                 return try JSONSerialization.jsonObject(with: data, options: []) as? [String: [Any]]
             } catch {
-                print(error.localizedDescription)
+                return ["상품명": ["스캔이 올바르지 않아요"], "단가": [0], "수량": [0], "금액": [0]]
             }
         }
         return nil
