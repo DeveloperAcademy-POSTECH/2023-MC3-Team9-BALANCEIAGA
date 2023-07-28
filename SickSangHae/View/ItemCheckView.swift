@@ -16,6 +16,7 @@ struct ItemCheckView: View {
     @ObservedObject var viewModel = UpdateItemViewModel()
     @State var appState: AppState
     @State private var isRegisterCompleteView = false
+    @State private var isShowingUpdateItemView = true
     
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
     
@@ -89,19 +90,37 @@ struct ItemCheckView: View {
             
             switch isOCR{
             case true:
-                NavigationLink(destination: UpdateItemView(viewModel: UpdateItemViewModel(),titleName: "수정", buttonName: "수정 완료",gptAnswer: $gptAnswer, appState: appState), label: {
-                ZStack{
-                    RoundedRectangle(cornerRadius: 5)
-                        .foregroundColor(Color("Gray100"))
-                    
-                    Text("수정")
-                        .foregroundColor(Color("Gray600"))
-                        .font(.system(size: 14.adjusted))
+                NavigationLink("",isActive: $isShowingUpdateItemView) {
+                    UpdateItemView(viewModel: UpdateItemViewModel(), titleName: "수정", buttonName: "수정 완료", gptAnswer: $gptAnswer, appState: appState)
                 }
-                .frame(width: 45, height: 25)
-                .foregroundColor(Color("Gray600"))
-                .padding(.trailing, 20.adjusted)
-                })
+                Button {
+                    isShowingUpdateItemView = true
+                } label: {
+                    ZStack{
+                        RoundedRectangle(cornerRadius: 5)
+                            .foregroundColor(Color("Gray100"))
+                        
+                        Text("수정")
+                            .foregroundColor(Color("Gray600"))
+                            .font(.system(size: 14.adjusted))
+                    }
+                    .frame(width: 45, height: 25)
+                    .foregroundColor(Color("Gray600"))
+                    .padding(.trailing, 20.adjusted)
+                }
+//                NavigationLink(destination: UpdateItemView(viewModel: UpdateItemViewModel(),titleName: "수정", buttonName: "수정 완료",gptAnswer: $gptAnswer, appState: appState), label: {
+//                ZStack{
+//                    RoundedRectangle(cornerRadius: 5)
+//                        .foregroundColor(Color("Gray100"))
+//
+//                    Text("수정")
+//                        .foregroundColor(Color("Gray600"))
+//                        .font(.system(size: 14.adjusted))
+//                }
+//                .frame(width: 45, height: 25)
+//                .foregroundColor(Color("Gray600"))
+//                .padding(.trailing, 20.adjusted)
+//                })
             default:
                 EmptyView()
             }
