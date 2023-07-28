@@ -122,9 +122,8 @@ struct ItemCheckView: View {
 
                 ForEach(0..<gptAnswer["상품명"]!.count, id: \.self) { index in
                     let productName = gptAnswer["상품명"]![index] as! String
-                    let price = gptAnswer["단가"]![index] as! Int
                     let quantity = gptAnswer["수량"]![index] as! Int
-                    let amount = gptAnswer["금액"]![index] as! Int
+                    let price = gptAnswer["금액"]![index] as! Int
 
                     listDetail(listTraling: productName, listLeading: String(price), listColor: "Gray900")
                     
