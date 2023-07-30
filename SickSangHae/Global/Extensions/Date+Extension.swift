@@ -17,4 +17,10 @@ extension Date {
         formatter.dateFormat = "yyyy년 MM월 dd일"
         return formatter.string(from: self)
     }
+    
+    var remainingDate: String {
+        let threeMonthInSeconds = 7716600
+        let dateDifference = Calendar.current.dateComponents([.day], from: self, to: self + TimeInterval(threeMonthInSeconds)).day
+        return String(dateDifference ?? 90)
+    }
 }
