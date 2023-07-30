@@ -264,6 +264,10 @@ struct Pie: View {
             }
 
         }
+        .onAppear(){
+            print("pie")
+            print(wholeCost, eatenCost)
+        }
         .aspectRatio(1, contentMode: .fit)
     }
 }
