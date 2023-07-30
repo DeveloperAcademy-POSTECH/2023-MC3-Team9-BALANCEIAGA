@@ -43,6 +43,7 @@ struct TabBarView: View {
             }
             .ignoresSafeArea(.keyboard)
         }
+        .environmentObject(coreDataViewModel)
     }
 }
 

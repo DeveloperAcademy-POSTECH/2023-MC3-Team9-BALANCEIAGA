@@ -15,6 +15,10 @@ struct ItemCheckView: View {
     var isOCR = true
     @ObservedObject var viewModel = UpdateItemViewModel()
     @State var appState: AppState
+    @State private var isRegisterCompleteView = false
+    @State private var isShowingUpdateItemView = false
+    
+    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
     
     var body: some View {
         NavigationStack {
@@ -54,7 +58,7 @@ struct ItemCheckView: View {
                     }
                     
                     Spacer()
-                    NavigationLink(destination: RegisterCompleteView(appState: appState), label: {
+                    NavigationLink(destination: RegisterCompleteView(appState: appState) ,label: {
                         ZStack {
                             Rectangle()
                                 .frame(width: 350, height: 60)
@@ -67,10 +71,16 @@ struct ItemCheckView: View {
                             }
                         }
                         .padding(.bottom, 30)
+                        .onTapGesture {
+                            registerItemsToCoreData()
+                        }
                     })
                 }
             }
             .navigationBarBackButtonHidden(true)
+            .fullScreenCover(isPresented: $isShowingUpdateItemView) {
+                UpdateItemView(viewModel: UpdateItemViewModel(),titleName: "수정", buttonName: "수정 완료",gptAnswer: $gptAnswer, appState: appState)
+            }
         }
     }
     private var ListTitle: some View {
@@ -83,19 +93,21 @@ struct ItemCheckView: View {
             
             switch isOCR{
             case true:
-                NavigationLink(destination: UpdateItemView(viewModel: UpdateItemViewModel(),titleName: "수정", buttonName: "수정 완료", appState: appState), label: {
-                ZStack{
-                    RoundedRectangle(cornerRadius: 5)
-                        .foregroundColor(Color("Gray100"))
-                    
-                    Text("수정")
-                        .foregroundColor(Color("Gray600"))
-                        .font(.system(size: 14.adjusted))
+                Button {
+                    isShowingUpdateItemView = true
+                } label: {
+                    ZStack{
+                        RoundedRectangle(cornerRadius: 5)
+                            .foregroundColor(Color("Gray100"))
+                        
+                        Text("수정")
+                            .foregroundColor(Color("Gray600"))
+                            .font(.system(size: 14.adjusted))
+                    }
+                    .frame(width: 45, height: 25)
+                    .foregroundColor(Color("Gray600"))
+                    .padding(.trailing, 20.adjusted)
                 }
-                .frame(width: 45, height: 25)
-                .foregroundColor(Color("Gray600"))
-                .padding(.trailing, 20.adjusted)
-                })
             default:
                 EmptyView()
             }
@@ -152,6 +164,12 @@ struct ItemCheckView: View {
         .padding([.top, .bottom], 8.adjusted)
     }
     
+    
+    func registerItemsToCoreData() {
+        for i in 0..<gptAnswer["상품명"]!.count {
+            coreDataViewModel.createReceiptData(name: gptAnswer["상품명"]![i] as! String, price: Double(gptAnswer["금액"]![i] as! Int))
+        }
+    }
 }
 
 //struct ItemCheckView_Previews: PreviewProvider {

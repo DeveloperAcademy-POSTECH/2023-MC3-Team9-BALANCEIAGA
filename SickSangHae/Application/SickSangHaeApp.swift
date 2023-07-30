@@ -10,7 +10,6 @@ import SwiftUI
 @main
 struct SickSangHaeApp: App {
     @StateObject private var cameraViewModelShared = CameraViewModel()
-
     var body: some Scene {
         WindowGroup {
         let appState = AppState()

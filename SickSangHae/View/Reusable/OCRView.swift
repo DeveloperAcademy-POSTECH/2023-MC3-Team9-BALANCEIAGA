@@ -39,7 +39,6 @@ struct OCRView: View {
                 NavigationLink(destination: ItemCheckView(gptAnswer: $viewModel.gptAnswer, appState: appState), isActive: $isShowItemCheckView) {
                     EmptyView()
                 }
-                .hidden()
                 scanView
                   .onAppear {
                       // MARK: DispatchGroup을 enter 합니다.
