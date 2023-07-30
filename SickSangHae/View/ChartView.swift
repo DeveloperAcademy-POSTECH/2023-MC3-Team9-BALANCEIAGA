@@ -9,8 +9,10 @@ import SwiftUI
 
 struct ChartView: View {
     @State private var selectedDate = Date()
-    @State private var wholeCost = 123102
-    @State private var eatenCost = 43200
+    @State private var wholeCost: Double = 1
+    @State private var eatenCost: Double = 1
+
+    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
 
     private let dateFormatter: DateFormatter = {
             let formatter = DateFormatter()
@@ -71,10 +73,7 @@ struct ChartView: View {
                 Spacer()
                     .frame(height: 41.adjusted)
 
-                Pie(slices: [
-                    (7, Color("PrimaryGB")),
-                    (3, Color("Gray200"))
-                ])
+                Pie(wholeCost: wholeCost, eatenCost: eatenCost)
                 .frame(width: 200.adjusted)
 
                 summaryList
@@ -92,12 +91,46 @@ struct ChartView: View {
 
                     ListTitle(title: "못 먹은 WORST3")
                     ListContents(data: data)
+
+                    ForEach(coreDataViewModel.receipts, id:\.self){ item in
+                        Text(item.name)
+                        Button(){
+                            print(dateFormatter.string(from: item.dateOfPurchase))
+                            print(item.price)
+                        }label:{
+                            Text("button")
+                        }
+                    }
                 }
 
             }
+            .onChange(of: selectedDate){ newDate in
+                calculateCosts(for: newDate)
+            }
         }
-
+        .onAppear {
+            calculateCosts(for: selectedDate)
+            print((wholeCost - eatenCost) / wholeCost)
+        }
     }
+
+    private func calculateCosts(for date: Date) {
+            let month = dateFormatter.string(from: date)
+            var newWholeCost: Double = 0
+            var newEatenCost: Double = 0
+
+            for item in coreDataViewModel.receipts {
+                if month == dateFormatter.string(from: item.dateOfPurchase) {
+                    newWholeCost += item.price
+                    if item.currentStatus == .Eaten {
+                        newEatenCost += item.price
+                    }
+                }
+            }
+
+            wholeCost = newWholeCost
+            eatenCost = newEatenCost
+        }
 
     private func ListTitle(title: String) -> some View{
         HStack {
@@ -156,7 +189,7 @@ struct ChartView: View {
                     .font(.system(size: 14).weight(.medium))
                     .foregroundColor(Color("Gray900"))
                 Spacer()
-                Text("\(wholeCost)원")
+                Text("\(Int(wholeCost))원")
                     .font(.system(size: 22).weight(.bold))
                     .foregroundColor(Color("Gray900"))
             }
@@ -165,7 +198,7 @@ struct ChartView: View {
                     .font(.system(size: 14).weight(.medium))
                     .foregroundColor(Color("Gray900"))
                 Spacer()
-                Text("\(eatenCost)원")
+                Text("\(Int(eatenCost))원")
                     .font(.system(size: 22).weight(.bold))
                     .foregroundColor(Color("Gray900"))
             }
@@ -174,7 +207,7 @@ struct ChartView: View {
                     .font(.system(size: 14).weight(.medium))
                     .foregroundColor(Color("Gray900"))
                 Spacer()
-                Text("\(wholeCost - eatenCost)원")
+                Text("\(Int(wholeCost - eatenCost))원")
                     .font(.system(size: 22).weight(.bold))
                     .foregroundColor(Color("PrimaryGB"))
             }
@@ -188,8 +221,15 @@ struct ChartView: View {
 }
 
 struct Pie: View {
+    @State var wholeCost: Double
+    @State var eatenCost: Double
 
-    @State var slices: [(Double, Color)]
+    var slices: [(Double, Color)] {
+            return [
+                ((wholeCost - eatenCost) / wholeCost, Color("PrimaryGB")),
+                (1, Color("Gray200"))
+            ]
+        }
 
     var body: some View {
         Canvas { context, size in
