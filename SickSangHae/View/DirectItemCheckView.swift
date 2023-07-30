@@ -13,7 +13,6 @@ struct DirectItemCheckView: View {
     @Environment(\.dismiss) var dismiss
     @ObservedObject var viewModel: UpdateItemViewModel
     @State var appState: AppState
-    
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
     
     var body: some View {
