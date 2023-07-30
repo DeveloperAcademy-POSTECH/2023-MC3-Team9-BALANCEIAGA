@@ -51,7 +51,8 @@ struct CameraView: View {
     .navigationBarBackButtonHidden(true)
     .foregroundColor(.white)
     .sheet(isPresented: $viewModel.isImagePickerPresented ,onDismiss: {
-      viewModel.isSelectedShowPreview.toggle()
+        guard let _ = viewModel.selectedImage else { return }
+        viewModel.isSelectedShowPreview.toggle()
     }) {
       ImagePicker(image: $viewModel.selectedImage, isPresented: $viewModel.isImagePickerPresented)
     }
