@@ -24,17 +24,28 @@ class CoreDataViewModel: ObservableObject {
         return receipts.filter{ $0.currentStatus == .longTermUnEaten}
     }
     
-    var eatenList: [Receipt] {
-        return receipts
-            .filter{ $0.currentStatus == .Eaten }
-            .sorted{ $0.dateOfHistory > $1.dateOfHistory }
+    var historyDictionary: [String : [Receipt]] {
+        let eatenList: [Receipt] = receipts.filter { $0.currentStatus == .Eaten || $0.currentStatus == .Spoiled }
+        var dateGroupDictionary: [String : [Receipt]] = [String : [Receipt]]()
+        
+        
+        eatenList.forEach { item in
+            let updatedDate = item.dateOfHistory.formattedDate
+            if let _ = dateGroupDictionary[updatedDate] {
+                dateGroupDictionary[updatedDate]!.append(item)
+            } else {
+                dateGroupDictionary[updatedDate] = [item]
+            }
+        }
+        return dateGroupDictionary
     }
     
-    var spoiledList: [Receipt] {
-        return receipts
-            .filter{ $0.currentStatus == .Spoiled }
-            .sorted{ $0.dateOfHistory > $1.dateOfHistory }
-    }
+//  MARK: 먹은것과 상한것 구분을 안한다고 해서 일단은 주석처리 해놨음
+//    var spoiledList: [Receipt] {
+//        return receipts
+//            .filter{ $0.currentStatus == .Spoiled }
+//            .sorted{ $0.dateOfHistory > $1.dateOfHistory }
+//    }
     
     init() {
         getAllReceiptData()
