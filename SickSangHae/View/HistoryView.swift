@@ -31,16 +31,15 @@ struct HistoryView: View {
                 Spacer()
                     .frame(height: 20)
                 
-                segmentedTabButton
-                    .padding(.horizontal, 20)
-                
+//                segmentedTabButton
+//                    .padding(.horizontal, 20)
+//
                 
                 ScrollView {
                     deleteNotiMessage
                     
                     listSection
                     
-//                    listSection
                     
                 } //ScrollView닫기
                 .listStyle(.plain)
