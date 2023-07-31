@@ -19,8 +19,9 @@ extension Date {
     }
     
     var remainingDate: String {
-        let threeMonthInSeconds = 7889400
-        let dateDifference = Calendar.current.dateComponents([.day], from: .now, to: self + TimeInterval(threeMonthInSeconds)).day
+        let dateTerm = DateComponents(day: 90)
+        let dateTermFromNow = Calendar.current.date(byAdding: dateTerm, to: .now) ?? .now
+        let dateDifference = Calendar.current.dateComponents([.day], from: self, to: dateTermFromNow).day
         return String(dateDifference ?? 90)
     }
 }
