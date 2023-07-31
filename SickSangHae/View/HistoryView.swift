@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HistoryView: View {
     
-    @State var isMovingSegmentedTab = true
+    @State var isEatenTab = true
     
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
     
@@ -56,7 +56,7 @@ struct HistoryView: View {
                 Spacer()
                 
                 Button(action: {
-                    isMovingSegmentedTab = true
+                    isEatenTab = true
                 }, label: {
                     Text("먹었어요😋")
                         .font(.system(size: 20, weight: .bold))
@@ -66,7 +66,7 @@ struct HistoryView: View {
                 Spacer()
 
                 RoundedRectangle(cornerRadius: 1.5)
-                    .foregroundColor(isMovingSegmentedTab ? Color("PrimaryGB") : .clear)
+                    .foregroundColor(isEatenTab ? Color("PrimaryGB") : .clear)
                     .frame(width: 155, height: 3)
             } //VStack닫기
             
@@ -77,7 +77,7 @@ struct HistoryView: View {
                 Spacer()
                 
                 Button(action: {
-                    isMovingSegmentedTab = false
+                    isEatenTab = false
                 }, label: {
                     Text("상했어요🤢")
                         .font(.system(size: 20, weight: .bold))
@@ -87,7 +87,7 @@ struct HistoryView: View {
                 Spacer()
                 
                 RoundedRectangle(cornerRadius: 1.5)
-                    .foregroundColor(isMovingSegmentedTab ? .clear : Color("PrimaryGB"))
+                    .foregroundColor(isEatenTab ? .clear : Color("PrimaryGB"))
                     .frame(width: 155, height: 3)
             } //VStack닫기
         } //HStack닫기
@@ -111,8 +111,17 @@ struct HistoryView: View {
     
     
     var listSection: some View {
-        let eatenList: [String:[Receipt]] = coreDataViewModel.historyDictionary
-        let keys = Array(eatenList.keys.sorted(by: >))
+        
+        var targetDictionary: [String : [Receipt]] = [String : [Receipt]]()
+        var keys: [String] = [String]()
+        
+        if isEatenTab {
+            targetDictionary = coreDataViewModel.eatenDictionary
+            keys = Array(targetDictionary.keys.sorted(by: >))
+        } else {
+            targetDictionary = coreDataViewModel.spoiledDictionary
+            keys = Array(targetDictionary.keys.sorted(by: >))
+        }
 
         return ForEach(keys, id:\.self) { key in
             VStack {
@@ -121,28 +130,14 @@ struct HistoryView: View {
                     .frame(width: screenWidth, height: 12)
                     .background(Color("Gray100"))
                 
-                listTitle(eatenList: eatenList, key: key)
-                itemList(eatenList: eatenList, key: key)
+                listTitle(itemDictionary: targetDictionary, key: key)
+                itemList(itemDictionary: targetDictionary, key: key)
             }
         }
-//        VStack(spacing: 0) {
-//            listTitle(title: "test")
-//
-//            itemList
-//
-//            Spacer()
-//                .frame(height: 4)
-//
-//            Rectangle()
-//                .foregroundColor(.clear)
-//                .frame(width: screenWidth, height: 12)
-//                .background(Color("Gray100"))
-//
-//        } //VStack닫기
         
     } //listSection닫기
     
-    func listTitle(eatenList: [String: [Receipt]], key: String) -> some View {
+    func listTitle(itemDictionary: [String: [Receipt]], key: String) -> some View {
         HStack {
             Text(key)
                 .foregroundColor(Color("Gray900"))
@@ -150,7 +145,7 @@ struct HistoryView: View {
             
             Spacer()
             
-            Text("\(eatenList[key]?.first?.dateOfPurchase.remainingDate ?? "90")일 남음")
+            Text("\(itemDictionary[key]?.first?.dateOfPurchase.remainingDate ?? "90")일 남음")
                 .font(.system(size: 14, weight: .medium))
                 .foregroundColor(Color("Gray600"))
             
@@ -160,8 +155,8 @@ struct HistoryView: View {
         
     } //listTitle닫기
     
-    func itemList(eatenList: [String: [Receipt]], key: String) -> AnyView {
-        guard let itemList = eatenList[key] else { return AnyView(EmptyView()) }
+    func itemList(itemDictionary: [String: [Receipt]], key: String) -> AnyView {
+        guard let itemList = itemDictionary[key] else { return AnyView(EmptyView()) }
         
         return AnyView(
             ForEach(itemList, id:\.self) { item in
@@ -188,14 +183,6 @@ struct HistoryView: View {
                         }, label: {
                             Text("복구하기")
                             Image(systemName: "arrow.counterclockwise")
-                        })
-
-                        Button(action: {
-                            //아이템 상태 변경 로직
-                            isMovingSegmentedTab ? coreDataViewModel.updateStatus(target: item, to: .Spoiled) : coreDataViewModel.updateStatus(target: item, to: .Eaten)
-                        }, label: {
-                            Text(isMovingSegmentedTab ? "상했어요" : "먹었어요")
-                            Image(systemName: "arrow.triangle.2.circlepath")
                         })
 
                         Divider()
