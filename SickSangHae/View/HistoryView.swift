@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HistoryView: View {
     
-    @State var isMovingSegmentedTab = true
+    @State var isEatenTab = true
     
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
     
@@ -33,14 +33,13 @@ struct HistoryView: View {
                 
                 segmentedTabButton
                     .padding(.horizontal, 20)
-                
+//
                 
                 ScrollView {
                     deleteNotiMessage
                     
                     listSection
                     
-//                    listSection
                     
                 } //ScrollView닫기
                 .listStyle(.plain)
@@ -57,7 +56,7 @@ struct HistoryView: View {
                 Spacer()
                 
                 Button(action: {
-                    isMovingSegmentedTab = true
+                    isEatenTab = true
                 }, label: {
                     Text("먹었어요😋")
                         .font(.system(size: 20, weight: .bold))
@@ -67,7 +66,7 @@ struct HistoryView: View {
                 Spacer()
 
                 RoundedRectangle(cornerRadius: 1.5)
-                    .foregroundColor(isMovingSegmentedTab ? Color("PrimaryGB") : .clear)
+                    .foregroundColor(isEatenTab ? Color("PrimaryGB") : .clear)
                     .frame(width: 155, height: 3)
             } //VStack닫기
             
@@ -78,7 +77,7 @@ struct HistoryView: View {
                 Spacer()
                 
                 Button(action: {
-                    isMovingSegmentedTab = false
+                    isEatenTab = false
                 }, label: {
                     Text("상했어요🤢")
                         .font(.system(size: 20, weight: .bold))
@@ -88,7 +87,7 @@ struct HistoryView: View {
                 Spacer()
                 
                 RoundedRectangle(cornerRadius: 1.5)
-                    .foregroundColor(isMovingSegmentedTab ? .clear : Color("PrimaryGB"))
+                    .foregroundColor(isEatenTab ? .clear : Color("PrimaryGB"))
                     .frame(width: 155, height: 3)
             } //VStack닫기
         } //HStack닫기
@@ -112,43 +111,55 @@ struct HistoryView: View {
     
     
     var listSection: some View {
-        VStack(spacing: 0) {
-            listTitle
-            
-            itemList
-            
-            Spacer()
-                .frame(height: 4)
-            
-            Rectangle()
-                .foregroundColor(.clear)
-                .frame(width: screenWidth, height: 12)
-                .background(Color("Gray100"))
-            
-        } //VStack닫기
+        
+        var targetDictionary: [String : [Receipt]] = [String : [Receipt]]()
+        var keys: [String] = [String]()
+        
+        if isEatenTab {
+            targetDictionary = coreDataViewModel.eatenDictionary
+            keys = Array(targetDictionary.keys.sorted(by: >))
+        } else {
+            targetDictionary = coreDataViewModel.spoiledDictionary
+            keys = Array(targetDictionary.keys.sorted(by: >))
+        }
+
+        return ForEach(keys, id:\.self) { key in
+            VStack {
+                Rectangle()
+                    .foregroundColor(.clear)
+                    .frame(width: screenWidth, height: 12)
+                    .background(Color("Gray100"))
+                
+                listTitle(itemDictionary: targetDictionary, key: key)
+                itemList(itemDictionary: targetDictionary, key: key)
+            }
+        }
         
     } //listSection닫기
     
-    var listTitle: some View {
+    func listTitle(itemDictionary: [String: [Receipt]], key: String) -> some View {
         HStack {
-            Text("2023년 7월 21일")
+            Text(key)
                 .foregroundColor(Color("Gray900"))
                 .font(.system(size: 20).weight(.semibold))
             
             Spacer()
             
-            Text("88일 남음")
+            Text("\(itemDictionary[key]?.first?.dateOfPurchase.remainingDate ?? "90")일 남음")
                 .font(.system(size: 14, weight: .medium))
                 .foregroundColor(Color("Gray600"))
             
         } //HStack닫기
-        .padding([.top, .bottom], 17)
-        .padding([.leading, .trailing], 20)
+        .padding(.vertical, 17)
+        .padding(.horizontal, 20)
         
     } //listTitle닫기
     
-    var itemList: some View {
-        ForEach(isMovingSegmentedTab ? coreDataViewModel.eatenList : coreDataViewModel.spoiledList, id:\.self) { item in
+    func itemList(itemDictionary: [String: [Receipt]], key: String) -> AnyView {
+        guard let itemList = itemDictionary[key] else { return AnyView(EmptyView()) }
+        
+        return AnyView(
+            ForEach(itemList, id:\.self) { item in
             VStack {
                 HStack {
                     Image(item.icon)
@@ -173,17 +184,9 @@ struct HistoryView: View {
                             Text("복구하기")
                             Image(systemName: "arrow.counterclockwise")
                         })
-                        
-                        Button(action: {
-                            //아이템 상태 변경 로직
-                            isMovingSegmentedTab ? coreDataViewModel.updateStatus(target: item, to: .Spoiled) : coreDataViewModel.updateStatus(target: item, to: .Eaten)
-                        }, label: {
-                            Text(isMovingSegmentedTab ? "상했어요" : "먹었어요")
-                            Image(systemName: "arrow.triangle.2.circlepath")
-                        })
-                        
+
                         Divider()
-                        
+
                         Button(role: .destructive, action: {
                             coreDataViewModel.deleteReceiptData(target: item)
                         }, label: {
@@ -201,20 +204,19 @@ struct HistoryView: View {
                                     .frame(width: 21, height: 5)
                             )
                             .padding(.trailing, 20)
-                    } //Menu닫기
-                    
+                    }//Menu닫기
+                    .padding(.top, 12)
+
+                    Divider()
+                        .overlay(Color("Gray100"))
+                        .opacity(item == itemList.last ? 0 : 1)
+
                 } //HStack닫기
-                .padding(.top, 12)
-                
-                Divider()
-                    .overlay(Color("Gray100"))
-                    .opacity(item == coreDataViewModel.eatenList.last ? 0 : 1)
-                
+                .padding(.leading, 20)
             } //VStack닫기
-            .padding(.leading, 20)
-            
         } //ForEach닫기
-        
+        )
+
     } //itemList닫기
     
 } //struct닫기
