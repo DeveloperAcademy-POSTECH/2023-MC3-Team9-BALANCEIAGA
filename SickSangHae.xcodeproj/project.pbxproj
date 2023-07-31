@@ -10,6 +10,8 @@
 		020439652A6161CA0055A8D4 /* CameraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020439642A6161CA0055A8D4 /* CameraViewModel.swift */; };
 		020439692A6599180055A8D4 /* ImagePicker+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020439682A6599180055A8D4 /* ImagePicker+Extension.swift */; };
 		0204396F2A66B9500055A8D4 /* OCRViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0204396E2A66B9500055A8D4 /* OCRViewModel.swift */; };
+		02137F092A7785DE001C3469 /* SettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02137F082A7785DE001C3469 /* SettingModel.swift */; };
+		02137F0B2A77861F001C3469 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02137F0A2A77861F001C3469 /* SettingViewModel.swift */; };
 		027E96732A56AB5E0066BA8F /* SickSangHaeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027E96722A56AB5E0066BA8F /* SickSangHaeApp.swift */; };
 		027E96772A56AB5F0066BA8F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 027E96762A56AB5F0066BA8F /* Assets.xcassets */; };
 		027E967A2A56AB5F0066BA8F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 027E96792A56AB5F0066BA8F /* Preview Assets.xcassets */; };
@@ -79,6 +81,8 @@
 		020439642A6161CA0055A8D4 /* CameraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewModel.swift; sourceTree = "<group>"; };
 		020439682A6599180055A8D4 /* ImagePicker+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImagePicker+Extension.swift"; sourceTree = "<group>"; };
 		0204396E2A66B9500055A8D4 /* OCRViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRViewModel.swift; sourceTree = "<group>"; };
+		02137F082A7785DE001C3469 /* SettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingModel.swift; sourceTree = "<group>"; };
+		02137F0A2A77861F001C3469 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		025E92752A6C7254003DFA03 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		027E966F2A56AB5E0066BA8F /* SickSangHae.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SickSangHae.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		027E96722A56AB5E0066BA8F /* SickSangHaeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SickSangHaeApp.swift; sourceTree = "<group>"; };
@@ -209,6 +213,7 @@
 				02D4497F2A5FEFF600D97A37 /* CameraModel.swift */,
 				CE0319E62A6D5221009580F6 /* Categories.swift */,
 				02FC0ED72A6C5DF100B4284C /* TopAlertModel.swift */,
+				02137F082A7785DE001C3469 /* SettingModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -245,6 +250,7 @@
 				0204396E2A66B9500055A8D4 /* OCRViewModel.swift */,
 				02FC0ED52A6C5D3500B4284C /* TopAlertViewModel.swift */,
 				0296E08E2A6D966000B69F01 /* UpdateItemViewModel.swift */,
+				02137F0A2A77861F001C3469 /* SettingViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -432,6 +438,7 @@
 				02C1FA0B2A56B2F2009E9D41 /* NavigationView.swift in Sources */,
 				027E969C2A56B1FE0066BA8F /* AppInfoView.swift in Sources */,
 				CE9AFE0E2A68E56A00EB2D8C /* Date+Extension.swift in Sources */,
+				02137F0B2A77861F001C3469 /* SettingViewModel.swift in Sources */,
 				CE9AFD9C2A5FEFE400EB2D8C /* PersistentController.swift in Sources */,
 				02D449802A5FEFF600D97A37 /* CameraModel.swift in Sources */,
 				02FC0ED82A6C5DF100B4284C /* TopAlertModel.swift in Sources */,
@@ -476,6 +483,7 @@
 				7C41D9672A6282570054FD04 /* BigButtonView.swift in Sources */,
 				027E968E2A56AF8C0066BA8F /* GetScreenShotView.swift in Sources */,
 				027E96882A56AD140066BA8F /* MainView.swift in Sources */,
+				02137F092A7785DE001C3469 /* SettingModel.swift in Sources */,
 				7C41D96B2A6282CA0054FD04 /* EditItemDetailView.swift in Sources */,
 				027E96982A56B1800066BA8F /* TabBarView.swift in Sources */,
 				027E968C2A56AF4A0066BA8F /* UpdateItemView.swift in Sources */,
