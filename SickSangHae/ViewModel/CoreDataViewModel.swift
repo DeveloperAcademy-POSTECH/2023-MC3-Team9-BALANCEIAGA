@@ -24,13 +24,29 @@ class CoreDataViewModel: ObservableObject {
         return receipts.filter{ $0.currentStatus == .longTermUnEaten}
     }
     
-    var historyDictionary: [String : [Receipt]] {
-        let eatenList: [Receipt] = receipts.filter { $0.currentStatus == .Eaten || $0.currentStatus == .Spoiled }
+    var eatenDictionary: [String : [Receipt]] {
+        let eatenList: [Receipt] = receipts.filter { $0.currentStatus == .Eaten }
         var dateGroupDictionary: [String : [Receipt]] = [String : [Receipt]]()
         
         
         eatenList.forEach { item in
-            let updatedDate = item.dateOfPurchase.formattedDate
+            let updatedDate = item.dateOfHistory.formattedDate
+            if let _ = dateGroupDictionary[updatedDate] {
+                dateGroupDictionary[updatedDate]!.append(item)
+            } else {
+                dateGroupDictionary[updatedDate] = [item]
+            }
+        }
+        return dateGroupDictionary
+    }
+    
+    var spoiledDictionary: [String : [Receipt]] {
+        let spoiledList: [Receipt] = receipts.filter { $0.currentStatus == .Spoiled }
+        var dateGroupDictionary: [String : [Receipt]] = [String : [Receipt]]()
+        
+        
+        spoiledList.forEach { item in
+            let updatedDate = item.dateOfHistory.formattedDate
             if let _ = dateGroupDictionary[updatedDate] {
                 dateGroupDictionary[updatedDate]!.append(item)
             } else {
