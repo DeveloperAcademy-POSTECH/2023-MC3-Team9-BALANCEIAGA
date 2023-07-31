@@ -31,8 +31,8 @@ struct HistoryView: View {
                 Spacer()
                     .frame(height: 20)
                 
-//                segmentedTabButton
-//                    .padding(.horizontal, 20)
+                segmentedTabButton
+                    .padding(.horizontal, 20)
 //
                 
                 ScrollView {
@@ -116,13 +116,13 @@ struct HistoryView: View {
 
         return ForEach(keys, id:\.self) { key in
             VStack {
-                listTitle(eatenList: eatenList, key: key)
-                itemList(eatenList: eatenList, key: key)
-                
                 Rectangle()
                     .foregroundColor(.clear)
                     .frame(width: screenWidth, height: 12)
                     .background(Color("Gray100"))
+                
+                listTitle(eatenList: eatenList, key: key)
+                itemList(eatenList: eatenList, key: key)
             }
         }
 //        VStack(spacing: 0) {
@@ -150,7 +150,7 @@ struct HistoryView: View {
             
             Spacer()
             
-            Text("\(eatenList[key]?.first?.dateOfHistory.remainingDate ?? "90")일 남음")
+            Text("\(eatenList[key]?.first?.dateOfPurchase.remainingDate ?? "90")일 남음")
                 .font(.system(size: 14, weight: .medium))
                 .foregroundColor(Color("Gray600"))
             

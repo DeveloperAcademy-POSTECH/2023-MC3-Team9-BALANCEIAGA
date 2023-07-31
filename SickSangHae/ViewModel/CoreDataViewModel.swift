@@ -30,7 +30,7 @@ class CoreDataViewModel: ObservableObject {
         
         
         eatenList.forEach { item in
-            let updatedDate = item.dateOfHistory.formattedDate
+            let updatedDate = item.dateOfPurchase.formattedDate
             if let _ = dateGroupDictionary[updatedDate] {
                 dateGroupDictionary[updatedDate]!.append(item)
             } else {
