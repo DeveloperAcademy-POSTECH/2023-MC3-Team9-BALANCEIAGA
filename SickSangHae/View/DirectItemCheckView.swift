@@ -65,12 +65,12 @@ struct DirectItemCheckView: View {
                             }
                         }
                         .padding(.bottom, 30)
-                        .onTapGesture {
-                            registerItemsToCoreData()
-                        }
-//                        .simultaneousGesture(TapGesture().onEnded {
+//                        .onTapGesture {
 //                            registerItemsToCoreData()
-//                        })
+//                        }
+                        .simultaneousGesture(TapGesture().onEnded {
+                            registerItemsToCoreData()
+                        })
                     })
 
                 }
