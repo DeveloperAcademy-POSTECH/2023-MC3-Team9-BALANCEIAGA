@@ -8,17 +8,21 @@
 import SwiftUI
 
 struct LongTermList: View {
-    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    @ObservedObject var coreDataViewModel: CoreDataViewModel
+    @ObservedObject var listContentViewModel: ListContentViewModel
+    @State private var isDescending = true
     
-    let itemList: [Receipt]
-    let status: Status
-    @State private var swipeOffsets: [CGFloat]
+    let appState: AppState
     
+    init(coreDataViewModel: CoreDataViewModel, listContentViewModel: ListContentViewModel, appState: AppState) {
+        self.coreDataViewModel = coreDataViewModel
+        self.listContentViewModel = listContentViewModel
+        self.appState = appState
+    }
     
-    init(itemList: [Receipt], swipeOffsets: [CGFloat], status: Status) {
-        self.itemList = itemList
-        self.status = status
-        self.swipeOffsets = swipeOffsets
+    var sortedReceipts: Array<(Int, Receipt)> {
+        isDescending ? Array(zip(listContentViewModel.itemList.indices, listContentViewModel.itemList)) :
+Array(zip(listContentViewModel.itemList.indices, listContentViewModel.itemList.reversed()))
     }
 
     var body: some View {
@@ -39,11 +43,10 @@ struct LongTermList: View {
             Spacer()
 
             Button{
-
+                isDescending.toggle()
             } label: {
-
                 HStack(spacing: 2){
-                    Text("최신순")
+                    Text(isDescending ? "최신순" : "오래된순")
                         .foregroundColor(Color("Gray600"))
                     Image(systemName: "arrow.up.arrow.down")
                 }
@@ -56,23 +59,24 @@ struct LongTermList: View {
         .padding(.leading, 20)
     }
 
-    private var ListContents: some View{
-        VStack {
-            ForEach(Array(zip(itemList.indices, itemList)), id:\.0) { index, item in
+    private var ListContents: some View {
+        Group {
+            ForEach( sortedReceipts,
+                id:\.0) { index, item in
                 ZStack {
                     HStack {
                         Button {
                             withAnimation {
                                 coreDataViewModel.updateStatus(target: item, to: .Eaten)
                             }
-                            swipeOffsets[index] = 0
+                            listContentViewModel.offsets[index] = 0
                         } label: {
                             Image(systemName: "fork.knife")
                         }
                         .frame(width: 70, height: 60)
                         .background(.green)
                         .foregroundColor(.white)
-                        .opacity(swipeOffsets[index] > 0 ? 1 : 0)
+                        .opacity(listContentViewModel.offsets[index] > 0 ? 1 : 0)
                         
                         Spacer()
                         
@@ -80,88 +84,83 @@ struct LongTermList: View {
                             withAnimation {
                                 coreDataViewModel.updateStatus(target: item, to: .Spoiled)
                             }
-                            swipeOffsets[index] = 0
+                            listContentViewModel.offsets[index] = 0
                         } label: {
                             Image(systemName: "allergens.fill")
                         }
                         .frame(width: 70, height: 60)
                         .background(.red)
                         .foregroundColor(.white)
-                        .opacity(swipeOffsets[index] < 0 ? 1 : 0)
+                        .opacity(listContentViewModel.offsets[index] < 0 ? 1 : 0)
                     }
                     
-                    
-                    ZStack {
-                        Rectangle()
-                            .fill(.white)
-                        HStack(spacing: 0) {
-                            Text("")
-                                .foregroundColor(.clear)
-                            
-                            Image(systemName: "circle.fill")
-                                .resizable()
-                                .foregroundColor(Color("Gray200"))
-                                .frame(width: 36, height: 36)
-                                .padding(.leading, 20)
-                            
-                            Spacer()
-                                .frame(width: 12)
-                            
-                            Text(item.name)
-                                .font(.system(size: 17).weight(.semibold))
-                                .foregroundColor(Color("Gray900"))
-                            
-                            Spacer()
-                            
-                            Text("구매한지 \(item.dateOfPurchase.dateDifference)일")
-                                .foregroundColor(Color("Gray900"))
-                                .font(.system(size: 14).weight(.semibold))
-                                .padding(.trailing, 20)
-                        }
-                        .padding([.top, .bottom], 8)
-                    }
-                    .offset(x: swipeOffsets[index])
-                    .onTapGesture {
-                        withAnimation {
-                            swipeOffsets[index] = 0
-                        }
-                    }
-                    .gesture(DragGesture().onChanged({ value in
-                        withAnimation {
-                            swipeOffsets[index] = value.translation.width
-                        }
-                    })
-                        .onEnded ({ value in
-                            withAnimation {
-                                let translationWidth = value.translation.width
-                                switch translationWidth {
-                                case ..<(-60):
-                                    swipeOffsets[index] = -70
-                                case 60...:
-                                    swipeOffsets[index] = 70
-                                default:
-                                    swipeOffsets[index] = 0
-                                }
+                    NavigationLink {
+                        ItemDetailView(receipt: item, appState: appState)
+                            .environmentObject(coreDataViewModel)
+                    } label: {
+                        ZStack {
+                            Rectangle()
+                                .fill(.white)
+                            HStack(spacing: 0) {
+                                Text("")
+                                    .foregroundColor(.clear)
+                                
+                                Image(item.icon)
+                                    .resizable()
+                                    .foregroundColor(Color("Gray200"))
+                                    .frame(width: 36, height: 36)
+                                    .padding(.leading, 20)
+                                
+                                Spacer()
+                                    .frame(width: 12)
+                                
+                                Text(item.name)
+                                    .font(.system(size: 17).weight(.semibold))
+                                    .foregroundColor(Color("Gray900"))
+                                
+                                Spacer()
+                                
+                                Text("구매한지 \(item.dateOfPurchase.dateDifference)일")
+                                    .foregroundColor(Color("Gray900"))
+                                    .font(.system(size: 14).weight(.semibold))
+                                    .padding(.trailing, 20)
                             }
-                        }))
+                            .padding([.top, .bottom], 8)
+                        }
+                        .gesture(DragGesture().onChanged({ value in
+                            withAnimation {
+                                listContentViewModel.offsets[index] = value.translation.width
+                            }
+                        })
+                            .onEnded ({ value in
+                                withAnimation {
+                                    let translationWidth = value.translation.width
+                                    switch translationWidth {
+                                    case ..<(-60):
+                                        listContentViewModel.offsets[index] = -70
+                                    case 60...:
+                                        listContentViewModel.offsets[index] = 70
+                                    default:
+                                        listContentViewModel.offsets[index] = 0
+                                    }
+                                }
+                            }))
+                    }
+                    .offset(x: listContentViewModel.offsets[index])
+                    
+                    
                 }
                 
                 Divider()
                     .overlay(Color("Gray100"))
-                    .opacity(item == itemList.last ? 0 : 1)
-                    .padding([.leading], 20)
+                    .opacity(item == listContentViewModel.itemList.last ? 0 : 1)
+                    .padding(.leading, 20)
             }
             
             
             Button("Add") {
-                swipeOffsets.append(0.0)
-                coreDataViewModel.createTestReceiptData(status: status)
-                print("swipeOffsets.count: \(swipeOffsets.count)")
-                print("itemList.count: \(itemList.count)")
-            }
-            .onAppear {
-                print("swipeOffsets.count: \(swipeOffsets.count)")
-                print("itemList.count: \(itemList.count)")
+                listContentViewModel.offsets.append(0.0)
+                coreDataViewModel.createTestReceiptData(status: listContentViewModel.status)
             }
         }
     }

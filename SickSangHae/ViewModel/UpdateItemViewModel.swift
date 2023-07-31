@@ -16,19 +16,10 @@ final class UpdateItemViewModel: ObservableObject {
   @Published var priceInt: Int = 0
   @Published var priceString: String = ""
   @Published var name: String = ""
-  @Published var items: [Item] = [Item](arrayLiteral: Item())
-  
-    struct Item: Hashable, Identifiable {
-        let id: UUID
-        let name: String
-        let price: Int
-        
-        init(name: String = "", price: Int = 0) {
-            self.id = UUID()
-            self.name = name
-            self.price = price
-        }
-    }
+
+    @Published var itemBlockViewModels: [ItemBlockViewModel] = [ItemBlockViewModel]()
+    
+    
     
   private static let dateFormat: DateFormatter =  {
     let formatter = DateFormatter()
@@ -96,18 +87,39 @@ final class UpdateItemViewModel: ObservableObject {
     }
   }
     
-    func addNewItem() {
-        items.append(Item())
-        // TODO: CoreData 에 넣는 함수
-    }
-    
-    func deleteItem(id: UUID) {
-        for i in 0..<items.count {
-            if items[i].id == id {
-                items.remove(at: i)
+    var isEveryBlockFilled: Bool {
+        var result = true
+        itemBlockViewModels.forEach { item in
+            if item.areBothTextFieldsNotEmpty == false {
+                result = false
                 return
             }
         }
+        
+        return result
+    }
+    
+    func addNewItemBlock() {
+        itemBlockViewModels.append(ItemBlockViewModel(name: "", price: 0))
+    }
+    
+    func makeInitialItemBlock(name: String, price: Int) {
+        itemBlockViewModels.append(ItemBlockViewModel(name: name, price: price))
+    }
+    
+    
+    func deleteItemBlock(itemBlockViewModel: ItemBlockViewModel) {
+        for i in 0..<itemBlockViewModels.count {
+            if itemBlockViewModels[i].id == itemBlockViewModel.id {
+                itemBlockViewModels.remove(at: i)
+                break
+            }
+        }
+    }
+
+    // MARK: Json 형식의 String을 Dictionary<String, [Any]> 타입으로 바꿔주는 함수
+    func formatValue(_ value: [Any]) -> String {
+            return value.map { String(describing: $0) }.joined(separator: ", ")
     }
 }
 

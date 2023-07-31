@@ -151,7 +151,7 @@ struct HistoryView: View {
         ForEach(isMovingSegmentedTab ? coreDataViewModel.eatenList : coreDataViewModel.spoiledList, id:\.self) { item in
             VStack {
                 HStack {
-                    Image(systemName: "circle.fill")
+                    Image(item.icon)
                         .resizable()
                         .foregroundColor(Color("Gray200"))
                         .frame(width: 36, height: 36)

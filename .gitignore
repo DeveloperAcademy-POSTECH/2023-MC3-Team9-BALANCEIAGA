@@ -100,3 +100,8 @@ iOSInjectionProject/
 .DS_Store
 .AppleDouble
 .LSOverride
+
+
+
+## CHAT_GPT_KEYS
+*.xcconfig

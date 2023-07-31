@@ -9,11 +9,8 @@ import CoreData
 import Foundation
 
 class CoreDataViewModel: ObservableObject {
-    private let viewContext = PersistentController.shared.viewContext
+    let viewContext = PersistentController.shared.viewContext
     @Published var receipts: [Receipt] = []
-    @Published var shortTermUnEatenOffsets: [CGFloat] = []
-    @Published var shortTermPinnedOffsets: [CGFloat] = []
-    @Published var longTermUnEatenOffsets: [CGFloat] = []
     
     var shortTermUnEatenList: [Receipt] {
         return receipts.filter{ $0.currentStatus == .shortTermUnEaten}
@@ -41,7 +38,6 @@ class CoreDataViewModel: ObservableObject {
     
     init() {
         getAllReceiptData()
-        getAllOffsetCounts()
     }
     
     
@@ -58,12 +54,6 @@ extension CoreDataViewModel {
         } catch {
             print("Cannot fetch receipts from SickSangHae Model")
         }
-    }
-    
-    private func getAllOffsetCounts() {
-        shortTermPinnedOffsets = [CGFloat](repeating: 0.0, count:shortTermPinnedList.count)
-        shortTermUnEatenOffsets = [CGFloat](repeating: 0.0, count:shortTermUnEatenList.count)
-        longTermUnEatenOffsets = [CGFloat](repeating: 0.0, count:longTermUnEatenList.count)
     }
     
     private func saveChanges() {
@@ -83,7 +73,7 @@ extension CoreDataViewModel {
         receipt.name = name
         receipt.dateOfPurchase = Date.now
         receipt.dateOfHistory = Date.now
-        receipt.icon = "icon_test"
+        receipt.icon = "shoppingCart"
         receipt.price = price
         receipt.previousStatus = .shortTermUnEaten
         receipt.currentStatus = .shortTermUnEaten
@@ -93,29 +83,14 @@ extension CoreDataViewModel {
         self.getAllReceiptData()
     }
     
-    func createNewSwipeOffset(status: Status, completion: () -> ()) {
-        switch status {
-        case .shortTermPinned:
-            shortTermPinnedOffsets.append(0.0)
-        case .shortTermUnEaten:
-            shortTermUnEatenOffsets.append(0.0)
-        case .longTermUnEaten:
-            longTermUnEatenOffsets.append(0.0)
-        default:
-            break
-        }
-        completion()
-    }
-    
     func createTestReceiptData(status: Status) {
-        createNewSwipeOffset(status: status) {
-            print("Done \(status)\n")
+
             let receipt = Receipt(context: viewContext)
             receipt.id = UUID()
             receipt.name = "TestName \(receipts.count)"
             receipt.dateOfPurchase = Date.now
             receipt.dateOfHistory = Date.distantPast
-            receipt.icon = "icon_test"
+            receipt.icon = "shoppingCart"
             receipt.price = 6000.0
             receipt.previousStatus = status
             receipt.currentStatus = status
@@ -123,7 +98,7 @@ extension CoreDataViewModel {
             
             saveChanges()
             self.getAllReceiptData()
-        }
+
     }
     
     func deleteReceiptData(target: Receipt) {
@@ -169,6 +144,18 @@ extension CoreDataViewModel {
         
         receipt.currentStatus = receipt.previousStatus
         receipt.dateOfHistory = receipt.dateOfPurchase
+        
+        saveChanges()
+        getAllReceiptData()
+    }
+    
+    func editReceiptData(target: Receipt, icon: String, name: String, dateOfPurchase: Date, price: String) {
+        guard let receipt = viewContext.get(by: target.objectID) else { return }
+        
+        receipt.icon = icon
+        receipt.name = name
+        receipt.dateOfPurchase = dateOfPurchase
+        receipt.price = Double(price) ?? 0.0
         
         saveChanges()
         getAllReceiptData()
