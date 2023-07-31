@@ -12,6 +12,9 @@
 		0204396F2A66B9500055A8D4 /* OCRViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0204396E2A66B9500055A8D4 /* OCRViewModel.swift */; };
 		02137F092A7785DE001C3469 /* SettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02137F082A7785DE001C3469 /* SettingModel.swift */; };
 		02137F0B2A77861F001C3469 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02137F0A2A77861F001C3469 /* SettingViewModel.swift */; };
+		02137F0D2A778B26001C3469 /* NotificationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02137F0C2A778B26001C3469 /* NotificationModel.swift */; };
+		02137F0F2A778B71001C3469 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02137F0E2A778B71001C3469 /* NotificationViewModel.swift */; };
+		02137F112A779AA7001C3469 /* Gradient+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02137F102A779AA7001C3469 /* Gradient+Extension.swift */; };
 		027E96732A56AB5E0066BA8F /* SickSangHaeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027E96722A56AB5E0066BA8F /* SickSangHaeApp.swift */; };
 		027E96772A56AB5F0066BA8F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 027E96762A56AB5F0066BA8F /* Assets.xcassets */; };
 		027E967A2A56AB5F0066BA8F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 027E96792A56AB5F0066BA8F /* Preview Assets.xcassets */; };
@@ -83,6 +86,9 @@
 		0204396E2A66B9500055A8D4 /* OCRViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRViewModel.swift; sourceTree = "<group>"; };
 		02137F082A7785DE001C3469 /* SettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingModel.swift; sourceTree = "<group>"; };
 		02137F0A2A77861F001C3469 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
+		02137F0C2A778B26001C3469 /* NotificationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationModel.swift; sourceTree = "<group>"; };
+		02137F0E2A778B71001C3469 /* NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
+		02137F102A779AA7001C3469 /* Gradient+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Gradient+Extension.swift"; sourceTree = "<group>"; };
 		025E92752A6C7254003DFA03 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		027E966F2A56AB5E0066BA8F /* SickSangHae.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SickSangHae.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		027E96722A56AB5E0066BA8F /* SickSangHaeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SickSangHaeApp.swift; sourceTree = "<group>"; };
@@ -214,6 +220,7 @@
 				CE0319E62A6D5221009580F6 /* Categories.swift */,
 				02FC0ED72A6C5DF100B4284C /* TopAlertModel.swift */,
 				02137F082A7785DE001C3469 /* SettingModel.swift */,
+				02137F0C2A778B26001C3469 /* NotificationModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -251,6 +258,7 @@
 				02FC0ED52A6C5D3500B4284C /* TopAlertViewModel.swift */,
 				0296E08E2A6D966000B69F01 /* UpdateItemViewModel.swift */,
 				02137F0A2A77861F001C3469 /* SettingViewModel.swift */,
+				02137F0E2A778B71001C3469 /* NotificationViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -273,6 +281,7 @@
 				CE9AFE0D2A68E56A00EB2D8C /* Date+Extension.swift */,
 				028B6B242A6DB47C00DFDEF7 /* View+Extension.swift */,
 				02EC281D2A6FEEEE00DAFCFA /* Font+Extension.swift */,
+				02137F102A779AA7001C3469 /* Gradient+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -440,6 +449,7 @@
 				CE9AFE0E2A68E56A00EB2D8C /* Date+Extension.swift in Sources */,
 				02137F0B2A77861F001C3469 /* SettingViewModel.swift in Sources */,
 				CE9AFD9C2A5FEFE400EB2D8C /* PersistentController.swift in Sources */,
+				02137F0F2A778B71001C3469 /* NotificationViewModel.swift in Sources */,
 				02D449802A5FEFF600D97A37 /* CameraModel.swift in Sources */,
 				02FC0ED82A6C5DF100B4284C /* TopAlertModel.swift in Sources */,
 				027E968A2A56AE0F0066BA8F /* CameraView.swift in Sources */,
@@ -454,12 +464,14 @@
 				7C41D95F2A6282120054FD04 /* TopAlertView.swift in Sources */,
 				020439692A6599180055A8D4 /* ImagePicker+Extension.swift in Sources */,
 				027E969A2A56B1B00066BA8F /* NotificationView.swift in Sources */,
+				02137F112A779AA7001C3469 /* Gradient+Extension.swift in Sources */,
 				8787EC002A5E79F400104EDE /* Color+Extension.swift in Sources */,
 				7C41D95D2A6281D60054FD04 /* EditIconDetailView.swift in Sources */,
 				7C41D9532A62807A0054FD04 /* LongTermList.swift in Sources */,
 				7C41D96D2A6284170054FD04 /* ItemDetailView.swift in Sources */,
 				7C41D9692A62825E0054FD04 /* SmallButtonView.swift in Sources */,
 				CE0319E72A6D5221009580F6 /* Categories.swift in Sources */,
+				02137F0D2A778B26001C3469 /* NotificationModel.swift in Sources */,
 				0204396F2A66B9500055A8D4 /* OCRViewModel.swift in Sources */,
 				02FC0ED62A6C5D3500B4284C /* TopAlertViewModel.swift in Sources */,
 				027E969E2A56B2150066BA8F /* SupportView.swift in Sources */,
