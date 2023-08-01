@@ -13,11 +13,11 @@ struct NotificationView: View {
     var body: some View {
         switch viewModel.currentCase {
         case .hurryEat:
-            NotificationBaseView(title: "빨리 먹어야 해요", periodUint: ["1일","2일","3일"], explain: "'빨리 먹어야 해요' 식료품의 구매일이 2일 지났을 경우 알림을 띄웁니다." , viewModel: viewModel)
+            NotificationBaseView(title: "빨리 먹어야 해요", periodUint: ["1일","2일","3일"], explain: "'빨리 먹어야 해요' 식료품의 구매일이 \(viewModel.day)일 지났을 경우 알림을 띄웁니다." , viewModel: viewModel, selectedOption: $viewModel.selectedOption)
         case .basic:
-            NotificationBaseView(title: "기본", periodUint: ["1주","2주","3주"], explain: "'기본' 식료품의 구매일이 2일 지났을 경우 알림을 띄웁니다." , viewModel: viewModel)
+            NotificationBaseView(title: "기본", periodUint: ["1주","2주","3주"], explain: "'기본' 식료품의 구매일이 \(viewModel.day)주 지났을 경우 알림을 띄웁니다." , viewModel: viewModel, selectedOption: $viewModel.selectedOption)
         case .longTerm:
-            NotificationBaseView(title: "장기보관", periodUint: ["1달","2달","3달"], explain: "'장기보관' 식료품의 구매일이 2일 지났을 경우 알림을 띄웁니다." , viewModel: viewModel)
+            NotificationBaseView(title: "장기보관", periodUint: ["1달","2달","3달"], explain: "'장기보관' 식료품의 구매일이 \(viewModel.day)달 지났을 경우 알림을 띄웁니다." , viewModel: viewModel, selectedOption: $viewModel.selectedOption)
         }
     }
 }
@@ -27,16 +27,21 @@ struct NotificationBaseView: View {
     var periodUint: [String]
     var explain: String
     @ObservedObject var viewModel: NotificationViewModel
-    @State var selectedOption: Int = 1
+    @Binding var selectedOption: Int
+    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         VStack(alignment: .leading) {
             Spacer().frame(height: 10.adjusted)
             HStack {
-                Image(systemName: "chevron.left")
-                    .resizable()
-                    .frame(width: 10, height: 19)
-                
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .resizable()
+                        .frame(width: 10, height: 19)
+                        .foregroundColor(.gray900)
+                }
                 Spacer()
                 
                 Text(title)
@@ -56,8 +61,11 @@ struct NotificationBaseView: View {
             Spacer()
             
         }
+        .onChange(of: selectedOption) { newValue in
+            viewModel.updateDay(for: newValue)
+        }
+        
     }
-    
 }
 
 struct radioButtonView: View {
@@ -100,7 +108,7 @@ struct radioButtonView: View {
                 }
                 .padding(.horizontal, 24.adjusted)
                 .padding(.vertical, 24)
-            
+                
                 Rectangle()
                     .frame(height: 1)
                     .foregroundColor(.gray50)

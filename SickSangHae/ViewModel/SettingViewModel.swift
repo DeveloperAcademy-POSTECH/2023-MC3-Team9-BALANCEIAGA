@@ -8,10 +8,7 @@
 import SwiftUI
 
 class SettingViewModel: ObservableObject {
-    @Published var isOnToggle = false
-    
-    var settingListItems: [SettingListItem] = [
-        SettingListItem(title: "앱 푸시 알림", isSubTitle: false, subTitle: nil, isToggle: false, buttonTitle: "설정"),
+    @Published var settingListItems: [SettingListItem] = [
         SettingListItem(title: "식료품 경과일 알림", isSubTitle: true, subTitle: "설정한 기준일이 지난 경우 알려드려요", isToggle: true, buttonTitle: ""),
         SettingListItem(title: "빨리 먹어야 해요", isSubTitle: false, subTitle: "", isToggle: false, buttonTitle: "2일"),
         SettingListItem(title: "기본", isSubTitle: false, subTitle: "", isToggle: false, buttonTitle: "1주"),
@@ -20,8 +17,20 @@ class SettingViewModel: ObservableObject {
         SettingListItem(title: "식통계 알림", isSubTitle: true, subTitle: "매월 1일 통계를 확인하도록 알려드려요.", isToggle: true, buttonTitle: "")
     ]
     
-    // 해당 아이템의 제목이 "앱 푸시 알림" 또는 "빨리 먹어야 해요"일 때에만 true 반환
     func isShowListSection(for item: SettingListItem) -> Bool {
-        return item.title == "앱 푸시 알림" || item.title == "장기보관"
+        return item.title == "장기보관"
+    }
+    
+    func navigationNoti(for item: SettingListItem) -> notificationCase {
+        switch item.title {
+        case "빨리 먹어야 해요":
+            return .hurryEat
+        case "기본":
+            return .basic
+        case "장기보관":
+            return .longTerm
+        default:
+            return .hurryEat
+        }
     }
 }

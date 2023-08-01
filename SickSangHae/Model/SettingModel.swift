@@ -13,5 +13,6 @@ struct SettingListItem {
     var subTitle: String?
     var isToggle: Bool
     var buttonTitle: String
+    var isOnToggle: Bool = false
 }
 
