@@ -32,7 +32,7 @@ struct EditItemDetailView: View {
                 
                 
             }
-            deleteButton
+            
         }
         .padding(.horizontal, 20.adjusted)
         .ignoresSafeArea(.keyboard)
@@ -43,8 +43,6 @@ struct EditItemDetailView: View {
     
     var topNaviBar: some View {
         ZStack {
-            Text("수정")
-                .bold()
             HStack {
                 Button(action: {
                     self.isShowingEditView.toggle()
@@ -98,27 +96,6 @@ struct EditItemDetailView: View {
             }
         }
         .padding(.vertical, 20.adjusted)
-    }
-    
-    var deleteButton: some View {
-        Button(action: {
-            moveToRootViewAndDelete {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    coreDateViewModel.deleteReceiptData(target: receipt)
-                }
-            }
-        }, label: {
-            ZStack {
-                Rectangle()
-                    .cornerRadius(8)
-                    .frame(height: 60)
-                    .foregroundColor(Color("Gray100"))
-                Text("항목 삭제")
-                    .bold()
-                    .foregroundColor(.red)
-            }
-            .padding(.bottom, 20.adjusted)
-        })
     }
     
     

@@ -8,14 +8,21 @@
 import SwiftUI
 
 class TopAlertViewModel: ObservableObject {
-  @Published var isAlertVisible = true
-  var name: String
-  var currentCase: TopAlertViewCase
+    @Published var isAlertVisible = true
     
-  init(name: String, currentCase: TopAlertViewCase) {
+  var name: String
+//  var currentCase: TopAlertViewCase
+    var changedStatus: Status
+    
+  init(name: String, changedStatus: Status) {
     self.name = name
-    self.currentCase = currentCase
+    self.changedStatus = changedStatus
   }
+    
+//    init(name: String, currentCase: TopAlertViewCase) {
+//      self.name = name
+//      self.currentCase = currentCase
+//    }
   
   func hideAlert() {
     withAnimation {

@@ -9,9 +9,14 @@ import SwiftUI
 
 struct CenterAlertView: View {
     
-    let titleMessage: String
-    let bodyMessage: String
-    let actionButtonMessage: String
+    var titleMessage: String
+    var bodyMessage: String
+    var actionButtonMessage: String
+    
+    @Binding var isShowingCenterAlertView: Bool
+    @Binding var isDeletingItem: Bool
+    
+    
     
     var body: some View {
         ZStack {
@@ -60,7 +65,7 @@ struct CenterAlertView: View {
     var centerAlertButton: some View {
         HStack {
             Button(action: {
-                // showCenterAlert = false
+                isShowingCenterAlertView = false
             }, label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 8)
@@ -76,10 +81,10 @@ struct CenterAlertView: View {
                 .frame(width: 10)
             
             Button(action: {
-                /*
-                 deleteItem
-                 showCenterAlert = false
-                 */
+                print(isDeletingItem)
+                isDeletingItem = true
+                isShowingCenterAlertView = false
+                print(isDeletingItem)
             }, label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 8)
@@ -96,6 +101,6 @@ struct CenterAlertView: View {
 
 struct CenterAlertView_Previews: PreviewProvider {
     static var previews: some View {
-        CenterAlertView(titleMessage: "제목", bodyMessage: "항목", actionButtonMessage: "취소")
+        CenterAlertView(titleMessage: "제목", bodyMessage: "항목", actionButtonMessage: "취소", isShowingCenterAlertView: .constant(false), isDeletingItem: .constant(false))
     }
 }

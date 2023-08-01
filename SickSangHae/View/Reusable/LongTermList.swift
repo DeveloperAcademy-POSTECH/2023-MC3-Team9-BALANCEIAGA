@@ -61,100 +61,9 @@ Array(zip(listContentViewModel.itemList.indices, listContentViewModel.itemList.r
 
     private var ListContents: some View {
         Group {
-            ForEach( sortedReceipts,
-                id:\.0) { index, item in
-                ZStack {
-                    HStack {
-                        Button {
-                            withAnimation {
-                                coreDataViewModel.updateStatus(target: item, to: .Eaten)
-                            }
-                            listContentViewModel.offsets[index] = 0
-                        } label: {
-                            Image(systemName: "fork.knife")
-                        }
-                        .frame(width: 70, height: 60)
-                        .background(.green)
-                        .foregroundColor(.white)
-                        .opacity(listContentViewModel.offsets[index] > 0 ? 1 : 0)
-                        
-                        Spacer()
-                        
-                        Button {
-                            withAnimation {
-                                coreDataViewModel.updateStatus(target: item, to: .Spoiled)
-                            }
-                            listContentViewModel.offsets[index] = 0
-                        } label: {
-                            Image(systemName: "allergens.fill")
-                        }
-                        .frame(width: 70, height: 60)
-                        .background(.red)
-                        .foregroundColor(.white)
-                        .opacity(listContentViewModel.offsets[index] < 0 ? 1 : 0)
-                    }
-                    
-                    NavigationLink {
-                        ItemDetailView(receipt: item, appState: appState)
-                            .environmentObject(coreDataViewModel)
-                    } label: {
-                        ZStack {
-                            Rectangle()
-                                .fill(.white)
-                            HStack(spacing: 0) {
-                                Text("")
-                                    .foregroundColor(.clear)
-                                
-                                Image(item.icon)
-                                    .resizable()
-                                    .foregroundColor(Color("Gray200"))
-                                    .frame(width: 36, height: 36)
-                                    .padding(.leading, 20)
-                                
-                                Spacer()
-                                    .frame(width: 12)
-
-                                Text(item.name)
-                                    .font(.pretendard(.semiBold, size: 17))
-                                    .foregroundColor(Color("Gray900"))
-                                
-                                Spacer()
-                                
-                                Text("구매한지 \(item.dateOfPurchase.dateDifference)일")
-                                    .foregroundColor(Color("Gray900"))
-                                    .font(.pretendard(.semibold, size: 14))
-                                    .padding(.trailing, 20)
-                            }
-                            .padding([.top, .bottom], 8)
-                        }
-                        .gesture(DragGesture().onChanged({ value in
-                            withAnimation {
-                                listContentViewModel.offsets[index] = value.translation.width
-                            }
-                        })
-                            .onEnded ({ value in
-                                withAnimation {
-                                    let translationWidth = value.translation.width
-                                    switch translationWidth {
-                                    case ..<(-60):
-                                        listContentViewModel.offsets[index] = -70
-                                    case 60...:
-                                        listContentViewModel.offsets[index] = 70
-                                    default:
-                                        listContentViewModel.offsets[index] = 0
-                                    }
-                                }
-                            }))
-                    }
-                    .offset(x: listContentViewModel.offsets[index])
-                    
-                    
-                }
-                
-                Divider()
-                    .overlay(Color("Gray100"))
-                    .opacity(item == listContentViewModel.itemList.last ? 0 : 1)
-                    .padding(.leading, 20)
+            ForEach( listContentViewModel.itemList,
+                     id:\.self) { item in
+                listCell(item: item)
             }
             
             
@@ -162,6 +71,51 @@ Array(zip(listContentViewModel.itemList.indices, listContentViewModel.itemList.r
                 listContentViewModel.offsets.append(0.0)
                 coreDataViewModel.createTestReceiptData(status: listContentViewModel.status)
             }
+        }
+    }
+    
+    func listCell(item: Receipt) -> some View {
+        return VStack {
+            NavigationLink {
+                ItemDetailView(topAlertViewModel: TopAlertViewModel(name: item.name, changedStatus: item.currentStatus), receipt: item, appState: appState, needToEatASAP: item.currentStatus)
+                    .environmentObject(coreDataViewModel)
+            } label: {
+                ZStack {
+                    Rectangle()
+                        .fill(.white)
+                    HStack(spacing: 0) {
+                        Text("")
+                            .foregroundColor(.clear)
+                        
+                        Image(item.icon)
+                            .resizable()
+                            .foregroundColor(Color("Gray200"))
+                            .frame(width: 36, height: 36)
+                            .padding(.leading, 20)
+                        
+                        Spacer()
+                            .frame(width: 12)
+                        
+                        Text(item.name)
+                            .font(.system(size: 17).weight(.semibold))
+                            .foregroundColor(Color("Gray900"))
+                        
+                        Spacer()
+                        
+                        Text("구매한지 \(item.dateOfPurchase.dateDifference)일")
+                            .foregroundColor(Color("Gray900"))
+                            .font(.system(size: 14).weight(.semibold))
+                            .padding(.trailing, 20)
+                    }
+                    .padding([.top, .bottom], 8)
+                }
+            }
+            
+            Divider()
+                .overlay(Color("Gray100"))
+                .opacity(item == listContentViewModel.itemList.last ? 0 : 1)
+                .padding(.leading, 20)
+            
         }
     }
 }
