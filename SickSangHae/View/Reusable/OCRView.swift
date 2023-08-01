@@ -36,7 +36,7 @@ struct OCRView: View {
                     }
             }
             if isShowScanView {
-                NavigationLink(destination: ItemCheckView(gptAnswer: $viewModel.gptAnswer, appState: appState), isActive: $isShowItemCheckView) {
+                NavigationLink(destination: OCRItemCheckView(gptAnswer: $viewModel.gptAnswer, appState: appState), isActive: $isShowItemCheckView) {
                     EmptyView()
                 }
                 scanView
