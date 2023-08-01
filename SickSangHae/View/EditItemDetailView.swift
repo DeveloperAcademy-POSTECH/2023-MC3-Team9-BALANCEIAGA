@@ -153,7 +153,7 @@ struct InfoEditField: View {
     var nameField: some View {
         VStack(alignment: .leading) {
             Text("품목명")
-                .font(.system(size: 14, weight: .medium))
+                .font(.pretendard(.medium, size: 14))
                 .foregroundColor(Color("Gray600"))
             
             ZStack(alignment: .leading) {
@@ -199,7 +199,7 @@ struct InfoEditField: View {
     var dateField: some View {
         VStack(alignment: .leading) {
             Text("구매일")
-                .font(.system(size: 14, weight: .medium))
+                .font(.pretendard(.medium, size: 14))
                 .foregroundColor(Color("Gray600"))
             
             ZStack(alignment: .leading) {
@@ -236,7 +236,7 @@ struct InfoEditField: View {
     var wonField: some View {
         VStack(alignment: .leading) {
             Text("구매금액")
-                .font(.system(size: 14, weight: .medium))
+                .font(.pretendard(.medium, size: 14))
                 .foregroundColor(Color("Gray600"))
             
             ZStack(alignment: .leading) {

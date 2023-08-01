@@ -50,16 +50,16 @@ struct ItemDetailView: View {
                 
                 VStack(alignment: .leading) {
                     Text("냉장고 선택하기")
-                        .font(.system(size: 20, weight: .bold))
+                        .font(.pretendard(.bold, size: 20))
                         .font(.title2)
                         .padding(.bottom, 2)
                     
                     Text("식료품의 특징에 맞게 선택해주세요.")
-                        .font(.system(size: 14, weight: .medium))
+                        .font(.pretendard(.medium, size: 14))
                         .foregroundColor(Color("Gray600"))
                     
                     Text("일반")
-                        .font(.system(size: 17, weight: .bold))
+                        .font(.pretendard(.bold, size: 17))
                         .padding(.top, 20)
                         .padding(.bottom, 5)
                     
@@ -68,7 +68,7 @@ struct ItemDetailView: View {
                     fastEatRadioButton
                     
                     Text("장기 보관")
-                        .font(.system(size: 17, weight: .bold))
+                        .font(.pretendard(.bold, size: 17))
                         .padding(.top, 20)
                         .padding(.bottom, 5)
                     
@@ -129,27 +129,27 @@ struct ItemDetailView: View {
                             .frame(width: 80, height: 80)
                         
                         Text("\(receipt.name)")
-                            .font(.system(size: 22, weight: .bold))
+                            .font(.pretendard(.bold, size: 22))
                             .padding(.leading, 15)
                     }
                     .padding(.vertical, 30)
                     
                     Text("구매일")
-                        .font(.system(size: 14, weight: .medium))
+                        .font(.pretendard(.medium, size: 14))
                         .foregroundColor(Color("Gray600"))
                         .padding(.bottom, 12)
                     
                     Text("\(receipt.dateOfPurchase.formattedDate)")
-                        .font(.system(size: 20, weight: .bold))
+                        .font(.pretendard(.bold, size: 20))
                         .padding(.bottom, 30)
                     
                     Text("구매금액")
-                        .font(.system(size: 14, weight: .medium))
+                        .font(.pretendard(.medium, size: 14))
                         .foregroundColor(Color("Gray600"))
                         .padding(.bottom, 12)
                     
                     Text("\(Int(receipt.price))원")
-                        .font(.system(size: 20, weight: .bold))
+                        .font(.pretendard(.bold, size: 20))
                         .padding(.bottom, 30)
                 }
                 
@@ -216,7 +216,7 @@ struct ItemDetailView: View {
                     .padding(.leading, 20)
                     
                     Text("기본")
-                        .font(.system(size: 17, weight: .semibold))
+                        .font(.pretendard(.semiBold, size: 17))
                         .padding(.leading, 5)
                         .foregroundColor(Color("Gray900"))
                     
@@ -296,7 +296,7 @@ struct ItemDetailView: View {
                     .padding(.leading, 20)
                     
                     Text("빨리 먹어야 해요")
-                        .font(.system(size: 17, weight: .semibold))
+                        .font(.pretendard(.semiBold, size: 17))
                         .padding(.leading, 5)
                         .foregroundColor(Color("Gray900"))
                     
@@ -375,7 +375,7 @@ struct ItemDetailView: View {
                     .padding(.leading, 20)
                     
                     Text("천천히 먹어도 돼요")
-                        .font(.system(size: 17, weight: .semibold))
+                        .font(.pretendard(.semiBold, size: 17))
                         .padding(.leading, 5)
                         .foregroundColor(Color("Gray900"))
                     

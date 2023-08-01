@@ -32,7 +32,7 @@ struct GetScreenShotView: View {
               NavigationLink(destination: OCRView(image: model.resizeImage(image, to: UIScreen.main.bounds.size), appState: appState)) {
               Text("등록")
                 .foregroundColor(.black)
-                .font(.system(size: 17.adjusted).bold())
+                .font(.pretendard(.bold, size: 17.adjusted))
             }
           }
           .padding([.leading, .trailing], 20.adjusted)

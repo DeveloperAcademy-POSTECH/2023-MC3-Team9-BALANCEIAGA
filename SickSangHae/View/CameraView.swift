@@ -86,7 +86,7 @@ struct CameraView: View {
     Text("영수증의 결제 정보가\n잘 보이도록 찍어주세요")
       .multilineTextAlignment(.center)
       .foregroundColor(.white)
-      .font(.system(size: 22))
+      .font(.pretendard(.regular, size: 22))
       .transition(.opacity)
       .onAppear {
         withAnimation(.easeOut(duration: 2)) {

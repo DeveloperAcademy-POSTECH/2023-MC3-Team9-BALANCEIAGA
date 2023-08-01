@@ -22,7 +22,7 @@ struct HistoryView: View {
                 
                 HStack {
                     Text("보관함")
-                        .font(.system(size: 28, weight: .bold))
+                        .font(.pretendard(.bold, size: 28))
                         .foregroundColor(Color("PrimaryGB"))
                         .padding(.horizontal, 20)
                     Spacer()
@@ -60,7 +60,7 @@ struct HistoryView: View {
                     isMovingSegmentedTab = true
                 }, label: {
                     Text("먹었어요😋")
-                        .font(.system(size: 20, weight: .bold))
+                        .font(.pretendard(.bold, size: 20))
                         .foregroundColor(Color("Gray900"))
                 }) //Button닫기
                 
@@ -81,7 +81,7 @@ struct HistoryView: View {
                     isMovingSegmentedTab = false
                 }, label: {
                     Text("상했어요🤢")
-                        .font(.system(size: 20, weight: .bold))
+                        .font(.pretendard(.bold, size: 20))
                         .foregroundColor(Color("Gray900"))
                 }) //Button닫기
                 
@@ -102,7 +102,7 @@ struct HistoryView: View {
                 .frame(height: 24)
             
             Text("아래의 항목들은 이곳에서 90일 동안 보관됩니다. 각 항목들은 90일이 지나면 영구적으로 삭제됩니다.")
-                .font(.system(size: 14))
+                .font(.pretendard(.regular, size: 14))
                 .foregroundColor(Color("Gray600"))
             
         } //VStack닫기
@@ -133,12 +133,12 @@ struct HistoryView: View {
         HStack {
             Text("2023년 7월 21일")
                 .foregroundColor(Color("Gray900"))
-                .font(.system(size: 20).weight(.semibold))
+                .font(.pretendard(.semiBold, size: 20))
             
             Spacer()
             
             Text("88일 남음")
-                .font(.system(size: 14, weight: .medium))
+                .font(.pretendard(.medium, size: 14))
                 .foregroundColor(Color("Gray600"))
             
         } //HStack닫기
@@ -160,7 +160,7 @@ struct HistoryView: View {
                         .frame(width: 12)
                     
                     Text(item.name)
-                        .font(.system(size: 17).weight(.semibold))
+                        .font(.pretendard(.semiBold, size: 17))
                         .foregroundColor(Color("Gray900"))
                     
                     Spacer()

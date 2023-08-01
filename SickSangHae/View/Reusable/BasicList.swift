@@ -35,7 +35,7 @@ struct BasicList: View {
             HStack {
                 Text("기본")
                     .foregroundColor(Color("Gray900"))
-                    .font(.system(size: 20).weight(.semibold))
+                    .font(.pretendard(.semiBold, size: 20))
                 
                 Spacer()
                 
@@ -49,7 +49,7 @@ struct BasicList: View {
                     }
                 }
                 .foregroundColor(Color("Gray600"))
-                .font(.system(size: 14))
+                .font(.pretendard(.medium, size: 14))
                 .padding(.trailing, 20)
             }
             .padding([.top, .bottom], 17)
@@ -60,7 +60,7 @@ struct BasicList: View {
             HStack {
                 Text("빨리 먹어야 해요 🕖")
                     .foregroundColor(Color("Gray900"))
-                    .font(.system(size: 20).weight(.semibold))
+                    .font(.pretendard(.semiBold, size: 20))
                 
                 Spacer()
             }
@@ -149,14 +149,14 @@ Array(zip(listContentViewModel.itemList.indices, listContentViewModel.itemList.r
                                 
                             
                             Text(item.name)
-                                .font(.system(size: 17).weight(.semibold))
+                                .font(.pretendard(.semiBold, size: 17))
                                 .foregroundColor(Color("Gray900"))
                             
                             Spacer()
                             
                             Text("구매한지 \(item.dateOfPurchase.dateDifference)일")
                                 .foregroundColor(Color("Gray900"))
-                                .font(.system(size: 14).weight(.semibold))
+                                .font(.pretendard(.semiBold, size: 14))
                                 .padding(.trailing, 20)
                         }
                         .padding(.vertical, 8)

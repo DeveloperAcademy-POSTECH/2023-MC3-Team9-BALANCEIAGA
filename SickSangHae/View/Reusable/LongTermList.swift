@@ -38,7 +38,7 @@ Array(zip(listContentViewModel.itemList.indices, listContentViewModel.itemList.r
         HStack{
             Text("천천히 먹어도 돼요")
                 .foregroundColor(Color("Gray900"))
-                .font(.system(size: 20).weight(.bold))
+                .font(.pretendard(.bold, size: 20))
 
             Spacer()
 
@@ -52,7 +52,7 @@ Array(zip(listContentViewModel.itemList.indices, listContentViewModel.itemList.r
                 }
             }
             .foregroundColor(Color("Gray600"))
-            .font(.system(size: 14))
+            .font(.pretendard(.medium, size: 14))
             .padding(.trailing, 20)
         }
         .padding([.top, .bottom], 17)
@@ -113,16 +113,16 @@ Array(zip(listContentViewModel.itemList.indices, listContentViewModel.itemList.r
                                 
                                 Spacer()
                                     .frame(width: 12)
-                                
+
                                 Text(item.name)
-                                    .font(.system(size: 17).weight(.semibold))
+                                    .font(.pretendard(.semiBold, size: 17))
                                     .foregroundColor(Color("Gray900"))
                                 
                                 Spacer()
                                 
                                 Text("구매한지 \(item.dateOfPurchase.dateDifference)일")
                                     .foregroundColor(Color("Gray900"))
-                                    .font(.system(size: 14).weight(.semibold))
+                                    .font(.pretendard(.semibold, size: 14))
                                     .padding(.trailing, 20)
                             }
                             .padding([.top, .bottom], 8)
