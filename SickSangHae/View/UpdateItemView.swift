@@ -77,24 +77,24 @@ struct UpdateItemView: View {
                     }
                 }
                 
-                if viewModel.isShowTopAlertView {
-                    Group {
-                        TopAlertView(viewModel: TopAlertViewModel(name: "파채", currentCase: .delete))
-                            .transition(.move(edge: .top))
-                    }
-                    .opacity(viewModel.isShowTopAlertView ? 1 : 0)
-                    .animation(.easeInOut(duration: 0.4))
-                    .onAppear {
-                        withAnimation(.easeInOut(duration: 1)) {
-                            viewModel.isShowTopAlertView = true
-                        }
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                            withAnimation(.easeInOut(duration: 1)) {
-                                viewModel.isShowTopAlertView = false
-                            }
-                        }
-                    }
-                }
+//                if viewModel.isShowTopAlertView {
+//                    Group {
+//                        TopAlertView(viewModel: TopAlertViewModel(name: "파채", currentCase: .delete))
+//                            .transition(.move(edge: .top))
+//                    }
+//                    .opacity(viewModel.isShowTopAlertView ? 1 : 0)
+//                    .animation(.easeInOut(duration: 0.4))
+//                    .onAppear {
+//                        withAnimation(.easeInOut(duration: 1)) {
+//                            viewModel.isShowTopAlertView = true
+//                        }
+//                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+//                            withAnimation(.easeInOut(duration: 1)) {
+//                                viewModel.isShowTopAlertView = false
+//                            }
+//                        }
+//                    }
+//                }
             }
             .onAppear {
                 for i in 0..<gptAnswer["상품명"]!.count {
