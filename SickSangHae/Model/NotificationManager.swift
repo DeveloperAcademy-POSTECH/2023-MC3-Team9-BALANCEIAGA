@@ -76,4 +76,21 @@ class NotifiactionManager: ObservableObject {
             }
         }
     }
+    
+    func openSettings() {
+       if let bundle = Bundle.main.bundleIdentifier,
+          let settings = URL(string: UIApplication.openSettingsURLString + bundle) {
+            if UIApplication.shared.canOpenURL(settings) {
+               UIApplication.shared.open(settings)
+            }
+        }
+    }
+    
+    func updateIsNotiOnStatus() {
+         notiCenter.getNotificationSettings { settings in
+             DispatchQueue.main.async {
+                 self.isNotiOn = settings.authorizationStatus == .authorized
+             }
+         }
+     }
 }

@@ -11,6 +11,7 @@ struct SettingView: View {
     @State private var isModalOpen = false
     @StateObject private var viewModel = SettingViewModel()
     @ObservedObject private var notiManager = NotifiactionManager()
+    @State private var buttonClickCount = 0
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -27,7 +28,12 @@ struct SettingView: View {
                     .foregroundColor(.gray900)
                 Spacer()
                 Button {
-                    notiManager.isNotiOn = true
+                    if buttonClickCount == 0 {
+                        notiManager.isNotiOn = true
+                    } else {
+                        notiManager.openSettings()
+                    }
+                    buttonClickCount += 1
                 } label: {
                     HStack(spacing: 14.adjusted) {
                         Text("설정")
@@ -52,9 +58,14 @@ struct SettingView: View {
                     }
                 }
             }
+            .disabled(notiManager.isNotiOn ? false : true)
             Spacer()
         }
         
+        //앱의 foreground 상태 판단
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+            notiManager.updateIsNotiOnStatus()
+        }
     }
     
     private func listContent(item: SettingListItem, index: Int) -> some View {
