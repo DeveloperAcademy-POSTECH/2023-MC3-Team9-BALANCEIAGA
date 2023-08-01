@@ -47,14 +47,14 @@ struct CenterAlertView: View {
     var centerAlertText: some View {
         VStack(spacing: 0) {
             Text(titleMessage)
-                .font(.system(size: 20, weight: .semibold))
+                .font(.pretendard(.semiBold, size: 20))
                 .foregroundColor(Color("Gray900"))
                 .frame(width: 240, height: 20)
                 .multilineTextAlignment(.center)
                 .padding(.bottom, 16)
             
             Text("진짜로 \(bodyMessage)를 \(actionButtonMessage)하시겠습니까?")
-                .font(.system(size: 17, weight: .medium))
+                .font(.pretendard(.medium, size: 17))
                 .foregroundColor(Color("Gray800"))
                 .frame(width: 240, height: 17)
                 .multilineTextAlignment(.center)
@@ -72,7 +72,7 @@ struct CenterAlertView: View {
                         .frame(width: 125, height: 45)
                         .foregroundColor(Color("Gray100"))
                     Text("아니오")
-                        .font(.system(size: 14, weight: .semibold))
+                        .font(.pretendard(.semiBold, size: 14))
                         .foregroundColor(Color("Gray600"))
                 }
             })
@@ -91,7 +91,7 @@ struct CenterAlertView: View {
                         .frame(width: 125, height: 45)
                         .foregroundColor(Color("PointR"))
                     Text("네, \(actionButtonMessage)할래요")
-                        .font(.system(size: 14, weight: .semibold))
+                        .font(.pretendard(.semiBold, size: 14))
                         .foregroundColor(.white)
                 }
             })

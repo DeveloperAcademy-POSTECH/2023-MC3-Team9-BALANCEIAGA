@@ -176,7 +176,7 @@ struct ItemDetailView: View {
                     .padding(.leading, 20)
                     
                     Text("기본")
-                        .font(.system(size: 17, weight: .semibold))
+                        .font(.pretendard(.semiBold, size: 17))
                         .padding(.leading, 5)
                         .foregroundColor(Color("Gray900"))
                     
@@ -235,7 +235,7 @@ struct ItemDetailView: View {
                     .padding(.leading, 20)
                     
                     Text("빨리 먹어야 해요")
-                        .font(.system(size: 17, weight: .semibold))
+                        .font(.pretendard(.semiBold, size: 17))
                         .padding(.leading, 5)
                         .foregroundColor(Color("Gray900"))
                     
@@ -293,7 +293,7 @@ struct ItemDetailView: View {
                     .padding(.leading, 20)
                     
                     Text("천천히 먹어도 돼요")
-                        .font(.system(size: 17, weight: .semibold))
+                        .font(.pretendard(.semiBold, size: 17))
                         .padding(.leading, 5)
                         .foregroundColor(Color("Gray900"))
                     

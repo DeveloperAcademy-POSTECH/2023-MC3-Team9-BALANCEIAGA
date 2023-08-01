@@ -117,8 +117,7 @@ struct UpdateItemView: View {
             })
             Spacer()
             Text(titleName)
-                .fontWeight(.bold)
-                .font(.system(size: 17))
+                .font(.pretendard(.bold, size: 17))
             Spacer()
             Button(action: {
                 self.appState.moveToRootView = true
@@ -162,7 +161,7 @@ struct UpdateItemView: View {
                     .frame(height: 60.adjusted)
                 Text(buttonName)
                     .foregroundColor(.white)
-                    .font(.system(size: 17))
+                    .font(.pretendard(.regular, size: 17))
             }
             .padding([.leading, .trailing], 20.adjusted)
             .padding(.bottom, 30.adjusted)
@@ -188,7 +187,7 @@ extension UpdateItemView {
                     viewModel.isDatePickerOpen.toggle()
                 }, label: {
                     Text("\(viewModel.dateString)")
-                        .font(.system(size: 20).bold())
+                        .font(.pretendard(.bold, size: 20))
                 })
                 
                 Button(action: {

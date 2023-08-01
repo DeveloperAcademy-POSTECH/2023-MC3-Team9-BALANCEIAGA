@@ -66,7 +66,7 @@ struct TopAlertBaseView: View {
             .frame(width: 44.adjusted, height: 44.adjusted)
           VStack(alignment: .leading, spacing: 4.adjusted) {
             Text(message)
-              .font(.system(size: 14).bold())
+                  .font(.pretendard(.bold, size: 14))
               .foregroundColor(.black)
           }
         }

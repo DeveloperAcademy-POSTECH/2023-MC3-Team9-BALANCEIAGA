@@ -35,7 +35,7 @@ struct BasicList: View {
             HStack {
                 Text("기본")
                     .foregroundColor(Color("Gray900"))
-                    .font(.system(size: 20).weight(.semibold))
+                    .font(.pretendard(.semiBold, size: 20))
                 
                 Spacer()
                 
@@ -49,7 +49,7 @@ struct BasicList: View {
                     }
                 }
                 .foregroundColor(Color("Gray600"))
-                .font(.system(size: 14))
+                .font(.pretendard(.medium, size: 14))
                 .padding(.trailing, 20)
             }
             .padding([.top, .bottom], 17)
@@ -60,7 +60,7 @@ struct BasicList: View {
             HStack {
                 Text("빨리 먹어야 해요 🕖")
                     .foregroundColor(Color("Gray900"))
-                    .font(.system(size: 20).weight(.semibold))
+                    .font(.pretendard(.semiBold, size: 20))
                 
                 Spacer()
             }
