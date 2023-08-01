@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct UpdateItemView: View {
+struct OCRUpdateItemView: View {
     @Namespace var bottomID
     @Environment(\.dismiss) private var dismiss
     @ObservedObject var viewModel: UpdateItemViewModel
@@ -169,7 +169,7 @@ struct UpdateItemView: View {
     }
 }
 
-extension UpdateItemView {
+extension OCRUpdateItemView {
     struct DateSelectionView: View {
         @ObservedObject var viewModel: UpdateItemViewModel
         
@@ -255,9 +255,9 @@ extension UpdateItemView {
 }
 
 
-struct UpdateItemView_Previews: PreviewProvider {
+struct OCRUpdateItemView_Previews: PreviewProvider {
     @State var testDict = ["상품명":[], "단가":[], "수량":[], "금액":[]]
   static var previews: some View {
-      UpdateItemView(viewModel: UpdateItemViewModel(), titleName: "test", buttonName: "button", gptAnswer: .constant(["test": []]), appState: AppState())
+      OCRUpdateItemView(viewModel: UpdateItemViewModel(), titleName: "test", buttonName: "button", gptAnswer: .constant(["test": []]), appState: AppState())
   }
 }

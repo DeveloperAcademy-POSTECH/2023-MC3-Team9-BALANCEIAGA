@@ -45,13 +45,14 @@ struct CameraView: View {
           flashButton
         }
         .padding([.leading, .trailing, .bottom], 32.adjusted)
-//        selfAddButton
+        selfAddButton
       }
     }
     .navigationBarBackButtonHidden(true)
     .foregroundColor(.white)
     .sheet(isPresented: $viewModel.isImagePickerPresented ,onDismiss: {
-      viewModel.isSelectedShowPreview.toggle()
+        guard let _ = viewModel.selectedImage else { return }
+        viewModel.isSelectedShowPreview.toggle()
     }) {
       ImagePicker(image: $viewModel.selectedImage, isPresented: $viewModel.isImagePickerPresented)
     }
@@ -120,37 +121,34 @@ struct CameraView: View {
     }
     .foregroundColor(.white)
   }
-  
-//  private var selfAddButton: some View {
-//      NavigationLink(destination: UpdateItemView(viewModel: UpdateItemViewModel(), titleName: "직접 추가", buttonName: "다음", appState: appState), isActive: $isDirectInput) {
-//          Button {
-//              print("Clicked")
-//              isDirectInput = true
-//          } label: {
-//              ZStack(alignment: .center) {
-//                  Rectangle()
-//                      .foregroundColor(.clear)
-//                      .frame(height: 60.adjusted)
-//                      .cornerRadius(15)
-//                      .overlay(
-//                        RoundedRectangle(cornerRadius: 15)
-//                            .inset(by: 1)
-//                            .stroke(.white, lineWidth: 2)
-//                      )
-//                  HStack(spacing: 8.adjusted) {
-//                      Image(systemName: "pencil.circle")
-//                          .resizable()
-//                          .frame(width: 19.adjusted, height: 19.adjusted)
-//                      Text("직접 추가하기")
-//                          .font(.system(size: 17))
-//                  }
-//              }
-//              .foregroundColor(.white)
-//          }
-//          .padding(.horizontal, 24.adjusted)
-//          .padding(.bottom, 20.adjusted)
-//      }
-//    }
+    
+    private var selfAddButton: some View {
+        NavigationLink {
+            DirectUpdateItemView(viewModel: UpdateItemViewModel(), titleName: "직접 추가", buttonName: "다음", appState: appState)
+        } label: {
+              ZStack(alignment: .center) {
+                  Rectangle()
+                      .foregroundColor(.clear)
+                      .frame(height: 60.adjusted)
+                      .cornerRadius(15)
+                      .overlay(
+                        RoundedRectangle(cornerRadius: 15)
+                            .inset(by: 1)
+                            .stroke(.white, lineWidth: 2)
+                      )
+                  HStack(spacing: 8.adjusted) {
+                      Image(systemName: "pencil.circle")
+                          .resizable()
+                          .frame(width: 19.adjusted, height: 19.adjusted)
+                      Text("직접 추가하기")
+                          .font(.system(size: 17))
+                  }
+              }
+              .foregroundColor(.white)
+              .padding(.horizontal, 24.adjusted)
+              .padding(.bottom, 20.adjusted)
+        }
+    }
 }
 
 struct CameraPreviewView: UIViewRepresentable {
