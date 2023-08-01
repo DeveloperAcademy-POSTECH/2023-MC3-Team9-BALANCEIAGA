@@ -10,6 +10,11 @@ import SwiftUI
 struct HistoryView: View {
     
     @State var isEatenTab = true
+    @State var isShowingCenterAlertView = false
+    @State var isDeletingItem = false
+    @State var selectedItem: Receipt?
+    
+    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
     
     var body: some View {
         ZStack {
@@ -240,7 +245,6 @@ struct HistoryView: View {
             Button(role: .destructive, action: {
                 selectedItem = item
                 isShowingCenterAlertView = true
-//                coreDataViewModel.deleteReceiptData(target: item)
             }, label: {
                 Text("삭제하기")
                 Image(systemName: "trash.fill")
