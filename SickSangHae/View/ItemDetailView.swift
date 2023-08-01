@@ -7,169 +7,144 @@
 
 import SwiftUI
 
-//enum selected{
-//    case basic
-//    case fastEat
-//    case slowEat
-//    case unselected
-//}
-
 struct ItemDetailView: View {
+    @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    
+    @ObservedObject var topAlertViewModel: TopAlertViewModel
+    
+    @State private var isShowingEditView = false
+    @State private var isShowingTopAlertView = false
+    @State private var isShowingCenterAlertView = false
+    @State private var isDeletingItem = false
+    @State var receipt: Receipt
+    @State var appState: AppState
+    @State var needToEatASAP: Status {
+        didSet {
+            topAlertViewModel.changedStatus = needToEatASAP
+            withAnimation(.easeInOut(duration: 0.5)) {
+                isShowingTopAlertView = true
+            }
+            coreDataViewModel.updateStatus(target: receipt, to: needToEatASAP)
+        }
+    }
+
+    
     var greenBlueGradient = Gradient(colors: [Color("PrimaryG"), Color("PrimaryB")])
     var notSelectedGradient = Gradient(colors: [Color("Gray200"), Color("Gray200")])
     var clearGradient = Gradient(colors: [.clear, .clear])
     
-    @State var appState: AppState
-    
-    @State private var isShowingEditView = false
-    
-    @State var receipt: Receipt
-    
-    @EnvironmentObject var coreDateViewModel: CoreDataViewModel
-    
-    //    @State var needToEatASAP: selected = .unselected
-        @State var needToEatASAP: Status {
-            didSet {
-                coreDateViewModel.updateStatus(target: receipt, to: needToEatASAP)
-            }
-        }
-    
-    init(receipt: Receipt, appState: AppState) {
-        self.receipt = receipt
-        self.needToEatASAP = receipt.currentStatus
-        self.appState = appState
-    }
     
     var body: some View {
-        
-        VStack(spacing: 0) {
-            topNaviBar
-            
-            ScrollView {
+        ZStack {
+            VStack(spacing: 0) {
+                topNaviBar(dismiss: dismiss)
+                
                 itemInfoSection
                 
+                SmallButtonView(receipt: receipt)
+                
+                Rectangle()
+                    .frame(width: screenWidth ,height: 12)
+                    .foregroundColor(Color("Gray100"))
+                    .padding(.top, 10)
+                    .padding(.bottom, 30)
+                
+                
+                
                 VStack(alignment: .leading) {
-                    Text("냉장고 선택하기")
-                        .font(.system(size: 20, weight: .bold))
-                        .font(.title2)
-                        .padding(.bottom, 2)
-                    
-                    Text("식료품의 특징에 맞게 선택해주세요.")
-                        .font(.system(size: 14, weight: .medium))
-                        .foregroundColor(Color("Gray600"))
-                    
-                    Text("일반")
+                    Text("냉장고")
                         .font(.system(size: 17, weight: .bold))
-                        .padding(.top, 20)
                         .padding(.bottom, 5)
                     
-                    bacicRadioButton
+                    radioButtonGroup
+                        .disabled(isShowingTopAlertView)
                     
-                    fastEatRadioButton
-                    
-                    Text("장기 보관")
+                    Text("식료품 정보")
                         .font(.system(size: 17, weight: .bold))
-                        .padding(.top, 20)
-                        .padding(.bottom, 5)
+                        .padding(.vertical, 5)
                     
-                    slowEatRadioButton
-                    
-                    Spacer()
-                    
+                    itemInfoView
                 } //VStack닫기
                 .padding(.horizontal, 20.adjusted)
                 .padding(.bottom, 40)
-            } //ScrollView닫기
-            SmallButtonView(receipt: receipt)
-        } // VStack닫기
+            } // VStack닫기
+            
+            
+            VStack {
+                if isShowingTopAlertView {
+                    itemDetailTopAlertView
+                        .padding(.vertical, 30)
+                }
+                Spacer()
+            }
+            CenterAlertView(titleMessage: "식료품 삭제", bodyMessage: receipt.name, actionButtonMessage: "삭제", isShowingCenterAlertView: $isShowingCenterAlertView, isDeletingItem: $isDeletingItem)
+                .opacity(isShowingCenterAlertView ? 1 : 0)
+                .onChange(of: isDeletingItem) { _ in
+                    if isDeletingItem {
+                        dismiss()
+                        coreDataViewModel.deleteReceiptData(target: receipt)
+                    }
+                }
+                .onAppear {
+
+                }
+                .onDisappear {
+                    isDeletingItem = false
+                }
+        }
+        .navigationBarHidden(true)
     } //body닫기
         
-    var topNaviBar: some View {
+    func topNaviBar(dismiss: DismissAction) -> some View {
         HStack {
             Button {
-                print("clicked")
-                appState.moveToRootView = true
+                dismiss()
             } label: {
                 Image(systemName: "chevron.left")
                     .resizable()
                     .frame(width: 10, height: 18)
             }
+
             Spacer()
-            
-            Text("\(receipt.name)")
-                .bold()
-                .padding(.leading, 15)
-            
-            Spacer()
-            
-            Button(action: {
-                self.isShowingEditView.toggle()
-            }, label: {
-                Text("수정")
-                    .bold()
-                    .foregroundColor(.black)
-            })
+
+            menuButton
             .fullScreenCover(isPresented: $isShowingEditView) {
                 EditItemDetailView(isShowingEditView: $isShowingEditView, iconText: receipt.icon, nameText: receipt.name, dateText: receipt.dateOfPurchase, wonText: "\(receipt.price)", appState: appState, receipt: receipt)
             }
         } //HStack닫기
         .padding(.top, 10)
-        .padding(.horizontal, 20.adjusted)
+        .padding(.horizontal, 20)
     }
         
     var itemInfoSection: some View {
         VStack(spacing: 0) {
-            HStack {
-                VStack(alignment: .leading, spacing: 0) {
-                    
-                    HStack {
-                        Image(receipt.icon)
-                            .resizable()
-                            .foregroundColor(Color("Gray200"))
-                            .frame(width: 80, height: 80)
-                        
-                        Text("\(receipt.name)")
-                            .font(.system(size: 22, weight: .bold))
-                            .padding(.leading, 15)
-                    }
-                    .padding(.vertical, 30)
-                    
-                    Text("구매일")
-                        .font(.system(size: 14, weight: .medium))
-                        .foregroundColor(Color("Gray600"))
-                        .padding(.bottom, 12)
-                    
-                    Text("\(receipt.dateOfPurchase.formattedDate)")
-                        .font(.system(size: 20, weight: .bold))
-                        .padding(.bottom, 30)
-                    
-                    Text("구매금액")
-                        .font(.system(size: 14, weight: .medium))
-                        .foregroundColor(Color("Gray600"))
-                        .padding(.bottom, 12)
-                    
-                    Text("\(Int(receipt.price))원")
-                        .font(.system(size: 20, weight: .bold))
-                        .padding(.bottom, 30)
-                }
-                
-                Spacer()
-            } //HStack닫기
-            .padding(.leading, 20.adjusted)
+            Image(receipt.icon)
+                .resizable()
+                .foregroundColor(Color("Gray200"))
+                .frame(width: 80, height: 80)
+                .padding(.vertical, 30)
             
-            Rectangle()
-                .frame(width: screenWidth ,height: 12)
-                .foregroundColor(Color("Gray100"))
-                .padding(.top, 10)
-                .padding(.bottom, 30)
+            Text("\(receipt.name)")
+                .font(.system(size: 22, weight: .bold))
         }
-        
+    }
+    
+    var radioButtonGroup: some View {
+        Group {
+            bacicRadioButton
+            fastEatRadioButton
+            slowEatRadioButton
+        }
+        .disabled(isShowingTopAlertView)
     }
     
     var bacicRadioButton: some View {
         Button(action: {
-//            needToEatASAP = .basic
             needToEatASAP = .shortTermUnEaten
+//            withAnimation(.easeInOut(duration: 1)) {
+//                isShowingTopAlertView = true
+//            }
         }, label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
@@ -179,14 +154,6 @@ struct ItemDetailView: View {
                 HStack {
                     ZStack {
                         Circle()
-//                            .stroke(
-//                                LinearGradient(
-//                                    gradient: needToEatASAP == .basic ? greenBlueGradient: notSelectedGradient,
-//                                    startPoint: .leading,
-//                                    endPoint: .trailing
-//                                ),
-//                                lineWidth: 2
-//                            )
                             .stroke(
                                 LinearGradient(
                                     gradient: needToEatASAP == .shortTermUnEaten ? greenBlueGradient: notSelectedGradient,
@@ -197,13 +164,6 @@ struct ItemDetailView: View {
                             )
                             .frame(width: 20, height: 20)
                         Circle()
-//                            .fill(
-//                                LinearGradient(
-//                                    gradient: needToEatASAP == .basic ? greenBlueGradient : Gradient(colors: [.clear, .clear]),
-//                                    startPoint: .leading,
-//                                    endPoint: .trailing
-//                                )
-//                            )
                             .fill(
                                 LinearGradient(
                                     gradient: needToEatASAP == .shortTermUnEaten ? greenBlueGradient : Gradient(colors: [.clear, .clear]),
@@ -226,14 +186,6 @@ struct ItemDetailView: View {
         })
         .overlay(
             RoundedRectangle(cornerRadius: 8)
-//                .stroke(
-//                    LinearGradient(
-//                        gradient: needToEatASAP == .basic ? greenBlueGradient : Gradient(colors: [.clear, .clear]),
-//                        startPoint: .leading,
-//                        endPoint: .trailing
-//                    ),
-//                    lineWidth: 2
-//                )
                 .stroke(
                     LinearGradient(
                         gradient: needToEatASAP == .shortTermUnEaten ? greenBlueGradient : Gradient(colors: [.clear, .clear]),
@@ -248,8 +200,10 @@ struct ItemDetailView: View {
     
     var fastEatRadioButton: some View {
         Button(action: {
-//            needToEatASAP = .fastEat
             needToEatASAP = .shortTermPinned
+//            withAnimation(.easeInOut(duration: 1)) {
+//                isShowingTopAlertView = true
+//            }
         }, label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
@@ -259,14 +213,6 @@ struct ItemDetailView: View {
                 HStack {
                     ZStack {
                         Circle()
-//                            .stroke(
-//                                LinearGradient(
-//                                    gradient: needToEatASAP == .fastEat ? greenBlueGradient: notSelectedGradient,
-//                                    startPoint: .leading,
-//                                    endPoint: .trailing
-//                                ),
-//                                lineWidth: 2
-//                            )
                             .stroke(
                                 LinearGradient(
                                     gradient: needToEatASAP == .shortTermPinned ? greenBlueGradient: notSelectedGradient,
@@ -277,13 +223,6 @@ struct ItemDetailView: View {
                             )
                             .frame(width: 20, height: 20)
                         Circle()
-//                            .fill(
-//                                LinearGradient(
-//                                    gradient: needToEatASAP == .fastEat ? greenBlueGradient : Gradient(colors: [.clear, .clear]),
-//                                    startPoint: .leading,
-//                                    endPoint: .trailing
-//                                )
-//                            )
                             .fill(
                                 LinearGradient(
                                     gradient: needToEatASAP == .shortTermPinned ? greenBlueGradient : Gradient(colors: [.clear, .clear]),
@@ -306,14 +245,6 @@ struct ItemDetailView: View {
         })
         .overlay(
             RoundedRectangle(cornerRadius: 8)
-//                .stroke(
-//                    LinearGradient(
-//                        gradient: needToEatASAP == .fastEat ? greenBlueGradient : Gradient(colors: [.clear, .clear]),
-//                        startPoint: .leading,
-//                        endPoint: .trailing
-//                    ),
-//                    lineWidth: 2
-//                )
                 .stroke(
                     LinearGradient(
                         gradient: needToEatASAP == .shortTermPinned ? greenBlueGradient : Gradient(colors: [.clear, .clear]),
@@ -327,8 +258,10 @@ struct ItemDetailView: View {
     
     var slowEatRadioButton: some View {
         Button(action: {
-//            needToEatASAP = .slowEat
             needToEatASAP = .longTermUnEaten
+//            withAnimation(.easeInOut(duration: 1)) {
+//                isShowingTopAlertView = true
+//            }
         }, label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
@@ -338,14 +271,6 @@ struct ItemDetailView: View {
                 HStack {
                     ZStack {
                         Circle()
-//                            .stroke(
-//                                LinearGradient(
-//                                    gradient: needToEatASAP == .slowEat ? greenBlueGradient: notSelectedGradient,
-//                                    startPoint: .leading,
-//                                    endPoint: .trailing
-//                                ),
-//                                lineWidth: 2
-//                            )
                             .stroke(
                                 LinearGradient(
                                     gradient: needToEatASAP == .longTermUnEaten ? greenBlueGradient: notSelectedGradient,
@@ -356,13 +281,6 @@ struct ItemDetailView: View {
                             )
                             .frame(width: 20, height: 20)
                         Circle()
-//                            .fill(
-//                                LinearGradient(
-//                                    gradient: needToEatASAP == .slowEat ? greenBlueGradient : Gradient(colors: [.clear, .clear]),
-//                                    startPoint: .leading,
-//                                    endPoint: .trailing
-//                                )
-//                            )
                             .fill(
                                 LinearGradient(
                                     gradient: needToEatASAP == .longTermUnEaten ? greenBlueGradient : Gradient(colors: [.clear, .clear]),
@@ -385,14 +303,6 @@ struct ItemDetailView: View {
         })
         .overlay(
             RoundedRectangle(cornerRadius: 8)
-//                .stroke(
-//                    LinearGradient(
-//                        gradient: needToEatASAP == .slowEat ? greenBlueGradient : Gradient(colors: [.clear, .clear]),
-//                        startPoint: .leading,
-//                        endPoint: .trailing
-//                    ),
-//                    lineWidth: 2
-//                )
                 .stroke(
                     LinearGradient(
                         gradient: needToEatASAP == .longTermUnEaten ? greenBlueGradient : Gradient(colors: [.clear, .clear]),
@@ -403,11 +313,137 @@ struct ItemDetailView: View {
                 )
         )
     }
+    
+    var menuButton: some View {
+        Menu {
+            Button(action: {
+                isShowingEditView = true
+            }, label: {
+                Text("편집")
+                Image(systemName: "arrow.counterclockwise")
+            })
+            
+            Divider()
+            
+            Button(role: .destructive, action: {
+                isShowingCenterAlertView = true
+//                dismiss()
+//                coreDataViewModel.deleteReceiptData(target: receipt)
+            }, label: {
+                Text("삭제")
+                Image(systemName: "trash.fill")
+            })
+        } label: {
+            Rectangle()
+                .frame(width: 36, height: 36)
+                .foregroundColor(.clear)
+                .overlay(
+                    Image(systemName: "ellipsis")
+                        .resizable()
+                        .foregroundColor(Color("Gray200"))
+                        .frame(width: 21, height: 5)
+                )
+                .padding(.trailing, 20)
+        } //Menu닫기
+    }
+    
+    
+    var itemInfoView: some View {
+        ZStack(alignment: .trailing) {
+                Rectangle()
+                    .foregroundColor(.lightGrayColor)
+                    .cornerRadius(12)
+                
+                VStack(alignment: .leading) {
+                    HStack(spacing: 28) {
+                        Text("품목")
+                            .padding(.leading,20)
+                        
+                        Text(receipt.name)
+                        
+                    }
+                    Divider().foregroundColor(.gray100)
+                    HStack(spacing: 28) {
+                        Text("금액")
+                            .padding(.leading,20)
+                        
+                        Text("\(Int(receipt.price))")
+                        
+                    }
+                    Spacer().frame(height: 10)
+                }
+                .frame(height: 116.adjusted)
+        }
+    }
+    
+    var itemDetailTopAlertView: some View {
+        Group {
+            TopAlertView(viewModel: topAlertViewModel)
+                .transition(.move(edge: .top))
+        }
+        .opacity(isShowingTopAlertView ? 1 : 0)
+//        .animation(.easeInOut(duration: 0.4))
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                withAnimation(.easeInOut(duration: 0.5)) {
+                    isShowingTopAlertView = false
+                }
+            }
+        }
+    }
+}
+
+struct ItemDetailTopAlertView: View {
+    let name: String
+    var body: some View {
+        ItemDetailTopAlertBaseView(iconImage: "img_eat", message: "\(name) 항목이 일반으로 이동됐어요", backgroundColor: .pointRLight, strokeColor: .pointRMiddle)
+    }
+}
+
+struct ItemDetailTopAlertBaseView: View {
+  var iconImage: String
+  var message: String
+  var backgroundColor: Color
+  var strokeColor: Color
+  @GestureState private var dragOffset = CGSize.zero
+  
+
+  var body: some View {
+      ZStack(alignment: .leading) {
+        RoundedRectangle(cornerRadius: 41.adjusted)
+          .stroke(strokeColor, lineWidth: 1)
+          .background(backgroundColor)
+          .background(.ultraThickMaterial)
+          .frame(height: 68.adjusted)
+          .clipShape(RoundedRectangle(cornerRadius: 41.adjusted))
+          .opacity(0.8)
+        HStack(spacing: 10.adjusted) {
+          Image(iconImage)
+            .resizable()
+            .scaledToFill()
+            .frame(width: 44.adjusted, height: 44.adjusted)
+          VStack(alignment: .leading, spacing: 4.adjusted) {
+            Text(message)
+              .font(.system(size: 14).bold())
+              .foregroundColor(.black)
+          }
+        }
+        .padding(.leading, 14.adjusted)
+      }
+      .padding([.leading, .trailing], 20.adjusted)
+  }
+}
+
+extension ItemDetailTopAlertView: Hashable {
+    func hash(into hasher: inout Hasher) {
+        
+    }
 }
         
 struct ItemDetailView_Previews: PreviewProvider {
     static let coreDataViewModel = CoreDataViewModel()
     static var previews: some View {
-        ItemDetailView(receipt: Receipt(context: coreDataViewModel.viewContext), appState: AppState())
+        ItemDetailView(topAlertViewModel: TopAlertViewModel(name: "파채", changedStatus: .shortTermPinned), receipt: Receipt(context: coreDataViewModel.viewContext), appState: AppState(), needToEatASAP: .shortTermUnEaten)
+            .environmentObject(coreDataViewModel)
     }
 }

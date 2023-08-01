@@ -101,7 +101,9 @@ extension CoreDataViewModel {
 
     }
     
-    func deleteReceiptData(target: Receipt) {
+    @MainActor
+    func deleteReceiptData(target: Receipt?) {
+        guard let target = target else { return }
         viewContext.delete(by: target)
         getAllReceiptData()
     }
@@ -156,6 +158,7 @@ extension CoreDataViewModel {
         receipt.name = name
         receipt.dateOfPurchase = dateOfPurchase
         receipt.price = Double(price) ?? 0.0
+        
         
         saveChanges()
         getAllReceiptData()

@@ -9,12 +9,16 @@ import SwiftUI
 
 struct HistoryView: View {
     
-    @State var isMovingSegmentedTab = true
-    
+    @Environment(\.dismiss) var dismiss
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
     
+    @State var isMovingSegmentedTab = true
+    @State private var selectedItem: Receipt?
+    @State private var isShowingCenterAlertView = false
+    @State private var isDeletingItem = false
+    
     var body: some View {
-        NavigationStack {
+        ZStack {
             VStack(spacing: 0) {
                 //버튼 및 타이틀
                 Spacer()
@@ -40,15 +44,20 @@ struct HistoryView: View {
                     
                     listSection
                     
-//                    listSection
-                    
                 } //ScrollView닫기
                 .listStyle(.plain)
                 
             } //VStack닫기
             
-        } //NavigationStack닫기
-        
+            CenterAlertView(titleMessage: "식료품 삭제", bodyMessage: selectedItem?.name ?? "알수없음", actionButtonMessage: "삭제", isShowingCenterAlertView: $isShowingCenterAlertView, isDeletingItem: $isDeletingItem)
+                .opacity(isShowingCenterAlertView ? 1 : 0)
+                .onChange(of: isDeletingItem) { _ in
+                    if isDeletingItem {
+                        coreDataViewModel.deleteReceiptData(target: selectedItem)
+                        isDeletingItem = false
+                    }
+                }
+        }
     } //body닫기
     
     var segmentedTabButton: some View {
@@ -165,43 +174,7 @@ struct HistoryView: View {
                     
                     Spacer()
                     
-                    Menu {
-                        Button(action: {
-                            //아이템 상태 복구 로직
-                            coreDataViewModel.recoverPreviousStatus(target: item)
-                        }, label: {
-                            Text("복구하기")
-                            Image(systemName: "arrow.counterclockwise")
-                        })
-                        
-                        Button(action: {
-                            //아이템 상태 변경 로직
-                            isMovingSegmentedTab ? coreDataViewModel.updateStatus(target: item, to: .Spoiled) : coreDataViewModel.updateStatus(target: item, to: .Eaten)
-                        }, label: {
-                            Text(isMovingSegmentedTab ? "상했어요" : "먹었어요")
-                            Image(systemName: "arrow.triangle.2.circlepath")
-                        })
-                        
-                        Divider()
-                        
-                        Button(role: .destructive, action: {
-                            coreDataViewModel.deleteReceiptData(target: item)
-                        }, label: {
-                            Text("삭제하기")
-                            Image(systemName: "trash.fill")
-                        })
-                    } label: {
-                        Rectangle()
-                            .frame(width: 36, height: 36)
-                            .foregroundColor(.clear)
-                            .overlay(
-                                Image(systemName: "ellipsis")
-                                    .resizable()
-                                    .foregroundColor(Color("Gray200"))
-                                    .frame(width: 21, height: 5)
-                            )
-                            .padding(.trailing, 20)
-                    } //Menu닫기
+                    menuButtons(item: item)
                     
                 } //HStack닫기
                 .padding(.top, 12)
@@ -216,6 +189,41 @@ struct HistoryView: View {
         } //ForEach닫기
         
     } //itemList닫기
+    
+    
+    func menuButtons(item: Receipt) -> some View {
+        Menu {
+            Button(action: {
+                //아이템 상태 복구 로직
+                coreDataViewModel.recoverPreviousStatus(target: item)
+            }, label: {
+                Text("복구하기")
+                Image(systemName: "arrow.counterclockwise")
+            })
+            
+            Divider()
+            
+            Button(role: .destructive, action: {
+                selectedItem = item
+                isShowingCenterAlertView = true
+//                coreDataViewModel.deleteReceiptData(target: item)
+            }, label: {
+                Text("삭제하기")
+                Image(systemName: "trash.fill")
+            })
+        } label: {
+            Rectangle()
+                .frame(width: 36, height: 36)
+                .foregroundColor(.clear)
+                .overlay(
+                    Image(systemName: "ellipsis")
+                        .resizable()
+                        .foregroundColor(Color("Gray200"))
+                        .frame(width: 21, height: 5)
+                )
+                .padding(.trailing, 20)
+        } //Menu닫기
+    }
     
 } //struct닫기
 
