@@ -77,24 +77,24 @@ struct OCRUpdateItemView: View {
                     }
                 }
                 
-                if viewModel.isShowTopAlertView {
-                    Group {
-                        TopAlertView(viewModel: TopAlertViewModel(name: "파채", currentCase: .delete))
-                            .transition(.move(edge: .top))
-                    }
-                    .opacity(viewModel.isShowTopAlertView ? 1 : 0)
-                    .animation(.easeInOut(duration: 0.4))
-                    .onAppear {
-                        withAnimation(.easeInOut(duration: 1)) {
-                            viewModel.isShowTopAlertView = true
-                        }
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                            withAnimation(.easeInOut(duration: 1)) {
-                                viewModel.isShowTopAlertView = false
-                            }
-                        }
-                    }
-                }
+//                if viewModel.isShowTopAlertView {
+//                    Group {
+//                        TopAlertView(viewModel: TopAlertViewModel(name: "파채", currentCase: .delete))
+//                            .transition(.move(edge: .top))
+//                    }
+//                    .opacity(viewModel.isShowTopAlertView ? 1 : 0)
+//                    .animation(.easeInOut(duration: 0.4))
+//                    .onAppear {
+//                        withAnimation(.easeInOut(duration: 1)) {
+//                            viewModel.isShowTopAlertView = true
+//                        }
+//                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+//                            withAnimation(.easeInOut(duration: 1)) {
+//                                viewModel.isShowTopAlertView = false
+//                            }
+//                        }
+//                    }
+//                }
             }
             .onAppear {
                 for i in 0..<gptAnswer["상품명"]!.count {
@@ -117,8 +117,7 @@ struct OCRUpdateItemView: View {
             })
             Spacer()
             Text(titleName)
-                .fontWeight(.bold)
-                .font(.system(size: 17))
+                .font(.pretendard(.bold, size: 17))
             Spacer()
             Button(action: {
                 self.appState.moveToRootView = true
@@ -162,7 +161,7 @@ struct OCRUpdateItemView: View {
                     .frame(height: 60.adjusted)
                 Text(buttonName)
                     .foregroundColor(.white)
-                    .font(.system(size: 17))
+                    .font(.pretendard(.regular, size: 17))
             }
             .padding([.leading, .trailing], 20.adjusted)
             .padding(.bottom, 30.adjusted)
@@ -188,7 +187,7 @@ extension OCRUpdateItemView {
                     viewModel.isDatePickerOpen.toggle()
                 }, label: {
                     Text("\(viewModel.dateString)")
-                        .font(.system(size: 20).bold())
+                        .font(.pretendard(.bold, size: 20))
                 })
                 
                 Button(action: {

@@ -31,7 +31,7 @@ struct ItemBlockView: View {
                             .padding(.bottom, 4)
                         
                         Text("삭제")
-                            .font(.system(size: 14, weight: .semibold))
+                            .font(.pretendard(.semiBold, size: 14))
                     }
                     .frame(width: 90.adjusted, height: 116.adjusted)
                 }
@@ -79,7 +79,7 @@ struct ItemBlockView: View {
                     
                     if !itemBlockViewModel.areBothTextFieldsNotEmpty {
                         Text("\(viewModel.showTextfieldStatus)을 입력하세요.")
-                            .font(.system(size: 14))
+                            .font(.pretendard(.regular, size: 14))
                             .foregroundColor(.pointR)
                             .padding(.leading, 20.adjusted)
                     }

@@ -36,7 +36,7 @@ struct MainView: View {
                     selectedTopTabBar = .basic
                 } label: {
                     Text("일반 보관")
-                        .font(.system(size: 28, weight: .bold))
+                        .font(.pretendard(.bold, size: 28))
                         .foregroundColor(selectedTopTabBar == .basic ? Color("PrimaryGB") : Color("Gray200"))
                 }
 
@@ -47,7 +47,7 @@ struct MainView: View {
                     selectedTopTabBar = .longterm
                 } label: {
                     Text("장기 보관")
-                        .font(.system(size: 28).weight(.bold))
+                        .font(.pretendard(.bold, size: 28))
                         .foregroundColor(selectedTopTabBar == .longterm ? Color("PrimaryGB") : Color("Gray200"))
                 }
             }

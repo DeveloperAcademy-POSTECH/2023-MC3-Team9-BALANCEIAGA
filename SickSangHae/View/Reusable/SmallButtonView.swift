@@ -11,16 +11,14 @@ struct SmallButtonView: View {
     
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
     let receipt: Receipt
-    
+    @Environment(\.dismiss) var dismiss
     var body: some View {
         ZStack {
             VStack(spacing: 0){
-                Divider()
-                    .foregroundColor(Color("Gray100"))
-                    .frame(width: 390.adjusted, height: 1.adjusted)
                 HStack {
                     Button {
                         coreDataViewModel.updateStatus(target: receipt, to: .Eaten)
+                        dismiss()
                     } label: {
                         ZStack {
                             Rectangle()
@@ -34,6 +32,7 @@ struct SmallButtonView: View {
                     Spacer()
                     Button {
                         coreDataViewModel.updateStatus(target: receipt, to: .Spoiled)
+                        dismiss()
                     } label: {
                         ZStack {
                             Rectangle()
