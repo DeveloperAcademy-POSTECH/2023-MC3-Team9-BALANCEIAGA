@@ -37,11 +37,6 @@ struct ItemDetailView: View {
     
     var body: some View {
         ZStack {
-            VStack {
-                topNaviBar(dismiss: dismiss)
-                Spacer()
-            }
-            
             VStack(spacing: 0) {
                 ScrollView {
                     itemInfoSection
@@ -75,6 +70,11 @@ struct ItemDetailView: View {
                 }
             } // VStack닫기
             .padding(.top, 40)
+            
+            VStack {
+                topNaviBar(dismiss: dismiss)
+                Spacer()
+            }
                 
                 
                 VStack {
@@ -119,13 +119,13 @@ struct ItemDetailView: View {
             }
 
             Spacer()
+//                .background(.clear)
 
             menuButton
             .fullScreenCover(isPresented: $isShowingEditView) {
                 EditItemDetailView(isShowingEditView: $isShowingEditView, iconText: receipt.icon, nameText: receipt.name, dateText: receipt.dateOfPurchase, wonText: "\(receipt.price)", appState: appState, receipt: receipt)
             }
         } //HStack닫기
-        .background(.clear)
         .padding(.top, 30)
         .padding(.horizontal, 20)
     }
