@@ -47,16 +47,17 @@ struct HistoryView: View {
                 } //ScrollView닫기
                 .listStyle(.plain)
                 
+
             } //VStack닫기
             
-            CenterAlertView(titleMessage: "식료품 삭제", bodyMessage: selectedItem?.name ?? "알수없음", actionButtonMessage: "삭제", isShowingCenterAlertView: $isShowingCenterAlertView, isDeletingItem: $isDeletingItem)
+        CenterAlertView(titleMessage: "식료품 삭제", bodyMessage: selectedItem?.name ?? "알수없음", actionButtonMessage: "삭제", isShowingCenterAlertView: $isShowingCenterAlertView, isDeletingItem: $isDeletingItem)
                 .opacity(isShowingCenterAlertView ? 1 : 0)
-                .onChange(of: isDeletingItem) { _ in
-                    if isDeletingItem {
-                        coreDataViewModel.deleteReceiptData(target: selectedItem)
-                        isDeletingItem = false
-                    }
+            .onChange(of: isDeletingItem) { _ in
+                if isDeletingItem {
+                    coreDataViewModel.deleteReceiptData(target: selectedItem)
+                    isDeletingItem = false
                 }
+            }
         }
     } //body닫기
     
@@ -186,36 +187,7 @@ struct HistoryView: View {
                     
                     Spacer()
                     
-                    Menu {
-                        Button(action: {
-                            //아이템 상태 복구 로직
-                            coreDataViewModel.recoverPreviousStatus(target: item)
-                        }, label: {
-                            Text("복구하기")
-                            Image(systemName: "arrow.counterclockwise")
-                        })
-
-                        Divider()
-
-                        Button(role: .destructive, action: {
-                            coreDataViewModel.deleteReceiptData(target: item)
-                        }, label: {
-                            Text("삭제하기")
-                            Image(systemName: "trash.fill")
-                        })
-                    } label: {
-                        Rectangle()
-                            .frame(width: 36, height: 36)
-                            .foregroundColor(.clear)
-                            .overlay(
-                                Image(systemName: "ellipsis")
-                                    .resizable()
-                                    .foregroundColor(Color("Gray200"))
-                                    .frame(width: 21, height: 5)
-                            )
-                            .padding(.trailing, 20)
-                    }//Menu닫기
-                    .padding(.top, 12)
+                    menuButtons(item: item)
 
                     Divider()
                         .overlay(Color("Gray100"))
@@ -244,7 +216,9 @@ struct HistoryView: View {
             
             Button(role: .destructive, action: {
                 selectedItem = item
-                isShowingCenterAlertView = true
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    isShowingCenterAlertView = true
+                }
             }, label: {
                 Text("삭제하기")
                 Image(systemName: "trash.fill")

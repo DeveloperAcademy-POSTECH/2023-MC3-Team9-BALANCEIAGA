@@ -101,9 +101,15 @@ struct ItemDetailView: View {
             Button {
                 dismiss()
             } label: {
-                Image(systemName: "chevron.left")
-                    .resizable()
-                    .frame(width: 10, height: 18)
+                ZStack {
+                    Rectangle()
+                        .fill(.clear)
+                        .frame(width: 36, height: 36)
+                    Image(systemName: "chevron.left")
+                        .resizable()
+                        .frame(width: 10, height: 18)
+                        .foregroundColor(Color.gray600)
+                }
             }
 
             Spacer()
@@ -113,7 +119,7 @@ struct ItemDetailView: View {
                 EditItemDetailView(isShowingEditView: $isShowingEditView, iconText: receipt.icon, nameText: receipt.name, dateText: receipt.dateOfPurchase, wonText: "\(receipt.price)", appState: appState, receipt: receipt)
             }
         } //HStack닫기
-        .padding(.top, 10)
+        .padding(.top, 30)
         .padding(.horizontal, 20)
     }
         
@@ -142,9 +148,6 @@ struct ItemDetailView: View {
     var bacicRadioButton: some View {
         Button(action: {
             needToEatASAP = .shortTermUnEaten
-//            withAnimation(.easeInOut(duration: 1)) {
-//                isShowingTopAlertView = true
-//            }
         }, label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
@@ -201,9 +204,6 @@ struct ItemDetailView: View {
     var fastEatRadioButton: some View {
         Button(action: {
             needToEatASAP = .shortTermPinned
-//            withAnimation(.easeInOut(duration: 1)) {
-//                isShowingTopAlertView = true
-//            }
         }, label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
@@ -259,9 +259,6 @@ struct ItemDetailView: View {
     var slowEatRadioButton: some View {
         Button(action: {
             needToEatASAP = .longTermUnEaten
-//            withAnimation(.easeInOut(duration: 1)) {
-//                isShowingTopAlertView = true
-//            }
         }, label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
@@ -320,15 +317,15 @@ struct ItemDetailView: View {
                 isShowingEditView = true
             }, label: {
                 Text("편집")
-                Image(systemName: "arrow.counterclockwise")
+                Image(systemName: "pencil")
             })
-            
+
             Divider()
-            
+
             Button(role: .destructive, action: {
-                isShowingCenterAlertView = true
-//                dismiss()
-//                coreDataViewModel.deleteReceiptData(target: receipt)
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    isShowingCenterAlertView = true
+                }
             }, label: {
                 Text("삭제")
                 Image(systemName: "trash.fill")
@@ -340,10 +337,9 @@ struct ItemDetailView: View {
                 .overlay(
                     Image(systemName: "ellipsis")
                         .resizable()
-                        .foregroundColor(Color("Gray200"))
+                        .foregroundColor(Color.gray600)
                         .frame(width: 21, height: 5)
                 )
-                .padding(.trailing, 20)
         } //Menu닫기
     }
     
@@ -385,9 +381,9 @@ struct ItemDetailView: View {
 //        .animation(.easeInOut(duration: 0.4))
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                withAnimation(.easeInOut(duration: 0.5)) {
+//                withAnimation(.easeInOut(duration: 0.5)) {
                     isShowingTopAlertView = false
-                }
+//                }
             }
         }
     }

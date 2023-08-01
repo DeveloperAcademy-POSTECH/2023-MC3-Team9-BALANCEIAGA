@@ -91,18 +91,16 @@ private struct ListContent: View {
     
     var body: some View {
         ForEach(listContentViewModel.itemList, id:\.self) { item in
-            ZStack {
+            VStack {
                 listCell(item: item)
-                    .onAppear {
-                        print(listContentViewModel.itemList.count)
-                    }
+                
+                
+                Divider()
+                    .overlay(Color("Gray100"))
+                    .opacity(item == listContentViewModel.itemList.last ? 0 : 1)
+                    .padding(.leading, 20)
+                
             }
-            
-            
-            Divider()
-                .overlay(Color("Gray100"))
-                .opacity(item == listContentViewModel.itemList.last ? 0 : 1)
-                .padding(.leading, 20)
         }
     }
     
