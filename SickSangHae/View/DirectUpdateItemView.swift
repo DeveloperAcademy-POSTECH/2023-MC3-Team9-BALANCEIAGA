@@ -1,105 +1,84 @@
 //
-//  UpdateItemView.swift
+//  DirectUpdateItemView.swift
 //  SickSangHae
 //
-//  Created by CHANG JIN LEE on 2023/07/17.
+//  Created by user on 2023/07/30.
 //
 
 import SwiftUI
 
-struct UpdateItemView: View {
+struct DirectUpdateItemView: View {
     @Namespace var bottomID
     @Environment(\.dismiss) private var dismiss
     @ObservedObject var viewModel: UpdateItemViewModel
     @State var titleName: String
     @State var buttonName: String
-    let appState: AppState
+    @State private var isItemCheckView = false
+    @State var appState: AppState
     
     var body: some View {
-        ZStack(alignment: .top) {
-            Color.white
-                .ignoresSafeArea(.all)
-            VStack {
-                topBar
-                Spacer().frame(height: 36.adjusted)
-                DateSelectionView(viewModel: viewModel)
-                Spacer().frame(height: 30.adjusted)
-                ZStack(alignment: .top) {
-                    VStack {
-                        ScrollViewReader { proxy in
-                            ScrollView(.vertical) {
-                                VStack {
-                                    ForEach(viewModel.itemBlockViewModels, id: \.self) { item in
-                                        ItemBlockView(viewModel: viewModel, itemBlockViewModel: item)
-                                        .gesture(
-                                            DragGesture()
-                                                .onChanged({ value in
-                                                    withAnimation {
-                                                        if value.translation.width < 0 {
-                                                            item.offset = value.translation.width
-                                                        }
-                                                    }
-                                                })
-                                                .onEnded({ value in
-                                                    withAnimation {
-                                                        if value.translation.width < -90 {
-                                                            item.offset = -100
-                                                        } else {
-                                                            item.offset = 0
-                                                        }
-                                                    }
-                                                })
-                                        )
-                                    }
-                                    .onChange(of: viewModel.itemBlockViewModels) { _ in
-                                        withAnimation {
-                                            proxy.scrollTo(bottomID, anchor: .bottom)
+            ZStack(alignment: .top) {
+                Color.white
+                    .ignoresSafeArea(.all)
+                VStack {
+                    topBar
+                    Spacer().frame(height: 36.adjusted)
+                    DateSelectionView(viewModel: viewModel)
+                    Spacer().frame(height: 30.adjusted)
+                    ZStack(alignment: .top) {
+                        VStack {
+                            ScrollViewReader { proxy in
+                                ScrollView(.vertical) {
+                                    VStack {
+                                        ForEach(viewModel.itemBlockViewModels, id: \.self) { item in
+                                            ItemBlockView(viewModel: viewModel, itemBlockViewModel: item)
+                                                .gesture(
+                                                    DragGesture()
+                                                        .onChanged({ value in
+                                                            withAnimation {
+                                                                if value.translation.width < 0 {
+                                                                    item.offset = value.translation.width
+                                                                }
+                                                            }
+                                                        })
+                                                        .onEnded({ value in
+                                                            withAnimation {
+                                                                if value.translation.width < -90 {
+                                                                    item.offset = -100
+                                                                } else {
+                                                                    item.offset = 0
+                                                                }
+                                                            }
+                                                        })
+                                                )
                                         }
-                                    }
-                                    addItemButton
-                                        .onTapGesture {
+                                        .onChange(of: viewModel.itemBlockViewModels) { _ in
                                             withAnimation {
-                                                addItemBlockView()
+                                                proxy.scrollTo(bottomID, anchor: .bottom)
                                             }
                                         }
-                                        .id(bottomID)
+                                        addItemButton
+                                            .onTapGesture {
+                                                withAnimation {
+                                                    addItemBlockView()
+                                                }
+                                            }
+                                            .id(bottomID)
+                                    }
                                 }
                             }
+                            Spacer()
+                            nextButton
                         }
-                        Spacer()
-                        nextButton
-                            .onTapGesture {
-                                registerItemBlockViews()
-                            }
-                    }
-                    if viewModel.isDatePickerOpen {
-                        DatePickerView(viewModel: viewModel)
-                    }
-                }
-            }
-            
-            if viewModel.isShowTopAlertView {
-                Group {
-                    TopAlertView(viewModel: TopAlertViewModel(name: "파채", currentCase: .delete))
-                        .transition(.move(edge: .top))
-                }
-                .opacity(viewModel.isShowTopAlertView ? 1 : 0)
-                .animation(.easeInOut(duration: 0.4))
-                .onAppear {
-                    withAnimation(.easeInOut(duration: 1)) {
-                        viewModel.isShowTopAlertView = true
-                    }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                        withAnimation(.easeInOut(duration: 1)) {
-                            viewModel.isShowTopAlertView = false
+                        if viewModel.isDatePickerOpen {
+                            DatePickerView(viewModel: viewModel)
                         }
                     }
                 }
             }
-        }
-        .onTapGesture {
-            self.endTextEditing()
-        }
+            .onTapGesture {
+                self.endTextEditing()
+            }
         .navigationBarBackButtonHidden(true)
     }
     
@@ -146,24 +125,28 @@ struct UpdateItemView: View {
     }
     
     private var nextButton: some View {
-        Button(action: {
-            viewModel.isShowTextfieldWarning = !viewModel.areBothTextFieldsNotEmpty
-        }, label: {
+        NavigationLink {
+//            viewModel.isShowTextfieldWarning = !viewModel.areBothTextFieldsNotEmpty
+//            registerItemBlockViews()
+            DirectItemCheckView(viewModel: viewModel, appState: appState)
+        } label: {
             ZStack{
                 Rectangle()
+                    .background(Color("PrimaryGB"))
                     .cornerRadius(12)
                     .frame(height: 60.adjusted)
+                    
                 Text(buttonName)
                     .foregroundColor(.white)
                     .font(.system(size: 17))
             }
-            .padding([.leading, .trailing], 20.adjusted)
+            .padding(.horizontal, 20.adjusted)
             .padding(.bottom, 30.adjusted)
-        })
+        }
     }
 }
 
-extension UpdateItemView {
+extension DirectUpdateItemView {
     struct DateSelectionView: View {
         @ObservedObject var viewModel: UpdateItemViewModel
         
@@ -233,15 +216,13 @@ extension UpdateItemView {
     }
     
     func registerItemBlockViews() {
-        for i in 0..<viewModel.itemBlockViewModels.count {
-            // TODO: CoreData 연결
-        }
+        
     }
 }
 
 
-struct UpdateItemView_Previews: PreviewProvider {
+struct DirectUpdateItemView_Previews: PreviewProvider {
   static var previews: some View {
-      UpdateItemView(viewModel: UpdateItemViewModel(), titleName: "test", buttonName: "button", appState: AppState())
+      DirectUpdateItemView(viewModel: UpdateItemViewModel(), titleName: "직접추가", buttonName: "다음", appState: AppState())
   }
 }

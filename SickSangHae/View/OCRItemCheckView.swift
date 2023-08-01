@@ -7,14 +7,17 @@
 
 import SwiftUI
 
-struct ItemCheckView: View {
+struct OCRItemCheckView: View {
     
-    var items = ["a", "b", "c", "d"]
     @Binding var gptAnswer: Dictionary<String, [Any]>
     // TODO: 나중에 뷰 연결할때는 @Binding으로 바꾸어야할 듯합니다.
     var isOCR = true
     @ObservedObject var viewModel = UpdateItemViewModel()
     @State var appState: AppState
+    @State private var isRegisterCompleteView = false
+    @State private var isShowingUpdateItemView = false
+    
+    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
     
     var body: some View {
         NavigationStack {
@@ -43,7 +46,7 @@ struct ItemCheckView: View {
                     
                     HStack {
                         Text("아래 식료품을 등록할게요")
-                            .fontWeight(.bold)
+                            .font(.pretendard(.semiBold, size: 22))
                             .padding(34)
                     }
                     
@@ -54,7 +57,7 @@ struct ItemCheckView: View {
                     }
                     
                     Spacer()
-                    NavigationLink(destination: RegisterCompleteView(appState: appState), label: {
+                    NavigationLink(destination: RegisterCompleteView(appState: appState) ,label: {
                         ZStack {
                             Rectangle()
                                 .frame(width: 350, height: 60)
@@ -67,35 +70,43 @@ struct ItemCheckView: View {
                             }
                         }
                         .padding(.bottom, 30)
+                        .onTapGesture {
+                            registerItemsToCoreData()
+                        }
                     })
                 }
             }
             .navigationBarBackButtonHidden(true)
+            .fullScreenCover(isPresented: $isShowingUpdateItemView) {
+                OCRUpdateItemView(viewModel: UpdateItemViewModel(),titleName: "수정", buttonName: "수정 완료",gptAnswer: $gptAnswer, appState: appState)
+            }
         }
     }
     private var ListTitle: some View {
         HStack{
             Text(viewModel.dateString)
                 .foregroundColor(Color("Gray900"))
-                .font(.system(size: 20.adjusted).weight(.bold))
-            
+                .font(.pretendard(.bold, size: 20.adjusted))
+
             Spacer()
             
             switch isOCR{
             case true:
-                NavigationLink(destination: UpdateItemView(viewModel: UpdateItemViewModel(),titleName: "수정", buttonName: "수정 완료", appState: appState), label: {
-                ZStack{
-                    RoundedRectangle(cornerRadius: 5)
-                        .foregroundColor(Color("Gray100"))
-                    
-                    Text("수정")
-                        .foregroundColor(Color("Gray600"))
-                        .font(.system(size: 14.adjusted))
+                Button {
+                    isShowingUpdateItemView = true
+                } label: {
+                    ZStack{
+                        RoundedRectangle(cornerRadius: 5)
+                            .foregroundColor(Color("Gray100"))
+                        
+                        Text("수정")
+                            .foregroundColor(Color("Gray600"))
+                            .font(.pretendard(.regular, size: 14.adjusted))
+                    }
+                    .frame(width: 45, height: 25)
+                    .foregroundColor(Color("Gray600"))
+                    .padding(.trailing, 20.adjusted)
                 }
-                .frame(width: 45, height: 25)
-                .foregroundColor(Color("Gray600"))
-                .padding(.trailing, 20.adjusted)
-                })
             default:
                 EmptyView()
             }
@@ -141,17 +152,23 @@ struct ItemCheckView: View {
         return HStack{
             Text(listTraling)
                 .foregroundColor(Color(listColor))
-                .font(.system(size: 17.adjusted).weight(.semibold))
+                .font(.pretendard(.semiBold, size: 17.adjusted))
             
             Spacer()
             
             Text(listLeading)
                 .foregroundColor(Color(listColor))
-                .font(.system(size: 14.adjusted).weight(.semibold))
+                .font(.pretendard(.semiBold, size: 14.adjusted))
         }
         .padding([.top, .bottom], 8.adjusted)
     }
     
+    
+    func registerItemsToCoreData() {
+        for i in 0..<gptAnswer["상품명"]!.count {
+            coreDataViewModel.createReceiptData(name: gptAnswer["상품명"]![i] as! String, price: Double(gptAnswer["금액"]![i] as! Int))
+        }
+    }
 }
 
 //struct ItemCheckView_Previews: PreviewProvider {

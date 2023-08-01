@@ -18,7 +18,7 @@ struct RegisterCompleteView: View {
                 .frame(width: 140)
                 .foregroundColor(Color("Gray100"))
             Text("등록이 완료되었어요")
-                .font(.system(size: 18).weight(.semibold))
+                .font(.pretendard(.semiBold, size: 18))
 
             Spacer()
 

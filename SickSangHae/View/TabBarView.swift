@@ -43,6 +43,7 @@ struct TabBarView: View {
             }
             .ignoresSafeArea(.keyboard)
         }
+        .environmentObject(coreDataViewModel)
     }
 }
 
@@ -83,7 +84,7 @@ struct CustomTabView: View {
                       HStack {
                         Image(systemName: "camera.viewfinder")
                         Text("영수증 스캔하기")
-                          .font(.system(size: 17, weight: .semibold))
+                              .font(.pretendard(.semiBold, size: 17))
                       }
                       .foregroundColor(.white)
                     }
@@ -150,7 +151,7 @@ struct CustomTabView: View {
                             .frame(height: 4)
                         
                         Text(title)
-                            .font(.system(size: 11, weight: .medium))
+                            .font(.pretendard(.medium, size: 11))
                     }
                     .foregroundColor(selectedTab == selectedTabType ? Color("PrimaryGB") : Color("Gray200"))
                 }

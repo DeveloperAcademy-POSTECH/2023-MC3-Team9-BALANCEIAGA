@@ -9,8 +9,11 @@ import SwiftUI
 
 struct ChartView: View {
     @State private var selectedDate = Date()
-    @State private var wholeCost = 123102
-    @State private var eatenCost = 43200
+    @State private var wholeCost: Double = 1
+    @State private var eatenCost: Double = 1
+    @State private var slices = [(2.0, Color("PrimaryGB")), (1.0, Color("Gray200"))]
+
+    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
 
     private let dateFormatter: DateFormatter = {
             let formatter = DateFormatter()
@@ -22,13 +25,13 @@ struct ChartView: View {
     let data = ["Apple", "Banana", "Orange"]
 
     var body: some View {
-
+        
         Spacer()
             .frame(height: 32.adjusted)
 
         HStack(alignment: .top){
             Text("식통계")
-                .font(.system(size: 28.adjusted).weight(.bold))
+                .font(.pretendard(.bold, size: 28.adjusted))
                 .foregroundColor( Color("PrimaryGB"))
 
             Spacer()
@@ -53,7 +56,7 @@ struct ChartView: View {
                     }
 
                     Text("\(dateFormatter.string(from: selectedDate))월")
-                        .font(.system(size: 22.adjusted).weight(.bold))
+                        .font(.pretendard(.bold, size: 22.adjusted))
                         .foregroundColor(Color("Gray900"))
                         .padding(.horizontal, 12.adjusted)
 
@@ -71,39 +74,106 @@ struct ChartView: View {
                 Spacer()
                     .frame(height: 41.adjusted)
 
-                Pie(slices: [
-                    (7, Color("PrimaryGB")),
-                    (3, Color("Gray200"))
-                ])
+                Pie
                 .frame(width: 200.adjusted)
 
                 summaryList
                     .padding(.horizontal, 20.adjusted)
                     .padding(.vertical, 38.adjusted)
 
-                Group{
-                    Rectangle()
-                        .foregroundColor(.clear)
-                        .frame(width: screenWidth, height: 12.adjusted)
-                        .background(Color("Gray100"))
+                // MARK: 디자인에서 이 부분 변경 사항이 있으면 주석을 해제하고 작업 할 것.
+//                Group{
+//                    Rectangle()
+//                        .foregroundColor(.clear)
+//                        .frame(width: screenWidth, height: 12.adjusted)
+//                        .background(Color("Gray100"))
+//
+//                    ListTitle(title: "잘 먹은 BEST3")
+//                    ListContents(data: data)
+//
+//                    ListTitle(title: "못 먹은 WORST3")
+//                    ListContents(data: data)
+//                }
+            }
+            .onChange(of: selectedDate){ newDate in
+                calculateCosts(for: newDate)
+            }
+        }
+    }
 
-                    ListTitle(title: "잘 먹은 BEST3")
-                    ListContents(data: data)
+    private var Pie : some View {
+            Canvas { context, size in
+                let donut = Path { p in
+                    let donutSize = CGSize(width: size.width * 0.3, height: size.height * 0.3) // Reduce the size by 0.8
+                                p.addEllipse(in: CGRect(origin: .zero, size: size))
+                                p.addEllipse(in: CGRect(x: (size.width - donutSize.width) / 2,
+                                                        y: (size.height - donutSize.height) / 2,
+                                                        width: donutSize.width, height: donutSize.height))
+                }
+                context.clip(to: donut, style: .init(eoFill: true))
 
-                    ListTitle(title: "못 먹은 WORST3")
-                    ListContents(data: data)
+                let total = slices.reduce(0) { $0 + $1.0 }
+                context.translateBy(x: size.width * 0.5, y: size.height * 0.5)
+                var pieContext = context
+                pieContext.rotate(by: .degrees(-90))
+                let radius = min(size.width, size.height) * 0.48
+                var startAngle = Angle.zero
+                for (value, color) in slices {
+                    let angle = Angle(degrees: 360 * (value / total))
+                    let endAngle = startAngle + angle
+
+
+                    let path = Path { p in
+                        p.move(to: .zero)
+                        p.addArc(center: .zero, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: false)
+                        p.closeSubpath()
+                    }
+                    pieContext.fill(path, with: .color(color))
+
+                    startAngle = endAngle
                 }
 
             }
+            .onChange(of: selectedDate){ _ in
+                calculateCosts(for: selectedDate)
+            }
+            .onAppear(){
+                calculateCosts(for: selectedDate)
+            }
+            .aspectRatio(1, contentMode: .fit)
         }
 
+    private func calculateCosts(for date: Date) {
+        let month = dateFormatter.string(from: date)
+        var newWholeCost: Double = 0
+        var newEatenCost: Double = 0
+
+        for item in coreDataViewModel.receipts {
+            if month == dateFormatter.string(from: item.dateOfPurchase) {
+                newWholeCost += item.price
+                if item.currentStatus == .Eaten {
+                    newEatenCost += item.price
+                }
+            }
+        }
+
+        wholeCost = newWholeCost
+        eatenCost = newEatenCost
+        if wholeCost == 0, eatenCost == 0{
+            slices = [(0, Color("PrimaryGB")),
+                      (1, Color("Gray200"))]
+        }
+        else{
+            slices = [((wholeCost - eatenCost) / wholeCost, Color("PrimaryGB")),
+                      (1 - (wholeCost - eatenCost) / wholeCost, Color("Gray200"))]
+        }
     }
 
     private func ListTitle(title: String) -> some View{
         HStack {
             Text(title)
                 .foregroundColor(Color("Gray900"))
-                .font(.system(size: 20.adjusted).weight(.semibold))
+                .font(.pretendard(.semiBold, size: 20.adjusted))
 
             Spacer()
         }
@@ -128,14 +198,14 @@ struct ChartView: View {
                         .frame(width: 12.adjusted)
 
                     Text(item)
-                        .font(.system(size: 17.adjusted).weight(.semibold))
+                        .font(.pretendard(.semiBold, size: 17.adjusted))
                         .foregroundColor(Color("Gray900"))
 
                     Spacer()
 
                     Text("x회")
                         .foregroundColor(Color("Gray900"))
-                        .font(.system(size: 14.adjusted).weight(.semibold))
+                        .font(.pretendard(.semiBold, size: 14.adjusted))
                         .padding(.trailing, 20.adjusted)
                 }
                 .padding([.top, .bottom], 8.adjusted)
@@ -153,29 +223,29 @@ struct ChartView: View {
         VStack(spacing: 15.adjusted){
             HStack{
                 Text("전체")
-                    .font(.system(size: 14).weight(.medium))
+                    .font(.pretendard(.medium, size: 14))
                     .foregroundColor(Color("Gray900"))
                 Spacer()
-                Text("\(wholeCost)원")
-                    .font(.system(size: 22).weight(.bold))
+                Text("\(Int(wholeCost))원")
+                    .font(.pretendard(.bold, size: 22))
                     .foregroundColor(Color("Gray900"))
             }
             HStack{
                 Text("잘 먹은 금액")
-                    .font(.system(size: 14).weight(.medium))
+                    .font(.pretendard(.medium, size: 14))
                     .foregroundColor(Color("Gray900"))
                 Spacer()
-                Text("\(eatenCost)원")
-                    .font(.system(size: 22).weight(.bold))
+                Text("\(Int(eatenCost))원")
+                    .font(.pretendard(.bold, size: 22))
                     .foregroundColor(Color("Gray900"))
             }
             HStack{
                 Text("낭비된 금액")
-                    .font(.system(size: 14).weight(.medium))
+                    .font(.pretendard(.medium, size: 14))
                     .foregroundColor(Color("Gray900"))
                 Spacer()
-                Text("\(wholeCost - eatenCost)원")
-                    .font(.system(size: 22).weight(.bold))
+                Text("\(Int(wholeCost - eatenCost))원")
+                    .font(.pretendard(.bold, size: 22))
                     .foregroundColor(Color("PrimaryGB"))
             }
         }
@@ -187,48 +257,6 @@ struct ChartView: View {
        }
 }
 
-struct Pie: View {
-
-    @State var slices: [(Double, Color)]
-
-    var body: some View {
-        Canvas { context, size in
-            let donut = Path { p in
-                let donutSize = CGSize(width: size.width * 0.3, height: size.height * 0.3) // Reduce the size by 0.8
-                            p.addEllipse(in: CGRect(origin: .zero, size: size))
-                            p.addEllipse(in: CGRect(x: (size.width - donutSize.width) / 2,
-                                                    y: (size.height - donutSize.height) / 2,
-                                                    width: donutSize.width, height: donutSize.height))
-            }
-            context.clip(to: donut, style: .init(eoFill: true))
-
-            let total = slices.reduce(0) { $0 + $1.0 }
-            context.translateBy(x: size.width * 0.5, y: size.height * 0.5)
-            var pieContext = context
-            pieContext.rotate(by: .degrees(-90))
-            let radius = min(size.width, size.height) * 0.48
-            var startAngle = Angle.zero
-            for (value, color) in slices {
-                let angle = Angle(degrees: 360 * (value / total))
-                let endAngle = startAngle + angle
-
-
-                let path = Path { p in
-                    p.move(to: .zero)
-                    p.addArc(center: .zero, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: false)
-                    p.closeSubpath()
-                }
-                pieContext.fill(path, with: .color(color))
-
-                startAngle = endAngle
-            }
-
-        }
-        .aspectRatio(1, contentMode: .fit)
-    }
-}
-
-
 private struct BasicListTitle: View {
 
     let title: String
@@ -237,7 +265,7 @@ private struct BasicListTitle: View {
         HStack {
             Text(title)
                 .foregroundColor(Color("Gray900"))
-                .font(.system(size: 20.adjusted).weight(.semibold))
+                .font(.pretendard(.semiBold, size: 20.adjusted))
 
             Spacer()
 
@@ -251,7 +279,7 @@ private struct BasicListTitle: View {
                 }
             }
             .foregroundColor(Color("Gray600"))
-            .font(.system(size: 14.adjusted))
+            .font(.pretendard(.regular, size: 14.adjusted))
             .padding(.trailing, 20.adjusted)
         }
         .padding([.top, .bottom], 17.adjusted)
