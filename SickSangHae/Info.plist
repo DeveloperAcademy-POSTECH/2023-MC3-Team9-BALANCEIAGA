@@ -2,10 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CHAT_GPT_TOKEN</key>
-	<string>$(CHAT_GPT_TOKEN)</string>
 	<key>CHAT_GPT_ORGANIZATIONIDENTIFIER</key>
 	<string>$(CHAT_GPT_ORGANIZATIONIDENTIFIER)</string>
+	<key>CHAT_GPT_TOKEN</key>
+	<string>$(CHAT_GPT_TOKEN)</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Pretendard-Bold.otf</string>

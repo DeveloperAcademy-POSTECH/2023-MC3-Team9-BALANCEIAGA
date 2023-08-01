@@ -19,7 +19,7 @@ enum Tab: CaseIterable {
             case .mainView: MainView()
             case .chartView: ChartView()
             case .historyView: HistoryView()
-            case .settingView: SettingVIew()
+            case .settingView: SettingView()
             }
         }
 }
