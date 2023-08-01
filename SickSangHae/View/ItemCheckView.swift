@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct ItemCheckView: View {
-    
-    var items = ["a", "b", "c", "d"]
     @Binding var gptAnswer: Dictionary<String, [Any]>
     // TODO: 나중에 뷰 연결할때는 @Binding으로 바꾸어야할 듯합니다.
     var isOCR = true

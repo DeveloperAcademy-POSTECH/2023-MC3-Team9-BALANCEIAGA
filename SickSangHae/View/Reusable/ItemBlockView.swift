@@ -24,7 +24,6 @@ struct ItemBlockView: View {
                 Spacer()
                 Button {
                     deleteItem()
-//                    viewModel.deleteItemBlock(itemBlockViewModel: itemBlockViewModel)
                 } label: {
                     VStack {
                         Image(systemName: "trash.fill")
@@ -57,7 +56,6 @@ struct ItemBlockView: View {
                         Spacer()
                         Button {
                             deleteItem()
-//                            viewModel.deleteItemBlock(itemBlockViewModel: itemBlockViewModel)
                         } label: {
                             Image(systemName: "xmark.circle")
                         }

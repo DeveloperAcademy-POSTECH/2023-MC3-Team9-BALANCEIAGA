@@ -11,8 +11,6 @@ enum topTabBar{
     case basic
     case longterm
 }
-// Dummy Data
-let data = ["Apple", "Banana", "Orange", "Pineapple", "Grapes", "Watermelon", "Mango", "Papaya", "Cherry"]
 
 struct MainView: View {
 
