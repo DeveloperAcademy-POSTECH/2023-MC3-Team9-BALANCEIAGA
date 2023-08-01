@@ -65,12 +65,6 @@ Array(zip(listContentViewModel.itemList.indices, listContentViewModel.itemList.r
                      id:\.self) { item in
                 listCell(item: item)
             }
-            
-            
-            Button("Add") {
-                listContentViewModel.offsets.append(0.0)
-                coreDataViewModel.createTestReceiptData(status: listContentViewModel.status)
-            }
         }
     }
     
@@ -119,12 +113,3 @@ Array(zip(listContentViewModel.itemList.indices, listContentViewModel.itemList.r
         }
     }
 }
-
-
-//struct LongTermList_Previews: PreviewProvider {
-//    static let coreDataViewModel = CoreDataViewModel()
-//    static var previews: some View {
-//        LongTermList()
-//            .environmentObject(coreDataViewModel)
-//    }
-//}

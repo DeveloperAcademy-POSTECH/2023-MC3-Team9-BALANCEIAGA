@@ -24,16 +24,36 @@ class CoreDataViewModel: ObservableObject {
         return receipts.filter{ $0.currentStatus == .longTermUnEaten}
     }
     
-    var eatenList: [Receipt] {
-        return receipts
-            .filter{ $0.currentStatus == .Eaten }
-            .sorted{ $0.dateOfHistory > $1.dateOfHistory }
+    var eatenDictionary: [String : [Receipt]] {
+        let eatenList: [Receipt] = receipts.filter { $0.currentStatus == .Eaten }
+        var dateGroupDictionary: [String : [Receipt]] = [String : [Receipt]]()
+        
+        
+        eatenList.forEach { item in
+            let updatedDate = item.dateOfHistory.formattedDate
+            if let _ = dateGroupDictionary[updatedDate] {
+                dateGroupDictionary[updatedDate]!.append(item)
+            } else {
+                dateGroupDictionary[updatedDate] = [item]
+            }
+        }
+        return dateGroupDictionary
     }
     
-    var spoiledList: [Receipt] {
-        return receipts
-            .filter{ $0.currentStatus == .Spoiled }
-            .sorted{ $0.dateOfHistory > $1.dateOfHistory }
+    var spoiledDictionary: [String : [Receipt]] {
+        let spoiledList: [Receipt] = receipts.filter { $0.currentStatus == .Spoiled }
+        var dateGroupDictionary: [String : [Receipt]] = [String : [Receipt]]()
+        
+        
+        spoiledList.forEach { item in
+            let updatedDate = item.dateOfHistory.formattedDate
+            if let _ = dateGroupDictionary[updatedDate] {
+                dateGroupDictionary[updatedDate]!.append(item)
+            } else {
+                dateGroupDictionary[updatedDate] = [item]
+            }
+        }
+        return dateGroupDictionary
     }
     
     init() {

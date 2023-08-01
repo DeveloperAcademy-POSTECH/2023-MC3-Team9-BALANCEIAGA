@@ -18,11 +18,6 @@ class TopAlertViewModel: ObservableObject {
     self.name = name
     self.changedStatus = changedStatus
   }
-    
-//    init(name: String, currentCase: TopAlertViewCase) {
-//      self.name = name
-//      self.currentCase = currentCase
-//    }
   
   func hideAlert() {
     withAnimation {

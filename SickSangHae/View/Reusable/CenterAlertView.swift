@@ -20,8 +20,15 @@ struct CenterAlertView: View {
     
     var body: some View {
         ZStack {
-            Color.black.opacity(0.4)
+            Color.white
                 .edgesIgnoringSafeArea(.all)
+                .opacity(0.01)
+            
+            Rectangle()
+                .fill(Color.gray400)
+                .frame(width: 300, height: 170)
+                .blur(radius: 25)
+            
             centerAlert
         }
     } //body닫기
@@ -33,7 +40,6 @@ struct CenterAlertView: View {
             .frame(width: 300, height: 170)
             .background(.white)
             .clipShape(RoundedRectangle(cornerRadius: 12))
-            .opacity(0.6)
             .overlay(
                 VStack {
                     centerAlertText
