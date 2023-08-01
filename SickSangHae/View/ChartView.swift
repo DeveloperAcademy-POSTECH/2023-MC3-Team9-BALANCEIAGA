@@ -10,19 +10,11 @@ import SwiftUI
 struct ChartView: View {
     @State private var selectedDate = Date()
     @State private var wholeCost: Double = 1
+    @State private var spoiledCost: Double = 1
     @State private var eatenCost: Double = 1
     @State private var slices = [(2.0, Color("PrimaryGB")), (1.0, Color("Gray200"))]
 
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
-
-    private let dateFormatter: DateFormatter = {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "M" // Format to display month and year
-            return formatter
-        }()
-
-    let itemList: [Receipt] = []
-    let data = ["Apple", "Banana", "Orange"]
 
     var body: some View {
         
@@ -55,19 +47,19 @@ struct ChartView: View {
                             .foregroundColor(.gray900)
                     }
 
-                    Text("\(dateFormatter.string(from: selectedDate))월")
+                    Text("\(selectedDate.formattedMonth)월")
                         .font(.pretendard(.bold, size: 22.adjusted))
                         .foregroundColor(Color("Gray900"))
                         .padding(.horizontal, 12.adjusted)
 
                     Button(action: {
                         // Go to the next month
-                        if( dateFormatter.string(from: selectedDate) != getCurrentMonth()){
+                        if( selectedDate.formattedMonth != getCurrentMonth()){
                             selectedDate = Calendar.current.date(byAdding: .month, value: 1, to: selectedDate) ?? selectedDate
                         }
                     }) {
                         Image(systemName: "chevron.right")
-                            .foregroundColor(dateFormatter.string(from: selectedDate) == getCurrentMonth() ? Color("Gray200") : Color("Gray900") )
+                            .foregroundColor(selectedDate.formattedMonth == getCurrentMonth() ? Color("Gray200") : Color("Gray900") )
                     }
                 }
 
@@ -136,36 +128,57 @@ struct ChartView: View {
             }
             .onChange(of: selectedDate){ _ in
                 calculateCosts(for: selectedDate)
+                print(eatenCost, spoiledCost, wholeCost)
             }
             .onAppear(){
                 calculateCosts(for: selectedDate)
+                print(eatenCost, spoiledCost, wholeCost)
             }
             .aspectRatio(1, contentMode: .fit)
         }
 
     private func calculateCosts(for date: Date) {
-        let month = dateFormatter.string(from: date)
+        let month = date.formattedMonth
         var newWholeCost: Double = 0
+        var newSpoiledCost: Double = 0
         var newEatenCost: Double = 0
 
         for item in coreDataViewModel.receipts {
-            if month == dateFormatter.string(from: item.dateOfPurchase) {
+            let newWholeMonth = item.dateOfPurchase.formattedMonth
+            if newWholeMonth == month{
                 newWholeCost += item.price
-                if item.currentStatus == .Eaten {
-                    newEatenCost += item.price
+            }
+        }
+
+        for item in coreDataViewModel.eatenDictionary {
+            let eatenMonth = Date().extractMonthNumber(from: item.key) ?? "0"
+            if eatenMonth == month{
+                for k in item.value{
+                    newSpoiledCost += k.price
                 }
             }
         }
 
-        wholeCost = newWholeCost
+        for item in coreDataViewModel.spoiledDictionary {
+            let eatenMonth = Date().extractMonthNumber(from: item.key) ?? "0"
+            if eatenMonth == month{
+                for k in item.value{
+                    newEatenCost += k.price
+                }
+            }
+        }
+
+        spoiledCost = newSpoiledCost
         eatenCost = newEatenCost
-        if wholeCost == 0, eatenCost == 0{
+        wholeCost = newWholeCost
+
+        if spoiledCost == 0, eatenCost == 0{
             slices = [(0, Color("PrimaryGB")),
                       (1, Color("Gray200"))]
         }
         else{
-            slices = [((wholeCost - eatenCost) / wholeCost, Color("PrimaryGB")),
-                      (1 - (wholeCost - eatenCost) / wholeCost, Color("Gray200"))]
+            slices = [(spoiledCost, Color("PrimaryGB")),
+                      (wholeCost - spoiledCost, Color("Gray200"))]
         }
     }
 
@@ -244,7 +257,7 @@ struct ChartView: View {
                     .font(.pretendard(.medium, size: 14))
                     .foregroundColor(Color("Gray900"))
                 Spacer()
-                Text("\(Int(wholeCost - eatenCost))원")
+                Text("\(Int(spoiledCost))원")
                     .font(.pretendard(.bold, size: 22))
                     .foregroundColor(Color("PrimaryGB"))
             }
