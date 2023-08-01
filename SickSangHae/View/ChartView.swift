@@ -128,11 +128,9 @@ struct ChartView: View {
             }
             .onChange(of: selectedDate){ _ in
                 calculateCosts(for: selectedDate)
-                print(eatenCost, spoiledCost, wholeCost)
             }
             .onAppear(){
                 calculateCosts(for: selectedDate)
-                print(eatenCost, spoiledCost, wholeCost)
             }
             .aspectRatio(1, contentMode: .fit)
         }
@@ -154,7 +152,7 @@ struct ChartView: View {
             let eatenMonth = Date().extractMonthNumber(from: item.key) ?? "0"
             if eatenMonth == month{
                 for k in item.value{
-                    newSpoiledCost += k.price
+                    newEatenCost += k.price
                 }
             }
         }
@@ -163,7 +161,7 @@ struct ChartView: View {
             let eatenMonth = Date().extractMonthNumber(from: item.key) ?? "0"
             if eatenMonth == month{
                 for k in item.value{
-                    newEatenCost += k.price
+                    newSpoiledCost += k.price
                 }
             }
         }
