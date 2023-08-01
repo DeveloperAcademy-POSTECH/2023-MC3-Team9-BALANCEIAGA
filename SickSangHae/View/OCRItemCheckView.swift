@@ -57,7 +57,17 @@ struct OCRItemCheckView: View {
                     }
                     
                     Spacer()
-                    NavigationLink(destination: RegisterCompleteView(appState: appState) ,label: {
+                    
+                    NavigationLink(isActive: $isRegisterCompleteView) {
+                        RegisterCompleteView(appState: appState)
+                    } label: {
+                        EmptyView()
+                    }
+                    
+                    Button {
+                        registerItemsToCoreData()
+                        isRegisterCompleteView = true
+                    } label: {
                         ZStack {
                             Rectangle()
                                 .frame(width: 350, height: 60)
@@ -70,10 +80,7 @@ struct OCRItemCheckView: View {
                             }
                         }
                         .padding(.bottom, 30)
-                        .onTapGesture {
-                            registerItemsToCoreData()
-                        }
-                    })
+                    }
                 }
             }
             .navigationBarBackButtonHidden(true)
