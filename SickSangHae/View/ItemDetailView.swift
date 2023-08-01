@@ -125,6 +125,7 @@ struct ItemDetailView: View {
                 EditItemDetailView(isShowingEditView: $isShowingEditView, iconText: receipt.icon, nameText: receipt.name, dateText: receipt.dateOfPurchase, wonText: "\(receipt.price)", appState: appState, receipt: receipt)
             }
         } //HStack닫기
+        .background(.clear)
         .padding(.top, 30)
         .padding(.horizontal, 20)
     }
@@ -140,6 +141,7 @@ struct ItemDetailView: View {
             Text("\(receipt.name)")
                 .font(.system(size: 22, weight: .bold))
         }
+        .padding(.horizontal, 20.adjusted)
     }
     
     var radioButtonGroup: some View {
