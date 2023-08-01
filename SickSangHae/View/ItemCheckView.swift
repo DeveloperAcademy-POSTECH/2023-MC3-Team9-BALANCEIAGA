@@ -47,7 +47,7 @@ struct ItemCheckView: View {
                     
                     HStack {
                         Text("아래 식료품을 등록할게요")
-                            .fontWeight(.bold)
+                            .font(.pretendard(.semiBold, size: 22))
                             .padding(34)
                     }
                     
@@ -87,8 +87,8 @@ struct ItemCheckView: View {
         HStack{
             Text(viewModel.dateString)
                 .foregroundColor(Color("Gray900"))
-                .font(.system(size: 20.adjusted).weight(.bold))
-            
+                .font(.pretendard(.bold, size: 20.adjusted))
+
             Spacer()
             
             switch isOCR{
@@ -102,7 +102,7 @@ struct ItemCheckView: View {
                         
                         Text("수정")
                             .foregroundColor(Color("Gray600"))
-                            .font(.system(size: 14.adjusted))
+                            .font(.pretendard(.regular, size: 14.adjusted))
                     }
                     .frame(width: 45, height: 25)
                     .foregroundColor(Color("Gray600"))
@@ -153,13 +153,13 @@ struct ItemCheckView: View {
         return HStack{
             Text(listTraling)
                 .foregroundColor(Color(listColor))
-                .font(.system(size: 17.adjusted).weight(.semibold))
+                .font(.pretendard(.semiBold, size: 17.adjusted))
             
             Spacer()
             
             Text(listLeading)
                 .foregroundColor(Color(listColor))
-                .font(.system(size: 14.adjusted).weight(.semibold))
+                .font(.pretendard(.semiBold, size: 14.adjusted))
         }
         .padding([.top, .bottom], 8.adjusted)
     }

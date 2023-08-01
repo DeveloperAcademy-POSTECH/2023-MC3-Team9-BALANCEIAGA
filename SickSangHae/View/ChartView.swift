@@ -31,7 +31,7 @@ struct ChartView: View {
 
         HStack(alignment: .top){
             Text("식통계")
-                .font(.system(size: 28.adjusted).weight(.bold))
+                .font(.pretendard(.bold, size: 28.adjusted))
                 .foregroundColor( Color("PrimaryGB"))
 
             Spacer()
@@ -56,7 +56,7 @@ struct ChartView: View {
                     }
 
                     Text("\(dateFormatter.string(from: selectedDate))월")
-                        .font(.system(size: 22.adjusted).weight(.bold))
+                        .font(.pretendard(.bold, size: 22.adjusted))
                         .foregroundColor(Color("Gray900"))
                         .padding(.horizontal, 12.adjusted)
 
@@ -173,7 +173,7 @@ struct ChartView: View {
         HStack {
             Text(title)
                 .foregroundColor(Color("Gray900"))
-                .font(.system(size: 20.adjusted).weight(.semibold))
+                .font(.pretendard(.semiBold, size: 20.adjusted))
 
             Spacer()
         }
@@ -198,14 +198,14 @@ struct ChartView: View {
                         .frame(width: 12.adjusted)
 
                     Text(item)
-                        .font(.system(size: 17.adjusted).weight(.semibold))
+                        .font(.pretendard(.semiBold, size: 17.adjusted))
                         .foregroundColor(Color("Gray900"))
 
                     Spacer()
 
                     Text("x회")
                         .foregroundColor(Color("Gray900"))
-                        .font(.system(size: 14.adjusted).weight(.semibold))
+                        .font(.pretendard(.semiBold, size: 14.adjusted))
                         .padding(.trailing, 20.adjusted)
                 }
                 .padding([.top, .bottom], 8.adjusted)
@@ -223,29 +223,29 @@ struct ChartView: View {
         VStack(spacing: 15.adjusted){
             HStack{
                 Text("전체")
-                    .font(.system(size: 14).weight(.medium))
+                    .font(.pretendard(.medium, size: 14))
                     .foregroundColor(Color("Gray900"))
                 Spacer()
                 Text("\(Int(wholeCost))원")
-                    .font(.system(size: 22).weight(.bold))
+                    .font(.pretendard(.bold, size: 22))
                     .foregroundColor(Color("Gray900"))
             }
             HStack{
                 Text("잘 먹은 금액")
-                    .font(.system(size: 14).weight(.medium))
+                    .font(.pretendard(.medium, size: 14))
                     .foregroundColor(Color("Gray900"))
                 Spacer()
                 Text("\(Int(eatenCost))원")
-                    .font(.system(size: 22).weight(.bold))
+                    .font(.pretendard(.bold, size: 22))
                     .foregroundColor(Color("Gray900"))
             }
             HStack{
                 Text("낭비된 금액")
-                    .font(.system(size: 14).weight(.medium))
+                    .font(.pretendard(.medium, size: 14))
                     .foregroundColor(Color("Gray900"))
                 Spacer()
                 Text("\(Int(wholeCost - eatenCost))원")
-                    .font(.system(size: 22).weight(.bold))
+                    .font(.pretendard(.bold, size: 22))
                     .foregroundColor(Color("PrimaryGB"))
             }
         }
@@ -265,7 +265,7 @@ private struct BasicListTitle: View {
         HStack {
             Text(title)
                 .foregroundColor(Color("Gray900"))
-                .font(.system(size: 20.adjusted).weight(.semibold))
+                .font(.pretendard(.semiBold, size: 20.adjusted))
 
             Spacer()
 
@@ -279,7 +279,7 @@ private struct BasicListTitle: View {
                 }
             }
             .foregroundColor(Color("Gray600"))
-            .font(.system(size: 14.adjusted))
+            .font(.pretendard(.regular, size: 14.adjusted))
             .padding(.trailing, 20.adjusted)
         }
         .padding([.top, .bottom], 17.adjusted)

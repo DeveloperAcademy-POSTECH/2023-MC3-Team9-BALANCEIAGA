@@ -32,7 +32,7 @@ struct EditItemDetailView: View {
                 
                 
             }
-            deleteButton
+            
         }
         .padding(.horizontal, 20.adjusted)
         .ignoresSafeArea(.keyboard)
@@ -43,8 +43,6 @@ struct EditItemDetailView: View {
     
     var topNaviBar: some View {
         ZStack {
-            Text("수정")
-                .bold()
             HStack {
                 Button(action: {
                     self.isShowingEditView.toggle()
@@ -100,27 +98,6 @@ struct EditItemDetailView: View {
         .padding(.vertical, 20.adjusted)
     }
     
-    var deleteButton: some View {
-        Button(action: {
-            moveToRootViewAndDelete {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    coreDateViewModel.deleteReceiptData(target: receipt)
-                }
-            }
-        }, label: {
-            ZStack {
-                Rectangle()
-                    .cornerRadius(8)
-                    .frame(height: 60)
-                    .foregroundColor(Color("Gray100"))
-                Text("항목 삭제")
-                    .bold()
-                    .foregroundColor(.red)
-            }
-            .padding(.bottom, 20.adjusted)
-        })
-    }
-    
     
     func moveToRootViewAndDelete(completion: () -> ()) {
         isShowingEditView = false
@@ -153,7 +130,7 @@ struct InfoEditField: View {
     var nameField: some View {
         VStack(alignment: .leading) {
             Text("품목명")
-                .font(.system(size: 14, weight: .medium))
+                .font(.pretendard(.medium, size: 14))
                 .foregroundColor(Color("Gray600"))
             
             ZStack(alignment: .leading) {
@@ -199,7 +176,7 @@ struct InfoEditField: View {
     var dateField: some View {
         VStack(alignment: .leading) {
             Text("구매일")
-                .font(.system(size: 14, weight: .medium))
+                .font(.pretendard(.medium, size: 14))
                 .foregroundColor(Color("Gray600"))
             
             ZStack(alignment: .leading) {
@@ -236,7 +213,7 @@ struct InfoEditField: View {
     var wonField: some View {
         VStack(alignment: .leading) {
             Text("구매금액")
-                .font(.system(size: 14, weight: .medium))
+                .font(.pretendard(.medium, size: 14))
                 .foregroundColor(Color("Gray600"))
             
             ZStack(alignment: .leading) {

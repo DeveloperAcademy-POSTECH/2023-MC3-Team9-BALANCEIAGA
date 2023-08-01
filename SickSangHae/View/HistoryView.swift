@@ -11,10 +11,8 @@ struct HistoryView: View {
     
     @State var isEatenTab = true
     
-    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
-    
     var body: some View {
-        NavigationStack {
+        ZStack {
             VStack(spacing: 0) {
                 //버튼 및 타이틀
                 Spacer()
@@ -22,7 +20,7 @@ struct HistoryView: View {
                 
                 HStack {
                     Text("보관함")
-                        .font(.system(size: 28, weight: .bold))
+                        .font(.pretendard(.bold, size: 28))
                         .foregroundColor(Color("PrimaryGB"))
                         .padding(.horizontal, 20)
                     Spacer()
@@ -46,8 +44,15 @@ struct HistoryView: View {
                 
             } //VStack닫기
             
-        } //NavigationStack닫기
-        
+            CenterAlertView(titleMessage: "식료품 삭제", bodyMessage: selectedItem?.name ?? "알수없음", actionButtonMessage: "삭제", isShowingCenterAlertView: $isShowingCenterAlertView, isDeletingItem: $isDeletingItem)
+                .opacity(isShowingCenterAlertView ? 1 : 0)
+                .onChange(of: isDeletingItem) { _ in
+                    if isDeletingItem {
+                        coreDataViewModel.deleteReceiptData(target: selectedItem)
+                        isDeletingItem = false
+                    }
+                }
+        }
     } //body닫기
     
     var segmentedTabButton: some View {
@@ -59,7 +64,7 @@ struct HistoryView: View {
                     isEatenTab = true
                 }, label: {
                     Text("먹었어요😋")
-                        .font(.system(size: 20, weight: .bold))
+                        .font(.pretendard(.bold, size: 20))
                         .foregroundColor(Color("Gray900"))
                 }) //Button닫기
                 
@@ -80,7 +85,7 @@ struct HistoryView: View {
                     isEatenTab = false
                 }, label: {
                     Text("상했어요🤢")
-                        .font(.system(size: 20, weight: .bold))
+                        .font(.pretendard(.bold, size: 20))
                         .foregroundColor(Color("Gray900"))
                 }) //Button닫기
                 
@@ -101,7 +106,7 @@ struct HistoryView: View {
                 .frame(height: 24)
             
             Text("아래의 항목들은 이곳에서 90일 동안 보관됩니다. 각 항목들은 90일이 지나면 영구적으로 삭제됩니다.")
-                .font(.system(size: 14))
+                .font(.pretendard(.regular, size: 14))
                 .foregroundColor(Color("Gray600"))
             
         } //VStack닫기
@@ -141,7 +146,7 @@ struct HistoryView: View {
         HStack {
             Text(key)
                 .foregroundColor(Color("Gray900"))
-                .font(.system(size: 20).weight(.semibold))
+                .font(.pretendard(.semiBold, size: 20))
             
             Spacer()
             
@@ -171,7 +176,7 @@ struct HistoryView: View {
                         .frame(width: 12)
                     
                     Text(item.name)
-                        .font(.system(size: 17).weight(.semibold))
+                        .font(.pretendard(.semiBold, size: 17))
                         .foregroundColor(Color("Gray900"))
                     
                     Spacer()
@@ -218,6 +223,41 @@ struct HistoryView: View {
         )
 
     } //itemList닫기
+    
+    
+    func menuButtons(item: Receipt) -> some View {
+        Menu {
+            Button(action: {
+                //아이템 상태 복구 로직
+                coreDataViewModel.recoverPreviousStatus(target: item)
+            }, label: {
+                Text("복구하기")
+                Image(systemName: "arrow.counterclockwise")
+            })
+            
+            Divider()
+            
+            Button(role: .destructive, action: {
+                selectedItem = item
+                isShowingCenterAlertView = true
+//                coreDataViewModel.deleteReceiptData(target: item)
+            }, label: {
+                Text("삭제하기")
+                Image(systemName: "trash.fill")
+            })
+        } label: {
+            Rectangle()
+                .frame(width: 36, height: 36)
+                .foregroundColor(.clear)
+                .overlay(
+                    Image(systemName: "ellipsis")
+                        .resizable()
+                        .foregroundColor(Color("Gray200"))
+                        .frame(width: 21, height: 5)
+                )
+                .padding(.trailing, 20)
+        } //Menu닫기
+    }
     
 } //struct닫기
 

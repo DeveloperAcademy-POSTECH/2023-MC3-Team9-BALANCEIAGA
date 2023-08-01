@@ -86,7 +86,7 @@ struct OCRView: View {
                 VStack {
                     Spacer()
                     Text("영수증 인식완료!")
-                        .font(.system(size: 22).bold())
+                        .font(.pretendard(.bold, size: 22))
                         .padding(.bottom, 80.adjusted)
                         .foregroundColor(Color.accentColor)
 
