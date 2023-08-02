@@ -38,7 +38,9 @@ struct ItemDetailView: View {
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
+                topNaviBar(dismiss: dismiss)
                 ScrollView {
+                    
                     itemInfoSection
                     
                     SmallButtonView(receipt: receipt)
@@ -69,10 +71,12 @@ struct ItemDetailView: View {
                     .padding(.bottom, 40)
                 }
             } // VStack닫기
-            .padding(.top, 40)
             
             VStack {
-                topNaviBar(dismiss: dismiss)
+                if isShowingTopAlertView {
+                    itemDetailTopAlertView
+                        .padding(.vertical, 30)
+                }
                 Spacer()
             }
 
@@ -89,7 +93,6 @@ struct ItemDetailView: View {
                     }
                     Spacer()
                 }
-
                 .onDisappear {
                     isDeletingItem = false
                 }
@@ -121,7 +124,7 @@ struct ItemDetailView: View {
                 EditItemDetailView(isShowingEditView: $isShowingEditView, iconText: receipt.icon, nameText: receipt.name, dateText: receipt.dateOfPurchase, wonText: "\(Int(receipt.price))", appState: appState, receipt: receipt)
             }
         } //HStack닫기
-        .padding(.top, 30)
+        .padding(.top, 10)
         .padding(.horizontal, 20)
     }
         
@@ -383,9 +386,7 @@ struct ItemDetailView: View {
         .opacity(isShowingTopAlertView ? 1 : 0)
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                withAnimation(.easeInOut(duration: 0.5)) {
                     isShowingTopAlertView = false
-                }
             }
         }
     }
