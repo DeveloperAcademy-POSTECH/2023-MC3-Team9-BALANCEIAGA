@@ -78,7 +78,7 @@ struct OCRItemCheckView: View {
             }
             .navigationBarBackButtonHidden(true)
             .fullScreenCover(isPresented: $isShowingUpdateItemView) {
-                OCRUpdateItemView(viewModel: UpdateItemViewModel(),titleName: "수정", buttonName: "수정 완료",gptAnswer: $gptAnswer, appState: appState)
+                OCRUpdateItemView(viewModel: UpdateItemViewModel(),gptAnswer: $gptAnswer, appState: appState)
             }
         }
     }
