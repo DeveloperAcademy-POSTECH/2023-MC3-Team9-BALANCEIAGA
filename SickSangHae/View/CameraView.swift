@@ -124,7 +124,7 @@ struct CameraView: View {
     
     private var selfAddButton: some View {
         NavigationLink {
-            DirectUpdateItemView(viewModel: UpdateItemViewModel(), titleName: "직접 추가", buttonName: "다음", appState: appState)
+            DirectUpdateItemView(viewModel: UpdateItemViewModel(), appState: appState)
         } label: {
               ZStack(alignment: .center) {
                   Rectangle()

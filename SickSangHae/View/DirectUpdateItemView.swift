@@ -11,8 +11,6 @@ struct DirectUpdateItemView: View {
     @Namespace var bottomID
     @Environment(\.dismiss) private var dismiss
     @ObservedObject var viewModel: UpdateItemViewModel
-    @State var titleName: String
-    @State var buttonName: String
     @State private var isItemCheckView = false
     @State var appState: AppState
     
@@ -91,7 +89,7 @@ struct DirectUpdateItemView: View {
                     .frame(width: 10, height: 19)
             })
             Spacer()
-            Text(titleName)
+            Text("직접 추가")
                 .fontWeight(.bold)
                 .font(.system(size: 17))
             Spacer()
@@ -136,7 +134,7 @@ struct DirectUpdateItemView: View {
                     .cornerRadius(12)
                     .frame(height: 60.adjusted)
                     
-                Text(buttonName)
+                Text("등록")
                     .foregroundColor(.white)
                     .font(.system(size: 17))
             }
@@ -198,15 +196,16 @@ extension DirectUpdateItemView {
                         displayedComponents: .date
                     )
                     .labelsHidden()
-                    .datePickerStyle(GraphicalDatePickerStyle())
+                    .datePickerStyle(.wheel)
                     .frame(width: geo.size.width, height: geo.size.height)
                     .onChange(of: viewModel.date) { _ in
                         viewModel.isDatePickerOpen = false
                     }
                 }
-                .padding(.all, 20)
+                .padding(20)
             }
-            .padding(20)
+            .frame(height: screenHeight/(2.6))
+            .padding(.horizontal, 15)
           }
         }
   
@@ -220,9 +219,3 @@ extension DirectUpdateItemView {
     }
 }
 
-
-struct DirectUpdateItemView_Previews: PreviewProvider {
-  static var previews: some View {
-      DirectUpdateItemView(viewModel: UpdateItemViewModel(), titleName: "직접추가", buttonName: "다음", appState: AppState())
-  }
-}

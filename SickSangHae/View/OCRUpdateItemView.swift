@@ -11,80 +11,78 @@ struct OCRUpdateItemView: View {
     @Namespace var bottomID
     @Environment(\.dismiss) private var dismiss
     @ObservedObject var viewModel: UpdateItemViewModel
-    @State var titleName: String
-    @State var buttonName: String
     @Binding var gptAnswer: [String:[Any]]
     @State private var isItemCheckView = false
     let appState: AppState
     
     var body: some View {
-            ZStack(alignment: .top) {
-                Color.white
-                    .ignoresSafeArea(.all)
-                VStack {
-                    topBar
-                    Spacer().frame(height: 36.adjusted)
-                    DateSelectionView(viewModel: viewModel)
-                    Spacer().frame(height: 30.adjusted)
-                    ZStack(alignment: .top) {
-                        VStack {
-                            ScrollViewReader { proxy in
-                                ScrollView(.vertical) {
-                                    VStack {
-                                        ForEach(viewModel.itemBlockViewModels, id: \.self) { item in
-                                            ItemBlockView(viewModel: viewModel, itemBlockViewModel: item)
-                                                .gesture(
-                                                    DragGesture()
-                                                        .onChanged({ value in
-                                                            withAnimation {
-                                                                if value.translation.width < 0 {
-                                                                    item.offset = value.translation.width
-                                                                }
+        ZStack(alignment: .top) {
+            Color.white
+                .ignoresSafeArea(.all)
+            VStack {
+                topBar
+                Spacer().frame(height: 36.adjusted)
+                DateSelectionView(viewModel: viewModel)
+                Spacer().frame(height: 30.adjusted)
+                ZStack(alignment: .top) {
+                    VStack {
+                        ScrollViewReader { proxy in
+                            ScrollView(.vertical) {
+                                VStack {
+                                    ForEach(viewModel.itemBlockViewModels, id: \.self) { item in
+                                        ItemBlockView(viewModel: viewModel, itemBlockViewModel: item)
+                                            .gesture(
+                                                DragGesture()
+                                                    .onChanged({ value in
+                                                        withAnimation {
+                                                            if value.translation.width < 0 {
+                                                                item.offset = value.translation.width
                                                             }
-                                                        })
-                                                        .onEnded({ value in
-                                                            withAnimation {
-                                                                if value.translation.width < -90 {
-                                                                    item.offset = -100
-                                                                } else {
-                                                                    item.offset = 0
-                                                                }
+                                                        }
+                                                    })
+                                                    .onEnded({ value in
+                                                        withAnimation {
+                                                            if value.translation.width < -90 {
+                                                                item.offset = -100
+                                                            } else {
+                                                                item.offset = 0
                                                             }
-                                                        })
-                                                )
-                                        }
-                                        .onChange(of: viewModel.itemBlockViewModels) { _ in
-                                            withAnimation {
-                                                proxy.scrollTo(bottomID, anchor: .bottom)
-                                            }
-                                        }
-                                        addItemButton
-                                            .onTapGesture {
-                                                withAnimation {
-                                                    addItemBlockView()
-                                                }
-                                            }
-                                            .id(bottomID)
+                                                        }
+                                                    })
+                                            )
                                     }
+                                    .onChange(of: viewModel.itemBlockViewModels) { _ in
+                                        withAnimation {
+                                            proxy.scrollTo(bottomID, anchor: .bottom)
+                                        }
+                                    }
+                                    addItemButton
+                                        .onTapGesture {
+                                            withAnimation {
+                                                addItemBlockView()
+                                            }
+                                        }
+                                        .id(bottomID)
                                 }
                             }
-                            Spacer()
-                            nextButton
                         }
-                        if viewModel.isDatePickerOpen {
-                            DatePickerView(viewModel: viewModel)
-                        }
+                        Spacer()
+                        nextButton
+                    }
+                    if viewModel.isDatePickerOpen {
+                        DatePickerView(viewModel: viewModel)
                     }
                 }
             }
-            .onAppear {
-                for i in 0..<gptAnswer["상품명"]!.count {
-                    viewModel.makeInitialItemBlock(name: gptAnswer["상품명"]![i] as! String, price: gptAnswer["금액"]![i] as! Int)
-                }
+        }
+        .onAppear {
+            for i in 0..<gptAnswer["상품명"]!.count {
+                viewModel.makeInitialItemBlock(name: gptAnswer["상품명"]![i] as! String, price: gptAnswer["금액"]![i] as! Int)
             }
-            .onTapGesture {
-                self.endTextEditing()
-            }
+        }
+        .onTapGesture {
+            self.endTextEditing()
+        }
         .navigationBarBackButtonHidden(true)
     }
     
@@ -97,7 +95,7 @@ struct OCRUpdateItemView: View {
                     .frame(width: 10, height: 19)
             })
             Spacer()
-            Text(titleName)
+            Text("수정하기")
                 .font(.pretendard(.bold, size: 17))
             Spacer()
             Button(action: {
@@ -133,14 +131,14 @@ struct OCRUpdateItemView: View {
         Button(action: {
             viewModel.isShowTextfieldWarning = !viewModel.areBothTextFieldsNotEmpty
             registerItemBlockViews()
-//            isItemCheckView = true
+            //            isItemCheckView = true
             dismiss()
         }, label: {
             ZStack{
                 Rectangle()
                     .cornerRadius(12)
                     .frame(height: 60.adjusted)
-                Text(buttonName)
+                Text("수정완료")
                     .foregroundColor(.white)
                     .font(.pretendard(.regular, size: 17))
             }
@@ -202,18 +200,20 @@ extension OCRUpdateItemView {
                         displayedComponents: .date
                     )
                     .labelsHidden()
-                    .datePickerStyle(GraphicalDatePickerStyle())
+                    .datePickerStyle(.wheel)
                     .frame(width: geo.size.width, height: geo.size.height)
                     .onChange(of: viewModel.date) { _ in
                         viewModel.isDatePickerOpen = false
                     }
+                    
                 }
-                .padding(.all, 20)
+                .padding(20)
             }
-            .padding(20)
-          }
+            .frame(height: screenHeight/(2.6))
+            .padding(.horizontal, 15)
         }
-  
+    }
+    
     
     func addItemBlockView() {
         viewModel.addNewItemBlock()
@@ -229,16 +229,16 @@ extension OCRUpdateItemView {
             gptAnswer["수량"]!.append(1)
             gptAnswer["금액"]!.append(item.price)
         }
-//        for i in 0..<viewModel.itemBlockViewModels.count {
-//
-//        }
+        //        for i in 0..<viewModel.itemBlockViewModels.count {
+        //
+        //        }
     }
 }
 
 
 struct OCRUpdateItemView_Previews: PreviewProvider {
     @State var testDict = ["상품명":[], "단가":[], "수량":[], "금액":[]]
-  static var previews: some View {
-      OCRUpdateItemView(viewModel: UpdateItemViewModel(), titleName: "test", buttonName: "button", gptAnswer: .constant(["test": []]), appState: AppState())
-  }
+    static var previews: some View {
+        OCRUpdateItemView(viewModel: UpdateItemViewModel(), gptAnswer: .constant(["test": []]), appState: AppState())
+    }
 }

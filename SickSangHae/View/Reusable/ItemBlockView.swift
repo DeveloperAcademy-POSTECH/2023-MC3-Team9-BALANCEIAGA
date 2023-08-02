@@ -116,6 +116,7 @@ class ItemBlockViewModel: ObservableObject, Equatable, Hashable {
     @Published var name: String
     @Published var price: Int
     @Published var offset: CGFloat = 0
+    @Published var isShowTextfieldWarning = false
     
     init(name: String, price: Int) {
         self.name = name
