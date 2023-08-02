@@ -156,7 +156,7 @@ struct HistoryView: View {
             
             Spacer()
             
-            Text("\(itemDictionary[key]?.first?.dateOfPurchase.remainingDate ?? "90")일 남음")
+            Text("\(itemDictionary[key]?.first?.dateOfHistory.remainingDate ?? "90")일 남음")
                 .font(.system(size: 14, weight: .medium))
                 .foregroundColor(Color("Gray600"))
             
