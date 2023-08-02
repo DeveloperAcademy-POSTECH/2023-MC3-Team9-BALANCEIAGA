@@ -32,25 +32,6 @@ struct DirectUpdateItemView: View {
                                     VStack {
                                         ForEach(viewModel.itemBlockViewModels, id: \.self) { item in
                                             ItemBlockView(viewModel: viewModel, itemBlockViewModel: item)
-                                                .gesture(
-                                                    DragGesture()
-                                                        .onChanged({ value in
-                                                            withAnimation {
-                                                                if value.translation.width < 0 {
-                                                                    item.offset = value.translation.width
-                                                                }
-                                                            }
-                                                        })
-                                                        .onEnded({ value in
-                                                            withAnimation {
-                                                                if value.translation.width < -90 {
-                                                                    item.offset = -100
-                                                                } else {
-                                                                    item.offset = 0
-                                                                }
-                                                            }
-                                                        })
-                                                )
                                         }
                                         .onChange(of: viewModel.itemBlockViewModels) { _ in
                                             withAnimation {
@@ -213,10 +194,6 @@ extension DirectUpdateItemView {
     
     func addItemBlockView() {
         viewModel.addNewItemBlock()
-    }
-    
-    func registerItemBlockViews() {
-        
     }
 }
 
