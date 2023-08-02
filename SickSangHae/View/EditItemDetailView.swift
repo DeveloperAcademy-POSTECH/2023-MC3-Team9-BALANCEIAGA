@@ -68,7 +68,7 @@ struct EditItemDetailView: View {
     }
     
     var editIconButton: some View {
-        ZStack(alignment: .bottomTrailing) {
+        HStack {
             //추후 Custom Item Icon으로 대체
             Image(iconText)
                 .resizable()
@@ -117,7 +117,8 @@ struct InfoEditField: View {
 //    @State private var selectedDate = Date()
     @State private var showingDatePicker = false
     
-    @FocusState var isInputActive: Bool
+    @FocusState var isNameInputActive: Bool
+    @FocusState var isPriceInputActive: Bool
     
     var body: some View {
         nameField
@@ -133,7 +134,7 @@ struct InfoEditField: View {
                 .font(.pretendard(.medium, size: 14))
                 .foregroundColor(Color("Gray600"))
             
-            ZStack(alignment: .leading) {
+            HStack {
                 if nameText.isEmpty {
                     Text("품목명은 필수에요")
                         .bold()
@@ -141,18 +142,18 @@ struct InfoEditField: View {
                 }
                 
                 TextField("", text: $nameText)
-                    .focused($isInputActive)
+                    .focused($isNameInputActive)
                     .toolbar {
                         ToolbarItemGroup(placement: .keyboard) {
                             Spacer()
                             
                             Button("완료") {
-                                isInputActive = true
+                                isNameInputActive = true
                             }
                         }
                     }
                 
-                if !nameText.isEmpty && isInputActive {
+                if !nameText.isEmpty && isNameInputActive {
                     Button(action: {
                         self.nameText = ""
                     }, label: {
@@ -226,19 +227,19 @@ struct InfoEditField: View {
                 }
                 
                 TextField("", text: $wonText)
-                    .focused($isInputActive)
+                    .focused($isPriceInputActive)
                     .keyboardType(.numberPad)
                     .toolbar {
                         ToolbarItemGroup(placement: .keyboard) {
                             Spacer()
                             
                             Button("완료") {
-                                isInputActive = false
+                                isPriceInputActive = false
                             }
                         }
                     }
                 
-                if wonText.isEmpty || !isInputActive {
+                if wonText.isEmpty || !isPriceInputActive {
                     EmptyView()
                 } else {
                     Button(action: {
