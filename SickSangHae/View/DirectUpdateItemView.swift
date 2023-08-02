@@ -42,6 +42,7 @@ struct DirectUpdateItemView: View {
                                             .onTapGesture {
                                                 withAnimation {
                                                     addItemBlockView()
+                                                    viewModel.countItemCheckView += 1
                                                 }
                                             }
                                             .id(bottomID)
@@ -50,6 +51,7 @@ struct DirectUpdateItemView: View {
                             }
                             Spacer()
                             nextButton
+                                .disabled(viewModel.countItemCheckView == 0 ? true : false)
                         }
                         if viewModel.isDatePickerOpen {
                             DatePickerView(viewModel: viewModel)
@@ -77,6 +79,7 @@ struct DirectUpdateItemView: View {
                 .font(.system(size: 17))
             Spacer()
             Button(action: {
+                viewModel.countItemCheckView -= 1
                 self.appState.moveToRootView = true
             } , label: {
                 Image(systemName: "xmark")

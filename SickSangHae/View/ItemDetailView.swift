@@ -38,46 +38,44 @@ struct ItemDetailView: View {
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
-                topNaviBar(dismiss: dismiss)
-                
-                itemInfoSection
-                
-                SmallButtonView(receipt: receipt)
-                
-                Rectangle()
-                    .frame(width: screenWidth ,height: 12)
-                    .foregroundColor(Color("Gray100"))
-                    .padding(.top, 10)
-                    .padding(.bottom, 30)
-                
-                
-                
-                VStack(alignment: .leading) {
-                    Text("냉장고")
-                        .font(.system(size: 17, weight: .bold))
-                        .padding(.bottom, 5)
+                ScrollView {
+                    itemInfoSection
                     
-                    radioButtonGroup
-                        .disabled(isShowingTopAlertView)
+                    SmallButtonView(receipt: receipt)
                     
-                    Text("식료품 정보")
-                        .font(.system(size: 17, weight: .bold))
-                        .padding(.vertical, 5)
+                    Rectangle()
+                        .frame(width: screenWidth ,height: 12)
+                        .foregroundColor(Color("Gray100"))
+                        .padding(.top, 10)
+                        .padding(.bottom, 30)
                     
-                    itemInfoView
-                } //VStack닫기
-                .padding(.horizontal, 20.adjusted)
-                .padding(.bottom, 40)
+                    
+                    
+                    VStack(alignment: .leading) {
+                        Text("냉장고")
+                            .font(.system(size: 17, weight: .bold))
+                            .padding(.bottom, 5)
+                        
+                        radioButtonGroup
+                            .disabled(isShowingTopAlertView)
+                        
+                        Text("식료품 정보")
+                            .font(.system(size: 17, weight: .bold))
+                            .padding(.vertical, 5)
+                        
+                        itemInfoView
+                    } //VStack닫기
+                    .padding(.horizontal, 20.adjusted)
+                    .padding(.bottom, 40)
+                }
             } // VStack닫기
-            
+            .padding(.top, 40)
             
             VStack {
-                if isShowingTopAlertView {
-                    itemDetailTopAlertView
-                        .padding(.vertical, 30)
-                }
+                topNaviBar(dismiss: dismiss)
                 Spacer()
             }
+
             CenterAlertView(titleMessage: "식료품 삭제", bodyMessage: receipt.name, actionButtonMessage: "삭제", isShowingCenterAlertView: $isShowingCenterAlertView, isDeletingItem: $isDeletingItem)
                 .opacity(isShowingCenterAlertView ? 1 : 0)
                 .onChange(of: isDeletingItem) { _ in
@@ -88,9 +86,10 @@ struct ItemDetailView: View {
                                 coreDataViewModel.deleteReceiptData(target: receipt)
                             }
                         }
-                        
                     }
+                    Spacer()
                 }
+
                 .onDisappear {
                     isDeletingItem = false
                 }
@@ -115,6 +114,7 @@ struct ItemDetailView: View {
             }
 
             Spacer()
+//                .background(.clear)
 
             menuButton
             .fullScreenCover(isPresented: $isShowingEditView) {
@@ -136,6 +136,7 @@ struct ItemDetailView: View {
             Text("\(receipt.name)")
                 .font(.system(size: 22, weight: .bold))
         }
+        .padding(.horizontal, 20.adjusted)
     }
     
     var radioButtonGroup: some View {
