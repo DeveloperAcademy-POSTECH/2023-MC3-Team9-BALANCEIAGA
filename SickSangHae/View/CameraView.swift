@@ -53,6 +53,7 @@ struct CameraView: View {
     .sheet(isPresented: $viewModel.isImagePickerPresented ,onDismiss: {
         guard let _ = viewModel.selectedImage else { return }
         viewModel.isSelectedShowPreview.toggle()
+        viewModel.isImagePickerPresented = false
     }) {
       ImagePicker(image: $viewModel.selectedImage, isPresented: $viewModel.isImagePickerPresented)
     }
