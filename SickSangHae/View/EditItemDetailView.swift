@@ -29,10 +29,7 @@ struct EditItemDetailView: View {
             ScrollView {
                 editIconButton
                 InfoEditField(nameText: $nameText,dateText: $dateText, wonText: $wonText)
-                
-                
             }
-            
         }
         .padding(.horizontal, 20.adjusted)
         .ignoresSafeArea(.keyboard)
@@ -114,10 +111,10 @@ struct InfoEditField: View {
     @Binding var wonText: String
     
     @State private var isEditing = false
-//    @State private var selectedDate = Date()
     @State private var showingDatePicker = false
     
-    @FocusState var isInputActive: Bool
+    @FocusState var isNameInputActive: Bool
+    @FocusState var isPriceInputActive: Bool
     
     var body: some View {
         nameField
@@ -133,32 +130,24 @@ struct InfoEditField: View {
                 .font(.pretendard(.medium, size: 14))
                 .foregroundColor(Color("Gray600"))
             
-            ZStack(alignment: .leading) {
-                if nameText.isEmpty {
-                    Text("품목명은 필수에요")
-                        .bold()
-                        .foregroundColor(Color("Gray200"))
-                }
-                
-                TextField("", text: $nameText)
-                    .focused($isInputActive)
+            HStack {
+                TextField("", text: $nameText, prompt: Text("품목명은 필수에요"))
+                    .focused($isNameInputActive)
                     .toolbar {
                         ToolbarItemGroup(placement: .keyboard) {
                             Spacer()
-                            
+
                             Button("완료") {
-                                isInputActive = true
+                                isNameInputActive = true
                             }
                         }
                     }
                 
-                if !nameText.isEmpty && isInputActive {
+                if !nameText.isEmpty && isNameInputActive {
                     Button(action: {
                         self.nameText = ""
                     }, label: {
                         HStack {
-                            Spacer()
-                            
                             Image(systemName: "xmark.circle.fill")
                                 .foregroundColor(Color("Gray200"))
                         }
@@ -216,37 +205,25 @@ struct InfoEditField: View {
                 .font(.pretendard(.medium, size: 14))
                 .foregroundColor(Color("Gray600"))
             
-            ZStack(alignment: .leading) {
-                if wonText.isEmpty {
-                    Text("얼마였나요?")
-                        .bold()
-                        .foregroundColor(Color("Gray200"))
-                } else {
-                    EmptyView()
-                }
-                
-                TextField("", text: $wonText)
-                    .focused($isInputActive)
+            HStack {
+                TextField("", text: $wonText, prompt: Text("얼마였나요?"))
+                    .focused($isPriceInputActive)
                     .keyboardType(.numberPad)
                     .toolbar {
                         ToolbarItemGroup(placement: .keyboard) {
                             Spacer()
                             
                             Button("완료") {
-                                isInputActive = false
+                                isPriceInputActive = false
                             }
                         }
                     }
                 
-                if wonText.isEmpty || !isInputActive {
-                    EmptyView()
-                } else {
+                if !wonText.isEmpty && isPriceInputActive {
                     Button(action: {
                         self.wonText = ""
                     }, label: {
                         HStack {
-                            Spacer()
-                            
                             Image(systemName: "xmark.circle.fill")
                                 .foregroundColor(Color("Gray200"))
                         }

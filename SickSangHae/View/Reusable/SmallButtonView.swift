@@ -17,8 +17,13 @@ struct SmallButtonView: View {
             VStack(spacing: 0){
                 HStack {
                     Button {
-                        coreDataViewModel.updateStatus(target: receipt, to: .Eaten)
                         dismiss()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                            withAnimation(.easeOut(duration: 0.5)) {
+                            coreDataViewModel.updateStatus(target: receipt, to: .Eaten)
+                            }
+                        }
+                        
                     } label: {
                         ZStack {
                             Rectangle()
@@ -29,10 +34,17 @@ struct SmallButtonView: View {
                         }
                     }
                     .buttonStyle(CustomButtonStyle())
+                    
                     Spacer()
+                    
                     Button {
-                        coreDataViewModel.updateStatus(target: receipt, to: .Spoiled)
                         dismiss()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                            withAnimation(.easeOut(duration: 0.5)) {
+                            coreDataViewModel.updateStatus(target: receipt, to: .Spoiled)
+                            }
+                        }
+                        
                     } label: {
                         ZStack {
                             Rectangle()

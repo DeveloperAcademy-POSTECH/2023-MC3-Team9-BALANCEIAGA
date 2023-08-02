@@ -143,7 +143,7 @@ struct DirectItemCheckView: View {
 
     func registerItemsToCoreData() {
         viewModel.itemBlockViewModels.forEach { item in
-            coreDataViewModel.createReceiptData(name: item.name, price: Double(item.price))
+            coreDataViewModel.createReceiptData(name: item.name, price: abs(Double(item.price)), date: viewModel.date)
         }
     }
 }

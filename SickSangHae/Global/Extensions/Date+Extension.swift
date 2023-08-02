@@ -20,8 +20,8 @@ extension Date {
     
     var remainingDate: String {
         let dateTerm = DateComponents(day: 90)
-        let dateTermFromNow = Calendar.current.date(byAdding: dateTerm, to: .now) ?? .now
-        let dateDifference = Calendar.current.dateComponents([.day], from: self, to: dateTermFromNow).day
+        let dateTermFromNow = Calendar.current.date(byAdding: dateTerm, to: self) ?? .now
+        let dateDifference = Calendar.current.dateComponents([.day], from: Date.now, to: dateTermFromNow).day
         return String(dateDifference ?? 90)
     }
 

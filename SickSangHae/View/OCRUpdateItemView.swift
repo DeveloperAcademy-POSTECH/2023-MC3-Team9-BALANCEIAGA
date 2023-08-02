@@ -16,41 +16,20 @@ struct OCRUpdateItemView: View {
     let appState: AppState
     
     var body: some View {
-        ZStack(alignment: .top) {
-            Color.white
-                .ignoresSafeArea(.all)
-            VStack {
-                topBar
-                Spacer().frame(height: 36.adjusted)
-                DateSelectionView(viewModel: viewModel)
-                Spacer().frame(height: 30.adjusted)
-                ZStack(alignment: .top) {
-                    VStack {
-                        ScrollViewReader { proxy in
-                            ScrollView(.vertical) {
-                                VStack {
-                                    ForEach(viewModel.itemBlockViewModels, id: \.self) { item in
-                                        ItemBlockView(viewModel: viewModel, itemBlockViewModel: item)
-                                            .gesture(
-                                                DragGesture()
-                                                    .onChanged({ value in
-                                                        withAnimation {
-                                                            if value.translation.width < 0 {
-                                                                item.offset = value.translation.width
-                                                            }
-                                                        }
-                                                    })
-                                                    .onEnded({ value in
-                                                        withAnimation {
-                                                            if value.translation.width < -90 {
-                                                                item.offset = -100
-                                                            } else {
-                                                                item.offset = 0
-                                                            }
-                                                        }
-                                                    })
-                                            )
-                                    }
+            ZStack(alignment: .top) {
+                Color.white
+                    .ignoresSafeArea(.all)
+                VStack {
+                    topBar
+                    Spacer().frame(height: 36.adjusted)
+                    DateSelectionView(viewModel: viewModel)
+                    Spacer().frame(height: 30.adjusted)
+                    ZStack(alignment: .top) {
+                        VStack {
+                            ScrollViewReader { proxy in
+                                ScrollView(.vertical) {
+                                        ForEach(viewModel.itemBlockViewModels, id: \.self) { item in
+                                            ItemBlockView(viewModel: viewModel, itemBlockViewModel: item)
                                     .onChange(of: viewModel.itemBlockViewModels) { _ in
                                         withAnimation {
                                             proxy.scrollTo(bottomID, anchor: .bottom)

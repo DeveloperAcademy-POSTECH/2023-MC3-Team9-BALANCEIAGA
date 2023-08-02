@@ -86,12 +86,12 @@ extension CoreDataViewModel {
         }
     }
     
-    func createReceiptData(name: String, price: Double) {
+    func createReceiptData(name: String, price: Double, date: Date = Date.now) {
         
         let receipt = Receipt(context: viewContext)
         receipt.id = UUID()
         receipt.name = name
-        receipt.dateOfPurchase = Date.now
+        receipt.dateOfPurchase = date ?? Date.now
         receipt.dateOfHistory = Date.now
         receipt.icon = "shoppingCart"
         receipt.price = price

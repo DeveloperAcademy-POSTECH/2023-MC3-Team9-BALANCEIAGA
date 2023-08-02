@@ -11,7 +11,6 @@ struct OCRItemCheckView: View {
     
     @Binding var gptAnswer: Dictionary<String, [Any]>
     // TODO: 나중에 뷰 연결할때는 @Binding으로 바꾸어야할 듯합니다.
-    var isOCR = true
     @ObservedObject var viewModel = UpdateItemViewModel()
     @State var appState: AppState
     @State private var isRegisterCompleteView = false
@@ -24,18 +23,13 @@ struct OCRItemCheckView: View {
             ZStack(alignment: .top) {
                 VStack {
                     HStack {
-                        switch isOCR{
-                        case true:
-                            EmptyView()
-                        default:
-                            Image(systemName: "chevron.left")
-                                .frame(width: 8, height: 14.2)
-                        }
+                        Image(systemName: "chevron.left")
+                            .frame(width: 8, height: 14.2)
                         
                         Spacer()
+                        
                         Button(action: {
                             self.appState.moveToRootView = true
-                            
                         }, label: {
                             Image(systemName: "xmark")
                                 .resizable()
@@ -96,26 +90,21 @@ struct OCRItemCheckView: View {
                 .font(.pretendard(.bold, size: 20.adjusted))
 
             Spacer()
-            
-            switch isOCR{
-            case true:
-                Button {
-                    isShowingUpdateItemView = true
-                } label: {
-                    ZStack{
-                        RoundedRectangle(cornerRadius: 5)
-                            .foregroundColor(Color("Gray100"))
-                        
-                        Text("수정")
-                            .foregroundColor(Color("Gray600"))
-                            .font(.pretendard(.regular, size: 14.adjusted))
-                    }
-                    .frame(width: 45, height: 25)
-                    .foregroundColor(Color("Gray600"))
-                    .padding(.trailing, 20.adjusted)
+        
+            Button {
+                isShowingUpdateItemView = true
+            } label: {
+                ZStack{
+                    RoundedRectangle(cornerRadius: 5)
+                        .foregroundColor(Color("Gray100"))
+                    
+                    Text("수정")
+                        .foregroundColor(Color("Gray600"))
+                        .font(.pretendard(.regular, size: 14.adjusted))
                 }
-            default:
-                EmptyView()
+                .frame(width: 45, height: 25)
+                .foregroundColor(Color("Gray600"))
+                .padding(.trailing, 20.adjusted)
             }
             
         }
@@ -173,7 +162,7 @@ struct OCRItemCheckView: View {
     
     func registerItemsToCoreData() {
         for i in 0..<gptAnswer["상품명"]!.count {
-            coreDataViewModel.createReceiptData(name: gptAnswer["상품명"]![i] as! String, price: Double(gptAnswer["금액"]![i] as! Int))
+            coreDataViewModel.createReceiptData(name: gptAnswer["상품명"]![i] as! String, price: abs(Double(gptAnswer["금액"]![i] as! Int)), date: viewModel.date)
         }
     }
 }

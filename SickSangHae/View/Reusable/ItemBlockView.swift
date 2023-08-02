@@ -101,12 +101,9 @@ extension ItemBlockView: Hashable, Equatable {
     }
     
     func deleteItem() {
-        viewModel.isShowTopAlertView = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            withAnimation(.easeInOut(duration: 1)) {
-                viewModel.isShowTopAlertView = false
-                viewModel.deleteItemBlock(itemBlockViewModel: itemBlockViewModel)
-            }
+        withAnimation(.easeInOut(duration: 0.5)) {
+            viewModel.isShowTopAlertView = false
+            viewModel.deleteItemBlock(itemBlockViewModel: itemBlockViewModel)
         }
     }
 }
