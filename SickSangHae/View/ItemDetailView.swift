@@ -83,11 +83,13 @@ struct ItemDetailView: View {
                 .onChange(of: isDeletingItem) { _ in
                     if isDeletingItem {
                         dismiss()
-                        coreDataViewModel.deleteReceiptData(target: receipt)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                            withAnimation(.easeOut(duration: 0.5)) {
+                                coreDataViewModel.deleteReceiptData(target: receipt)
+                            }
+                        }
+                        
                     }
-                }
-                .onAppear {
-
                 }
                 .onDisappear {
                     isDeletingItem = false
@@ -116,7 +118,7 @@ struct ItemDetailView: View {
 
             menuButton
             .fullScreenCover(isPresented: $isShowingEditView) {
-                EditItemDetailView(isShowingEditView: $isShowingEditView, iconText: receipt.icon, nameText: receipt.name, dateText: receipt.dateOfPurchase, wonText: "\(receipt.price)", appState: appState, receipt: receipt)
+                EditItemDetailView(isShowingEditView: $isShowingEditView, iconText: receipt.icon, nameText: receipt.name, dateText: receipt.dateOfPurchase, wonText: "\(Int(receipt.price))", appState: appState, receipt: receipt)
             }
         } //HStack닫기
         .padding(.top, 30)
@@ -352,15 +354,15 @@ struct ItemDetailView: View {
                 
                 VStack(alignment: .leading) {
                     HStack(spacing: 28) {
-                        Text("품목")
+                        Text("구매일자")
                             .padding(.leading,20)
                         
-                        Text(receipt.name)
+                        Text("\(receipt.dateOfPurchase.formattedDate)")
                         
                     }
                     Divider().foregroundColor(.gray100)
                     HStack(spacing: 28) {
-                        Text("금액")
+                        Text("구매금액")
                             .padding(.leading,20)
                         
                         Text("\(Int(receipt.price))")
@@ -378,12 +380,11 @@ struct ItemDetailView: View {
                 .transition(.move(edge: .top))
         }
         .opacity(isShowingTopAlertView ? 1 : 0)
-//        .animation(.easeInOut(duration: 0.4))
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-//                withAnimation(.easeInOut(duration: 0.5)) {
+                withAnimation(.easeInOut(duration: 0.5)) {
                     isShowingTopAlertView = false
-//                }
+                }
             }
         }
     }
