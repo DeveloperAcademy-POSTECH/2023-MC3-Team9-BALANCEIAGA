@@ -127,6 +127,21 @@ struct ItemDetailView: View {
         } //HStack닫기
         .padding(.top, 10)
         .padding(.horizontal, 20)
+    private func showTopAlert(duration: TimeInterval) {
+        isShowingTopAlertView = true
+
+        timer = Timer.scheduledTimer(withTimeInterval: duration, repeats: false) { _ in
+            isShowingTopAlertView = false
+        }
+    }
+
+    var itemDetailTopAlertView: some View {
+        TopAlertView(viewModel: topAlertViewModel)
+            .opacity(isShowingTopAlertView ? 1 : 0)
+            .onAppear {
+                showTopAlert(duration: 1.5)
+            }
+    }
     }
         
     var itemInfoSection: some View {
