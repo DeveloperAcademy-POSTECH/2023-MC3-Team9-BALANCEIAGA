@@ -52,56 +52,58 @@ struct ItemDetailView: View {
                         .padding(.top, 10)
                         .padding(.bottom, 30)
                     
-                    
-                    
                     VStack(alignment: .leading) {
                         Text("냉장고")
-                            .font(.system(size: 17, weight: .bold))
+                            .font(.pretendard(.semiBold, size: 17))
+                            .foregroundColor(.gray800)
                             .padding(.bottom, 5)
                         
                         radioButtonGroup
                             .disabled(isShowingTopAlertView)
+                            .padding(.bottom, 10)
                         
                         Text("식료품 정보")
-                            .font(.system(size: 17, weight: .bold))
-                            .padding(.vertical, 5)
+                            .font(.pretendard(.semiBold, size: 17))
+                            .foregroundColor(.gray800)
+                            .padding(.bottom, 5)
                         
                         bottomItemInfoSection
                     } //VStack닫기
                     .padding(.horizontal, 20.adjusted)
                     .padding(.bottom, 40)
-                }
+                } // ScrollView닫기
             } // VStack닫기
             
             VStack {
                 if isShowingTopAlertView {
                     itemDetailTopAlertView
-                        .padding(.vertical, 30)
+                        .padding(.top, 50)
                 }
                 Spacer()
             }
-
+            
             CenterAlertView(titleMessage: "식료품 삭제", bodyMessage: receipt.name, actionButtonMessage: "삭제", isShowingCenterAlertView: $isShowingCenterAlertView, isDeletingItem: $isDeletingItem)
                 .opacity(isShowingCenterAlertView ? 1 : 0)
                 .onChange(of: isDeletingItem) { _ in
                     if isDeletingItem {
                         dismiss()
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                            withAnimation(.easeOut(duration: 0.5)) {
+                            withAnimation(.easeInOut(duration: 0.2)) {
                                 coreDataViewModel.deleteReceiptData(target: receipt)
                             }
                         }
                     }
-                    Spacer()
-                }
+                } // onChange닫기
                 .onDisappear {
                     isDeletingItem = false
-                }
-        }
+                } // onDisappear닫기
+        } // ZStack닫기
         .navigationBarHidden(true)
+        
+        
     } //body닫기
         
-    func topNaviBar(dismiss: DismissAction) -> some View {
+    private func topNaviBar(dismiss: DismissAction) -> some View {
         HStack {
             Button {
                 dismiss()
@@ -109,16 +111,15 @@ struct ItemDetailView: View {
                 ZStack {
                     Rectangle()
                         .fill(.clear)
-                        .frame(width: 36, height: 36)
+                        .frame(width: 44, height: 44)
                     Image(systemName: "chevron.left")
                         .resizable()
-                        .frame(width: 10, height: 18)
-                        .foregroundColor(Color.gray600)
+                        .frame(width: 12, height: 21)
+                        .foregroundColor(Color("PrimaryGB"))
                 }
             }
 
             Spacer()
-//                .background(.clear)
 
             menuButton
             .fullScreenCover(isPresented: $isShowingEditView) {
@@ -126,7 +127,9 @@ struct ItemDetailView: View {
             }
         } //HStack닫기
         .padding(.top, 10)
-        .padding(.horizontal, 20)
+        .padding(.horizontal, 10)
+    }
+    
     private func showTopAlert(duration: TimeInterval) {
         isShowingTopAlertView = true
 
@@ -142,14 +145,45 @@ struct ItemDetailView: View {
                 showTopAlert(duration: 1.5)
             }
     }
+    
+    var menuButton: some View {
+        Menu {
+            Button(action: {
+                isShowingEditView = true
+            }, label: {
+                Text("편집")
+                Image(systemName: "pencil")
+            })
+            
+            Divider()
+            
+            Button(role: .destructive, action: {
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    isShowingCenterAlertView = true
+                }
+            }, label: {
+                Text("삭제")
+                Image(systemName: "trash.fill")
+            })
+        } label: {
+            ZStack {
+                Rectangle()
+                    .fill(.clear)
+                    .frame(width: 44, height: 44)
+                Image(systemName: "ellipsis")
+                    .resizable()
+                    .foregroundColor(Color("PrimaryGB"))
+                    .frame(width: 22, height: 5)
+            }
+        } //Menu닫기
     }
-        
-    var itemInfoSection: some View {
+    
+    var topItemInfoSection: some View {
         VStack(spacing: 0) {
             Image(receipt.icon)
                 .resizable()
                 .foregroundColor(Color("Gray200"))
-                .frame(width: 80, height: 80)
+                .frame(width: 110, height: 110)
                 .padding(.vertical, 30)
             
             Text("\(receipt.name)")
@@ -333,69 +367,47 @@ struct ItemDetailView: View {
         )
     }
     
-    var menuButton: some View {
-        Menu {
-            Button(action: {
-                isShowingEditView = true
-            }, label: {
-                Text("편집")
-                Image(systemName: "pencil")
-            })
-
-            Divider()
-
-            Button(role: .destructive, action: {
-                withAnimation(.easeInOut(duration: 0.2)) {
-                    isShowingCenterAlertView = true
-                }
-            }, label: {
-                Text("삭제")
-                Image(systemName: "trash.fill")
-            })
-        } label: {
-            Rectangle()
-                .frame(width: 36, height: 36)
-                .foregroundColor(.clear)
-                .overlay(
-                    Image(systemName: "ellipsis")
-                        .resizable()
-                        .foregroundColor(Color.gray600)
-                        .frame(width: 21, height: 5)
-                )
-        } //Menu닫기
-    }
-    
-    
-    var itemInfoView: some View {
+    var bottomItemInfoSection: some View {
         ZStack(alignment: .trailing) {
-                Rectangle()
-                    .foregroundColor(.lightGrayColor)
-                    .cornerRadius(12)
-                
-                VStack(alignment: .leading) {
-                    HStack(spacing: 28) {
-                        Text("구매일자")
-                            .padding(.leading,20)
-                        
-                        Text("\(receipt.dateOfPurchase.formattedDate)")
-                        
-                    }
-                    Divider().foregroundColor(.gray100)
-                    HStack(spacing: 28) {
-                        Text("구매금액")
-                            .padding(.leading,20)
-                        
-                        Text("\(Int(receipt.price))")
-                        
-                    }
-                    Spacer().frame(height: 10)
+            Rectangle()
+                .foregroundColor(.gray50)
+                .cornerRadius(8)
+            
+            VStack(alignment: .leading, spacing: 0) {
+                HStack(spacing: 28) {
+                    Text("구매일자")
+                        .font(.pretendard(.medium, size: 17))
+                        .foregroundColor(.gray600)
+                        .padding(.leading,20)
+                    
+                    Text("\(receipt.dateOfPurchase.formattedDate)")
+                        .font(.pretendard(.semiBold, size: 17))
+                    
                 }
-                .frame(height: 116.adjusted)
+                
+                Rectangle()
+                    .frame(height: 1)
+                    .foregroundColor(.gray100)
+                    .padding(.leading, 20)
+                    .padding(.vertical, 16)
+                
+                HStack(spacing: 28) {
+                    Text("구매금액")
+                        .font(.pretendard(.medium, size: 17))
+                        .foregroundColor(.gray600)
+                        .padding(.leading,20)
+                    
+                    Text("\(Int(receipt.price))원")
+                        .font(.pretendard(.semiBold, size: 17))
+                    
+                }
+            }
+            .frame(height: 116.adjusted)
         }
         .padding(.bottom, 30)
     }
 }
-        
+
 struct ItemDetailView_Previews: PreviewProvider {
     static let coreDataViewModel = CoreDataViewModel()
     static var previews: some View {
