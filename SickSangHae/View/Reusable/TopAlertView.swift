@@ -10,19 +10,19 @@ import SwiftUI
 //MARK: - 색, 폰트 변경
 
 struct TopAlertView: View {
-  @ObservedObject var viewModel: TopAlertViewModel
+    @ObservedObject var viewModel: TopAlertViewModel
     
     var body: some View {
-      switch viewModel.changedStatus {
-      case .shortTermUnEaten:
-          TopAlertBaseView(iconImage: "img_eat", message: "\"기본\" 보관으로 변경했어요", backgroundColor: .primaryGLight, strokeColor: .primaryGMiddle, viewModel: viewModel)
-      case .shortTermPinned:
-        TopAlertBaseView(iconImage: "img_eat", message: "\"빨리 먹어야 해요\" 보관으로 변경했어요", backgroundColor: .primaryGLight, strokeColor: .primaryGMiddle, viewModel: viewModel)
-      case .longTermUnEaten:
-        TopAlertBaseView(iconImage: "img_eat", message: "\"천천히 먹어도 돼요\" 보관으로 변경했어요", backgroundColor: .primaryGLight, strokeColor: .primaryGMiddle, viewModel: viewModel)
-      default:
-          TopAlertBaseView(iconImage: "img_eat", message: "\(viewModel.name) 항목이 일반으로 이동됐어요", backgroundColor: .alertGreen, strokeColor: .primaryGMiddle, viewModel: viewModel)
-      }
+        switch viewModel.changedStatus {
+        case .shortTermUnEaten:
+            TopAlertBaseView(iconImage: "img_eat", message: "\"기본\" 보관으로 변경했어요", backgroundColor: .alertGreen, strokeColor: .primaryGMiddle, viewModel: viewModel)
+        case .shortTermPinned:
+            TopAlertBaseView(iconImage: "img_eat", message: "\"빨리 먹어야 해요\" 보관으로 변경했어요", backgroundColor: .alertGreen, strokeColor: .primaryGMiddle, viewModel: viewModel)
+        case .longTermUnEaten:
+            TopAlertBaseView(iconImage: "img_eat", message: "\"천천히 먹어도 돼요\" 보관으로 변경했어요", backgroundColor: .alertGreen, strokeColor: .primaryGMiddle, viewModel: viewModel)
+        default:
+            TopAlertBaseView(iconImage: "img_eat", message: "\(viewModel.name) 항목이 일반으로 이동됐어요", backgroundColor: .alertGreen, strokeColor: .primaryGMiddle, viewModel: viewModel)
+        }
     }
 }
 
