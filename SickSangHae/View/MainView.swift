@@ -13,62 +13,89 @@ enum topTabBar{
 }
 
 struct MainView: View {
-
     @State var selectedTopTabBar: topTabBar = .basic
-    @State private var searchText = ""
-    @State private var isSearching = false
     @State var text: String = ""
+    @State var isSearching = false
     
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
     
     @State var appState = AppState()
 
     var body: some View {
-
+        
         VStack(alignment: .leading, spacing: 0){
             Spacer()
                 .frame(height: 32)
-
-            HStack(alignment: .top){
-                Button{
-                    selectedTopTabBar = .basic
-                } label: {
-                    Text("일반 보관")
-                        .font(.pretendard(.bold, size: 28))
-                        .foregroundColor(selectedTopTabBar == .basic ? Color("PrimaryGB") : Color("Gray200"))
+            
+            if text.isEmpty && isSearching == false {
+                HStack(alignment: .top) {
+                    Button{
+                        selectedTopTabBar = .basic
+                    } label: {
+                        Text("일반 보관")
+                            .font(.pretendard(.bold, size: 28))
+                            .foregroundColor(selectedTopTabBar == .basic ? Color("PrimaryGB") : Color("Gray200"))
+                    }
+                    
+                    Spacer()
+                        .frame(width: 15)
+                    
+                    Button{
+                        selectedTopTabBar = .longterm
+                    } label: {
+                        Text("장기 보관")
+                            .font(.pretendard(.bold, size: 28))
+                            .foregroundColor(selectedTopTabBar == .longterm ? Color("PrimaryGB") : Color("Gray200"))
+                    }
                 }
-
-                Spacer()
-                    .frame(width: 15)
-
-                Button{
-                    selectedTopTabBar = .longterm
-                } label: {
-                    Text("장기 보관")
-                        .font(.pretendard(.bold, size: 28))
-                        .foregroundColor(selectedTopTabBar == .longterm ? Color("PrimaryGB") : Color("Gray200"))
-                }
-            }
-            .padding(.horizontal, 20)
-
-            Spacer()
-                .frame(height: 20)
-
-            SearchBar(text: $text)
                 .padding(.horizontal, 20)
-                .padding(.bottom, 10)
-
-            switch selectedTopTabBar {
-            case .basic:
-                BasicList(appState: appState)
-            case .longterm:
-                LongTermList(coreDataViewModel: coreDataViewModel, listContentViewModel: ListContentViewModel(status: .longTermUnEaten, itemList: coreDataViewModel.longTermUnEatenList), appState: appState)
+                
+                
+            } else {
+                Text("검색")
+                    .font(.pretendard(.bold, size: 28))
+                    .foregroundColor(Color("PrimaryGB"))
+                    .padding(.horizontal, 20)
             }
             
+            Spacer()
+                .frame(height: 20)
+            
+            SearchBar(text: $text, isInputActive: $isSearching)
+                .padding(.horizontal, 20)
+                .padding(.bottom, 10)
+                .onTapGesture {
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        isSearching = true
+                    }
+                }
+                .onChange(of: text) { _ in
+                    withAnimation(.easeIn(duration: 0.2)) {
+                        coreDataViewModel.searchText = text
+                    }
+                }
+            
+            if text.isEmpty && isSearching == false {
+                switch selectedTopTabBar {
+                case .basic:
+                    BasicList(appState: appState)
+                case .longterm:
+                    LongTermList(coreDataViewModel: coreDataViewModel, listContentViewModel: ListContentViewModel(status: .longTermUnEaten, itemList: coreDataViewModel.longTermUnEatenList), appState: appState)
+                }
+            } else {
+                SearchView(appState: appState, coreDataViewModel: coreDataViewModel)
+                    .onTapGesture {
+                        withAnimation (.easeInOut(duration: 0.2)){
+                            if text.isEmpty {
+                                isSearching = false
+                            }
+                            endTextEditing()
+                        }
+                    }
+                Spacer()
+            }
         }
-
     }
-
 }
 
 struct SearchBar: View {
