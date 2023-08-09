@@ -138,6 +138,7 @@ struct ItemDetailView: View {
             
             Text("\(receipt.name)")
                 .font(.system(size: 22, weight: .bold))
+                .multilineTextAlignment(.center)
         }
         .padding(.horizontal, 20.adjusted)
     }
