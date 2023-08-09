@@ -378,66 +378,7 @@ struct ItemDetailView: View {
                 }
                 .frame(height: 116.adjusted)
         }
-    }
-    
-    var itemDetailTopAlertView: some View {
-        Group {
-            TopAlertView(viewModel: topAlertViewModel)
-                .transition(.move(edge: .top))
-        }
-        .opacity(isShowingTopAlertView ? 1 : 0)
-        .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    isShowingTopAlertView = false
-            }
-        }
-    }
-}
-
-struct ItemDetailTopAlertView: View {
-    let name: String
-    var body: some View {
-        ItemDetailTopAlertBaseView(iconImage: "img_eat", message: "\(name) 항목이 일반으로 이동됐어요", backgroundColor: .pointRLight, strokeColor: .pointRMiddle)
-    }
-}
-
-struct ItemDetailTopAlertBaseView: View {
-  var iconImage: String
-  var message: String
-  var backgroundColor: Color
-  var strokeColor: Color
-  @GestureState private var dragOffset = CGSize.zero
-  
-
-  var body: some View {
-      ZStack(alignment: .leading) {
-        RoundedRectangle(cornerRadius: 41.adjusted)
-          .stroke(strokeColor, lineWidth: 1)
-          .background(backgroundColor)
-          .background(.ultraThickMaterial)
-          .frame(height: 68.adjusted)
-          .clipShape(RoundedRectangle(cornerRadius: 41.adjusted))
-          .opacity(0.8)
-        HStack(spacing: 10.adjusted) {
-          Image(iconImage)
-            .resizable()
-            .scaledToFill()
-            .frame(width: 44.adjusted, height: 44.adjusted)
-          VStack(alignment: .leading, spacing: 4.adjusted) {
-            Text(message)
-              .font(.system(size: 14).bold())
-              .foregroundColor(.black)
-          }
-        }
-        .padding(.leading, 14.adjusted)
-      }
-      .padding([.leading, .trailing], 20.adjusted)
-  }
-}
-
-extension ItemDetailTopAlertView: Hashable {
-    func hash(into hasher: inout Hasher) {
-        
+        .padding(.bottom, 30)
     }
 }
         
