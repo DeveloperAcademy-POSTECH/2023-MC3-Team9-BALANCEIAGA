@@ -100,54 +100,69 @@ struct MainView: View {
 
 struct SearchBar: View {
     @Binding var text: String
-
-    @State private var isEditing = false
-    @FocusState var isInputActive: Bool
-
+    @State private var isShowCancelButton = false
+    
+    @Binding var isInputActive: Bool
+    
     var body: some View {
         HStack {
-            Spacer()
-                .frame(width: 12)
-            
-            Image(systemName: "magnifyingglass")
-                .foregroundColor(Color("Gray200"))
-            
-            ZStack(alignment: .leading) {
-                if text.isEmpty {
-                    Text("식재료 검색")
+            ZStack {
+                RoundedRectangle(cornerRadius: 16)
+                    .frame(height: 44)
+                    .foregroundColor(Color("Gray50"))
+                HStack {
+                    Image(systemName: "magnifyingglass")
                         .foregroundColor(Color("Gray200"))
-                } else {
-                    EmptyView()
-                }
-                TextField("", text: $text)
-                    .focused($isInputActive)
-                    .toolbar {
-                        ToolbarItemGroup(placement: .keyboard) {
-                            Spacer()
+                    
+                    ZStack(alignment: .leading) {
+                        if text.isEmpty {
+                            Text("식재료 검색")
+                                .foregroundColor(Color("Gray200"))
+                        }
+                        HStack {
+                            TextField("", text: $text)
+                                .onChange(of: isInputActive) { newValue in
+                                    if (!text.isEmpty || isInputActive) {
+                                        withAnimation(.easeInOut(duration: 0.2)) {
+                                            isShowCancelButton = true
+                                        }
+                                    } else {
+                                        withAnimation(.easeInOut(duration: 0.2)) {
+                                            isShowCancelButton = false
+                                        }
+                                    }
+                                }
                             
-                            Button("완료") {
-                                isInputActive = false
+                            if !text.isEmpty && isInputActive {
+                                Button(action: {
+                                    self.text = ""
+                                }) {
+                                    Image(systemName: "xmark.circle.fill")
+                                        .foregroundColor(Color("Gray200"))
+                                }
                             }
                         }
                     }
-                
-                if text.isEmpty || !isInputActive {
-                    EmptyView()
-                } else {
-                    Button(action: {
-                        self.text = ""
-                    }) {
-                        HStack {
-                            Spacer()
-                            
-                            Image(systemName: "xmark.circle.fill")
-                                .foregroundColor(Color("Gray200"))
-                        }
-                    }
                 }
+                .padding(.horizontal, 10)
             }
-            .padding(.leading, 4)
-            .padding(.trailing, 12)
+            
+            if isShowCancelButton {
+                Button(action: {
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        isInputActive = false
+                        self.text = ""
+                        endTextEditing()
+                    }
+                }, label: {
+                    Text("취소")
+                        .padding(.leading, 10)
+                })
+            }
+        }
+    }
+}
+
         }
         .frame(height: 42)
         .background(Color("Gray50"))
