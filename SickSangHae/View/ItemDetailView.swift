@@ -40,9 +40,9 @@ struct ItemDetailView: View {
         ZStack {
             VStack(spacing: 0) {
                 topNaviBar(dismiss: dismiss)
+                
                 ScrollView {
-                    
-                    itemInfoSection
+                    topItemInfoSection
                     
                     SmallButtonView(receipt: receipt)
                     
@@ -66,7 +66,7 @@ struct ItemDetailView: View {
                             .font(.system(size: 17, weight: .bold))
                             .padding(.vertical, 5)
                         
-                        itemInfoView
+                        bottomItemInfoSection
                     } //VStack닫기
                     .padding(.horizontal, 20.adjusted)
                     .padding(.bottom, 40)
