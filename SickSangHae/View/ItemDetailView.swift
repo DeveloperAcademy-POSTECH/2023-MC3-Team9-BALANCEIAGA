@@ -161,14 +161,13 @@ struct ItemDetailView: View {
     
     var radioButtonGroup: some View {
         Group {
-            bacicRadioButton
+            basicRadioButton
             fastEatRadioButton
             slowEatRadioButton
         }
-        .disabled(isShowingTopAlertView)
     }
     
-    var bacicRadioButton: some View {
+    var basicRadioButton: some View {
         Button(action: {
             needToEatASAP = .shortTermUnEaten
         }, label: {
