@@ -89,7 +89,7 @@ struct CustomTabView: View {
                       .foregroundColor(.white)
                       .padding(.bottom, 6)
                     }
-                    .padding(.bottom, 84)
+                    .padding(.bottom, 64)
                 }
                 .navigationDestination(isPresented: $isActive, destination: {
                     CameraView(appState: appState)
@@ -110,7 +110,7 @@ struct CustomTabView: View {
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
                     .fill(.white)
-                    .frame(maxHeight: 90)
+                    .frame(maxHeight: 70)
                 
                 HStack {
                     TabItem(selectedTabType: .mainView, imageName: selectedTab == .mainView ? "RefActive" : "RefDisActive", title: "냉장고")
