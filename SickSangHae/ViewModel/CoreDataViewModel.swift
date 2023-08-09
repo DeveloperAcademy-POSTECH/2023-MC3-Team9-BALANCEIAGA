@@ -12,6 +12,8 @@ class CoreDataViewModel: ObservableObject {
     let viewContext = PersistentController.shared.viewContext
     @Published var receipts: [Receipt] = []
     
+    @Published var searchText = ""
+    
     var shortTermUnEatenList: [Receipt] {
         return receipts.filter{ $0.currentStatus == .shortTermUnEaten}
     }
@@ -54,6 +56,11 @@ class CoreDataViewModel: ObservableObject {
             }
         }
         return dateGroupDictionary
+    }
+    
+    var searchList: [Receipt] {
+        let lowerSearchText = searchText.lowercased()
+        return receipts.filter { $0.name.lowercased().contains(lowerSearchText) }
     }
     
     init() {
@@ -182,6 +189,12 @@ extension CoreDataViewModel {
         
         saveChanges()
         getAllReceiptData()
+    }
+    
+    func searchListResults(text: String, receipts: [Receipt]) -> [Receipt] {
+        let lowerText = text.lowercased()
+        
+        return receipts.filter { $0.name.lowercased().contains(lowerText) }
     }
 }
 
