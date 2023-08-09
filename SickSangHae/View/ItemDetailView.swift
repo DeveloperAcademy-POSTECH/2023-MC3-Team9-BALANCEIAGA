@@ -17,6 +17,7 @@ struct ItemDetailView: View {
     @State private var isShowingTopAlertView = false
     @State private var isShowingCenterAlertView = false
     @State private var isDeletingItem = false
+    @State private var timer: Timer? = nil
     @State var receipt: Receipt
     @State var appState: AppState
     @State var needToEatASAP: Status {
