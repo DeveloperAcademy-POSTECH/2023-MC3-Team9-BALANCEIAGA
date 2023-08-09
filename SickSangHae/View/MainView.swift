@@ -163,10 +163,25 @@ struct SearchBar: View {
     }
 }
 
+
+struct SearchView: View {
+    @State var appState: AppState
+    @ObservedObject var coreDataViewModel: CoreDataViewModel
+
+    var body: some View {
+        ScrollView {
+            LazyVStack {
+                ForEach(coreDataViewModel.searchList) { item in
+                    listCell(item: item, appState: appState)
+
+                    Divider()
+                        .overlay(Color("Gray100"))
+                        .opacity(item == coreDataViewModel.searchList.last ? 0 : 1)
+                        .padding(.leading, 20)
+                }
+            }
         }
-        .frame(height: 42)
-        .background(Color("Gray50"))
-        .cornerRadius(10)
+        .scrollDismissesKeyboard(.immediately)
     }
 }
 
@@ -178,4 +193,3 @@ struct MainView_Previews: PreviewProvider {
           .environmentObject(coreDataViewModel)
   }
 }
-
