@@ -31,8 +31,8 @@ struct ItemDetailView: View {
     }
 
     
-    var greenBlueGradient = Gradient(colors: [Color("PrimaryG"), Color("PrimaryB")])
-    var notSelectedGradient = Gradient(colors: [Color("Gray200"), Color("Gray200")])
+    var greenBlueGradient = Gradient(colors: [.primaryG, .primaryB])
+    var notSelectedGradient = Gradient(colors: [.gray200, .gray200])
     var clearGradient = Gradient(colors: [.clear, .clear])
     
     
@@ -48,7 +48,7 @@ struct ItemDetailView: View {
                     
                     Rectangle()
                         .frame(width: screenWidth ,height: 12)
-                        .foregroundColor(Color("Gray100"))
+                        .foregroundColor(.gray100)
                         .padding(.top, 10)
                         .padding(.bottom, 30)
                     
@@ -69,7 +69,7 @@ struct ItemDetailView: View {
                         
                         bottomItemInfoSection
                     } //VStack닫기
-                    .padding(.horizontal, 20.adjusted)
+                    .padding(.horizontal, 20)
                     .padding(.bottom, 40)
                 } // ScrollView닫기
             } // VStack닫기
@@ -115,7 +115,7 @@ struct ItemDetailView: View {
                     Image(systemName: "chevron.left")
                         .resizable()
                         .frame(width: 12, height: 21)
-                        .foregroundColor(Color("PrimaryGB"))
+                        .foregroundColor(.primaryGB)
                 }
             }
 
@@ -172,7 +172,7 @@ struct ItemDetailView: View {
                     .frame(width: 44, height: 44)
                 Image(systemName: "ellipsis")
                     .resizable()
-                    .foregroundColor(Color("PrimaryGB"))
+                    .foregroundColor(.primaryGB)
                     .frame(width: 22, height: 5)
             }
         } //Menu닫기
@@ -182,7 +182,7 @@ struct ItemDetailView: View {
         VStack(spacing: 0) {
             Image(receipt.icon)
                 .resizable()
-                .foregroundColor(Color("Gray200"))
+                .foregroundColor(.gray200)
                 .frame(width: 110, height: 110)
                 .padding(.vertical, 30)
             
@@ -190,7 +190,7 @@ struct ItemDetailView: View {
                 .font(.system(size: 22, weight: .bold))
                 .multilineTextAlignment(.center)
         }
-        .padding(.horizontal, 20.adjusted)
+        .padding(.horizontal, 20)
     }
     
     var radioButtonGroup: some View {
@@ -208,7 +208,7 @@ struct ItemDetailView: View {
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
                     .frame(height: 60)
-                    .foregroundColor(Color("Gray50"))
+                    .foregroundColor(.gray50)
                 
                 HStack {
                     ZStack {
@@ -237,7 +237,7 @@ struct ItemDetailView: View {
                     Text("기본")
                         .font(.pretendard(.semiBold, size: 17))
                         .padding(.leading, 5)
-                        .foregroundColor(Color("Gray900"))
+                        .foregroundColor(.gray900)
                     
                     Spacer()
                 }
@@ -264,7 +264,7 @@ struct ItemDetailView: View {
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
                     .frame(height: 60)
-                    .foregroundColor(Color("Gray50"))
+                    .foregroundColor(.gray50)
                 
                 HStack {
                     ZStack {
@@ -293,7 +293,7 @@ struct ItemDetailView: View {
                     Text("빨리 먹어야 해요")
                         .font(.pretendard(.semiBold, size: 17))
                         .padding(.leading, 5)
-                        .foregroundColor(Color("Gray900"))
+                        .foregroundColor(.gray900)
                     
                     Spacer()
                 }
@@ -319,7 +319,7 @@ struct ItemDetailView: View {
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
                     .frame(height: 60)
-                    .foregroundColor(Color("Gray50"))
+                    .foregroundColor(.gray50)
                 
                 HStack {
                     ZStack {
@@ -348,7 +348,7 @@ struct ItemDetailView: View {
                     Text("천천히 먹어도 돼요")
                         .font(.pretendard(.semiBold, size: 17))
                         .padding(.leading, 5)
-                        .foregroundColor(Color("Gray900"))
+                        .foregroundColor(.gray900)
                     
                     Spacer()
                 }
