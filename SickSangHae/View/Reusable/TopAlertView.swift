@@ -34,6 +34,8 @@ struct TopAlertBaseView: View {
     //  @GestureState private var dragOffset = CGSize.zero
     @ObservedObject var viewModel: TopAlertViewModel
 
+    // TODO: TopAlert의 애니메이션 이슈가 해결되면 드래그 기능을 다시 활용
+
     var body: some View {
         if viewModel.isAlertVisible {
             ZStack(alignment: .leading) {
@@ -60,13 +62,6 @@ struct TopAlertBaseView: View {
                 .padding(.horizontal, 14)
             }
             .padding(.horizontal, 20)
-//            .offset(y: max(dragOffset.height, 0))
-//            .gesture (DragGesture()
-//                .updating($dragOffset, body: { (value, dragOffset, _) in
-//                    dragOffset = value.translation
-//                })
-//                    .onEnded(viewModel.onDragEnded)
-//            )
         }
     }
 }
