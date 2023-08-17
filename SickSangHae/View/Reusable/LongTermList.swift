@@ -93,6 +93,7 @@ Array(zip(listContentViewModel.itemList.indices, listContentViewModel.itemList.r
                         Text(item.name)
                             .font(.system(size: 17).weight(.semibold))
                             .foregroundColor(Color("Gray900"))
+                            .frame(height: 17)
                         
                         Spacer()
                         

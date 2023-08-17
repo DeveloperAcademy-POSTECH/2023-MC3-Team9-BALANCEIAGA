@@ -130,6 +130,7 @@ private struct ListContent: View {
                     Text(item.name)
                         .font(.system(size: 17).weight(.semibold))
                         .foregroundColor(Color("Gray900"))
+                        .frame(height: 17)
                     
                     Spacer()
                     
