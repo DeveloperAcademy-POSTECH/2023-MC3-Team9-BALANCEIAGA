@@ -31,7 +31,7 @@ struct NotificationBaseView: View {
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 0) {
             Spacer().frame(height: 10.adjusted)
             HStack {
                 Button {
@@ -77,7 +77,7 @@ struct radioButtonView: View {
         Button {
             selectedIndex = index
         } label: {
-            ZStack(alignment: .bottom) {
+          VStack(spacing: 0) {
                 HStack(spacing: 16.adjusted) {
                     ZStack {
                         Circle()
