@@ -29,7 +29,7 @@ struct SmallButtonView: View {
                             Rectangle()
                                 .stroke(lineWidth: 0)
                                 .background(Color("PrimaryG"))
-                                .cornerRadius(15)
+                                .cornerRadius(16)
                             Text("먹었어요😋")
                         }
                     }
@@ -50,14 +50,13 @@ struct SmallButtonView: View {
                             Rectangle()
                                 .stroke(lineWidth: 0)
                                 .background(Color("SmallButton"))
-                                .cornerRadius(15)
+                                .cornerRadius(16)
                             Text("상했어요🤢")
                         }
                     }
                     .buttonStyle(CustomButtonStyle())
                 }
-                .padding(EdgeInsets(top: 20.adjusted, leading: 20.adjusted, bottom: 20.adjusted, trailing: 20.adjusted))
-                // Figma 화면과 비슷한 배율로 그리려면 top padding 15로 해야함
+                .padding(EdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20))
             }
         }
     }
@@ -66,7 +65,7 @@ struct SmallButtonView: View {
         func makeBody(configuration: Configuration) -> some View {
             configuration.label
                 .fontWeight(.heavy)
-                .frame(width: 167.adjusted, height: 60.adjusted)
+                .frame(width: 167.adjusted, height: 55)
                 .foregroundColor(.white)
                 .opacity(configuration.isPressed ? 0.7 : 1)
         }

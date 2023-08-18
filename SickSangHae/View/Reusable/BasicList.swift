@@ -12,11 +12,12 @@ struct BasicList: View {
     @State var isDescending = true
     
     @State var appState: AppState
+
     
     var body: some View {
         ScrollView {
             PinnedListTitle
-            ListContent(coreDataViewModel: coreDataViewModel, listContentViewModel: ListContentViewModel(status: .shortTermPinned, itemList: coreDataViewModel.shortTermPinnedList), isDescending: true, appState: appState)
+            pinnedListContent(pinnedList: ListContentViewModel(status: .shortTermPinned, itemList: coreDataViewModel.shortTermPinnedList))
             
             Rectangle()
                 .foregroundColor(.clear)
@@ -24,7 +25,7 @@ struct BasicList: View {
                 .background(Color("Gray100"))
             
             BasicListTitle
-            ListContent(coreDataViewModel: coreDataViewModel, listContentViewModel: ListContentViewModel(status: .shortTermUnEaten, itemList: coreDataViewModel.shortTermUnEatenList), isDescending: isDescending, appState: appState)
+            basicListContent(basicList: ListContentViewModel(status: .shortTermUnEaten, itemList: coreDataViewModel.shortTermUnEatenList), isDesecending: isDescending)
             
         }
         .listStyle(.plain)
@@ -67,6 +68,32 @@ struct BasicList: View {
             .padding(.vertical, 17)
             .padding(.horizontal, 20)
         }
+    
+    func pinnedListContent(pinnedList: ListContentViewModel) -> some View {
+        return ForEach(pinnedList.itemList, id: \.self) { item in
+                VStack {
+                    listCell(item: item, appState: appState)
+                    
+                    Divider()
+                        .overlay(Color("Gray100"))
+                        .opacity(item == pinnedList.itemList.last ? 0 : 1)
+                        .padding(.leading, 20)
+            }
+        }
+    }
+    
+    func basicListContent(basicList: ListContentViewModel, isDesecending: Bool) -> some View {
+        return ForEach(isDescending ? basicList.itemList : basicList.itemList.reversed(), id: \.self) { item in
+                VStack {
+                    listCell(item: item, appState: appState)
+                    
+                    Divider()
+                        .overlay(Color("Gray100"))
+                        .opacity(item == basicList.itemList.last ? 0 : 1)
+                        .padding(.leading, 20)
+            }
+        }
+    }
 }
 
 
@@ -143,6 +170,7 @@ extension View {
                     Text(item.name)
                         .font(.system(size: 17).weight(.semibold))
                         .foregroundColor(Color("Gray900"))
+                        .frame(height: 17)
                     
                     Spacer()
                     
