@@ -59,8 +59,9 @@ class CoreDataViewModel: ObservableObject {
     }
     
     var searchList: [Receipt] {
-        let lowerSearchText = searchText.lowercased()
-        return receipts.filter { $0.name.lowercased().contains(lowerSearchText) }
+        return receipts.filter {
+            $0.name.localizedCaseInsensitiveContains(searchText)
+        }
     }
     
     init() {

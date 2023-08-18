@@ -7,15 +7,11 @@
 
 import SwiftUI
 
-enum topTabBar{
-    case basic
-    case longterm
-}
-
 struct MainView: View {
-    @State var selectedTopTabBar: topTabBar = .basic
-    @State var text: String = ""
-    @State var isSearching = false
+//    @State var selectedTopTabBar: topTabBar = .basic
+//    @State var text: String = ""
+//    @State var isSearching = false
+    @StateObject var mainViewModel: MainViewModel = MainViewModel()
     
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
     
@@ -27,31 +23,31 @@ struct MainView: View {
             Spacer()
                 .frame(height: 32)
             
-            if text.isEmpty && isSearching == false {
-                HStack(alignment: .top) {
-                    Button{
-                        selectedTopTabBar = .basic
-                    } label: {
-                        Text("일반 보관")
-                            .font(.pretendard(.bold, size: 28))
-                            .foregroundColor(selectedTopTabBar == .basic ? Color("PrimaryGB") : Color("Gray200"))
+            switch mainViewModel.searchingStatus {
+            case .notSearching:
+                    HStack(alignment: .top) {
+                        Button {
+                            mainViewModel.changeSelectedTopTabBar(to: topTabBar.basic)
+                        } label: {
+                            Text("일반 보관")
+                                .font(.pretendard(.bold, size: 28))
+                                .foregroundColor(mainViewModel.selectedTopTabBar == topTabBar.basic ? Color("PrimaryGB") : Color("Gray200"))
+                        }
+                        
+                        Spacer()
+                            .frame(width: 15)
+                        
+                        Button{
+                            mainViewModel.changeSelectedTopTabBar(to: .longterm)
+                        } label: {
+                            Text("장기 보관")
+                                .font(.pretendard(.bold, size: 28))
+                                .foregroundColor(mainViewModel.selectedTopTabBar == .longterm ? Color("PrimaryGB") : Color("Gray200"))
+                        }
                     }
+                    .padding(.horizontal, 20)
                     
-                    Spacer()
-                        .frame(width: 15)
-                    
-                    Button{
-                        selectedTopTabBar = .longterm
-                    } label: {
-                        Text("장기 보관")
-                            .font(.pretendard(.bold, size: 28))
-                            .foregroundColor(selectedTopTabBar == .longterm ? Color("PrimaryGB") : Color("Gray200"))
-                    }
-                }
-                .padding(.horizontal, 20)
-                
-                
-            } else {
+            default:
                 Text("검색")
                     .font(.pretendard(.bold, size: 28))
                     .foregroundColor(Color("PrimaryGB"))
@@ -61,48 +57,49 @@ struct MainView: View {
             Spacer()
                 .frame(height: 20)
             
-            SearchBar(text: $text, isInputActive: $isSearching)
+            SearchBar(mainViewModel: mainViewModel)
                 .padding(.horizontal, 20)
                 .padding(.bottom, 10)
                 .onTapGesture {
                     withAnimation(.easeInOut(duration: 0.2)) {
-                        isSearching = true
+                        mainViewModel.isFocused = true
                     }
                 }
-                .onChange(of: text) { _ in
+                .onChange(of: mainViewModel.text) { _ in
                     withAnimation(.easeIn(duration: 0.2)) {
-                        coreDataViewModel.searchText = text
+                        coreDataViewModel.searchText = mainViewModel.text
                     }
                 }
             
-            if text.isEmpty && isSearching == false {
-                switch selectedTopTabBar {
+            switch mainViewModel.searchingStatus {
+            case .notSearching:
+                    switch mainViewModel.selectedTopTabBar {
                 case .basic:
                     BasicList(appState: appState)
                 case .longterm:
-                    LongTermList(coreDataViewModel: coreDataViewModel, listContentViewModel: ListContentViewModel(status: .longTermUnEaten, itemList: coreDataViewModel.longTermUnEatenList), appState: appState)
+                        LongTermList(coreDataViewModel: coreDataViewModel, appState: appState)
                 }
-            } else {
-                SearchView(appState: appState, coreDataViewModel: coreDataViewModel)
-                    .onTapGesture {
-                        withAnimation (.easeInOut(duration: 0.2)){
-                            if text.isEmpty {
-                                isSearching = false
+            default:
+                Group {
+                    SearchView(appState: appState, coreDataViewModel: coreDataViewModel)
+                        .onTapGesture {
+                            withAnimation (.easeInOut(duration: 0.2)){
+                                if mainViewModel.text.isEmpty {
+                                    mainViewModel.isFocused = false
+                                }
+                                endTextEditing()
                             }
-                            endTextEditing()
                         }
-                    }
-                Spacer()
-            }
+                    Spacer()
+                }
+        }
         }
     }
 }
 
 struct SearchBar: View {
-    @Binding var text: String
+    @ObservedObject var mainViewModel: MainViewModel
     @State private var isShowCancelButton = false
-    
-    @Binding var isInputActive: Bool
     
     var body: some View {
         HStack {
@@ -115,27 +112,28 @@ struct SearchBar: View {
                         .foregroundColor(Color("Gray200"))
                     
                     ZStack(alignment: .leading) {
-                        if text.isEmpty {
+                        if mainViewModel.text.isEmpty {
                             Text("식재료 검색")
                                 .foregroundColor(Color("Gray200"))
                         }
                         HStack {
-                            TextField("", text: $text)
-                                .onChange(of: isInputActive) { newValue in
-                                    if (!text.isEmpty || isInputActive) {
-                                        withAnimation(.easeInOut(duration: 0.2)) {
-                                            isShowCancelButton = true
-                                        }
-                                    } else {
-                                        withAnimation(.easeInOut(duration: 0.2)) {
-                                            isShowCancelButton = false
-                                        }
+                            TextField("", text: $mainViewModel.text)
+                                .onChange(of: mainViewModel.isFocused) { _ in
+                                    switch mainViewModel.searchingStatus {
+                                    case .searching:
+                                            withAnimation(.easeInOut(duration: 0.2)) {
+                                                isShowCancelButton = true
+                                            }
+                                    default:
+                                            withAnimation(.easeInOut(duration: 0.2)) {
+                                                isShowCancelButton = false
+                                            }
                                     }
                                 }
                             
-                            if !text.isEmpty && isInputActive {
+                            if (mainViewModel.searchingStatus == .searching) || (mainViewModel.searchingStatus == .filled) {
                                 Button(action: {
-                                    self.text = ""
+                                    mainViewModel.text = ""
                                 }) {
                                     Image(systemName: "xmark.circle.fill")
                                         .foregroundColor(Color("Gray200"))
@@ -147,11 +145,11 @@ struct SearchBar: View {
                 .padding(.horizontal, 10)
             }
             
-            if isShowCancelButton {
+            if mainViewModel.searchingStatus != .notSearching {
                 Button(action: {
                     withAnimation(.easeInOut(duration: 0.2)) {
-                        isInputActive = false
-                        self.text = ""
+                        mainViewModel.isFocused = false
+                        mainViewModel.text = ""
                         endTextEditing()
                     }
                 }, label: {
