@@ -37,7 +37,6 @@ struct TabBarView: View {
         NavigationStack{
             VStack(spacing: 0) {
                 selectedTab.view
-                    .environmentObject(coreDataViewModel)
 
                 CustomTabView(selectedTab: $selectedTab, appState: appState)
             }
@@ -67,19 +66,20 @@ struct CustomTabView: View {
     @Binding var selectedTab: Tab
     @State var isActive = false
     @EnvironmentObject private var cameraViewModelShared: CameraViewModel
-
+    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    
     let appState: AppState
     var body: some View {
-        VStack(spacing: 0) {
+        ZStack(alignment: .bottom) {
             switch selectedTab {
             case .mainView:
                 Button {
                     isActive = true
                 } label: {
                     ZStack {
-                      ScanButton(cornerRadius: 15)
+                      ScanButton(cornerRadius: 16)
                         .fill(LinearGradient(gradient: Gradient(colors: [Color("PrimaryG"), Color("PrimaryB")]), startPoint: .leading, endPoint: .trailing))
-                        .frame(width: screenWidth, height: 55)
+                        .frame(width: screenWidth, height: 61)
                       
                       HStack {
                         Image(systemName: "camera.viewfinder")
@@ -87,7 +87,9 @@ struct CustomTabView: View {
                               .font(.pretendard(.semiBold, size: 17))
                       }
                       .foregroundColor(.white)
+                      .padding(.bottom, 6)
                     }
+                    .padding(.bottom, 64)
                 }
                 .navigationDestination(isPresented: $isActive, destination: {
                     CameraView(appState: appState)
@@ -105,32 +107,39 @@ struct CustomTabView: View {
 
             }
             
-            Spacer()
-                .frame(height: 8)
-
-            HStack {
-                TabItem(selectedTabType: .mainView, imageName: selectedTab == .mainView ? "RefActive" : "RefDisActive", title: "냉장고")
+            ZStack {
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(.white)
+                    .frame(maxHeight: 70)
                 
-                Spacer()
-
-                TabItem(selectedTabType: .historyView, imageName: selectedTab == .historyView ? "HistoryActive" : "HistoryDisActive", title: "식기록")
-                
-                Spacer()
-
-                TabItem(selectedTabType: .chartView, imageName: selectedTab == .chartView ? "ChartActive" : "ChartDisActive", title: "식통계")
-                
-                Spacer()
-                
-                TabItem(selectedTabType: .settingView, imageName: selectedTab == .settingView ? "SettingActive" : "SettingDisActive", title: "설정")
-
+                HStack {
+                    TabItem(selectedTabType: .mainView, imageName: selectedTab == .mainView ? "RefActive" : "RefDisActive", title: "냉장고")
+                    
+                    Spacer()
+                    
+                    TabItem(selectedTabType: .historyView, imageName: selectedTab == .historyView ? "HistoryActive" : "HistoryDisActive", title: "식기록")
+                    
+                    Spacer()
+                    
+                    TabItem(selectedTabType: .chartView, imageName: selectedTab == .chartView ? "ChartActive" : "ChartDisActive", title: "식통계")
+                    
+                    Spacer()
+                    
+                    TabItem(selectedTabType: .settingView, imageName: selectedTab == .settingView ? "SettingActive" : "SettingDisActive", title: "설정")
+                    
+                }
+                .frame(minWidth: 300, maxWidth: 360)
+                .padding(.horizontal, 24)
             }
-            .frame(minWidth: 300, maxWidth: 360)
-            .padding(.horizontal, 24)
+            
             
             Spacer()
                 .frame(height: 4)
         }
         .frame(width: screenWidth)
+        .onChange(of: selectedTab) { _ in
+            coreDataViewModel.searchText = ""
+        }
     }
 
     func TabItem(selectedTabType: Tab, imageName: String, title: String) -> some View{

@@ -12,11 +12,12 @@ struct BasicList: View {
     @State var isDescending = true
     
     @State var appState: AppState
+
     
     var body: some View {
         ScrollView {
             PinnedListTitle
-            ListContent(coreDataViewModel: coreDataViewModel, listContentViewModel: ListContentViewModel(status: .shortTermPinned, itemList: coreDataViewModel.shortTermPinnedList), isDescending: true, appState: appState)
+            pinnedListContent(pinnedList: ListContentViewModel(status: .shortTermPinned, itemList: coreDataViewModel.shortTermPinnedList))
             
             Rectangle()
                 .foregroundColor(.clear)
@@ -24,7 +25,7 @@ struct BasicList: View {
                 .background(Color("Gray100"))
             
             BasicListTitle
-            ListContent(coreDataViewModel: coreDataViewModel, listContentViewModel: ListContentViewModel(status: .shortTermUnEaten, itemList: coreDataViewModel.shortTermUnEatenList), isDescending: isDescending, appState: appState)
+            basicListContent(basicList: ListContentViewModel(status: .shortTermUnEaten, itemList: coreDataViewModel.shortTermUnEatenList), isDesecending: isDescending)
             
         }
         .listStyle(.plain)
@@ -67,6 +68,32 @@ struct BasicList: View {
             .padding(.vertical, 17)
             .padding(.horizontal, 20)
         }
+    
+    func pinnedListContent(pinnedList: ListContentViewModel) -> some View {
+        return ForEach(pinnedList.itemList, id: \.self) { item in
+                VStack {
+                    listCell(item: item, appState: appState)
+                    
+                    Divider()
+                        .overlay(Color("Gray100"))
+                        .opacity(item == pinnedList.itemList.last ? 0 : 1)
+                        .padding(.leading, 20)
+            }
+        }
+    }
+    
+    func basicListContent(basicList: ListContentViewModel, isDesecending: Bool) -> some View {
+        return ForEach(isDescending ? basicList.itemList : basicList.itemList.reversed(), id: \.self) { item in
+                VStack {
+                    listCell(item: item, appState: appState)
+                    
+                    Divider()
+                        .overlay(Color("Gray100"))
+                        .opacity(item == basicList.itemList.last ? 0 : 1)
+                        .padding(.leading, 20)
+            }
+        }
+    }
 }
 
 
@@ -80,7 +107,7 @@ private struct ListContent: View {
     
     @State var isDescending: Bool
     
-    let appState: AppState
+    @State var appState: AppState
     
     init(coreDataViewModel: CoreDataViewModel, listContentViewModel: ListContentViewModel, isDescending: Bool, appState: AppState) {
         self.coreDataViewModel = coreDataViewModel
@@ -90,10 +117,9 @@ private struct ListContent: View {
     }
     
     var body: some View {
-        ForEach(listContentViewModel.itemList, id:\.self) { item in
+        ForEach(listContentViewModel.itemList) { item in
             VStack {
-                listCell(item: item)
-                
+                listCell(item: item, appState: appState)
                 
                 Divider()
                     .overlay(Color("Gray100"))
@@ -104,11 +130,25 @@ private struct ListContent: View {
         }
     }
     
+}
+
+class ListContentViewModel: ObservableObject {
     
-    func listCell(item: Receipt) -> some View {
+    let status: Status
+    @Published var itemList: [Receipt]
+    @Published var offsets: [CGFloat]
+    
+    init(status: Status, itemList: [Receipt]) {
+        self.status = status
+        self.itemList = itemList
+        self.offsets = [CGFloat](repeating: 0, count: itemList.count)
+    }
+}
+
+extension View {
+    func listCell(item: Receipt, appState: AppState) -> some View {
         return NavigationLink {
             ItemDetailView(topAlertViewModel: TopAlertViewModel(name: item.name, changedStatus: item.currentStatus), receipt: item, appState: appState, needToEatASAP: item.currentStatus)
-                .environmentObject(coreDataViewModel)
         } label: {
             ZStack {
                 Rectangle()
@@ -145,18 +185,6 @@ private struct ListContent: View {
     }
 }
 
-class ListContentViewModel: ObservableObject {
-    
-    let status: Status
-    @Published var itemList: [Receipt]
-    @Published var offsets: [CGFloat]
-    
-    init(status: Status, itemList: [Receipt]) {
-        self.status = status
-        self.itemList = itemList
-        self.offsets = [CGFloat](repeating: 0, count: itemList.count)
-    }
-}
 
 struct BasicList_Previews: PreviewProvider {
     static let previewCoreDataViewModel = CoreDataViewModel()

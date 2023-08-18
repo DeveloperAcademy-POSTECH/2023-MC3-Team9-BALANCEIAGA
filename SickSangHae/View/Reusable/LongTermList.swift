@@ -9,27 +9,16 @@ import SwiftUI
 
 struct LongTermList: View {
     @ObservedObject var coreDataViewModel: CoreDataViewModel
-    @ObservedObject var listContentViewModel: ListContentViewModel
     @State private var isDescending = true
     
     let appState: AppState
     
-    init(coreDataViewModel: CoreDataViewModel, listContentViewModel: ListContentViewModel, appState: AppState) {
-        self.coreDataViewModel = coreDataViewModel
-        self.listContentViewModel = listContentViewModel
-        self.appState = appState
-    }
-    
-    var sortedReceipts: Array<(Int, Receipt)> {
-        isDescending ? Array(zip(listContentViewModel.itemList.indices, listContentViewModel.itemList)) :
-Array(zip(listContentViewModel.itemList.indices, listContentViewModel.itemList.reversed()))
-    }
 
     var body: some View {
 
         ScrollView {
             ListTitle
-            ListContents
+            longtermListContent(longTermList: ListContentViewModel(status: .longTermUnEaten, itemList: coreDataViewModel.longTermUnEatenList), isDesecending: isDescending)
         }
         .listStyle(.plain)
     }
@@ -58,12 +47,16 @@ Array(zip(listContentViewModel.itemList.indices, listContentViewModel.itemList.r
         .padding([.top, .bottom], 17)
         .padding(.leading, 20)
     }
-
-    private var ListContents: some View {
-        Group {
-            ForEach( listContentViewModel.itemList,
-                     id:\.self) { item in
-                listCell(item: item)
+    
+    func longtermListContent(longTermList: ListContentViewModel, isDesecending: Bool) -> some View {
+        return ForEach(isDescending ? longTermList.itemList : longTermList.itemList.reversed(), id: \.self) { item in
+            VStack {
+                listCell(item: item, appState: appState)
+                
+                Divider()
+                    .overlay(Color("Gray100"))
+                    .opacity(item == longTermList.itemList.last ? 0 : 1)
+                    .padding(.leading, 20)
             }
         }
     }
@@ -105,12 +98,6 @@ Array(zip(listContentViewModel.itemList.indices, listContentViewModel.itemList.r
                     .padding([.top, .bottom], 8)
                 }
             }
-            
-            Divider()
-                .overlay(Color("Gray100"))
-                .opacity(item == listContentViewModel.itemList.last ? 0 : 1)
-                .padding(.leading, 20)
-            
         }
     }
 }
