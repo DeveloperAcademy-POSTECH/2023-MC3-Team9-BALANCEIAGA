@@ -15,6 +15,8 @@
 		02137F0D2A778B26001C3469 /* NotificationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02137F0C2A778B26001C3469 /* NotificationModel.swift */; };
 		02137F0F2A778B71001C3469 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02137F0E2A778B71001C3469 /* NotificationViewModel.swift */; };
 		02137F112A779AA7001C3469 /* Gradient+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02137F102A779AA7001C3469 /* Gradient+Extension.swift */; };
+		021F4B5B2AB959CE00434DF3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 021F4B5A2AB959CE00434DF3 /* GoogleService-Info.plist */; };
+		023DDF3F2AB07F7F00AD51F0 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 023DDF3E2AB07F7F00AD51F0 /* FirebaseAnalytics */; };
 		027E96732A56AB5E0066BA8F /* SickSangHaeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027E96722A56AB5E0066BA8F /* SickSangHaeApp.swift */; };
 		027E96772A56AB5F0066BA8F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 027E96762A56AB5F0066BA8F /* Assets.xcassets */; };
 		027E967A2A56AB5F0066BA8F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 027E96792A56AB5F0066BA8F /* Preview Assets.xcassets */; };
@@ -93,6 +95,7 @@
 		02137F0C2A778B26001C3469 /* NotificationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationModel.swift; sourceTree = "<group>"; };
 		02137F0E2A778B71001C3469 /* NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
 		02137F102A779AA7001C3469 /* Gradient+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Gradient+Extension.swift"; sourceTree = "<group>"; };
+		021F4B5A2AB959CE00434DF3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		025E92752A6C7254003DFA03 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		027E966F2A56AB5E0066BA8F /* SickSangHae.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SickSangHae.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		027E96722A56AB5E0066BA8F /* SickSangHaeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SickSangHaeApp.swift; sourceTree = "<group>"; };
@@ -160,6 +163,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				023DDF3F2AB07F7F00AD51F0 /* FirebaseAnalytics in Frameworks */,
 				7C16FB352A70F1450025BC20 /* OpenAI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -195,6 +199,7 @@
 		027E96712A56AB5E0066BA8F /* SickSangHae */ = {
 			isa = PBXGroup;
 			children = (
+				021F4B5A2AB959CE00434DF3 /* GoogleService-Info.plist */,
 				025E92752A6C7254003DFA03 /* Info.plist */,
 				027E96852A56ACA90066BA8F /* Application */,
 				027E96832A56ABBA0066BA8F /* Global */,
@@ -362,6 +367,7 @@
 			name = SickSangHae;
 			packageProductDependencies = (
 				7C16FB342A70F1450025BC20 /* OpenAI */,
+				023DDF3E2AB07F7F00AD51F0 /* FirebaseAnalytics */,
 			);
 			productName = SickSangHae;
 			productReference = 027E966F2A56AB5E0066BA8F /* SickSangHae.app */;
@@ -415,6 +421,7 @@
 			mainGroup = 027E96662A56AB5E0066BA8F;
 			packageReferences = (
 				7C16FB332A70F1450025BC20 /* XCRemoteSwiftPackageReference "OpenAI" */,
+				023DDF3D2AB07F7F00AD51F0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 027E96702A56AB5E0066BA8F /* Products */;
 			projectDirPath = "";
@@ -437,6 +444,7 @@
 				027E96772A56AB5F0066BA8F /* Assets.xcassets in Resources */,
 				02EC28232A6FF1EE00DAFCFA /* Pretendard-Medium.otf in Resources */,
 				02EC28242A6FF1EE00DAFCFA /* Pretendard-SemiBold.otf in Resources */,
+				021F4B5B2AB959CE00434DF3 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -791,6 +799,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		023DDF3D2AB07F7F00AD51F0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
 		7C16FB332A70F1450025BC20 /* XCRemoteSwiftPackageReference "OpenAI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/MacPaw/OpenAI.git";
@@ -802,6 +818,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		023DDF3E2AB07F7F00AD51F0 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 023DDF3D2AB07F7F00AD51F0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
 		7C16FB342A70F1450025BC20 /* OpenAI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 7C16FB332A70F1450025BC20 /* XCRemoteSwiftPackageReference "OpenAI" */;
