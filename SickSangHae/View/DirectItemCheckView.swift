@@ -20,32 +20,49 @@ struct DirectItemCheckView: View {
         NavigationStack {
             ZStack(alignment: .top) {
                 VStack {
-                    HStack {
-                        Button(action:{dismiss()}, label: {
-                            Image(systemName: "chevron.left")
-                                .resizable()
-                                .frame(width: 10, height: 19)
+                    ZStack(alignment: .top){
+                        ZigZagShape()
+                            .fill(Color.gray50)
+                            .ignoresSafeArea()
+                            .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: 185)
+                        VStack{
+                            HStack {
+                                Button(action:{dismiss()}, label: {
+                                    Image(systemName: "chevron.left")
+                                        .resizable()
+                                        .frame(width: 10, height: 19)
+                                        .foregroundColor(.gray900)
+                                })
+                                
+                                Spacer()
+                                
+                                Text("직접 추가")
+                                    .foregroundColor(Color("Gray900"))
+                                    .font(.system(size: 17.adjusted)
+                                        .weight(.bold))
+                                
+                                Spacer()
+                                
+                                Button(action: {
+                                    self.appState.moveToRootView = true
+                                    
+                                }, label: {
+                                    Image(systemName: "xmark")
+                                        .resizable()
+                                        .frame(width: 15, height: 15)
+                                })
                                 .foregroundColor(.gray900)
-                        })
-
-                        Spacer()
-                        Button(action: {
-                            self.appState.moveToRootView = true
-
-                        }, label: {
-                            Image(systemName: "xmark")
-                                .resizable()
-                                .frame(width: 15, height: 15)
-                        })
-                        .foregroundColor(.gray900)
-                    }.padding(.horizontal, 20)
-
-                    HStack {
-                        Text("아래 식료품을 등록할게요")
-                            .fontWeight(.bold)
-                            .padding(34)
+                            }.padding(.horizontal, 20)
+                            
+                            HStack {
+                                Text("아래 식료품을 등록할게요")
+                                    .foregroundColor(Color("Gray400"))
+                                    .fontWeight(.bold)
+                                    .padding(34)
+                            }
+                        }
                     }
-
+                    
                     ListTitle
 
                     ScrollView{
@@ -145,6 +162,50 @@ struct DirectItemCheckView: View {
         viewModel.itemBlockViewModels.forEach { item in
             coreDataViewModel.createReceiptData(name: item.name, price: abs(Double(item.price)), date: viewModel.date)
         }
+    }
+}
+
+struct ZigZagShape: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+
+        let width = rect.size.width
+        let height = rect.size.height
+        
+        let zigZagWidth: CGFloat = 7
+        let zigZagHeight: CGFloat = 5
+        var yInitial = height - zigZagHeight
+        
+        path.move(to: CGPoint(x: 0, y: 0))
+        path.addLine(to: CGPoint(x: 0, y: yInitial))
+        
+        var slope = -1
+        var x: CGFloat = 0
+        var i = 0
+        while x < width {
+            x = zigZagWidth * CGFloat(i)
+            let p = zigZagHeight * CGFloat(slope)
+            let y = yInitial + p
+            path.addLine(to: CGPoint(x: x, y: y))
+            slope = slope * (-1)
+            i += 1
+        }
+        
+        path.addLine(to: CGPoint(x: width, y: 0))
+        
+        yInitial = 0 + zigZagHeight
+        x = CGFloat(width)
+        i = 0
+        while x > 0 {
+            x = width - (zigZagWidth * CGFloat(i))
+            let p = zigZagHeight * CGFloat(slope)
+            let y = yInitial + p
+            path.addLine(to: CGPoint(x: x, y: y))
+            slope = slope * (-1)
+            i += 1
+        }
+
+        return path
     }
 }
 
