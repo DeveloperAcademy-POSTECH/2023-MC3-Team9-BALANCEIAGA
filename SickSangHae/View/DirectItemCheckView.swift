@@ -114,14 +114,8 @@ struct DirectItemCheckView: View {
     }
 
     private var ListContents: some View{
-        ZStack{
-            RoundedRectangle(cornerRadius: 15)
-                .foregroundColor(Color("Gray50"))
-                .padding(.horizontal, 20)
-
             VStack{
-
-                listDetail(listTraling: "품목", listLeading: "금액", listColor: "Gray400")
+                listDetail(listTraling: "품목", listLeading: "금액")
                     .padding(.horizontal, 40)
                     .padding(.top)
 
@@ -130,28 +124,26 @@ struct DirectItemCheckView: View {
 
                 ForEach(viewModel.itemBlockViewModels, id: \.self) { item in
 
-                    listDetail(listTraling: item.name, listLeading: String(item.price), listColor: "Gray900")
+                    listDetail(listTraling: item.name, listLeading: String(item.price))
 
                     Divider()
                         .overlay(Color("Gray100"))
                 }
                 .padding(.horizontal, 40.adjusted)
             }
-        }
     }
 
 
     // TODO: listTraling에 품목을, listLeading에 금액을 넣어야 해요.
-    private func listDetail(listTraling: String, listLeading: String, listColor: String) -> some View{
+    private func listDetail(listTraling: String, listLeading: String) -> some View{
         return HStack{
             Text(listTraling)
-                .foregroundColor(Color(listColor))
                 .font(.system(size: 17.adjusted).weight(.semibold))
 
             Spacer()
 
-            Text(listLeading)
-                .foregroundColor(Color(listColor))
+            Text(listLeading + "원")
+                .foregroundColor(Color.gray800)
                 .font(.system(size: 14.adjusted).weight(.semibold))
         }
         .padding([.top, .bottom], 8.adjusted)
