@@ -35,18 +35,20 @@ struct OCRUpdateItemView: View {
                                             proxy.scrollTo(bottomID, anchor: .bottom)
                                         }
                                     }
-                                    addItemButton
-                                        .onTapGesture {
-                                            withAnimation {
-                                                addItemBlockView()
-                                            }
-                                        }
-                                        .id(bottomID)
                                 }
                             }
                         }
                         Spacer()
-                        nextButton
+                            HStack{
+                                addItemButton
+                                    .onTapGesture {
+                                        withAnimation {
+                                            addItemBlockView()
+                                        }
+                                    }
+                                    .id(bottomID)
+                                nextButton
+                            }
                     }
                     if viewModel.isDatePickerOpen {
                         DatePickerView(viewModel: viewModel)
@@ -92,7 +94,7 @@ struct OCRUpdateItemView: View {
     private var addItemButton: some View {
         ZStack {
             Rectangle()
-                .frame(width: 350, height: 60)
+                .frame(maxWidth: 250, maxHeight: 60)
                 .foregroundColor(.lightGrayColor)
                 .cornerRadius(12)
             
@@ -103,7 +105,8 @@ struct OCRUpdateItemView: View {
             .bold()
             .foregroundColor(.accentColor)
         }
-        .padding(.top, 15)
+        .padding(.leading, 20)
+        .padding(.bottom, 34.adjusted)
     }
     
     private var nextButton: some View {
@@ -116,13 +119,14 @@ struct OCRUpdateItemView: View {
             ZStack{
                 Rectangle()
                     .cornerRadius(12)
-                    .frame(height: 60.adjusted)
-                Text("수정완료")
+                    .frame(maxWidth: 88.adjusted, maxHeight: 60.adjusted)
+                Text("다음")
                     .foregroundColor(.white)
                     .font(.pretendard(.regular, size: 17))
             }
-            .padding([.leading, .trailing], 20.adjusted)
-            .padding(.bottom, 30.adjusted)
+            .padding(.trailing, 20.adjusted)
+            .padding(.leading, 12.adjusted)
+            .padding(.bottom, 34.adjusted)
         })
     }
 }

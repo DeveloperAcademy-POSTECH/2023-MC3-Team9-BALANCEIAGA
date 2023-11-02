@@ -22,26 +22,21 @@ struct OCRItemCheckView: View {
         NavigationStack {
             ZStack(alignment: .top) {
                 VStack {
-                    HStack {
-                        Image(systemName: "chevron.left")
-                            .frame(width: 8, height: 14.2)
-                        
-                        Spacer()
-                        
-                        Button(action: {
-                            self.appState.moveToRootView = true
-                        }, label: {
-                            Image(systemName: "xmark")
-                                .resizable()
-                                .frame(width: 15, height: 15)
-                        })
-                        .foregroundColor(.gray900)
-                    }.padding(.horizontal, 20)
-                    
-                    HStack {
-                        Text("아래 식료품을 등록할게요")
-                            .font(.pretendard(.semiBold, size: 22))
-                            .padding(34)
+                    ZStack(alignment: .top){
+                        ZigZagShape()
+                            .fill(Color.gray50)
+                            .ignoresSafeArea()
+                            .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: 140)
+                        VStack{
+                            NavBar
+                            
+                            HStack {
+                                Text("아래 식료품을 등록할게요")
+                                    .foregroundColor(Color("Gray400"))
+                                    .font(.pretendard(.semiBold, size: 20))
+                                    .padding(34)
+                            }
+                        }
                     }
                     
                     ListTitle
@@ -83,6 +78,30 @@ struct OCRItemCheckView: View {
             }
         }
     }
+    private var NavBar: some View{
+        HStack {
+            Image(systemName: "chevron.left")
+                .frame(width: 8, height: 14.2)
+            
+            Spacer()
+            
+            Text("직접 추가")
+                .foregroundColor(Color("Gray900"))
+                .font(.system(size: 17.adjusted)
+                    .weight(.bold))
+            
+            Spacer()
+            
+            Button(action: {
+                self.appState.moveToRootView = true
+            }, label: {
+                Image(systemName: "xmark")
+                    .resizable()
+                    .frame(width: 15, height: 15)
+            })
+            .foregroundColor(.gray900)
+        }.padding(.horizontal, 20)
+    }
     private var ListTitle: some View {
         HStack{
             Text(viewModel.dateString)
@@ -113,32 +132,25 @@ struct OCRItemCheckView: View {
     }
     
     private var ListContents: some View{
-        ZStack{
-            RoundedRectangle(cornerRadius: 15)
-                .foregroundColor(Color("Gray50"))
-                .padding(.horizontal, 20)
+        VStack{
+            listDetail(listTraling: "품목", listLeading: "금액", listColor: "Gray400")
+                .padding(.horizontal, 40)
+                .padding(.top)
             
-            VStack{
+            Divider()
+                .overlay(Color("Gray100"))
+            
+            ForEach(0..<gptAnswer["상품명"]!.count, id: \.self) { index in
+                let productName = gptAnswer["상품명"]![index] as! String
+                let quantity = gptAnswer["수량"]![index] as! Int
+                let price = gptAnswer["금액"]![index] as! Int
                 
-                listDetail(listTraling: "품목", listLeading: "금액", listColor: "Gray400")
-                    .padding(.horizontal, 40)
-                    .padding(.top)
+                listDetail(listTraling: productName, listLeading: String(price) + "원", listColor: "Gray900")
                 
                 Divider()
                     .overlay(Color("Gray100"))
-
-                ForEach(0..<gptAnswer["상품명"]!.count, id: \.self) { index in
-                    let productName = gptAnswer["상품명"]![index] as! String
-                    let quantity = gptAnswer["수량"]![index] as! Int
-                    let price = gptAnswer["금액"]![index] as! Int
-
-                    listDetail(listTraling: productName, listLeading: String(price), listColor: "Gray900")
-                    
-                    Divider()
-                        .overlay(Color("Gray100"))
-                }
-                .padding(.horizontal, 40.adjusted)
             }
+            .padding(.horizontal, 40.adjusted)
         }
     }
     
@@ -167,9 +179,9 @@ struct OCRItemCheckView: View {
     }
 }
 
-//struct ItemCheckView_Previews: PreviewProvider {
-//
-//    static var previews: some View {
-//        ItemCheckView(gptAnswer: <#Binding<[String : [Any]]>#>, appState: <#AppState#>)
-//    }
-//}
+struct ItemCheckView_Previews: PreviewProvider {
+
+    static var previews: some View {
+        OCRItemCheckView(gptAnswer: .constant(["test": ["Test Value"]]), appState: AppState())
+    }
+}
