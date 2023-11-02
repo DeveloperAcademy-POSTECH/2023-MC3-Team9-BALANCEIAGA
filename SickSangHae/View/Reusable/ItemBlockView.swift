@@ -36,7 +36,7 @@ struct ItemBlockView: View {
                 }
                 .background(Color("PointR"))
                 .foregroundColor(.white)
-                .clipShape(RoundedRectangle(cornerRadius: 12))
+//                .clipShape(RoundedRectangle(cornerRadius: 12))
 //                .padding(.trailing, 20.adjusted)
                 .opacity(itemBlockViewModel.offset < 0 ? 1 : 0)
             }
@@ -47,9 +47,9 @@ struct ItemBlockView: View {
                 }
 
             Group {
-                Rectangle()
-                    .foregroundColor(.lightGrayColor)
-                    .cornerRadius(12)
+//                Rectangle()
+//                    .foregroundColor(.lightGrayColor)
+//                    .cornerRadius(12)
                 
                 VStack(alignment: .leading) {
                     HStack {
@@ -61,18 +61,15 @@ struct ItemBlockView: View {
                         }
                     }
                     
-                    HStack(spacing: 28.adjusted) {
-                        Text("품목")
-                            .padding(.leading,20)
-                        TextField("무엇을 구매했나요?", text: $itemBlockViewModel.name)
-                    }
-                    Divider().foregroundColor(.gray100)
-                    HStack(spacing: 28.adjusted) {
-                        Text("금액")
-                            .padding(.leading,20)
-                        TextField("얼마였나요?", value: $itemBlockViewModel.price, formatter: UpdateItemViewModel.priceFormatter)
-                            .keyboardType(.numberPad)
-                    }
+                    TextField("무엇을 구매했나요?", text: $itemBlockViewModel.name)
+                        .font(.pretendard(.semiBold, size: 17))
+                        .foregroundColor(Color.gray900)
+                    
+                    TextField("얼마였나요?", value: $itemBlockViewModel.price, formatter: UpdateItemViewModel.priceFormatter)
+                        .keyboardType(.numberPad)
+                        .font(.pretendard(.semiBold, size: 14))
+                        .foregroundColor(Color.gray400)
+                    
                     Spacer().frame(height: 10)
                     
                     if !itemBlockViewModel.areBothTextFieldsNotEmpty {
