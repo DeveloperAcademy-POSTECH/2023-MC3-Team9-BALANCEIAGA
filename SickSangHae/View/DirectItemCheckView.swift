@@ -124,7 +124,7 @@ struct DirectItemCheckView: View {
 
                 ForEach(viewModel.itemBlockViewModels, id: \.self) { item in
 
-                    listDetail(listTraling: item.name, listLeading: String(item.price))
+                    listDetail(listTraling: item.name, listLeading: String(item.price) + "원")
 
                     Divider()
                         .overlay(Color("Gray100"))
@@ -142,7 +142,7 @@ struct DirectItemCheckView: View {
 
             Spacer()
 
-            Text(listLeading + "원")
+            Text(listLeading)
                 .foregroundColor(Color.gray800)
                 .font(.system(size: 14.adjusted).weight(.semibold))
         }
