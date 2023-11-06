@@ -21,15 +21,12 @@ struct HistoryView: View {
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
-                HStack(spacing: 0) {
-                    Text("식기록")
-                        .font(.pretendard(.bold, size: 28))
-                        .foregroundColor(.primaryGB)
-                    
-                    Spacer()
-                } // HStack
-                .padding(.top, 30)
-                .padding(.horizontal, 20)
+                Text("식기록")
+                    .font(.pretendard(.bold, size: 28))
+                    .foregroundColor(.primaryGB)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 20)
+                    .padding(.top, 30)
                 
                 segmentedTabButton
                 
@@ -110,18 +107,42 @@ struct HistoryView: View {
             keys = Array(targetDictionary.keys.sorted(by: >))
         }
         
-        return ForEach(keys, id:\.self) { key in
-            VStack {
-                listTitle(itemDictionary: targetDictionary, key: key)
-                itemList(itemDictionary: targetDictionary, key: key)
-                
-                if keys.last != key {
-                    Rectangle()
-                        .foregroundColor(.gray100)
-                        .frame(height: 12)
+        let content: AnyView
+        
+        if keys.isEmpty {
+            content = AnyView(
+                VStack {
+                    Image(systemName: "tray")
+                        .resizable()
+                        .foregroundColor(.gray200)
+                        .frame(width: 80, height: 60)
+                        .padding(.top, screenHeight * 0.25)
+                    
+                    Text("현재 해당 식기록이 없어요")
+                        .foregroundColor(.gray200)
+                        .font(.pretendard(.bold, size: 17))
+                        .padding(.top, 20)
+                        .frame(maxWidth: .infinity, alignment: .center)
                 }
-            } // VStack
-        } // return
+            ) // AnyView
+        } else {
+            content = AnyView(
+                ForEach(keys, id:\.self) { key in
+                    VStack {
+                        listTitle(itemDictionary: targetDictionary, key: key)
+                        itemList(itemDictionary: targetDictionary, key: key)
+
+                        if keys.last != key {
+                            Rectangle()
+                                .foregroundColor(.gray100)
+                                .frame(height: 12)
+                        } // if
+                    } // VStack
+                } // ForEach
+            ) // AnyView
+        } // else
+        
+        return content
     } // listSection
     
     func listTitle(itemDictionary: [String: [Receipt]], key: String) -> some View {
