@@ -50,9 +50,6 @@ struct OCRUpdateItemView: View {
                                 nextButton
                             }
                     }
-                    if viewModel.isDatePickerOpen {
-                        DatePickerView(viewModel: viewModel)
-                    }
                 }
             }
         }
@@ -65,6 +62,10 @@ struct OCRUpdateItemView: View {
             self.endTextEditing()
         }
         .navigationBarBackButtonHidden(true)
+        .sheet(isPresented: $viewModel.isDatePickerOpen){
+            CalendarModalView(viewModel: viewModel)
+                .presentationDetents([.large, .fraction(0.65), .fraction(0.75)])
+        }
     }
     
     
@@ -95,7 +96,7 @@ struct OCRUpdateItemView: View {
         ZStack {
             Rectangle()
                 .frame(maxWidth: 250, maxHeight: 60)
-                .foregroundColor(.lightGrayColor)
+                .foregroundColor(Color.gray50)
                 .cornerRadius(12)
             
             HStack {
@@ -132,6 +133,34 @@ struct OCRUpdateItemView: View {
 }
 
 extension OCRUpdateItemView {
+    struct CalendarModalView: View {
+        @ObservedObject var viewModel: UpdateItemViewModel
+        
+        var body: some View {
+            VStack {
+                DatePicker("날짜 선택", selection: $viewModel.date, displayedComponents: .date)
+                    .datePickerStyle(GraphicalDatePickerStyle())
+                    .labelsHidden()
+                    .padding()
+                
+                ZStack {
+                    Rectangle()
+                        .frame(width: 350, height: 60)
+                        .foregroundColor(Color.gray50)
+                        .cornerRadius(12)
+                    Button {
+                        //
+                    } label: {
+                        Text("확인")
+                            .foregroundColor(.primaryGB)
+                            .bold()
+                    }
+                }
+                .padding(.bottom, 30)
+            }
+        }
+    }
+    
     struct DateSelectionView: View {
         @ObservedObject var viewModel: UpdateItemViewModel
         
