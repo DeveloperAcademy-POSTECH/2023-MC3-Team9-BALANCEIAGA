@@ -41,9 +41,7 @@ struct OCRItemCheckView: View {
                     
                     ListTitle
                     
-                    ScrollView{
-                        ListContents
-                    }
+                    ListContents
                     
                     Spacer()
                     
@@ -117,12 +115,12 @@ struct OCRItemCheckView: View {
                     RoundedRectangle(cornerRadius: 5)
                         .foregroundColor(Color("Gray100"))
                     
-                    Text("수정")
-                        .foregroundColor(Color("Gray600"))
+                    Text("편집")
+                        .foregroundColor(Color("Gray400"))
                         .font(.pretendard(.regular, size: 14.adjusted))
                 }
                 .frame(width: 45, height: 25)
-                .foregroundColor(Color("Gray600"))
+                .foregroundColor(Color("Gray100"))
                 .padding(.trailing, 20.adjusted)
             }
             
@@ -132,13 +130,18 @@ struct OCRItemCheckView: View {
     }
     
     private var ListContents: some View{
-        VStack{
-            listDetail(listTraling: "품목", listLeading: "금액", listColor: "Gray400")
-                .padding(.horizontal, 40)
-                .padding(.top)
+        List{
+            VStack{
+                listDetail(listTraling: "품목", listLeading: "금액", listColor: "Gray400")
+                    .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                
+                Divider()
+                    .background(Color.gray100)
+                    .listRowInsets(EdgeInsets())
+            }
+            .listRowInsets(EdgeInsets())
+            .padding(.bottom, 10)
             
-            Divider()
-                .overlay(Color("Gray100"))
             
             ForEach(0..<gptAnswer["상품명"]!.count, id: \.self) { index in
                 let productName = gptAnswer["상품명"]![index] as! String
@@ -146,12 +149,17 @@ struct OCRItemCheckView: View {
                 let price = gptAnswer["금액"]![index] as! Int
                 
                 listDetail(listTraling: productName, listLeading: String(price) + "원", listColor: "Gray900")
+                    .listRowInsets(EdgeInsets())
                 
                 Divider()
-                    .overlay(Color("Gray100"))
+                    .background(Color.gray100)
+                    .listRowInsets(EdgeInsets())
+                    .padding(.vertical, 5)
             }
-            .padding(.horizontal, 40.adjusted)
+            .listRowInsets(EdgeInsets())
+            .listRowSeparator(.hidden)
         }
+        .listStyle(.plain)
     }
     
     
@@ -168,7 +176,7 @@ struct OCRItemCheckView: View {
                 .foregroundColor(Color(listColor))
                 .font(.pretendard(.semiBold, size: 14.adjusted))
         }
-        .padding([.top, .bottom], 8.adjusted)
+        .padding(.horizontal, 20.adjusted)
     }
     
     
