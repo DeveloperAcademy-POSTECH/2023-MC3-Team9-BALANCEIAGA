@@ -76,7 +76,7 @@ struct OCRUpdateItemView: View {
                     .frame(width: 10, height: 19)
             })
             Spacer()
-            Text("수정하기")
+            Text("수정")
                 .font(.pretendard(.bold, size: 17))
             Spacer()
             Button(action: {
