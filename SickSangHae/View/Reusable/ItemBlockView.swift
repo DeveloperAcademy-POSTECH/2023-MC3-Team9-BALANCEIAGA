@@ -36,8 +36,6 @@ struct ItemBlockView: View {
                 }
                 .background(Color("PointR"))
                 .foregroundColor(.white)
-//                .clipShape(RoundedRectangle(cornerRadius: 12))
-//                .padding(.trailing, 20.adjusted)
                 .opacity(itemBlockViewModel.offset < 0 ? 1 : 0)
             }
             .onTapGesture {
@@ -47,19 +45,11 @@ struct ItemBlockView: View {
                 }
 
             Group {
-//                Rectangle()
-//                    .foregroundColor(.lightGrayColor)
-//                    .cornerRadius(12)
                 
+                HStack{
                 VStack(alignment: .leading) {
-                    HStack {
-                        Spacer()
-                        Button {
-                            deleteItem()
-                        } label: {
-                            Image(systemName: "xmark.circle")
-                        }
-                    }
+                    Spacer()
+                        .frame(maxHeight: 5)
                     
                     TextField("무엇을 구매했나요?", text: $itemBlockViewModel.name)
                         .font(.pretendard(.semiBold, size: 17))
@@ -70,22 +60,35 @@ struct ItemBlockView: View {
                         .font(.pretendard(.semiBold, size: 14))
                         .foregroundColor(Color.gray400)
                     
-                    Spacer().frame(height: 10)
+//                    Spacer().frame(height: 10)
                     
-                    if !itemBlockViewModel.areBothTextFieldsNotEmpty {
-                        Text("\(viewModel.showTextfieldStatus)을 입력하세요.")
-                            .font(.pretendard(.regular, size: 14))
-                            .foregroundColor(.pointR)
-                            .padding(.leading, 20.adjusted)
-                    }
-                    
-                    
+//                    if !itemBlockViewModel.areBothTextFieldsNotEmpty {
+//                        Text("\(viewModel.showTextfieldStatus)을 입력하세요.")
+//                            .font(.pretendard(.regular, size: 14))
+//                            .foregroundColor(.pointR)
+//                            .padding(.leading, 20.adjusted)
+//                    }
                 }
+                    Button {
+//                            isShowingUpdateItemView = true
+                    } label: {
+                        ZStack{
+                            RoundedRectangle(cornerRadius: 5)
+                                .foregroundColor(Color("Gray100"))
+                            
+                            Text("편집")
+                                .foregroundColor(Color("Gray600"))
+                                .font(.pretendard(.regular, size: 14.adjusted))
+                        }
+                        .frame(width: 60, height: 32)
+                        .foregroundColor(Color("Gray600"))
+                    }
+            }
             }
         .frame(height: 116.adjusted)
         .offset(x: itemBlockViewModel.offset)
         }
-        .padding(.horizontal, 20.adjusted)
+        .padding(.horizontal, 24.adjusted)
     }
 }
 extension ItemBlockView: Hashable, Equatable {
