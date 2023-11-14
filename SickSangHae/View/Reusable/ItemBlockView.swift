@@ -82,9 +82,14 @@ struct ItemBlockView: View {
     private var editModalView: some View {
         VStack(alignment: .leading) {
             
-            Image(systemName: "minus")
-                .frame(maxWidth: 36, maxHeight: 5)
-                .padding(.top, 12)
+            HStack{
+                Spacer()
+                RoundedRectangle(cornerRadius: CGFloat(2.5))
+                    .frame(width: 36, height: 5)
+                    .foregroundColor(Color(UIColor.tertiaryLabel))
+                    .padding(.top, 12)
+                Spacer()
+            }
             
             topBar
                 .padding(.bottom, 40)
@@ -100,13 +105,15 @@ struct ItemBlockView: View {
                 
                 Spacer()
                 
-                Button {
-                    itemBlockViewModel.name = ""
-                } label: {
-                    Image(systemName: "xmark.circle.fill")
-                        .foregroundColor(Color.gray400)
+                if itemBlockViewModel.name != ""{
+                    Button {
+                        itemBlockViewModel.name = ""
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundColor(Color.gray400)
+                    }
+                    .disabled(itemBlockViewModel.name.isEmpty)
                 }
-                .disabled(itemBlockViewModel.name.isEmpty)
             }
             .padding(.horizontal, 20)
             .frame(height: 60)
@@ -124,13 +131,15 @@ struct ItemBlockView: View {
                     .keyboardType(.numberPad)
                 
                 Spacer()
-                Button {
-                    itemBlockViewModel.price = 0
-                } label: {
-                    Image(systemName: "xmark.circle.fill")
-                        .foregroundColor(Color.gray400)
+                if itemBlockViewModel.price != 0{
+                    Button {
+                        itemBlockViewModel.price = 0
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundColor(Color.gray400)
+                    }
+                    .disabled(itemBlockViewModel.price == 0)
                 }
-                .disabled(itemBlockViewModel.price == 0)
             }
             .padding(.horizontal, 20)
             .frame(height: 60)
