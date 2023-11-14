@@ -28,28 +28,26 @@ struct OCRUpdateItemView: View {
                         VStack(spacing: 0) {
                             ScrollViewReader { proxy in
                                 ScrollView(.vertical) {
-                                        ForEach(viewModel.itemBlockViewModels, id: \.self) { item in
-                                            ItemBlockView(viewModel: viewModel, itemBlockViewModel: item)
-                                    .onChange(of: viewModel.itemBlockViewModels) { _ in
-                                        withAnimation {
-                                            proxy.scrollTo(bottomID, anchor: .bottom)
-                                        }
+                                    ForEach(viewModel.itemBlockViewModels, id: \.self) { item in
+                                        ItemBlockView(viewModel: viewModel, itemBlockViewModel: item)
+                                            .onChange(of: viewModel.itemBlockViewModels) { _ in
+                                                withAnimation {
+                                                    proxy.scrollTo(bottomID, anchor: .bottom)
+                                                }
+                                            }
                                     }
                                 }
                             }
-                        }
-                        Spacer()
-                            HStack{
-                                addItemButton
-                                    .onTapGesture {
-                                        withAnimation {
-                                            addItemBlockView()
-                                        }
+                            Spacer()
+                            addItemButton
+                                .onTapGesture {
+                                    withAnimation {
+                                        addItemBlockView()
                                     }
-                                    .id(bottomID)
-                                nextButton
-                            }
-                    }
+                                }
+                                .id(bottomID)
+                            
+                        }
                 }
             }
         }
@@ -80,15 +78,13 @@ struct OCRUpdateItemView: View {
             Text("수정")
                 .font(.pretendard(.bold, size: 17))
             Spacer()
-            if viewModel.areBothTextFieldsNotEmpty{
-                Button(action: {
-                    self.appState.moveToRootView = true
-                } , label: {
-                    Image(systemName: "xmark")
-                        .resizable()
-                        .frame(width: 15, height: 15)
-                })
-            }
+            Button(action: {
+                self.appState.moveToRootView = true
+            } , label: {
+                Image(systemName: "xmark")
+                    .resizable()
+                    .frame(width: 15, height: 15)
+            })
         }
         .foregroundColor(.gray900)
         .padding([.leading, .trailing], 20.adjusted)
@@ -97,7 +93,7 @@ struct OCRUpdateItemView: View {
     private var addItemButton: some View {
         ZStack {
             Rectangle()
-                .frame(maxWidth: 250, maxHeight: 60)
+                .frame(maxWidth: 350, maxHeight: 60)
                 .foregroundColor(Color.gray50)
                 .cornerRadius(12)
             
@@ -108,8 +104,7 @@ struct OCRUpdateItemView: View {
             .bold()
             .foregroundColor(.accentColor)
         }
-        .padding(.leading, 20)
-        .padding(.bottom, 34.adjusted)
+        .padding(.top, 15)
     }
     
     private var nextButton: some View {
@@ -127,9 +122,8 @@ struct OCRUpdateItemView: View {
                     .foregroundColor(.white)
                     .font(.pretendard(.regular, size: 17))
             }
-            .padding(.trailing, 20.adjusted)
-            .padding(.leading, 12.adjusted)
-            .padding(.bottom, 34.adjusted)
+            .padding(.horizontal, 20.adjusted)
+            .padding(.bottom, 30.adjusted)
         })
     }
 }

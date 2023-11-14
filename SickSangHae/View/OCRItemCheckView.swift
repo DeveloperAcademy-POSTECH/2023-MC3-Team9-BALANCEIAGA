@@ -26,15 +26,15 @@ struct OCRItemCheckView: View {
                         ZigZagShape()
                             .fill(Color.gray50)
                             .ignoresSafeArea()
-                            .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: 140)
+                            .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: 162)
                         VStack{
                             NavBar
                             
                             HStack {
                                 Text("아래 식료품을 등록할게요")
-                                    .foregroundColor(Color("Gray400"))
+                                    .foregroundColor(Color.gray400)
                                     .font(.pretendard(.semiBold, size: 20))
-                                    .padding(34)
+                                    .padding(.top, 55)
                             }
                         }
                         .padding(.top, 13)
@@ -69,7 +69,6 @@ struct OCRItemCheckView: View {
                         }
                     }
                 }
-                .padding(.horizontal, 40)
             }
             .navigationBarBackButtonHidden(true)
             .fullScreenCover(isPresented: $isShowingUpdateItemView) {
@@ -123,12 +122,11 @@ struct OCRItemCheckView: View {
                 }
                 .frame(maxWidth: 60, maxHeight: 32)
                 .foregroundColor(Color("Gray100"))
-                .padding(.trailing, 20)
             }
-            
         }
         .padding(.top, 46)
         .padding(.bottom, 38)
+        .padding(.horizontal, 20)
     }
     
     private var ListContents: some View{
@@ -136,10 +134,12 @@ struct OCRItemCheckView: View {
             VStack{
                 listDetail(listTraling: "품목", listLeading: "금액", listColor: "Gray400", leadingTitle: 14)
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                    .padding(.bottom, 6)
                 
                 Divider()
                     .background(Color.gray100)
                     .listRowInsets(EdgeInsets())
+                    .padding(.bottom, 10)
             }
             .listRowInsets(EdgeInsets())
             .padding(.bottom, 10)
@@ -178,7 +178,7 @@ struct OCRItemCheckView: View {
                 .foregroundColor(Color(listColor))
                 .font(.pretendard(.semiBold, size: 14.adjusted))
         }
-        .padding(.horizontal, 20.adjusted)
+        .padding(.horizontal, 40)
     }
     
     
