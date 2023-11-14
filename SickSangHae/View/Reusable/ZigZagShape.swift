@@ -14,8 +14,8 @@ struct ZigZagShape: Shape {
         let width = rect.size.width
         let height = rect.size.height
         
-        let zigZagWidth: CGFloat = 7
-        let zigZagHeight: CGFloat = 5
+        let zigZagWidth: CGFloat = 6
+        let zigZagHeight: CGFloat = 4
         var yInitial = height - zigZagHeight
         
         path.move(to: CGPoint(x: 0, y: 0))
