@@ -1,10 +1,3 @@
-//
-//  ZigZagShape.swift
-//  SickSangHae
-//
-//  Created by CHANG JIN LEE on 11/2/23.
-//
-
 import SwiftUI
 
 struct ZigZagShape: Shape {
@@ -14,8 +7,13 @@ struct ZigZagShape: Shape {
         let width = rect.size.width
         let height = rect.size.height
         
-        let zigZagWidth: CGFloat = 6
-        let zigZagHeight: CGFloat = 4
+        let originalZigZagWidth: CGFloat = 6
+        let originalZigZagHeight: CGFloat = 4
+        
+        // Adjust the zigZagWidth to increase the frequency by 3/2
+        let zigZagWidth: CGFloat = originalZigZagWidth * 3 / 2
+        let zigZagHeight: CGFloat = originalZigZagHeight
+        
         var yInitial = height - zigZagHeight
         
         path.move(to: CGPoint(x: 0, y: 0))
@@ -47,9 +45,17 @@ struct ZigZagShape: Shape {
             i += 1
         }
 
+        // Apply gradient to the top edge of the path
+        let gradient = LinearGradient(gradient: Gradient(colors: [Color(red: 0.8, green: 0, blue: 0), Color(red: 0, green: 0, blue: 0.8)]), startPoint: .top, endPoint: .bottom)
+        path = path.applying(.init(scaleX: 1, y: -1)).applying(.init(translationX: 0, y: rect.size.height))
+        path.fill(gradient)
+        
         return path
     }
 }
-#Preview {
-    ZigZagShape()
+
+struct ZigZagShape_Previews: PreviewProvider {
+    static var previews: some View {
+        ZigZagShape()
+    }
 }
