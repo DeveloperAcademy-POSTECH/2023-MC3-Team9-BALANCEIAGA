@@ -12,6 +12,10 @@ struct ItemBlockView: View {
     
     @ObservedObject var itemBlockViewModel: ItemBlockViewModel
     @ObservedObject var viewModel: UpdateItemViewModel
+    @State var isShowingconfirmationDialog = false
+    @State var isShowingEditModal = false
+    @State private var isNameButtonEnabled = false
+    @State private var isPriceButtonEnabled = false
     
     init(viewModel: UpdateItemViewModel, itemBlockViewModel: ItemBlockViewModel) {
         self.viewModel = viewModel
@@ -19,92 +23,166 @@ struct ItemBlockView: View {
     }
     
     var body: some View {
-        ZStack(alignment: .trailing) {
-            HStack {
-                Spacer()
-                Button {
-                    deleteItem()
-                } label: {
-                    VStack {
-                        Image(systemName: "trash.fill")
-                            .padding(.bottom, 4)
-                        
-                        Text("삭제")
-                            .font(.pretendard(.semiBold, size: 14))
-                    }
-                    .frame(width: 90.adjusted, height: 116.adjusted)
-                }
-                .background(Color("PointR"))
-                .foregroundColor(.white)
-                .clipShape(RoundedRectangle(cornerRadius: 12))
-//                .padding(.trailing, 20.adjusted)
-                .opacity(itemBlockViewModel.offset < 0 ? 1 : 0)
-            }
-            .onTapGesture {
-                    withAnimation {
-                        itemBlockViewModel.offset = 0.0
-                    }
-                }
-
-            Group {
-                Rectangle()
-                    .foregroundColor(.lightGrayColor)
-                    .cornerRadius(12)
-                
+        Group {
+            HStack{
                 VStack(alignment: .leading) {
-                    HStack {
-                        Spacer()
-                        Button {
-                            deleteItem()
-                        } label: {
-                            Image(systemName: "xmark.circle")
-                        }
-                    }
+                    Spacer()
+                        .frame(maxHeight: 5)
                     
-                    HStack(spacing: 28.adjusted) {
-                        Text("품목")
-                            .padding(.leading,20)
-                        TextField("무엇을 구매했나요?", text: $itemBlockViewModel.name)
-                    }
-                    Divider().foregroundColor(.gray100)
-                    HStack(spacing: 28.adjusted) {
-                        Text("금액")
-                            .padding(.leading,20)
-                        TextField("얼마였나요?", value: $itemBlockViewModel.price, formatter: UpdateItemViewModel.priceFormatter)
-                            .keyboardType(.numberPad)
-                    }
-                    Spacer().frame(height: 10)
+                    TextField("무엇을 구매했나요?", text: $itemBlockViewModel.name)
+                        .font(.pretendard(.semiBold, size: 17))
+                        .foregroundColor(Color.gray900)
                     
-                    if !itemBlockViewModel.areBothTextFieldsNotEmpty {
-                        Text("\(viewModel.showTextfieldStatus)을 입력하세요.")
-                            .font(.pretendard(.regular, size: 14))
-                            .foregroundColor(.pointR)
-                            .padding(.leading, 20.adjusted)
-                    }
-                    
+                    TextField("얼마였나요?", value: $itemBlockViewModel.price, formatter: UpdateItemViewModel.priceFormatter)
+                        .keyboardType(.numberPad)
+                        .font(.pretendard(.semiBold, size: 14))
+                        .foregroundColor(Color.gray400)
                     
                 }
+                Button {
+                    isShowingconfirmationDialog = true
+                } label: {
+                    ZStack{
+                        RoundedRectangle(cornerRadius: 8)
+                            .foregroundColor(Color("Gray100"))
+                        
+                        Text("편집")
+                            .foregroundColor(Color("Gray600"))
+                            .font(.pretendard(.regular, size: 14.adjusted))
+                    }
+                    .frame(width: 60, height: 32)
+                    .foregroundColor(Color("Gray600"))
+                }
             }
-        .frame(height: 116.adjusted)
-        .offset(x: itemBlockViewModel.offset)
         }
-        .padding(.horizontal, 20.adjusted)
-    }
-}
-extension ItemBlockView: Hashable, Equatable {
-    static func == (lhs: ItemBlockView, rhs: ItemBlockView) -> Bool {
-        lhs.id == rhs.id
+        .padding(.horizontal, 24.adjusted)
+        .padding(.top, 23)
+        .confirmationDialog("Confirmation Dialog", isPresented: $isShowingconfirmationDialog, actions: {
+            Button("수정하기", action: {
+                self.isShowingEditModal = true
+            })
+                .font(.pretendard(.regular, size: 17.adjusted))
+            Button("항목 삭제", role: .destructive, action: {
+                withAnimation(.easeInOut(duration: 0.5)) {
+                           viewModel.isShowTopAlertView = false
+                           viewModel.deleteItemBlock(itemBlockViewModel: itemBlockViewModel)
+                       }
+            })
+                .font(.pretendard(.regular, size: 17.adjusted))
+            Button("취소", role: .cancel, action: {
+                isShowingconfirmationDialog = false
+            })
+                .font(.pretendard(.bold, size: 17))
+        })
+        .sheet(isPresented: self.$isShowingEditModal) {
+            editModalView
+        }
     }
     
-    func hash(into hasher: inout Hasher) {
-        
+    private var editModalView: some View {
+        VStack(alignment: .leading) {
+            
+            HStack{
+                Spacer()
+                RoundedRectangle(cornerRadius: CGFloat(2.5))
+                    .frame(width: 36, height: 5)
+                    .foregroundColor(Color(UIColor.tertiaryLabel))
+                    .padding(.top, 12)
+                Spacer()
+            }
+            
+            topBar
+                .padding(.bottom, 40)
+                .padding(.top, 24)
+            
+            Text("품목명")
+                .font(.pretendard(.medium, size: 14))
+                .foregroundColor(Color("Gray600"))
+                .padding(.leading, 8)
+            
+            HStack(spacing: 20.adjusted) {
+                TextField("무엇을 구매했나요?", text: $itemBlockViewModel.name)
+                
+                Spacer()
+                
+                if itemBlockViewModel.name != ""{
+                    Button {
+                        itemBlockViewModel.name = ""
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundColor(Color.gray400)
+                    }
+                    .disabled(itemBlockViewModel.name.isEmpty)
+                }
+            }
+            .padding(.horizontal, 20)
+            .frame(height: 60)
+            .background(Color("Gray50"))
+            .cornerRadius(12)
+            
+            Text("구매금액")
+                .font(.pretendard(.medium, size: 14))
+                .foregroundColor(Color("Gray600"))
+                .padding(.leading, 8)
+            
+            HStack(spacing: 20.adjusted) {
+                
+                TextField("얼마였나요?", value: $itemBlockViewModel.price, formatter: UpdateItemViewModel.priceFormatter)
+                    .keyboardType(.numberPad)
+                
+                Spacer()
+                if itemBlockViewModel.price != 0{
+                    Button {
+                        itemBlockViewModel.price = 0
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundColor(Color.gray400)
+                    }
+                    .disabled(itemBlockViewModel.price == 0)
+                }
+            }
+            .padding(.horizontal, 20)
+            .frame(height: 60)
+            .background(Color("Gray50"))
+            .cornerRadius(12)
+            
+            Spacer()
+        }
+        .padding(.horizontal, 20)
+        .padding(.bottom, 10)
     }
     
-    func deleteItem() {
-        withAnimation(.easeInOut(duration: 0.5)) {
-            viewModel.isShowTopAlertView = false
-            viewModel.deleteItemBlock(itemBlockViewModel: itemBlockViewModel)
+    private var topBar: some View {
+        HStack {
+            Button(action:{
+                isShowingEditModal = false
+            }, label: {
+                Text("취소")
+                    .foregroundColor(Color.primaryGB)
+                    .font(.pretendard(.semiBold, size: 17))
+            })
+            Spacer()
+            Text("품목 수정")
+                .font(.pretendard(.bold, size: 17))
+            Spacer()
+            Button(action: {
+                if (!itemBlockViewModel.name.isEmpty && itemBlockViewModel.price != 0) {
+                    isShowingEditModal = false
+                    viewModel.editItemBlock(itemBlockViewModel: itemBlockViewModel, name: itemBlockViewModel.name, price: itemBlockViewModel.price)
+                }
+            } , label: {
+                if (!itemBlockViewModel.name.isEmpty && itemBlockViewModel.price != 0){
+                    Text("완료")
+                        .foregroundColor(Color.primaryGB)
+                        .font(.pretendard(.semiBold, size: 17))
+                } else {
+                    Text("완료")
+                        .foregroundColor(Color.gray200)
+                        .font(.pretendard(.semiBold, size: 17))
+                }
+            })
         }
+        .foregroundColor(.gray900)
     }
 }
 
@@ -159,7 +237,10 @@ class ItemBlockViewModel: ObservableObject, Equatable, Hashable {
 
 struct ItemBlockView_Previews: PreviewProvider {
   static var previews: some View {
-      ItemBlockView(viewModel: UpdateItemViewModel(), itemBlockViewModel: ItemBlockViewModel(name: "", price: 0))
+      ScrollView{
+          ItemBlockView(viewModel: UpdateItemViewModel(), itemBlockViewModel: ItemBlockViewModel(name: "", price: 0))
+          ItemBlockView(viewModel: UpdateItemViewModel(), itemBlockViewModel: ItemBlockViewModel(name: "", price: 0))
+      }
   }
 }
 

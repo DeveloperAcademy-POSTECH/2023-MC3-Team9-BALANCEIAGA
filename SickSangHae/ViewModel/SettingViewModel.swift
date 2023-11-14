@@ -8,8 +8,6 @@
 import SwiftUI
 
 class SettingViewModel: ObservableObject {
-//    @Published var isFoodDdayNoti: Bool = false
-    
     @Published var settingListItems: [SettingListItem] = [
         SettingListItem(title: "식료품 경과일 알림", isSubTitle: true, subTitle: "설정한 기준일이 지난 경우 알려드려요", isToggle: true, buttonTitle: ""),
         SettingListItem(title: "빨리 먹어야 해요", isSubTitle: false, subTitle: "", isToggle: false, buttonTitle: "2일"),
