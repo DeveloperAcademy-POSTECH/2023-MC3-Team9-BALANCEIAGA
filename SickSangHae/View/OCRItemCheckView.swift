@@ -37,6 +37,7 @@ struct OCRItemCheckView: View {
                                     .padding(34)
                             }
                         }
+                        .padding(.top, 13)
                     }
                     
                     ListTitle
@@ -66,9 +67,9 @@ struct OCRItemCheckView: View {
                                     .bold()
                             }
                         }
-                        .padding(.bottom, 30)
                     }
                 }
+                .padding(.horizontal, 40)
             }
             .navigationBarBackButtonHidden(true)
             .fullScreenCover(isPresented: $isShowingUpdateItemView) {
@@ -78,8 +79,8 @@ struct OCRItemCheckView: View {
     }
     private var NavBar: some View{
         HStack {
-            Image(systemName: "chevron.left")
-                .frame(width: 8, height: 14.2)
+//            Image(systemName: "chevron.left")
+//                .frame(width: 8, height: 14.2)
             
             Spacer()
             
@@ -98,7 +99,8 @@ struct OCRItemCheckView: View {
                     .frame(width: 15, height: 15)
             })
             .foregroundColor(.gray900)
-        }.padding(.horizontal, 20)
+        }
+        .padding(.horizontal, 20)
     }
     private var ListTitle: some View {
         HStack{
@@ -112,27 +114,27 @@ struct OCRItemCheckView: View {
                 isShowingUpdateItemView = true
             } label: {
                 ZStack{
-                    RoundedRectangle(cornerRadius: 5)
+                    RoundedRectangle(cornerRadius: 8)
                         .foregroundColor(Color("Gray100"))
                     
                     Text("편집")
                         .foregroundColor(Color("Gray400"))
                         .font(.pretendard(.regular, size: 14.adjusted))
                 }
-                .frame(width: 45, height: 25)
+                .frame(maxWidth: 60, maxHeight: 32)
                 .foregroundColor(Color("Gray100"))
-                .padding(.trailing, 20.adjusted)
+                .padding(.trailing, 20)
             }
             
         }
-        .padding([.top, .bottom], 17.adjusted)
-        .padding(.leading, 20.adjusted)
+        .padding(.top, 46)
+        .padding(.bottom, 38)
     }
     
     private var ListContents: some View{
         List{
             VStack{
-                listDetail(listTraling: "품목", listLeading: "금액", listColor: "Gray400")
+                listDetail(listTraling: "품목", listLeading: "금액", listColor: "Gray400", leadingTitle: 14)
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                 
                 Divider()
@@ -148,7 +150,7 @@ struct OCRItemCheckView: View {
                 let quantity = gptAnswer["수량"]![index] as! Int
                 let price = gptAnswer["금액"]![index] as! Int
                 
-                listDetail(listTraling: productName, listLeading: String(price) + "원", listColor: "Gray900")
+                listDetail(listTraling: productName, listLeading: String(price) + "원", listColor: "Gray900", leadingTitle: 17)
                     .listRowInsets(EdgeInsets())
                 
                 Divider()
@@ -164,11 +166,11 @@ struct OCRItemCheckView: View {
     
     
     // TODO: listTraling에 품목을, listLeading에 금액을 넣어야 해요.
-    private func listDetail(listTraling: String, listLeading: String, listColor: String) -> some View{
+    private func listDetail(listTraling: String, listLeading: String, listColor: String, leadingTitle: CGFloat) -> some View{
         return HStack{
             Text(listTraling)
                 .foregroundColor(Color(listColor))
-                .font(.pretendard(.semiBold, size: 17.adjusted))
+                .font(.pretendard(.semiBold, size: leadingTitle))
             
             Spacer()
             
