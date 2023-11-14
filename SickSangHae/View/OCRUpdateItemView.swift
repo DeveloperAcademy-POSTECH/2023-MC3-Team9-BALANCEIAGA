@@ -19,13 +19,13 @@ struct OCRUpdateItemView: View {
             ZStack(alignment: .top) {
                 Color.white
                     .ignoresSafeArea(.all)
-                VStack {
+                VStack(spacing: 0) {
                     topBar
                     Spacer().frame(height: 36.adjusted)
                     DateSelectionView(viewModel: viewModel)
                     Spacer().frame(height: 30.adjusted)
                     ZStack(alignment: .top) {
-                        VStack {
+                        VStack(spacing: 0) {
                             ScrollViewReader { proxy in
                                 ScrollView(.vertical) {
                                         ForEach(viewModel.itemBlockViewModels, id: \.self) { item in
@@ -80,13 +80,15 @@ struct OCRUpdateItemView: View {
             Text("수정")
                 .font(.pretendard(.bold, size: 17))
             Spacer()
-            Button(action: {
-                self.appState.moveToRootView = true
-            } , label: {
-                Image(systemName: "xmark")
-                    .resizable()
-                    .frame(width: 15, height: 15)
-            })
+            if viewModel.areBothTextFieldsNotEmpty{
+                Button(action: {
+                    self.appState.moveToRootView = true
+                } , label: {
+                    Image(systemName: "xmark")
+                        .resizable()
+                        .frame(width: 15, height: 15)
+                })
+            }
         }
         .foregroundColor(.gray900)
         .padding([.leading, .trailing], 20.adjusted)
@@ -137,7 +139,7 @@ extension OCRUpdateItemView {
         @ObservedObject var viewModel: UpdateItemViewModel
         
         var body: some View {
-            VStack {
+            VStack(spacing: 0) {
                 DatePicker("날짜 선택", selection: $viewModel.date, displayedComponents: .date)
                     .datePickerStyle(GraphicalDatePickerStyle())
                     .labelsHidden()
