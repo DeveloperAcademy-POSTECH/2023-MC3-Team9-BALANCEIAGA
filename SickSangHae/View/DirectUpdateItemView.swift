@@ -36,20 +36,24 @@ struct DirectUpdateItemView: View {
                                                 proxy.scrollTo(bottomID, anchor: .bottom)
                                             }
                                         }
-                                        addItemButton
-                                            .onTapGesture {
-                                                withAnimation {
-                                                    addItemBlockView()
-                                                    viewModel.countItemCheckView += 1
-                                                }
-                                            }
-                                            .id(bottomID)
                                     }
                                 }
                             }
                             Spacer()
-                            nextButton
-                                .disabled(viewModel.countItemCheckView == 0 ? true : false)
+                            
+                            HStack{
+                                addItemButton
+                                    .onTapGesture {
+                                        withAnimation {
+                                            addItemBlockView()
+                                            viewModel.countItemCheckView += 1
+                                        }
+                                    }
+                                    .id(bottomID)
+                                
+                                nextButton
+                                    .disabled(viewModel.countItemCheckView == 0 ? true : false)
+                            }
                         }
                         if viewModel.isDatePickerOpen {
                             DatePickerView(viewModel: viewModel)
@@ -92,7 +96,7 @@ struct DirectUpdateItemView: View {
     private var addItemButton: some View {
         ZStack {
             Rectangle()
-                .frame(width: 350, height: 60)
+                .frame(width: 250, height: 60)
                 .foregroundColor(.lightGrayColor)
                 .cornerRadius(12)
             
@@ -103,7 +107,8 @@ struct DirectUpdateItemView: View {
             .bold()
             .foregroundColor(.accentColor)
         }
-        .padding(.top, 15)
+        .padding(.leading, 20)
+        .padding(.bottom, 34)
     }
     
     private var nextButton: some View {
@@ -114,16 +119,18 @@ struct DirectUpdateItemView: View {
         } label: {
             ZStack{
                 Rectangle()
-                    .background(Color("PrimaryGB"))
+                    .background(Color.primaryGB)
                     .cornerRadius(12)
-                    .frame(height: 60.adjusted)
+                    .frame(maxWidth: 88, maxHeight: 60)
                     
-                Text("등록")
+                Text("다음")
                     .foregroundColor(.white)
-                    .font(.system(size: 17))
+                    .font(.pretendard(.regular, size: 17))
             }
-            .padding(.horizontal, 20.adjusted)
-            .padding(.bottom, 30.adjusted)
+            .padding(.trailing, 20.adjusted)
+            .padding(.leading, 12.adjusted)
+            .padding(.bottom, 34.adjusted)
+            
         }
     }
 }
