@@ -24,7 +24,7 @@ struct DirectItemCheckView: View {
                         ZigZagShape()
                             .fill(Color.gray50)
                             .ignoresSafeArea()
-                            .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: 140)
+                            .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: 162)
                         VStack{
                             NavBar
                             
@@ -32,20 +32,15 @@ struct DirectItemCheckView: View {
                                 Text("아래 식료품을 등록할게요.")
                                     .foregroundColor(Color("Gray400"))
                                     .font(.pretendard(.semiBold, size: 20))
-                                    .padding(34)
+                                    .padding(.top, 55)
                             }
                         }
+                        .padding(.top, 13)
                     }
                     
-                    HStack{
-                        ListTitle
-                        Spacer()
-                        EditButton
-                    }
-
-                    ScrollView{
-                        ListContents
-                    }
+                    ListTitle
+                    
+                    ListContents
 
                     Spacer()
 
@@ -63,7 +58,6 @@ struct DirectItemCheckView: View {
                                     .bold()
                             }
                         }
-                        .padding(.bottom, 30)
                     }
 
                 }
@@ -134,43 +128,56 @@ struct DirectItemCheckView: View {
 
         }
         .padding([.top, .bottom], 17.adjusted)
+        .padding([.top, .bottom], 17.adjusted)
         .padding(.leading, 20.adjusted)
     }
 
     private var ListContents: some View{
+        List{
             VStack{
-                listDetail(listTraling: "품목", listLeading: "금액")
-                    .padding(.horizontal, 40)
-                    .padding(.top)
-
+                listDetail(listTraling: "품목", listLeading: "금액", listColor: "Gray400", leadingTitle: 14)
+                    .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                    .padding(.bottom, 6)
+                
                 Divider()
-                    .overlay(Color("Gray100"))
-
-                ForEach(viewModel.itemBlockViewModels, id: \.self) { item in
-
-                    listDetail(listTraling: item.name, listLeading: String(item.price) + "원")
-
-                    Divider()
-                        .overlay(Color("Gray100"))
-                }
-                .padding(.horizontal, 40.adjusted)
+                    .background(Color.gray100)
+                    .listRowInsets(EdgeInsets())
+                    .padding(.bottom, 10)
             }
+            .listRowInsets(EdgeInsets())
+            .padding(.bottom, 10)
+            
+            ForEach(viewModel.itemBlockViewModels, id: \.self) { item in
+                
+                listDetail(listTraling: item.name, listLeading: String(item.price) + "원", listColor: "Gray900", leadingTitle: 17)
+                    .listRowInsets(EdgeInsets())
+                
+                Divider()
+                    .overlay(Color.gray100)
+                    .listRowInsets(EdgeInsets())
+                    .padding(.vertical, 5)
+            }
+            .listRowInsets(EdgeInsets())
+            .listRowSeparator(.hidden)
+        }
+        .listStyle(.plain)
     }
 
 
     // TODO: listTraling에 품목을, listLeading에 금액을 넣어야 해요.
-    private func listDetail(listTraling: String, listLeading: String) -> some View{
+    private func listDetail(listTraling: String, listLeading: String, listColor: String, leadingTitle: CGFloat) -> some View{
         return HStack{
             Text(listTraling)
-                .font(.system(size: 17.adjusted).weight(.semibold))
+                .foregroundColor(Color(listColor))
+                .font(.pretendard(.semiBold, size: leadingTitle))
 
             Spacer()
 
             Text(listLeading)
-                .foregroundColor(Color.gray800)
-                .font(.system(size: 14.adjusted).weight(.semibold))
+                .foregroundColor(Color(listColor))
+                .font(.pretendard(.semiBold, size: 14.adjusted))
         }
-        .padding([.top, .bottom], 8.adjusted)
+        .padding(.horizontal, 40)
     }
 
 
