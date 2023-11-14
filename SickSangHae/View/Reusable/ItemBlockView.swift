@@ -43,7 +43,7 @@ struct ItemBlockView: View {
                     isShowingconfirmationDialog = true
                 } label: {
                     ZStack{
-                        RoundedRectangle(cornerRadius: 5)
+                        RoundedRectangle(cornerRadius: 8)
                             .foregroundColor(Color("Gray100"))
                         
                         Text("편집")
@@ -82,9 +82,13 @@ struct ItemBlockView: View {
     private var editModalView: some View {
         VStack(alignment: .leading) {
             
+            Image(systemName: "minus")
+                .frame(maxWidth: 36, maxHeight: 5)
+                .padding(.top, 12)
+            
             topBar
                 .padding(.bottom, 40)
-                .padding(.top, 41)
+                .padding(.top, 24)
             
             Text("품목명")
                 .font(.pretendard(.medium, size: 14))
@@ -107,7 +111,7 @@ struct ItemBlockView: View {
             .padding(.horizontal, 20)
             .frame(height: 60)
             .background(Color("Gray50"))
-            .cornerRadius(8)
+            .cornerRadius(12)
             
             Text("구매금액")
                 .font(.pretendard(.medium, size: 14))
@@ -131,7 +135,7 @@ struct ItemBlockView: View {
             .padding(.horizontal, 20)
             .frame(height: 60)
             .background(Color("Gray50"))
-            .cornerRadius(8)
+            .cornerRadius(12)
             
             Spacer()
         }
@@ -170,7 +174,6 @@ struct ItemBlockView: View {
             })
         }
         .foregroundColor(.gray900)
-        .padding(.horizontal, 20.adjusted)
     }
 }
 
