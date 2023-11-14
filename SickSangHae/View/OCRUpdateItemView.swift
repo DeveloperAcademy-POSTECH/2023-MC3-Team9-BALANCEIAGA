@@ -137,6 +137,11 @@ extension OCRUpdateItemView {
         
         var body: some View {
             VStack(spacing: 0) {
+                HStack(alignment: .center){
+                    Text("날짜 바꾸기")
+                        .font(.pretendard(.semiBold, size: 17))
+                        .padding(.top, 41)
+                }
                 DatePicker("날짜 선택", selection: $viewModel.date, displayedComponents: .date)
                     .datePickerStyle(GraphicalDatePickerStyle())
                     .labelsHidden()
