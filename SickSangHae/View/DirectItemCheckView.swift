@@ -20,37 +20,27 @@ struct DirectItemCheckView: View {
         NavigationStack {
             ZStack(alignment: .top) {
                 VStack {
-                    HStack {
-                        Button(action:{dismiss()}, label: {
-                            Image(systemName: "chevron.left")
-                                .resizable()
-                                .frame(width: 10, height: 19)
-                                .foregroundColor(.gray900)
-                        })
-
-                        Spacer()
-                        Button(action: {
-                            self.appState.moveToRootView = true
-
-                        }, label: {
-                            Image(systemName: "xmark")
-                                .resizable()
-                                .frame(width: 15, height: 15)
-                        })
-                        .foregroundColor(.gray900)
-                    }.padding(.horizontal, 20)
-
-                    HStack {
-                        Text("아래 식료품을 등록할게요")
-                            .fontWeight(.bold)
-                            .padding(34)
+                    ZStack(alignment: .top){
+                        ZigZagShape()
+                            .fill(Color.gray50)
+                            .ignoresSafeArea()
+                            .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: 162)
+                        VStack{
+                            NavBar
+                            
+                            HStack {
+                                Text("아래 식료품을 등록할게요.")
+                                    .foregroundColor(Color("Gray400"))
+                                    .font(.pretendard(.semiBold, size: 20))
+                                    .padding(.top, 55)
+                            }
+                        }
+                        .padding(.top, 13)
                     }
-
+                    
                     ListTitle
-
-                    ScrollView{
-                        ListContents
-                    }
+                    
+                    ListContents
 
                     Spacer()
 
@@ -68,7 +58,6 @@ struct DirectItemCheckView: View {
                                     .bold()
                             }
                         }
-                        .padding(.bottom, 30)
                     }
 
                 }
@@ -82,6 +71,52 @@ struct DirectItemCheckView: View {
             RegisterCompleteView(appState: appState)
         }
     }
+    private var NavBar: some View{
+        HStack {
+            Button(action:{dismiss()}, label: {
+                Image(systemName: "chevron.left")
+                    .resizable()
+                    .frame(width: 10, height: 19)
+                    .foregroundColor(.gray900)
+            })
+            
+            Spacer()
+            
+            Text("직접 추가")
+                .foregroundColor(Color("Gray900"))
+                .font(.system(size: 17.adjusted)
+                    .weight(.bold))
+            
+            Spacer()
+            
+            Button(action: {
+                self.appState.moveToRootView = true
+                
+            }, label: {
+                Image(systemName: "xmark")
+                    .resizable()
+                    .frame(width: 15, height: 15)
+            })
+            .foregroundColor(.gray900)
+        }.padding(.horizontal, 20)
+    }
+    private var EditButton: some View {
+        Button(){
+            
+        }label: {
+            ZStack{
+                Rectangle()
+                    .frame(maxWidth: 60, maxHeight: 32)
+                    .foregroundColor(Color.gray100)
+                    .cornerRadius(12)
+                    .padding()
+                Text("편집")
+                    .font(.system(size: 14.adjusted)
+                    .weight(.semibold))
+                    .foregroundColor(Color.gray400)
+            }
+        }
+    }
     private var ListTitle: some View {
         HStack{
             Text(viewModel.dateString)
@@ -93,51 +128,56 @@ struct DirectItemCheckView: View {
 
         }
         .padding([.top, .bottom], 17.adjusted)
+        .padding([.top, .bottom], 17.adjusted)
         .padding(.leading, 20.adjusted)
     }
 
     private var ListContents: some View{
-        ZStack{
-            RoundedRectangle(cornerRadius: 15)
-                .foregroundColor(Color("Gray50"))
-                .padding(.horizontal, 20)
-
+        List{
             VStack{
-
-                listDetail(listTraling: "품목", listLeading: "금액", listColor: "Gray400")
-                    .padding(.horizontal, 40)
-                    .padding(.top)
-
+                listDetail(listTraling: "품목", listLeading: "금액", listColor: "Gray400", leadingTitle: 14)
+                    .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                    .padding(.bottom, 6)
+                
                 Divider()
-                    .overlay(Color("Gray100"))
-
-                ForEach(viewModel.itemBlockViewModels, id: \.self) { item in
-
-                    listDetail(listTraling: item.name, listLeading: String(item.price), listColor: "Gray900")
-
-                    Divider()
-                        .overlay(Color("Gray100"))
-                }
-                .padding(.horizontal, 40.adjusted)
+                    .background(Color.gray100)
+                    .listRowInsets(EdgeInsets())
+                    .padding(.bottom, 10)
             }
+            .listRowInsets(EdgeInsets())
+            .padding(.bottom, 10)
+            
+            ForEach(viewModel.itemBlockViewModels, id: \.self) { item in
+                
+                listDetail(listTraling: item.name, listLeading: String(item.price) + "원", listColor: "Gray900", leadingTitle: 17)
+                    .listRowInsets(EdgeInsets())
+                
+                Divider()
+                    .overlay(Color.gray100)
+                    .listRowInsets(EdgeInsets())
+                    .padding(.vertical, 5)
+            }
+            .listRowInsets(EdgeInsets())
+            .listRowSeparator(.hidden)
         }
+        .listStyle(.plain)
     }
 
 
     // TODO: listTraling에 품목을, listLeading에 금액을 넣어야 해요.
-    private func listDetail(listTraling: String, listLeading: String, listColor: String) -> some View{
+    private func listDetail(listTraling: String, listLeading: String, listColor: String, leadingTitle: CGFloat) -> some View{
         return HStack{
             Text(listTraling)
                 .foregroundColor(Color(listColor))
-                .font(.system(size: 17.adjusted).weight(.semibold))
+                .font(.pretendard(.semiBold, size: leadingTitle))
 
             Spacer()
 
             Text(listLeading)
                 .foregroundColor(Color(listColor))
-                .font(.system(size: 14.adjusted).weight(.semibold))
+                .font(.pretendard(.semiBold, size: 14.adjusted))
         }
-        .padding([.top, .bottom], 8.adjusted)
+        .padding(.horizontal, 40)
     }
 
 

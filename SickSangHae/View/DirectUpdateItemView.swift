@@ -14,6 +14,8 @@ struct DirectUpdateItemView: View {
     @State private var isItemCheckView = false
     @State var appState: AppState
     
+    @State var showCalendarModal = false
+    
     var body: some View {
             ZStack(alignment: .top) {
                 Color.white
@@ -21,7 +23,7 @@ struct DirectUpdateItemView: View {
                 VStack {
                     topBar
                     Spacer().frame(height: 36.adjusted)
-                    DateSelectionView(viewModel: viewModel)
+                    DateSelectionView(viewModel: viewModel, showCalendarModal: $showCalendarModal)
                     Spacer().frame(height: 30.adjusted)
                     ZStack(alignment: .top) {
                         VStack {
@@ -36,23 +38,24 @@ struct DirectUpdateItemView: View {
                                                 proxy.scrollTo(bottomID, anchor: .bottom)
                                             }
                                         }
-                                        addItemButton
-                                            .onTapGesture {
-                                                withAnimation {
-                                                    addItemBlockView()
-                                                    viewModel.countItemCheckView += 1
-                                                }
-                                            }
-                                            .id(bottomID)
                                     }
                                 }
                             }
                             Spacer()
-                            nextButton
-                                .disabled(viewModel.countItemCheckView == 0 ? true : false)
-                        }
-                        if viewModel.isDatePickerOpen {
-                            DatePickerView(viewModel: viewModel)
+                            
+                            HStack{
+                                addItemButton
+                                    .onTapGesture {
+                                        withAnimation {
+                                            addItemBlockView()
+                                            viewModel.countItemCheckView += 1
+                                        }
+                                    }
+                                    .id(bottomID)
+                                
+                                nextButton
+                                    .disabled(viewModel.countItemCheckView == 0 ? true : false)
+                            }
                         }
                     }
                 }
@@ -61,6 +64,10 @@ struct DirectUpdateItemView: View {
                 self.endTextEditing()
             }
         .navigationBarBackButtonHidden(true)
+        .sheet(isPresented: $showCalendarModal){
+            CalendarModalView(viewModel: viewModel, showCalendarModal: $showCalendarModal)
+                .presentationDetents([.large, .fraction(0.65)])
+        }
     }
     
     
@@ -92,7 +99,7 @@ struct DirectUpdateItemView: View {
     private var addItemButton: some View {
         ZStack {
             Rectangle()
-                .frame(width: 350, height: 60)
+                .frame(width: 250, height: 60)
                 .foregroundColor(.lightGrayColor)
                 .cornerRadius(12)
             
@@ -103,7 +110,8 @@ struct DirectUpdateItemView: View {
             .bold()
             .foregroundColor(.accentColor)
         }
-        .padding(.top, 15)
+        .padding(.leading, 20)
+        .padding(.bottom, 34)
     }
     
     private var nextButton: some View {
@@ -114,23 +122,64 @@ struct DirectUpdateItemView: View {
         } label: {
             ZStack{
                 Rectangle()
-                    .background(Color("PrimaryGB"))
+                    .background(Color.primaryGB)
                     .cornerRadius(12)
-                    .frame(height: 60.adjusted)
+                    .frame(maxWidth: 88, maxHeight: 60)
                     
-                Text("등록")
+                Text("다음")
                     .foregroundColor(.white)
-                    .font(.system(size: 17))
+                    .font(.pretendard(.regular, size: 17))
             }
-            .padding(.horizontal, 20.adjusted)
-            .padding(.bottom, 30.adjusted)
+            .padding(.trailing, 20.adjusted)
+            .padding(.leading, 12.adjusted)
+            .padding(.bottom, 34.adjusted)
+            
         }
     }
 }
 
 extension DirectUpdateItemView {
+    struct CalendarModalView: View {
+        @ObservedObject var viewModel: UpdateItemViewModel
+        @Binding var showCalendarModal: Bool
+        
+        var body: some View {
+            VStack(spacing: 0) {
+                HStack(alignment: .center){
+                    Text("날짜 바꾸기")
+                        .font(.pretendard(.semiBold, size: 17))
+                        .padding(.top, 41)
+                }
+                DatePicker("날짜 선택", selection: $viewModel.date, displayedComponents: .date)
+                    .datePickerStyle(GraphicalDatePickerStyle())
+                    .labelsHidden()
+                    .padding()
+                    .onChange(of: viewModel.date, perform: { newDate in
+                        if newDate > Date() {
+                            viewModel.date = Date()
+                        }
+                    })
+                
+                ZStack {
+                    Rectangle()
+                        .frame(width: 350, height: 60)
+                        .foregroundColor(Color.gray50)
+                        .cornerRadius(12)
+                    Button {
+                        showCalendarModal = false
+                    } label: {
+                        Text("확인")
+                            .foregroundColor(.primaryGB)
+                            .bold()
+                    }
+                }
+                .padding(.bottom, 30)
+            }
+        }
+    }
     struct DateSelectionView: View {
         @ObservedObject var viewModel: UpdateItemViewModel
+        @Binding var showCalendarModal: Bool
         
         var body: some View {
             HStack(spacing: 24) {
@@ -143,7 +192,7 @@ extension DirectUpdateItemView {
                 })
                 
                 Button(action: {
-                    viewModel.isDatePickerOpen.toggle()
+                    showCalendarModal = true
                 }, label: {
                     Text("\(viewModel.dateString)")
                         .font(.system(size: 20).bold())
@@ -198,4 +247,3 @@ extension DirectUpdateItemView {
         viewModel.addNewItemBlock()
     }
 }
-
