@@ -124,6 +124,7 @@
 		02FC0ED72A6C5DF100B4284C /* TopAlertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopAlertModel.swift; sourceTree = "<group>"; };
 		237674E82A6516C200E92BAB /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		7C16FB3F2A7170030025BC20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		7C23A74B2ABBEAF20063A08C /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		7C31485B2AF38F3C00AC57C1 /* ZigZagShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZigZagShape.swift; sourceTree = "<group>"; };
 		7C41D9502A6280690054FD04 /* BasicList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicList.swift; sourceTree = "<group>"; };
 		7C41D9522A62807A0054FD04 /* LongTermList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LongTermList.swift; sourceTree = "<group>"; };
@@ -179,6 +180,7 @@
 		027E96662A56AB5E0066BA8F = {
 			isa = PBXGroup;
 			children = (
+				7C23A74B2ABBEAF20063A08C /* Secrets.xcconfig */,
 				027E96712A56AB5E0066BA8F /* SickSangHae */,
 				7CEB9EB12A613D7C008B70FD /* SickSangHaeTests */,
 				027E96702A56AB5E0066BA8F /* Products */,
@@ -541,6 +543,7 @@
 /* Begin XCBuildConfiguration section */
 		027E967B2A56AB5F0066BA8F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7C23A74B2ABBEAF20063A08C /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -602,6 +605,7 @@
 		};
 		027E967C2A56AB5F0066BA8F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7C23A74B2ABBEAF20063A08C /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -656,13 +660,14 @@
 		};
 		027E967E2A56AB5F0066BA8F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7C23A74B2ABBEAF20063A08C /* Secrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SickSangHae/Preview Content\"";
-				DEVELOPMENT_TEAM = 2QWMDJG53V;
+				DEVELOPMENT_TEAM = DD63847N69;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SickSangHae/Info.plist;
@@ -689,13 +694,14 @@
 		};
 		027E967F2A56AB5F0066BA8F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7C23A74B2ABBEAF20063A08C /* Secrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SickSangHae/Preview Content\"";
-				DEVELOPMENT_TEAM = 2QWMDJG53V;
+				DEVELOPMENT_TEAM = DD63847N69;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SickSangHae/Info.plist;
