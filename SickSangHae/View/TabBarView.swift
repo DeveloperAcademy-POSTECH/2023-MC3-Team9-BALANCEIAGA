@@ -78,7 +78,8 @@ struct CustomTabView: View {
                 } label: {
                     ZStack {
                       ScanButton(cornerRadius: 16)
-                        .fill(LinearGradient(gradient: Gradient(colors: [Color("PrimaryG"), Color("PrimaryB")]), startPoint: .leading, endPoint: .trailing))
+                            .foregroundColor(.primaryGB)
+//                        .fill(LinearGradient(gradient: Gradient(colors: [Color("PrimaryG"), Color("PrimaryB")]), startPoint: .leading, endPoint: .trailing))
                         .frame(width: screenWidth, height: 61)
                       
                       HStack {

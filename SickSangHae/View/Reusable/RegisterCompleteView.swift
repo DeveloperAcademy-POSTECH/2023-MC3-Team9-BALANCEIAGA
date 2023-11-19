@@ -9,6 +9,7 @@ import SwiftUI
 
 struct RegisterCompleteView: View {
     let appState: AppState
+    @Binding var isRegisterCompleteView: Bool
     
     var body: some View {
         VStack(spacing: 35){
@@ -40,6 +41,9 @@ struct RegisterCompleteView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
+        .onAppear(){
+            isRegisterCompleteView = true
+        }
     }
 }
 

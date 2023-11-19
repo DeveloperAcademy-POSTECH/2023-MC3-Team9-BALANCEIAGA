@@ -83,13 +83,16 @@ struct OCRView: View {
 
                 }
 
-                VStack {
+                VStack{
                     Spacer()
-                    Text("영수증 인식완료!")
-                        .font(.pretendard(.bold, size: 22))
-                        .padding(.bottom, 80.adjusted)
-                        .foregroundColor(Color.accentColor)
-
+                    HStack() {
+                        Spacer()
+                        Text("영수증 인식완료!")
+                            .font(.pretendard(.bold, size: 22))
+                            .padding(.bottom, 80.adjusted)
+                            .foregroundColor(Color.accentColor)
+                        Spacer()
+                    }
                 }
             }
         }

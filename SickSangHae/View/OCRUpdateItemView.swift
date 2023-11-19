@@ -13,9 +13,16 @@ struct OCRUpdateItemView: View {
     @ObservedObject var viewModel: UpdateItemViewModel
     @Binding var gptAnswer: [String:[Any]]
     @State private var isItemCheckView = false
+    @State private var isShowModal = false
     let appState: AppState
     
     @State var showCalendarModal = false
+    
+    //
+    @State var itemBlockName = ""
+    @State var itemBlockPrice: Int = 0
+    @State private var showingDatePicker = false
+    @State var dateText: Date
     
     var body: some View {
             ZStack(alignment: .top) {
@@ -24,7 +31,7 @@ struct OCRUpdateItemView: View {
                 VStack(spacing: 0) {
                     topBar
                     Spacer().frame(height: 36.adjusted)
-                    DateSelectionView(viewModel: viewModel, showCalendarModal: $showCalendarModal)
+                    DateSelectionView(viewModel: viewModel, showCalendarModal: $showCalendarModal, name: $itemBlockName, price: $itemBlockPrice)
                     Spacer().frame(height: 30.adjusted)
                     ZStack(alignment: .top) {
                         VStack(spacing: 0) {
@@ -44,7 +51,7 @@ struct OCRUpdateItemView: View {
                             addItemButton
                                 .onTapGesture {
                                     withAnimation {
-                                        addItemBlockView()
+                                        isShowModal = true
                                     }
                                 }
                                 .id(bottomID)
@@ -62,9 +69,17 @@ struct OCRUpdateItemView: View {
             self.endTextEditing()
         }
         .navigationBarBackButtonHidden(true)
-        .sheet(isPresented: $viewModel.isDatePickerOpen){
-            CalendarModalView(viewModel: viewModel, showCalendarModal: $showCalendarModal)
-                .presentationDetents([.large, .fraction(0.65), .fraction(0.75)])
+        .sheet(isPresented: $showCalendarModal){
+//            CalendarModalView(viewModel: viewModel, showCalendarModal: $showCalendarModal)
+            dateField
+                .presentationDetents([.medium])
+        }
+        .sheet(isPresented: $isShowModal){
+            editModalView
+                .onDisappear(){
+                    itemBlockName = ""
+                    itemBlockPrice = 0
+                }
         }
     }
     
@@ -76,10 +91,14 @@ struct OCRUpdateItemView: View {
                     .resizable()
                     .frame(width: 10, height: 19)
             })
+            
             Spacer()
+            
             Text("수정")
                 .font(.pretendard(.bold, size: 17))
+            
             Spacer()
+            
             Button(action: {
                 self.appState.moveToRootView = true
             } , label: {
@@ -89,7 +108,8 @@ struct OCRUpdateItemView: View {
             })
         }
         .foregroundColor(.gray900)
-        .padding([.leading, .trailing], 20.adjusted)
+        .padding(.horizontal, 20)
+        .padding(.top, 15)
     }
     
     private var addItemButton: some View {
@@ -127,6 +147,130 @@ struct OCRUpdateItemView: View {
             .padding(.horizontal, 20.adjusted)
             .padding(.bottom, 30.adjusted)
         })
+    }
+    private var editModalView: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            
+            HStack{
+                Spacer()
+                RoundedRectangle(cornerRadius: CGFloat(2.5))
+                    .frame(width: 36, height: 5)
+                    .foregroundColor(Color(UIColor.tertiaryLabel))
+                    .padding(.top, 12)
+                Spacer()
+            }
+            
+            editTopBar
+                .padding(.bottom, 40)
+                .padding(.top, 8)
+            
+            Text("품목명")
+                .font(.pretendard(.medium, size: 14))
+                .foregroundColor(Color("Gray600"))
+                .padding(.leading, 8)
+                .padding(.bottom, 8)
+            
+            HStack(spacing: 20) {
+                TextField("무엇을 구매했나요?", text: $itemBlockName)
+                
+                Spacer()
+                
+                if itemBlockName != ""{
+                    Button {
+                        itemBlockName = ""
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundColor(Color.gray400)
+                    }
+                    .disabled(itemBlockName.isEmpty)
+                }
+            }
+            .padding(.horizontal, 20)
+            .frame(height: 60)
+            .background(Color.gray50)
+            .cornerRadius(12)
+            
+            Text("구매금액")
+                .font(.pretendard(.medium, size: 14))
+                .foregroundColor(Color("Gray600"))
+                .padding(.leading, 8)
+                .padding(.bottom, 8)
+                .padding(.top, 24)
+            
+            HStack(spacing: 20) {
+                
+                TextField("얼마였나요?", value: $itemBlockPrice, formatter: UpdateItemViewModel.priceFormatter)
+                    .keyboardType(.numberPad)
+                
+                Spacer()
+                if itemBlockPrice != 0{
+                    Button {
+                        itemBlockPrice = 0
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundColor(Color.gray400)
+                    }
+                    .disabled(itemBlockPrice == 0)
+                }
+            }
+            .padding(.horizontal, 20)
+            .frame(height: 60)
+            .background(Color.gray50)
+            .cornerRadius(12)
+            
+            Spacer()
+        }
+        .padding(.horizontal, 20)
+        .padding(.bottom, 10)
+    }
+    private var editTopBar: some View {
+        HStack {
+            Button(action:{
+                isShowModal = false
+            }, label: {
+                Text("취소")
+                    .foregroundColor(Color.primaryGB)
+                    .font(.pretendard(.semiBold, size: 17))
+            })
+            Spacer()
+            Text("품목 추가")
+                .font(.pretendard(.bold, size: 17))
+            Spacer()
+            Button(action: {
+                if (!itemBlockName.isEmpty && itemBlockPrice != 0) {
+                    isShowModal = false
+                    addItemBlockView(name: itemBlockName, price: itemBlockPrice)
+                }
+            } , label: {
+                if (!itemBlockName.isEmpty && itemBlockPrice != 0){
+                    Text("완료")
+                        .foregroundColor(Color.primaryGB)
+                        .font(.pretendard(.semiBold, size: 17))
+                } else {
+                    Text("완료")
+                        .foregroundColor(Color.gray200)
+                        .font(.pretendard(.semiBold, size: 17))
+                }
+            })
+        }
+        .foregroundColor(.gray900)
+    }
+    
+    private var dateField: some View {
+        DatePicker("구매일자", selection: $viewModel.date, in: ...Date(), displayedComponents: .date)
+            .presentationDetents([.medium])
+            .datePickerStyle(GraphicalDatePickerStyle())
+            .padding(.horizontal, 10)
+            .environment(\.locale, .init(identifier: "ko"))
+            .onChange(of: dateText) { _ in
+                showingDatePicker = false
+//                viewModel.date = dateText
+            }
+    }
+    var formattedDate: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy년 MM월 dd일"
+        return formatter.string(from: dateText)
     }
 }
 
@@ -173,11 +317,14 @@ extension OCRUpdateItemView {
     struct DateSelectionView: View {
         @ObservedObject var viewModel: UpdateItemViewModel
         @Binding var showCalendarModal: Bool
+        @Binding var name: String
+        @Binding var price: Int
         
         var body: some View {
             HStack(spacing: 24) {
                 Button(action: {
                     viewModel.decreaseDate = viewModel.date
+                    viewModel.addNewItemBlock(name: name, price: price)
                 }, label: {
                     Image(systemName: "chevron.left")
                         .resizable()
@@ -238,8 +385,8 @@ extension OCRUpdateItemView {
     }
     
     
-    func addItemBlockView() {
-        viewModel.addNewItemBlock()
+    func addItemBlockView(name: String, price: Int) {
+        viewModel.addNewItemBlock(name: name, price: price)
     }
     
     func registerItemBlockViews() {
@@ -262,6 +409,6 @@ extension OCRUpdateItemView {
 struct OCRUpdateItemView_Previews: PreviewProvider {
     @State var testDict = ["상품명":[], "단가":[], "수량":[], "금액":[]]
     static var previews: some View {
-        OCRUpdateItemView(viewModel: UpdateItemViewModel(), gptAnswer: .constant(["test": []]), appState: AppState())
+        OCRUpdateItemView(viewModel: UpdateItemViewModel(), gptAnswer: .constant(["test": []]), appState: AppState(), itemBlockName: "", itemBlockPrice: 0, dateText: Date())
     }
 }

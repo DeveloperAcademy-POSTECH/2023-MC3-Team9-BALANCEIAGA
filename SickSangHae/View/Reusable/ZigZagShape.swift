@@ -5,7 +5,7 @@ struct ZigZagShape: Shape {
         var path = Path()
 
         let width = rect.size.width
-        let height = rect.size.height
+        let height = rect.size.height * 2
         
         let originalZigZagWidth: CGFloat = 6
         let originalZigZagHeight: CGFloat = 4

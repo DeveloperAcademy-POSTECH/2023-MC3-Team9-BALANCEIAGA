@@ -11,7 +11,7 @@ struct OCRItemCheckView: View {
     
     @Binding var gptAnswer: Dictionary<String, [Any]>
     // TODO: 나중에 뷰 연결할때는 @Binding으로 바꾸어야할 듯합니다.
-    @ObservedObject var viewModel = UpdateItemViewModel()
+    @StateObject var viewModel = UpdateItemViewModel()
     @State var appState: AppState
     @State private var isRegisterCompleteView = false
     @State private var isShowingUpdateItemView = false
@@ -19,7 +19,7 @@ struct OCRItemCheckView: View {
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
     
     var body: some View {
-        NavigationStack {
+//        NavigationView {
             ZStack(alignment: .top) {
                 VStack {
                     ZStack(alignment: .top){
@@ -46,11 +46,11 @@ struct OCRItemCheckView: View {
                     
                     Spacer()
                     
-                    NavigationLink(isActive: $isRegisterCompleteView) {
-                        RegisterCompleteView(appState: appState)
-                    } label: {
-                        EmptyView()
-                    }
+//                    NavigationLink(isActive: $isRegisterCompleteView) {
+//                        RegisterCompleteView(appState: appState)
+//                    } label: {
+//                        EmptyView()
+//                    }
                     
                     Button {
                         registerItemsToCoreData()
@@ -68,11 +68,14 @@ struct OCRItemCheckView: View {
                             }
                         }
                     }
-                }
+//                }
             }
             .navigationBarBackButtonHidden(true)
+            .fullScreenCover(isPresented: $isRegisterCompleteView) {
+                RegisterCompleteView(appState: appState, isRegisterCompleteView: $isRegisterCompleteView)
+            }
             .fullScreenCover(isPresented: $isShowingUpdateItemView) {
-                OCRUpdateItemView(viewModel: UpdateItemViewModel(),gptAnswer: $gptAnswer, appState: appState)
+                OCRUpdateItemView(viewModel: UpdateItemViewModel(),gptAnswer: $gptAnswer, appState: appState, dateText: Date())
             }
         }
     }
@@ -82,11 +85,12 @@ struct OCRItemCheckView: View {
 //                .frame(width: 8, height: 14.2)
             
             Spacer()
+                .frame(width: 15, height: 15)
+            Spacer()
             
-            Text("직접 추가")
-                .foregroundColor(Color("Gray900"))
-                .font(.system(size: 17.adjusted)
-                    .weight(.bold))
+            Text("등록하기")
+                .foregroundColor(Color.gray900)
+                .font(.pretendard(.bold, size: 17))
             
             Spacer()
             
@@ -103,7 +107,7 @@ struct OCRItemCheckView: View {
     }
     private var ListTitle: some View {
         HStack{
-            Text(viewModel.dateString)
+            Text("\(viewModel.dateString)")
                 .foregroundColor(Color("Gray900"))
                 .font(.pretendard(.bold, size: 20.adjusted))
 

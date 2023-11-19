@@ -68,7 +68,7 @@ struct DirectItemCheckView: View {
             .navigationBarBackButtonHidden(true)
         }
         .fullScreenCover(isPresented: $isShowingModal){
-            RegisterCompleteView(appState: appState)
+            RegisterCompleteView(appState: appState, isRegisterCompleteView: $isShowingModal)
         }
     }
     private var NavBar: some View{
@@ -82,7 +82,7 @@ struct DirectItemCheckView: View {
             
             Spacer()
             
-            Text("직접 추가")
+            Text("등록하기")
                 .foregroundColor(Color("Gray900"))
                 .font(.system(size: 17.adjusted)
                     .weight(.bold))

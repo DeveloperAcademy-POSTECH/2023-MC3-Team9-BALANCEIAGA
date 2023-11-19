@@ -100,8 +100,8 @@ final class UpdateItemViewModel: ObservableObject {
         return result
     }
     
-    func addNewItemBlock() {
-        itemBlockViewModels.append(ItemBlockViewModel(name: "", price: 0))
+    func addNewItemBlock(name: String = "", price: Int = 0) {
+        itemBlockViewModels.append(ItemBlockViewModel(name: name, price: price))
     }
     
     func makeInitialItemBlock(name: String, price: Int) {

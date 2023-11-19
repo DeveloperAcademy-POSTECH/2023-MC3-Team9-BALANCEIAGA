@@ -16,58 +16,74 @@ struct CameraView: View {
     @State private var isDirectInput = false
     
   var body: some View {
-    ZStack {
-      viewModel.cameraPreview.ignoresSafeArea()
-        .onAppear {
-          viewModel.configure()
-          viewModel.startShowingText()
-        }
-        .gesture(MagnificationGesture()
-          .onChanged { val in
-            viewModel.zoom(factor: val)
+      NavigationStack {
+          
+          ZStack {
+              NavigationLink(isActive: $viewModel.isCapturedShowPreview) {
+                  if let image = viewModel.captureImage {
+                      GetScreenShotView(appState: appState, image: image)
+                  } else {
+                      Text("레츠레츠")
+                          .opacity(0)
+                          .navigationBarBackButtonHidden(true)
+                  }
+              } label: {
+                  EmptyView()
+              }
+
+              
+              viewModel.cameraPreview.ignoresSafeArea()
+                  .onAppear {
+                      viewModel.configure()
+                      viewModel.startShowingText()
+                  }
+                  .gesture(MagnificationGesture()
+                    .onChanged { val in
+                        viewModel.zoom(factor: val)
+                    }
+                    .onEnded { _ in
+                        viewModel.zoomInitialize()
+                    }
+                  )
+              VStack {
+                  closeButton
+                  Spacer()
+                  if viewModel.isShowingText {
+                      alertText
+                  }
+                  Spacer()
+                  HStack {
+                      galleryButton
+                      Spacer()
+                      captureButton
+                      Spacer()
+                      flashButton
+                  }
+                  .padding([.leading, .trailing, .bottom], 32.adjusted)
+                  selfAddButton
+              }
           }
-          .onEnded { _ in
-            viewModel.zoomInitialize()
+          .navigationBarBackButtonHidden(true)
+          .foregroundColor(.white)
+          .sheet(isPresented: $viewModel.isImagePickerPresented ,onDismiss: {
+              guard let _ = viewModel.selectedImage else { return }
+              viewModel.isSelectedShowPreview.toggle()
+          }) {
+              ImagePicker(image: $viewModel.selectedImage, isPresented: $viewModel.isImagePickerPresented)
           }
-        )
-      VStack {
-        closeButton
-        Spacer()
-        if viewModel.isShowingText {
-          alertText
-        }
-        Spacer()
-        HStack {
-          galleryButton
-          Spacer()
-          captureButton
-          Spacer()
-          flashButton
-        }
-        .padding([.leading, .trailing, .bottom], 32.adjusted)
-        selfAddButton
+          //갤러리에서 이미지 선택했을 때
+          .fullScreenCover(isPresented: $viewModel.isSelectedShowPreview) {
+              if let image = viewModel.selectedImage {
+                  GetScreenShotView(appState: appState, image: image)
+              }
+          }
       }
-    }
-    .navigationBarBackButtonHidden(true)
-    .foregroundColor(.white)
-    .sheet(isPresented: $viewModel.isImagePickerPresented ,onDismiss: {
-        guard let _ = viewModel.selectedImage else { return }
-        viewModel.isSelectedShowPreview.toggle()
-    }) {
-      ImagePicker(image: $viewModel.selectedImage, isPresented: $viewModel.isImagePickerPresented)
-    }
-    //갤러리에서 이미지 선택했을 때
-    .fullScreenCover(isPresented: $viewModel.isSelectedShowPreview) {
-      if let image = viewModel.selectedImage {
-          GetScreenShotView(appState: appState, image: image)
-      }
-    }
     //사진을 찍었을 때
-    .fullScreenCover(isPresented: $viewModel.isCapturedShowPreview) {
-      if let image = viewModel.captureImage {
-          GetScreenShotView(appState: appState, image: image)
-      }
-    }
+//    .fullScreenCover(isPresented: $viewModel.isCapturedShowPreview) {
+//      if let image = viewModel.captureImage {
+//          GetScreenShotView(appState: appState, image: image)
+//      }
+//    }
   }
   
   private var closeButton: some View {
@@ -105,9 +121,9 @@ struct CameraView: View {
   }
   
   private var captureButton: some View {
-    Button(action: {
-      viewModel.capturePhoto()
-      viewModel.isCapturedShowPreview.toggle()
+      return Button(action: {
+        viewModel.capturePhoto()
+        viewModel.isCapturedShowPreview.toggle()
     }) {
       Image("img_cameraShutter")
     }

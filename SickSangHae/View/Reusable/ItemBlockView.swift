@@ -37,8 +37,8 @@ struct ItemBlockView: View {
                         .keyboardType(.numberPad)
                         .font(.pretendard(.semiBold, size: 14))
                         .foregroundColor(Color.gray400)
-                    
                 }
+                .disabled(true)
                 Button {
                     isShowingconfirmationDialog = true
                 } label: {
@@ -80,7 +80,7 @@ struct ItemBlockView: View {
     }
     
     private var editModalView: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 0) {
             
             HStack{
                 Spacer()
@@ -93,14 +93,15 @@ struct ItemBlockView: View {
             
             topBar
                 .padding(.bottom, 40)
-                .padding(.top, 24)
+                .padding(.top, 8)
             
             Text("품목명")
                 .font(.pretendard(.medium, size: 14))
                 .foregroundColor(Color("Gray600"))
                 .padding(.leading, 8)
+                .padding(.bottom, 8)
             
-            HStack(spacing: 20.adjusted) {
+            HStack(spacing: 20) {
                 TextField("무엇을 구매했나요?", text: $itemBlockViewModel.name)
                 
                 Spacer()
@@ -117,15 +118,17 @@ struct ItemBlockView: View {
             }
             .padding(.horizontal, 20)
             .frame(height: 60)
-            .background(Color("Gray50"))
+            .background(Color.gray50)
             .cornerRadius(12)
             
             Text("구매금액")
                 .font(.pretendard(.medium, size: 14))
                 .foregroundColor(Color("Gray600"))
                 .padding(.leading, 8)
+                .padding(.bottom, 8)
+                .padding(.top, 24)
             
-            HStack(spacing: 20.adjusted) {
+            HStack(spacing: 20) {
                 
                 TextField("얼마였나요?", value: $itemBlockViewModel.price, formatter: UpdateItemViewModel.priceFormatter)
                     .keyboardType(.numberPad)
@@ -143,7 +146,7 @@ struct ItemBlockView: View {
             }
             .padding(.horizontal, 20)
             .frame(height: 60)
-            .background(Color("Gray50"))
+            .background(Color.gray50)
             .cornerRadius(12)
             
             Spacer()

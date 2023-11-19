@@ -79,7 +79,7 @@ struct DirectUpdateItemView: View {
                     .frame(width: 10, height: 19)
             })
             Spacer()
-            Text("직접 추가")
+            Text("등록하기")
                 .fontWeight(.bold)
                 .font(.system(size: 17))
             Spacer()

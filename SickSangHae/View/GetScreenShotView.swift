@@ -15,7 +15,7 @@ struct GetScreenShotView: View {
   var image: UIImage
   
   var body: some View {
-    NavigationStack {
+//    NavigationStack {
       ZStack(alignment: .top) {
         Color.white
           .ignoresSafeArea(.all)
@@ -46,7 +46,7 @@ struct GetScreenShotView: View {
           
         }
       }
-    }
+//    }
     .navigationBarBackButtonHidden(true)
 
 
