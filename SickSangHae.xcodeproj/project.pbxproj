@@ -67,6 +67,7 @@
 		CE04EA102A76A82400CFBE4E /* DirectItemCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE04EA0F2A76A82400CFBE4E /* DirectItemCheckView.swift */; };
 		CE056C662B9482E80018E416 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = CE056C652B9482E80018E416 /* FirebaseAnalytics */; };
 		CE056C682B9482E80018E416 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CE056C672B9482E80018E416 /* FirebaseAnalyticsSwift */; };
+		CE056C6A2B9486F80018E416 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE056C692B9486F80018E416 /* GoogleService-Info.plist */; };
 		CE9AFD902A5FE33000EB2D8C /* SickSangHaeModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CE9AFD8E2A5FE33000EB2D8C /* SickSangHaeModel.xcdatamodeld */; };
 		CE9AFD972A5FEC9100EB2D8C /* Receipt+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9AFD952A5FEC9100EB2D8C /* Receipt+CoreDataClass.swift */; };
 		CE9AFD982A5FEC9100EB2D8C /* Receipt+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9AFD962A5FEC9100EB2D8C /* Receipt+CoreDataProperties.swift */; };
@@ -150,6 +151,7 @@
 		CE0319E62A6D5221009580F6 /* Categories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Categories.swift; sourceTree = "<group>"; };
 		CE04EA0D2A76A81800CFBE4E /* DirectUpdateItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectUpdateItemView.swift; sourceTree = "<group>"; };
 		CE04EA0F2A76A82400CFBE4E /* DirectItemCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectItemCheckView.swift; sourceTree = "<group>"; };
+		CE056C692B9486F80018E416 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CE9AFD8F2A5FE33000EB2D8C /* SickSangHaeModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SickSangHaeModel.xcdatamodel; sourceTree = "<group>"; };
 		CE9AFD952A5FEC9100EB2D8C /* Receipt+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Receipt+CoreDataClass.swift"; sourceTree = "<group>"; };
 		CE9AFD962A5FEC9100EB2D8C /* Receipt+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Receipt+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				025E92752A6C7254003DFA03 /* Info.plist */,
+				CE056C692B9486F80018E416 /* GoogleService-Info.plist */,
 				027E96852A56ACA90066BA8F /* Application */,
 				027E96832A56ABBA0066BA8F /* Global */,
 				027E96822A56ABA20066BA8F /* ViewModel */,
@@ -449,6 +452,7 @@
 				027E96772A56AB5F0066BA8F /* Assets.xcassets in Resources */,
 				02EC28232A6FF1EE00DAFCFA /* Pretendard-Medium.otf in Resources */,
 				02EC28242A6FF1EE00DAFCFA /* Pretendard-SemiBold.otf in Resources */,
+				CE056C6A2B9486F80018E416 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
