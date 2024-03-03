@@ -65,6 +65,8 @@
 		CE0319E72A6D5221009580F6 /* Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0319E62A6D5221009580F6 /* Categories.swift */; };
 		CE04EA0E2A76A81800CFBE4E /* DirectUpdateItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE04EA0D2A76A81800CFBE4E /* DirectUpdateItemView.swift */; };
 		CE04EA102A76A82400CFBE4E /* DirectItemCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE04EA0F2A76A82400CFBE4E /* DirectItemCheckView.swift */; };
+		CE056C662B9482E80018E416 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = CE056C652B9482E80018E416 /* FirebaseAnalytics */; };
+		CE056C682B9482E80018E416 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CE056C672B9482E80018E416 /* FirebaseAnalyticsSwift */; };
 		CE9AFD902A5FE33000EB2D8C /* SickSangHaeModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CE9AFD8E2A5FE33000EB2D8C /* SickSangHaeModel.xcdatamodeld */; };
 		CE9AFD972A5FEC9100EB2D8C /* Receipt+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9AFD952A5FEC9100EB2D8C /* Receipt+CoreDataClass.swift */; };
 		CE9AFD982A5FEC9100EB2D8C /* Receipt+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9AFD962A5FEC9100EB2D8C /* Receipt+CoreDataProperties.swift */; };
@@ -163,6 +165,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE056C682B9482E80018E416 /* FirebaseAnalyticsSwift in Frameworks */,
+				CE056C662B9482E80018E416 /* FirebaseAnalytics in Frameworks */,
 				7C16FB352A70F1450025BC20 /* OpenAI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -367,6 +371,8 @@
 			name = SickSangHae;
 			packageProductDependencies = (
 				7C16FB342A70F1450025BC20 /* OpenAI */,
+				CE056C652B9482E80018E416 /* FirebaseAnalytics */,
+				CE056C672B9482E80018E416 /* FirebaseAnalyticsSwift */,
 			);
 			productName = SickSangHae;
 			productReference = 027E966F2A56AB5E0066BA8F /* SickSangHae.app */;
@@ -420,6 +426,7 @@
 			mainGroup = 027E96662A56AB5E0066BA8F;
 			packageReferences = (
 				7C16FB332A70F1450025BC20 /* XCRemoteSwiftPackageReference "OpenAI" */,
+				CE056C642B9482E80018E416 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 027E96702A56AB5E0066BA8F /* Products */;
 			projectDirPath = "";
@@ -809,6 +816,14 @@
 				minimumVersion = 0.2.3;
 			};
 		};
+		CE056C642B9482E80018E416 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.21.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -816,6 +831,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7C16FB332A70F1450025BC20 /* XCRemoteSwiftPackageReference "OpenAI" */;
 			productName = OpenAI;
+		};
+		CE056C652B9482E80018E416 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE056C642B9482E80018E416 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		CE056C672B9482E80018E416 /* FirebaseAnalyticsSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE056C642B9482E80018E416 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 
