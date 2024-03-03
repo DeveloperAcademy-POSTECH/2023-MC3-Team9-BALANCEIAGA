@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyD-6Ny7qh3rgmpBFXylBsWyQAB-I558IO0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1039427244756</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>wonni.SickSangHae</string>
+	<key>PROJECT_ID</key>
+	<string>sicksanghae-faf38</string>
+	<key>STORAGE_BUCKET</key>
+	<string>sicksanghae-faf38.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1039427244756:ios:f1b851859cf3bc0448a141</string>
+</dict>
+</plist>
