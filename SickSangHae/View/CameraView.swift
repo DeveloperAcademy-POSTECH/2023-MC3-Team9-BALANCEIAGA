@@ -158,13 +158,13 @@ struct CameraView: View {
               .foregroundColor(.white)
               .padding(.horizontal, 24.adjusted)
               .padding(.bottom, 20.adjusted)
-              .simultaneousGesture(
-                TapGesture()
-                    .onEnded {
-                        Analyzer.sendGA(CameraViewEvents.selfAddButton)
-                    }
-              )
         }
+        .simultaneousGesture(
+          TapGesture()
+              .onEnded {
+                  Analyzer.sendGA(CameraViewEvents.selfAddButton)
+              }
+        )
     }
 }
 

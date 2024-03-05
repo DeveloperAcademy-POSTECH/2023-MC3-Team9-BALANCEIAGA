@@ -26,7 +26,13 @@ extension GASendable {
 class Analyzer {
     static func sendGA<T: GASendable>(_ attribute: T) { //MARK: 함수명 변경
         if let sendableString = attribute.value() {
-            Analytics.logEvent(sendableString, parameters: nil)
+            Analytics.logEvent(
+                sendableString,
+                parameters:
+                    [
+                        AnalyticsParameterScreenName: sendableString,
+                            AnalyticsParameterScreenClass: sendableString
+                    ])
         }
     }
 }
