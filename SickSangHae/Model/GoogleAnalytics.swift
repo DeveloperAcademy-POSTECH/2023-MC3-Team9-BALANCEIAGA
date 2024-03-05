@@ -15,6 +15,7 @@ protocol GASendable: RawRepresentable {
 extension GASendable {
     func value() -> String? {
         if let sendableString = self.rawValue as? String {
+            print(sendableString)
             return sendableString
         } else {
             return nil
@@ -23,12 +24,6 @@ extension GASendable {
 }
 
 class Analyzer {
-//    static func sendGA(_ attribute: any GASendable) { //MARK: 함수명 변경
-//        if let sendableString = attribute.value() {
-//            Analytics.logEvent(sendableString, parameters: nil)
-//        }
-//    }
-    
     static func sendGA<T: GASendable>(_ attribute: T) { //MARK: 함수명 변경
         if let sendableString = attribute.value() {
             Analytics.logEvent(sendableString, parameters: nil)
