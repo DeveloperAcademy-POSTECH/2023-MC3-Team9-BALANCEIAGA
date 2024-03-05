@@ -47,6 +47,7 @@ struct DirectUpdateItemView: View {
                                 addItemButton
                                     .onTapGesture {
                                         withAnimation {
+                                            Analyzer.sendGA(DirectUpdateItemViewEvents.addItemButton)
                                             addItemBlockView()
                                             viewModel.countItemCheckView += 1
                                         }
@@ -73,7 +74,10 @@ struct DirectUpdateItemView: View {
     
     private var topBar: some View {
         HStack {
-            Button(action:{dismiss()}, label: {
+            Button(action:{
+                Analyzer.sendGA(DirectUpdateItemViewEvents.backButton)
+                dismiss()
+            }, label: {
                 Image(systemName: "chevron.left")
                     .resizable()
                     .frame(width: 10, height: 19)
@@ -84,6 +88,7 @@ struct DirectUpdateItemView: View {
                 .font(.system(size: 17))
             Spacer()
             Button(action: {
+                Analyzer.sendGA(DirectUpdateItemViewEvents.xmarkButton)
                 viewModel.countItemCheckView -= 1
                 self.appState.moveToRootView = true
             } , label: {
@@ -133,7 +138,12 @@ struct DirectUpdateItemView: View {
             .padding(.trailing, 20.adjusted)
             .padding(.leading, 12.adjusted)
             .padding(.bottom, 34.adjusted)
-            
+            .simultaneousGesture(
+                TapGesture()
+                    .onEnded {
+                        Analyzer.sendGA(DirectUpdateItemViewEvents.nextButton)
+                    }
+            )
         }
     }
 }

@@ -91,6 +91,7 @@ struct CenterAlertView: View {
                 isDeletingItem = true
                 isShowingCenterAlertView = false
                 print(isDeletingItem)
+                Analyzer.sendGA(HistoryViewEvents.deleteButton)
             }, label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 8)

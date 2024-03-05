@@ -61,6 +61,9 @@ struct OCRView: View {
                   }
             }
         }
+        .onAppear {
+            Analyzer.sendGA(OCRViewEvents.appear)
+        }
         .navigationBarBackButtonHidden(true)
     }
 

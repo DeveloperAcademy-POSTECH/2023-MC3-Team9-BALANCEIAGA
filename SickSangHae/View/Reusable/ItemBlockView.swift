@@ -57,12 +57,17 @@ struct ItemBlockView: View {
         }
         .padding(.horizontal, 24.adjusted)
         .padding(.top, 23)
+        .onAppear {
+            Analyzer.sendGA(ItemBlockViewEvents.appear)
+        }
         .confirmationDialog("Confirmation Dialog", isPresented: $isShowingconfirmationDialog, actions: {
             Button("수정하기", action: {
+                Analyzer.sendGA(ItemBlockViewEvents.editItemButton)
                 self.isShowingEditModal = true
             })
                 .font(.pretendard(.regular, size: 17.adjusted))
             Button("항목 삭제", role: .destructive, action: {
+                Analyzer.sendGA(ItemBlockViewEvents.deleteItemButton)
                 withAnimation(.easeInOut(duration: 0.5)) {
                            viewModel.isShowTopAlertView = false
                            viewModel.deleteItemBlock(itemBlockViewModel: itemBlockViewModel)
@@ -71,6 +76,7 @@ struct ItemBlockView: View {
                 .font(.pretendard(.regular, size: 17.adjusted))
             Button("취소", role: .cancel, action: {
                 isShowingconfirmationDialog = false
+                
             })
                 .font(.pretendard(.bold, size: 17))
         })
@@ -102,12 +108,19 @@ struct ItemBlockView: View {
             
             HStack(spacing: 20.adjusted) {
                 TextField("무엇을 구매했나요?", text: $itemBlockViewModel.name)
+                    .simultaneousGesture(
+                        TapGesture()
+                            .onEnded {
+                                Analyzer.sendGA(ItemBlockViewEvents.nameChange)
+                            }
+                    )
                 
                 Spacer()
                 
                 if itemBlockViewModel.name != ""{
                     Button {
                         itemBlockViewModel.name = ""
+                        Analyzer.sendGA(ItemBlockViewEvents.xmarkButton)
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundColor(Color.gray400)
@@ -128,7 +141,14 @@ struct ItemBlockView: View {
             HStack(spacing: 20.adjusted) {
                 
                 TextField("얼마였나요?", value: $itemBlockViewModel.price, formatter: UpdateItemViewModel.priceFormatter)
+                    .simultaneousGesture(
+                        TapGesture()
+                            .onEnded {
+                                Analyzer.sendGA(ItemBlockViewEvents.priceChange)
+                            }
+                    )
                     .keyboardType(.numberPad)
+                    
                 
                 Spacer()
                 if itemBlockViewModel.price != 0{
@@ -155,6 +175,7 @@ struct ItemBlockView: View {
     private var topBar: some View {
         HStack {
             Button(action:{
+                Analyzer.sendGA(ItemBlockViewEvents.cancelButton)
                 isShowingEditModal = false
             }, label: {
                 Text("취소")
@@ -167,6 +188,7 @@ struct ItemBlockView: View {
             Spacer()
             Button(action: {
                 if (!itemBlockViewModel.name.isEmpty && itemBlockViewModel.price != 0) {
+                    Analyzer.sendGA(ItemBlockViewEvents.editCompleteButton)
                     isShowingEditModal = false
                     viewModel.editItemBlock(itemBlockViewModel: itemBlockViewModel, name: itemBlockViewModel.name, price: itemBlockViewModel.price)
                 }

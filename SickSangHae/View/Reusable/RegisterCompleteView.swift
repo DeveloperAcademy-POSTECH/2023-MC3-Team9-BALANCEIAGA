@@ -23,6 +23,7 @@ struct RegisterCompleteView: View {
             Spacer()
 
             Button {
+                Analyzer.sendGA(RegisterCompleteViewEvents.closeButton)
                 self.appState.moveToRootView = true
             } label:{
                 ZStack{
@@ -40,6 +41,9 @@ struct RegisterCompleteView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
+        .onAppear {
+            Analyzer.sendGA(RegisterCompleteViewEvents.appear)
+        }
     }
 }
 

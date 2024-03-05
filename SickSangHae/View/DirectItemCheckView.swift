@@ -45,6 +45,8 @@ struct DirectItemCheckView: View {
                     Spacer()
 
                     Button{
+                        registerItemsToCoreData()
+                        Analyzer.sendGA(DirectItemCheckViewEvents.registerButton)
                         isShowingModal = true
                     } label: {
                         ZStack{
@@ -62,9 +64,13 @@ struct DirectItemCheckView: View {
 
                 }
             }
-            .onDisappear(){
-                registerItemsToCoreData()
+            .onAppear {
+                Analyzer.sendGA(DirectItemCheckViewEvents.appear)
             }
+//            .onDisappear(){
+//                //MARK: 이 부분때문에 그냥 꺼도 아이템이 CoreData에 등록됨(BugFix)
+//                registerItemsToCoreData()
+//            }
             .navigationBarBackButtonHidden(true)
         }
         .fullScreenCover(isPresented: $isShowingModal){
@@ -73,7 +79,10 @@ struct DirectItemCheckView: View {
     }
     private var NavBar: some View{
         HStack {
-            Button(action:{dismiss()}, label: {
+            Button(action:{
+                Analyzer.sendGA(DirectItemCheckViewEvents.backButton)
+                dismiss()
+            }, label: {
                 Image(systemName: "chevron.left")
                     .resizable()
                     .frame(width: 10, height: 19)
@@ -90,8 +99,8 @@ struct DirectItemCheckView: View {
             Spacer()
             
             Button(action: {
+                Analyzer.sendGA(DirectItemCheckViewEvents.xmarkButton)
                 self.appState.moveToRootView = true
-                
             }, label: {
                 Image(systemName: "xmark")
                     .resizable()

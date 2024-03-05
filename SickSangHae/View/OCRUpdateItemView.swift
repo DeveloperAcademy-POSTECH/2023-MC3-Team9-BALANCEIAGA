@@ -44,6 +44,7 @@ struct OCRUpdateItemView: View {
                             addItemButton
                                 .onTapGesture {
                                     withAnimation {
+                                        Analyzer.sendGA(OCRUpdateItemViewEvents.addItemButton)
                                         addItemBlockView()
                                     }
                                 }
@@ -71,7 +72,10 @@ struct OCRUpdateItemView: View {
     
     private var topBar: some View {
         HStack {
-            Button(action:{dismiss()}, label: {
+            Button(action:{
+                Analyzer.sendGA(OCRUpdateItemViewEvents.backButton)
+                dismiss()
+            }, label: {
                 Image(systemName: "chevron.left")
                     .resizable()
                     .frame(width: 10, height: 19)
@@ -81,6 +85,7 @@ struct OCRUpdateItemView: View {
                 .font(.pretendard(.bold, size: 17))
             Spacer()
             Button(action: {
+                Analyzer.sendGA(OCRUpdateItemViewEvents.xButton)
                 self.appState.moveToRootView = true
             } , label: {
                 Image(systemName: "xmark")

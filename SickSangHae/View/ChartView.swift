@@ -91,6 +91,9 @@ struct ChartView: View {
                 calculateCosts(for: newDate)
             }
         }
+        .onAppear {
+            Analyzer.sendGA(ChartViewEvents.appear)
+        }
     }
 
     private var Pie : some View {

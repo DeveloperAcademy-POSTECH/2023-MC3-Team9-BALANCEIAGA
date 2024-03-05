@@ -21,6 +21,7 @@ struct CameraView: View {
         .onAppear {
           viewModel.configure()
           viewModel.startShowingText()
+            Analyzer.sendGA(CameraViewEvents.appear)
         }
         .gesture(MagnificationGesture()
           .onChanged { val in
@@ -71,7 +72,10 @@ struct CameraView: View {
   }
   
   private var closeButton: some View {
-    Button(action: {dismiss()}) {
+      Button(action: {
+          dismiss()
+          Analyzer.sendGA(CameraViewEvents.closeButton)
+      }) {
       Spacer()
       Image(systemName: "xmark")
         .resizable()
@@ -97,7 +101,10 @@ struct CameraView: View {
   }
   
   private var galleryButton: some View {
-    Button (action: {viewModel.isImagePickerPresented.toggle()}) {
+      Button (action: {
+          viewModel.isImagePickerPresented.toggle()
+          Analyzer.sendGA(CameraViewEvents.galleryButton)
+      }) {
       Image("ic_gallery")
         .resizable()
         .frame(width: 29.adjusted, height: 24.adjusted)
@@ -108,13 +115,17 @@ struct CameraView: View {
     Button(action: {
       viewModel.capturePhoto()
       viewModel.isCapturedShowPreview.toggle()
+        Analyzer.sendGA(CameraViewEvents.captureButton)
     }) {
       Image("img_cameraShutter")
     }
   }
   
   private var flashButton: some View {
-    Button(action: {viewModel.switchFlash()}) {
+      Button(action: {
+          viewModel.switchFlash()
+          Analyzer.sendGA(CameraViewEvents.flashButton)
+      }) {
       Image(systemName: viewModel.isFlashOn ? "bolt.fill" : "bolt.slash")
         .resizable()
         .frame(width: 20.adjusted, height: 26.adjusted)
@@ -147,6 +158,12 @@ struct CameraView: View {
               .foregroundColor(.white)
               .padding(.horizontal, 24.adjusted)
               .padding(.bottom, 20.adjusted)
+              .simultaneousGesture(
+                TapGesture()
+                    .onEnded {
+                        Analyzer.sendGA(CameraViewEvents.selfAddButton)
+                    }
+              )
         }
     }
 }

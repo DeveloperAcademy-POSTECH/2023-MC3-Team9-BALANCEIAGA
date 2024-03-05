@@ -34,6 +34,7 @@ struct SettingView: View {
                         notiManager.openSettings()
                     }
                     buttonClickCount += 1
+                    Analyzer.sendGA(SettingViewEvents.toSystemSetting)
                 } label: {
                     HStack(spacing: 14.adjusted) {
                         Text("설정")
@@ -89,6 +90,18 @@ struct SettingView: View {
                             .toggleStyle(.switch)
                             .tint(notiManager.isNotiOn ? Color.primaryGB : Color.gray200)
                             .frame(width: 50, height: 30)
+                            .onChange(of: viewModel.settingListItems[index].isToggle) { _ in // MARK: settingview의 toggle들만 GA 확인
+                                switch index {
+                                case 0: //
+                                    Analyzer.sendGA(SettingViewEvents.expireNotificationToggle)
+                                case 4:
+                                    Analyzer.sendGA(SettingViewEvents.cleanNotificationToggle)
+                                case 5:
+                                    Analyzer.sendGA(SettingViewEvents.chartNotificationToggle)
+                                default:
+                                    break
+                                }
+                            }
                     } else {
                         listButton(text: item.buttonTitle, for: item)
                     }

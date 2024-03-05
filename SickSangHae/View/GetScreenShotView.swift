@@ -21,7 +21,10 @@ struct GetScreenShotView: View {
           .ignoresSafeArea(.all)
         VStack {
           HStack {
-            Button(action:{ dismiss() }) {
+            Button(action:{
+                Analyzer.sendGA(GetScreenShotViewEvents.backButton)
+                dismiss()
+            }) {
               Image(systemName:"chevron.left")
                 .resizable()
                 .frame(width: 11.adjusted, height: 19.adjusted)
@@ -34,6 +37,12 @@ struct GetScreenShotView: View {
                 .foregroundColor(.black)
                 .font(.pretendard(.bold, size: 17.adjusted))
             }
+              .simultaneousGesture(
+                TapGesture()
+                    .onEnded {
+                        Analyzer.sendGA(GetScreenShotViewEvents.registerButton)
+                    }
+              )
           }
           .padding([.leading, .trailing], 20.adjusted)
           .padding(.top, 10.adjusted)
@@ -45,6 +54,9 @@ struct GetScreenShotView: View {
             .padding(.top, 90.adjusted)
           
         }
+      }
+      .onAppear {
+          Analyzer.sendGA(GetScreenShotViewEvents.appear)
       }
     }
     .navigationBarBackButtonHidden(true)

@@ -94,6 +94,9 @@ struct MainView: View {
                 }
         }
         }
+        .onAppear {
+            Analyzer.sendGA(MainViewEvents.appear)
+        }
     }
 }
 

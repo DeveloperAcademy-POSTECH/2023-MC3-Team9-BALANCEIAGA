@@ -35,6 +35,9 @@ struct HistoryView: View {
                 }
                 .listStyle(.plain)
             } // VStack
+            .onAppear {
+                Analyzer.sendGA(HistoryViewEvents.eatenTab)
+            }
             
         CenterAlertView(
             titleMessage: "식료품 삭제",
@@ -51,6 +54,7 @@ struct HistoryView: View {
                 } // if
             } // onChange
         } // ZStack
+        
     } // body
     
     var segmentedTabButton: some View {
@@ -61,6 +65,7 @@ struct HistoryView: View {
                         withAnimation(.spring(duration: 0.3)) {
                             isChangeTab = true
                         }
+                        Analyzer.sendGA(HistoryViewEvents.eatenTab)
                     }, label: {
                         Text("먹었어요😋")
                             .font(.pretendard(.bold, size: 20))
@@ -74,6 +79,7 @@ struct HistoryView: View {
                         withAnimation(.spring(duration: 0.3)) {
                             isChangeTab = false
                         }
+                        Analyzer.sendGA(HistoryViewEvents.rottenTab)
                     }, label: {
                         Text("상했어요🤢")
                             .font(.pretendard(.bold, size: 20))
@@ -187,6 +193,7 @@ struct HistoryView: View {
         Menu {
             Button(action: {
                 coreDataViewModel.recoverPreviousStatus(target: item)
+                Analyzer.sendGA(HistoryViewEvents.restoreButton)
             }, label: {
                 Text("복구하기")
                 Image(systemName: "arrow.counterclockwise")
@@ -199,6 +206,7 @@ struct HistoryView: View {
                 withAnimation(.easeInOut(duration: 0.2)) {
                     isShowingCenterAlertView = true
                 }
+                // MARK: 삭제 alert가 뜨고나서도 삭제하면 GA에 send -> CenterAlertView로 기능 옮김
             }, label: {
                 Text("삭제하기")
                 Image(systemName: "trash.fill")

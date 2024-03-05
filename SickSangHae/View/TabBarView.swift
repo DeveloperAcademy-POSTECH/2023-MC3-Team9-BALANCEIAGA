@@ -75,6 +75,7 @@ struct CustomTabView: View {
             case .mainView:
                 Button {
                     isActive = true
+                    Analyzer.sendGA(TabBarEvents.scanButton)
                 } label: {
                     ZStack {
                       ScanButton(cornerRadius: 16)
@@ -149,6 +150,17 @@ struct CustomTabView: View {
             .overlay(
                 Button {
                     selectedTab = selectedTabType
+                    switch selectedTabType {
+                    case .chartView:
+                        Analyzer.sendGA(TabBarEvents.chartsTab)
+
+                    case .mainView:
+                        Analyzer.sendGA(TabBarEvents.mainViewTab)
+                    case .historyView:
+                        Analyzer.sendGA(TabBarEvents.historyTab)
+                    case .settingView:
+                        Analyzer.sendGA(TabBarEvents.settingsTab)
+                    }
                 } label: {
                     VStack(spacing: 0) {
                         Image(imageName)

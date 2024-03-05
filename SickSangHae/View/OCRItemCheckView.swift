@@ -55,6 +55,7 @@ struct OCRItemCheckView: View {
                     Button {
                         registerItemsToCoreData()
                         isRegisterCompleteView = true
+                        Analyzer.sendGA(OCRItemCheckViewEvents.registerButton)
                     } label: {
                         ZStack {
                             Rectangle()
@@ -111,6 +112,7 @@ struct OCRItemCheckView: View {
         
             Button {
                 isShowingUpdateItemView = true
+                Analyzer.sendGA(OCRItemCheckViewEvents.editButton)
             } label: {
                 ZStack{
                     RoundedRectangle(cornerRadius: 8)
