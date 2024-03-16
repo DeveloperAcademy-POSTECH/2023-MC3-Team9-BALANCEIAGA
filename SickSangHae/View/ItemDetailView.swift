@@ -86,12 +86,15 @@ struct ItemDetailView: View {
                 .opacity(isShowingCenterAlertView ? 1 : 0)
                 .onChange(of: isDeletingItem) { _ in
                     if isDeletingItem {
+                        Analyzer.sendGA(ItemDetailViewEvents.delete)
                         dismiss()
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                             withAnimation(.easeInOut(duration: 0.2)) {
                                 coreDataViewModel.deleteReceiptData(target: receipt)
                             }
                         }
+                    } else {
+                        Analyzer.sendGA(ItemDetailViewEvents.cancelDelete)
                     }
                 } // onChange닫기
                 .onDisappear {
@@ -99,6 +102,9 @@ struct ItemDetailView: View {
                 } // onDisappear닫기
         } // ZStack닫기
         .navigationBarHidden(true)
+        .onAppear {
+            Analyzer.sendGA(ItemDetailViewEvents.appear)
+        }
         
         
     } //body닫기
@@ -106,6 +112,7 @@ struct ItemDetailView: View {
     private func topNaviBar(dismiss: DismissAction) -> some View {
         HStack {
             Button {
+                Analyzer.sendGA(ItemDetailViewEvents.back)
                 dismiss()
             } label: {
                 ZStack {
@@ -149,6 +156,7 @@ struct ItemDetailView: View {
     var menuButton: some View {
         Menu {
             Button(action: {
+                Analyzer.sendGA(ItemDetailViewEvents.edit)
                 isShowingEditView = true
             }, label: {
                 Text("편집")
@@ -203,6 +211,7 @@ struct ItemDetailView: View {
     
     var basicRadioButton: some View {
         Button(action: {
+            Analyzer.sendGA(ItemDetailViewEvents.basicFridge)
             needToEatASAP = .shortTermUnEaten
         }, label: {
             ZStack {
@@ -259,6 +268,7 @@ struct ItemDetailView: View {
     
     var fastEatRadioButton: some View {
         Button(action: {
+            Analyzer.sendGA(ItemDetailViewEvents.fastEatFridge)
             needToEatASAP = .shortTermPinned
         }, label: {
             ZStack {
@@ -314,6 +324,7 @@ struct ItemDetailView: View {
     
     var slowEatRadioButton: some View {
         Button(action: {
+            Analyzer.sendGA(ItemDetailViewEvents.slowEatFridge)
             needToEatASAP = .longTermUnEaten
         }, label: {
             ZStack {

@@ -105,3 +105,6 @@ iOSInjectionProject/
 
 ## CHAT_GPT_KEYS
 *.xcconfig
+
+## Firebase Info.plist
+GoogleService-Info.plist

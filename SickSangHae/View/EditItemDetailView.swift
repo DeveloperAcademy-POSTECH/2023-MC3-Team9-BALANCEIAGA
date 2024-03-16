@@ -36,13 +36,17 @@ struct EditItemDetailView: View {
         .onTapGesture {
             endTextEditing()
         }
+        .onAppear {
+            Analyzer.sendGA(EditItemDetailViewEvents.appear)
+        }
     }
     
     var topNaviBar: some View {
         ZStack {
             HStack {
                 Button(action: {
-                    self.isShowingEditView.toggle()
+                    Analyzer.sendGA(EditItemDetailViewEvents.cancel)
+                    self.isShowingEditView = false
                 }, label: {
                     Text("취소")
                         .bold()
@@ -50,9 +54,10 @@ struct EditItemDetailView: View {
                 })
                 Spacer()
                 Button(action: {
+                    Analyzer.sendGA(EditItemDetailViewEvents.complete)
                     //변경된 텍스트 값을 ItemDetailView로 업데이트하는 로직
                     coreDateViewModel.editReceiptData(target: receipt,icon: iconText, name: nameText, dateOfPurchase: dateText, price: wonText)
-                    self.isShowingEditView.toggle()
+                    self.isShowingEditView = false
                 }, label: {
                     Text("완료")
                         .bold()
@@ -73,7 +78,8 @@ struct EditItemDetailView: View {
                 .frame(width: 110, height: 110)
             
             Button(action: {
-                self.isShowingIconView.toggle()
+                Analyzer.sendGA(EditItemDetailViewEvents.iconButton)
+                self.isShowingIconView = true
             }, label: {
                 ZStack {
                     Circle()
@@ -142,6 +148,12 @@ struct InfoEditField: View {
                             }
                         }
                     }
+                    .simultaneousGesture(
+                        TapGesture()
+                            .onEnded {
+                                Analyzer.sendGA(EditItemDetailViewEvents.itemName)
+                            }
+                    )
                 
                 if !nameText.isEmpty && isNameInputActive {
                     Button(action: {
@@ -170,6 +182,7 @@ struct InfoEditField: View {
             
             ZStack(alignment: .leading) {
                 Button(action: {
+                    Analyzer.sendGA(EditItemDetailViewEvents.purchaseDate)
                     showingDatePicker.toggle()
                 }, label: {
                     HStack {
@@ -234,6 +247,12 @@ struct InfoEditField: View {
             .frame(height: 60)
             .background(Color("Gray50"))
             .cornerRadius(8)
+            .simultaneousGesture(
+                TapGesture()
+                    .onEnded {
+                        Analyzer.sendGA(EditItemDetailViewEvents.purchasePrice)
+                    }
+            )
         }
         .padding(.bottom, 10)
     }

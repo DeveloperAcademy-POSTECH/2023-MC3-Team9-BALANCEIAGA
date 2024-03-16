@@ -17,6 +17,7 @@ struct SmallButtonView: View {
             VStack(spacing: 0){
                 HStack {
                     Button {
+                        Analyzer.sendGA(ItemDetailViewEvents.eaten)
                         dismiss()
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                             withAnimation(.easeOut(duration: 0.5)) {
@@ -38,6 +39,7 @@ struct SmallButtonView: View {
                     Spacer()
                     
                     Button {
+                        Analyzer.sendGA(ItemDetailViewEvents.rotten)
                         dismiss()
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                             withAnimation(.easeOut(duration: 0.5)) {

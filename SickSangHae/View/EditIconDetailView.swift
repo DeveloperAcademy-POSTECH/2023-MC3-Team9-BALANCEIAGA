@@ -25,6 +25,7 @@ struct EditIconDetailView: View {
             
             HStack {
                 Button(action: {
+                    Analyzer.sendGA(EditIconDetailViewEvents.cancel)
                     dismiss()
                 }, label: {
                     Text("취소")
@@ -33,6 +34,7 @@ struct EditIconDetailView: View {
                 })
                 Spacer()
                 Button(action: {
+                    Analyzer.sendGA(EditIconDetailViewEvents.complete)
                     // 변경된 icon 저장하는 로직
                     receiptIcon = currentIcon
                     dismiss()
@@ -66,6 +68,9 @@ struct EditIconDetailView: View {
                                         .foregroundColor(Color("Gray900"))
                                         .frame(width: 11, height: 11)
                                 )
+                                .onTapGesture {
+                                    Analyzer.sendGA(EditIconDetailViewEvents.xmark)
+                                }
                         }
                     }
                     
@@ -81,6 +86,7 @@ struct EditIconDetailView: View {
                 ){
                     ForEach(0..<36) { number in
                         Button(action: {
+                            Analyzer.sendGA(EditIconDetailViewEvents.iconItem)
                             currentIcon = iconImages[number]
                         }, label: {
                             VStack {
@@ -99,6 +105,9 @@ struct EditIconDetailView: View {
                 }
                 .padding(20)
             }
+        }
+        .onAppear {
+            Analyzer.sendGA(EditIconDetailViewEvents.appear)
         }
     }
 }
