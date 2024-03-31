@@ -56,10 +56,12 @@ class NotifiactionManager: ObservableObject {
     }
     
     func addNotification() {
+        print("Add Notification")
         let content = UNMutableNotificationContent()
         content.title = "냉장고에 어떤 식재료가 있을까요? 🧐"
         content.body = "냉장고를 확인해보세요"
         content.sound = UNNotificationSound.default
+        content.userInfo = ["name" : "SickSangHaeAlert"]
         
         var dateComponents = DateComponents()
         dateComponents.hour = 10

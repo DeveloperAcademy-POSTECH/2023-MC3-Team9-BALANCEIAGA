@@ -27,6 +27,7 @@ struct MainView: View {
             case .notSearching:
                     HStack(alignment: .top) {
                         Button {
+                            Analyzer.sendGA(MainViewEvents.basicTerm)
                             mainViewModel.changeSelectedTopTabBar(to: topTabBar.basic)
                         } label: {
                             Text("일반 보관")
@@ -38,6 +39,7 @@ struct MainView: View {
                             .frame(width: 15)
                         
                         Button{
+                            Analyzer.sendGA(MainViewEvents.longTerm)
                             mainViewModel.changeSelectedTopTabBar(to: .longterm)
                         } label: {
                             Text("장기 보관")

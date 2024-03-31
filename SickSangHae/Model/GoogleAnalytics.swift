@@ -70,8 +70,8 @@ enum MainViewEvents:  String, GASendable {
     
     // Ver. Moca
     case appear = "A11_MainDefault_메인뷰"
-    case basicSave = "A11_MainShortTermTab_일반보관_탭_누름"
-    case longtermSave = "A11_MainLongTermTab_장기보관_탭_누름"
+    case basicTerm = "A11_MainBasicTermTab_일반보관_탭_누름"
+    case longTerm = "A11_MainLongTermTab_장기보관_탭_누름"
     case searchBar = "A11_MainSearchBar_검색창_탭_누름"
     case filter = "A11_MainFilter_최신순필터_누름"
 }
@@ -222,4 +222,8 @@ enum EditIconDetailViewEvents: String, GASendable {
     case complete = "C31_IconViewCancel_완료"
     case xmark = "C31_IconViewXMark_x버튼"
     case iconItem = "C31_IconViewIconItem_아이콘"
+}
+
+enum AlertClickEvent: String, GASendable {
+    case alert = "AL_AlertDefault_알림클릭"
 }
